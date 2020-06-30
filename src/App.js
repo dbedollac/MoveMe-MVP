@@ -1,13 +1,15 @@
 import React from 'react';
 import './App.css';
 import {db} from "./Config/firestore.js"
-import VideoPlayer from "./Components/Atoms/VideoPlayer.js"
+import {BrowserRouter, Switch, Route} from "react-router-dom"
+import SignIn from "./Components/Views/SignIn.js"
 
-function App() {
-
-  return (
-    <VideoPlayer Image="MM1B.jpg" Video="DescripciónProblema_DB.MOV" />
-  );
-}
+const App = () => (
+  <BrowserRouter>
+    <Switch>
+      <Route path="/" component={SignIn} exact />
+    </Switch>
+  </BrowserRouter>
+)
 
 export default App;
