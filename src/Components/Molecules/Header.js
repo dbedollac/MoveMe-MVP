@@ -1,6 +1,8 @@
 import React from 'react';
 import './Header.css';
+import { Button } from "antd";
 import NavBar from "../Atoms/NavBar.js"
+import {auth} from '../../Config/firestore'
 
 function Header(props){
   if (props.type===0) {
@@ -11,7 +13,7 @@ function Header(props){
           <img src="./logo.png" alt="Logo"/>
         </div>
         <div className="col-8 col-md-8 d-flex flex-row justify-content-center align-items-center">
-          <h1>M O V E M E</h1>
+          <h1>{props.title}</h1>
         </div>
       </div>
       </header>
@@ -21,11 +23,14 @@ function Header(props){
       return(
         <header>
         <div className="col-12 d-flex flex-row align-items-center" >
-            <div className="col-8">
+            <div className="col-6">
               <img src="./logo.png" alt="Logo"/>
             </div>
             <div className="col-4">
               <NavBar />
+            </div>
+            <div className="col-2">
+              <Button onClick={() => auth.signOut()} key="logout" type="primary">Cerrar Sesión</Button>,
             </div>
         </div>
         </header>

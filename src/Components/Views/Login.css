@@ -1,0 +1,16 @@
+.login-container{
+  background-image: url("Images/fitness-home-gray.png");
+  background-position: center;
+  background-size: cover;
+  padding-top: 5%;
+  min-height: 100vh;
+  color: white;
+}
+
+h2{
+  color: white;
+}
+
+.form{
+  background-color: rgba(0,0,0,0.8);
+}

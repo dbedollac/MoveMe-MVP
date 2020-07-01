@@ -1,0 +1,8 @@
+.configInstructor-container{
+  background-color: lightgray;
+  min-height: 100vh
+}
+
+.configInstructor-container h2{
+  color: black
+}
