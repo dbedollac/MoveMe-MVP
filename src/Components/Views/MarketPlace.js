@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../Molecules/Header'
 
-class InstructorProfile extends React.Component {
+class MarketPlace extends React.Component {
   constructor() {
     super()
   }
@@ -10,10 +10,10 @@ class InstructorProfile extends React.Component {
     return (
       <div>
         <Header type={1} />
-        <h1> Perfil del Instructor </h1>
+        <h1> Market Place </h1>
       </div>
     )
   }
 }
 
-export default InstructorProfile
+export default MarketPlace

@@ -7,10 +7,10 @@
   color: white;
 }
 
-h2{
+.login-container h2{
   color: white;
 }
 
-.form{
+.login-form{
   background-color: rgba(0,0,0,0.8);
 }

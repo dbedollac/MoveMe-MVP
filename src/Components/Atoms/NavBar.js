@@ -3,7 +3,6 @@ import { CollectionPlayFill } from 'react-bootstrap-icons';
 import { Calendar3Fill } from 'react-bootstrap-icons';
 import { Wallet2 } from 'react-bootstrap-icons';
 import { PersonSquare } from 'react-bootstrap-icons';
-import './NavBar.css'
 
 
 function NavBar() {

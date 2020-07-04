@@ -8,6 +8,8 @@
     "@testing-library/user-event": "^7.1.2",
     "antd": "^3.26.6",
     "bootstrap-icons": "^1.0.0-alpha5",
+    "formik": "^2.1.4",
+    "query-string": "^6.13.1",
     "react": "^16.13.1",
     "react-bootstrap-icons": "^1.0.3-alpha5",
     "react-dom": "^16.13.1",

@@ -1,10 +1,12 @@
-import React from 'react';
+import React from "react";
 import './Header.css';
 import { Button } from "antd";
 import NavBar from "../Atoms/NavBar.js"
 import {auth} from '../../Config/firestore'
+import { withRouter } from "react-router";
 
 function Header(props){
+
   if (props.type===0) {
     return(
       <header>
@@ -30,7 +32,7 @@ function Header(props){
               <NavBar />
             </div>
             <div className="col-2">
-              <Button onClick={() => auth.signOut()} key="logout" type="primary">Cerrar Sesión</Button>,
+              <Button onClick={() => {auth.signOut(); props.history.push("/")}} key="logout" type="primary">Cerrar Sesión</Button>,
             </div>
         </div>
         </header>
@@ -52,4 +54,4 @@ function Header(props){
   }
 }
 
-export default Header
+export default withRouter(Header)

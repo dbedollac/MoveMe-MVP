@@ -7,20 +7,20 @@
   color: white;
 }
 
-.pregunta{
+.chooseUserType-pregunta{
   background: lightgray;
   font-size: 30px;
   border-radius: 10px;
   color: black
 }
 
-.options{
+.chooseUserType-options{
   border-width: 1px;
   border-color: black;
   border-style: solid;
   color: black
 }
 
-.options img{
+.chooseUserType-options img{
   width: 150px;
 }

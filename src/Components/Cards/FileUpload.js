@@ -1,8 +1,10 @@
 import React from 'react';
 import * as firebase from 'firebase'
 import {storage} from "../../Config/firestore.js"
+import { Auth } from "../../Config/AuthContext";
 
 class FileUpload extends React.Component {
+static contextType = Auth
   constructor (props) {
     super(props)
     this.state = {
@@ -10,6 +12,22 @@ class FileUpload extends React.Component {
       picture: './Upload.png'
     }
     this.handleOnChange = this.handleOnChange.bind(this);
+    console.log(this.props.overlay);
+  }
+
+  componentDidMount(){
+    let user = this.context.usuario;
+    if (this.props.overlay !== null) {
+      storage.ref("Pictures")
+               .child(user.uid +'-'+this.props.overlay)
+               .getDownloadURL()
+               .then(url => {
+                this.setState({picture: url}) ;
+              }).catch(function (error) {
+                console.error("Error", error);
+              })
+    }
+
   }
 
   handleOnChange (e) {
@@ -41,12 +59,17 @@ class FileUpload extends React.Component {
 
   render () {
     return (
-      <div className="d-flex flex-column">
-        <img src={this.state.picture} className="text-center"/>
-        <progress value={this.state.uploadValue} max='100' className="progres-bar">
-          {this.state.uploadValue} %
-        </progress>
-        <input type='file' onChange={this.handleOnChange.bind(this)}/>
+      <div className="FileUpload card">
+        <p className='card-header col-12 text-center'><strong>{this.props.title}</strong></p>
+        <div className='card-body d-flex flex-column align-items-center'>
+          <label for='file-input'>
+            <img src={this.state.picture} className="text-center card-img-top"/>
+          </label>
+          <progress value={this.state.uploadValue} max='100' className="progres-bar">
+            {this.state.uploadValue} %
+          </progress>
+        </div>
+          <input id='file-input' type='file' onChange={this.handleOnChange.bind(this)} className="card-footer col-12" accept='image/*'/>
       </div>
     )
   }

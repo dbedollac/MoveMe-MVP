@@ -60,7 +60,7 @@ const Login = ({ history }) => {
                     {!signup ? (
                       <div className="col-12 login-container">
                         <form className="form-group d-flex flex-column col-12 align-items-center " onSubmit={correoClave}>
-                        <div className="d-flex flex-column col-6 form">
+                        <div className="d-flex flex-column col-6 login-form">
                             <div className="d-flex flex-column align-self-center col-10 m-2">
                               <h2 className="text-center ">Ingreso</h2>
                               {error? <Errores mensaje={error}/>:null}

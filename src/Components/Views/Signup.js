@@ -27,7 +27,7 @@ const Signup = ({ setsignup, history }) => {
       <div>
             <div className="col-12 login-container">
               <form className="form-group d-flex flex-column col-12 align-items-center " onSubmit={handleSignUp}>
-              <div className="d-flex flex-column col-6 form">
+              <div className="d-flex flex-column col-6 login-form">
                   <div className="d-flex flex-column align-self-center col-10 m-2">
                     <h2 className="text-center ">Registro</h2>
                     {error? <Errores mensaje={error}/>:null}

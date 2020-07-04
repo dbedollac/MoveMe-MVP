@@ -6,3 +6,20 @@
 .configInstructor-container h2{
   color: black
 }
+
+.configInstructor-container img{
+  height: 20vw;
+  width: 28vw
+}
+
+.zoom-button{
+  border-top-width: 2px;
+  border-top-style: solid;
+  border-top-color: gray
+}
+
+.foto-perfil{
+  border-right-width: 2px;
+  border-right-style: solid;
+  border-right-color: gray
+}
