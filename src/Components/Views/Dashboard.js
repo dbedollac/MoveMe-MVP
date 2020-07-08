@@ -1,6 +1,7 @@
 import React from "react";
 import { Auth } from "../../Config/AuthContext";
 import { withRouter } from "react-router";
+import {Redirect} from "react-router-dom";
 import {auth} from '../../Config/firestore'
 import ChooseUserType from './ChooseUserType'
 import InstructorProfile from './InstructorProfile'

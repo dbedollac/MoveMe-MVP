@@ -1,8 +1,6 @@
 import React from "react";
 import './Header.css';
-import { Button } from "antd";
-import NavBar from "../Atoms/NavBar.js"
-import {auth} from '../../Config/firestore'
+import NavBar from "./NavBarInstructors.js"
 import { withRouter } from "react-router";
 
 function Header(props){
@@ -25,14 +23,11 @@ function Header(props){
       return(
         <header>
         <div className="col-12 d-flex flex-row align-items-center" >
-            <div className="col-6">
+            <div className="col-2">
               <img src="./logo.png" alt="Logo"/>
             </div>
-            <div className="col-4">
+            <div className="col-10">
               <NavBar />
-            </div>
-            <div className="col-2">
-              <Button onClick={() => {auth.signOut(); props.history.push("/")}} key="logout" type="primary">Cerrar Sesión</Button>,
             </div>
         </div>
         </header>

@@ -1,0 +1,19 @@
+.navbar-option{
+  border-radius: 10px
+}
+
+.navbar-option a{
+  color: black;
+  text-decoration: none;
+}
+
+.navbar-option:hover{
+  background-color: white
+}
+
+
+.navbar-selected div{
+  border-radius: 10px;
+  background-color: rgba(0,0,0,0.5);
+  color: white
+  }

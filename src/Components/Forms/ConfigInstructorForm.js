@@ -9,6 +9,7 @@ const { usuario } = useContext(Auth);
 const [data,setdata] = useState({})
 
 useEffect(() => {
+  if (usuario) {
   var docRef = db.collection("Instructors").doc(usuario.email);
 
     docRef.get().then(function(doc) {
@@ -21,6 +22,7 @@ useEffect(() => {
     }).catch(function(error) {
         console.log("Error getting document:", error);
     });
+  }
   })
 
 const validate = values => {
@@ -35,14 +37,15 @@ return errors;
 // Pass the useFormik() hook initial form values and a submit function that will
 // be called when the form is submitted
 const formik = useFormik({
+  enableReinitialize: true,
   initialValues: {
-    profileName: '',
-    selfDescription: '',
+    profileName: data.profileName,
+    selfDescription: data.selfDescription,
     disableTrialClasses: false,
-    firstName: "",
-    lastName: '',
-    CLABE: '',
-    noTarjeta: ''
+    firstName: data.firstName,
+    lastName: data.lastName,
+    CLABE: data.CLABE,
+    noTarjeta: data.noTarjeta
   },
   validate,
   onSubmit: values => {
@@ -60,7 +63,7 @@ const formik = useFormik({
 });
 
   return(
-  <form onSubmit={formik.handleSubmit}>
+  <form onSubmit={formik.handleSubmit} >
     <div className="d-flex flex-column">
       <div className="d-flex flex-row">
           <div className="col-7">
@@ -71,7 +74,7 @@ const formik = useFormik({
               id="profileName"
               name="profileName"
               type="text"
-              placeholder={data.profileName}
+              placeholder={'¿Cómo te conocen tus clientes?'}
               onChange={formik.handleChange}
               value={formik.values.profileName}
               required
@@ -84,13 +87,13 @@ const formik = useFormik({
               type="text"
               rows='4'
               cols="50"
-              placeholder={data.selfDescription}
+              placeholder={'Describe tu experiencia'}
               onChange={formik.handleChange}
               value={formik.values.selfDescription}
             />
             <br/>
             <div>
-              <label htmlFor="disableTrialClasses">Deshabilitar clases prueba</label>
+              <label htmlFor="disableTrialClasses" className='mr-2'>Deshabilitar clases prueba</label>
               <input
                 id="disableTrialClasses"
                 name="disableTrialClasses"
@@ -113,7 +116,7 @@ const formik = useFormik({
               id="firtsName"
               name="firstName"
               type="text"
-              placeholder={data.firstName}
+              placeholder={'Nombre como en tarjeta'}
               onChange={formik.handleChange}
               value={formik.values.firstName}
               required
@@ -125,7 +128,7 @@ const formik = useFormik({
               id="lastName"
               name="lastName"
               type="text"
-              placeholder={data.lastName}
+              placeholder={'Apellido(s) como en tarjeta'}
               onChange={formik.handleChange}
               value={formik.values.lastName}
               required

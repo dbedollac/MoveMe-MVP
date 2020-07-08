@@ -7,7 +7,7 @@ import FileUpload from '../Cards/FileUpload'
 import ConfigInstructorForm from '../Forms/ConfigInstructorForm'
 import GetZoomToken from '../Atoms/GetZoomToken'
 import { CameraVideoFill } from 'react-bootstrap-icons';
-import {db} from '../../Config/firestore'
+import {db, auth} from '../../Config/firestore'
 
 class ConfigInstructor extends React.Component {
 static contextType = Auth
@@ -23,8 +23,15 @@ static contextType = Auth
   componentDidMount(){
     let user = this.context.usuario;
     console.log(user);
-    this.setState({uid: user.uid})
 
+    auth.onAuthStateChanged((user) => {
+      if (user===null) {
+          this.props.history.push("/login");
+      }
+    })
+
+    if(user){
+    this.setState({uid: user.uid})
     var docRef = db.collection("Instructors").doc(user.email);
     docRef.onSnapshot((doc)=>{
     if (doc.exists) {
@@ -36,6 +43,7 @@ static contextType = Auth
             }
         }}
         )
+      }
       }
 
   render(){

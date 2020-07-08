@@ -1,0 +1,9 @@
+.ClassCard-container p{
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+}
+.ClassCard-titulo{
+  background-color: rgba(0,0,0,0.8);
+  color: white
+}

@@ -1,0 +1,15 @@
+.MyClasses-container{
+  background-color: lightgray;
+  min-height: 100vh
+}
+
+.MyClasses-container img{
+  height: 15vw
+}
+
+
+.MyClasses-summary{
+  border-right-width: 2px;
+  border-right-style: solid;
+  border-right-color: gray
+}

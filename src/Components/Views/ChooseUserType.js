@@ -4,7 +4,7 @@ import Header from "../Molecules/Header";
 import { Auth } from "../../Config/AuthContext";
 import { withRouter } from "react-router";
 import {Redirect} from "react-router-dom";
-import {db} from '../../Config/firestore'
+import {db, auth} from '../../Config/firestore'
 import logo from './Images/logo.jpg'
 
 class ChooseUserType extends React.Component {
@@ -70,7 +70,8 @@ class ChooseUserType extends React.Component {
         disableTrialClasses: false,
         website: "",
         zoomToken: "",
-        zoomRefreshToken: ""
+        zoomRefreshToken: "",
+        countClasses: 0
         });
       }
         } else {
@@ -85,9 +86,16 @@ class ChooseUserType extends React.Component {
 
   componentDidMount(){
     let user = this.context.usuario;
+
+    auth.onAuthStateChanged((user) => {
+      if (user===null) {
+          this.props.history.push("/login");
+      }
+    })
+
     user?user.displayName?this.setState({nombre: user.displayName}):this.setState({nombre: user.email}):this.setState({nombre: null})
-  this.searchInstructor()
-  this.searchUser()
+    this.searchInstructor()
+    this.searchUser()
   }
 
 
@@ -104,7 +112,7 @@ class ChooseUserType extends React.Component {
 
     return(
       <div>
-          <Header type={0} title='M O V E M E'/>
+          <Header type={this.state.newInstructor?0:1} title='M O V E M E'/>
               <div className="col-12 chooseUserType-container d-flex flex-column justify-content-start align-items-center ">
                 <div className="d-flex flex-column m-2">
                   <h2>Hola {this.state.nombre} :)</h2>
@@ -133,4 +141,4 @@ class ChooseUserType extends React.Component {
   }
 }
 
-export default ChooseUserType;
+export default withRouter(ChooseUserType);

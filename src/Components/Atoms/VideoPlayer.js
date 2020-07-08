@@ -5,29 +5,6 @@ import ReactPlayer from 'react-player'
 class VideoPlayer extends React.Component{
   constructor(props){
     super(props)
-    this.state={
-      IMGurl:false,
-      VideoURL:""
-    }
-  }
-
-  componentDidMount(){
-    if (this.props.Image != null) {
-      storage.ref("Pictures")
-             .child(this.props.Image)
-             .getDownloadURL()
-             .then(url => {
-               this.setState({ IMGurl: url });
-             })
-    }
-
-     storage.ref("Videos")
-                  .child(this.props.Video)
-                  .getDownloadURL()
-                  .then(url => {
-                    this.setState({ Videourl: url });
-                  })
-      console.log(this.state.IMGurl);
   }
 
   render(){
@@ -36,9 +13,11 @@ class VideoPlayer extends React.Component{
         <ReactPlayer
         // Disable right click
         onContextMenu={e => e.preventDefault()}
-        url={this.state.Videourl}
+        url={this.props.Video}
         controls = {true}
-        light={this.state.IMGurl}
+        light={this.props.Image}
+        width={this.props.videoWidth}
+        height={this.props.videoWidth}
         config={{
           file: {
             attributes: {

@@ -1,0 +1,10 @@
+.NewClass-container img{
+  height: 15vw;
+  width: 12vw
+}
+
+.video{
+  border-right-width: 2px;
+  border-right-style: solid;
+  border-right-color: gray
+}
