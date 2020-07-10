@@ -7,7 +7,6 @@ import { withRouter } from "react-router";
 const NewClassForm = (props) => {
 const { usuario } = useContext(Auth);
 const [count, setcount] =useState(0)
-const [picture,setpicture] = useState(null)
 
 
 useEffect(()=>{
@@ -71,7 +70,6 @@ const formik = useFormik({
       duration: values.duration,
       zoomPrice: values.zoomPrice,
       offlinePrice: values.offlinePrice,
-      imgURL: picture
     },{ merge: true })
     alert('Tu clase se creo con éxito');
 

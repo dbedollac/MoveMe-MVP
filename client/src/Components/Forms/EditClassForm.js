@@ -4,9 +4,8 @@ import {db, storage} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
 import { withRouter } from "react-router";
 
-const NewClassForm = (props) => {
+const EditClassForm = (props) => {
 const { usuario } = useContext(Auth);
-const [picture,setpicture] = useState(null)
 
 const handleClick = () =>{
     storage.ref('Pictures')
@@ -63,7 +62,6 @@ const formik = useFormik({
       duration: values.duration,
       zoomPrice: values.zoomPrice,
       offlinePrice: values.offlinePrice,
-      imgURL: picture
     },{ merge: true })
     alert('Tu clase se editó con éxito');
     handleClick();
@@ -195,4 +193,4 @@ const formik = useFormik({
 
 }
 
-export default withRouter(NewClassForm)
+export default withRouter(EditClassForm)

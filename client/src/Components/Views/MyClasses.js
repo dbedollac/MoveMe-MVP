@@ -45,7 +45,7 @@ const [aux, setaux] = useState(true)
         setclases(Clases)
     });
   }
-})
+},[usuario])
 
 
 
@@ -264,7 +264,7 @@ const handleEditClass = ()=>{
                 <X className='float-left'size={'2em'} onClick={handleDetail} style={{position: 'absolute', top:'0%', left:'0%',cursor:'pointer'}}/>
               </div>:
 
-            clases?clases.reverse().map(clase => (
+            clases?clases.map(clase => (
               <div className='col-3' key={clase.id} onClick={handleDetail} style={{cursor:'pointer'}}>
                 <ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.id}/>
               </div>
