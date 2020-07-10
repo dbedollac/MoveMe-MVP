@@ -15,6 +15,14 @@ static contextType = Auth
     this.handleOnChange = this.handleOnChange.bind(this);
   }
 
+  componentDidMount(){
+    if (this.props.pictureURL) {
+      this.setState({
+        picture: this.props.pictureURL
+      })
+    }
+  }
+
   componentDidUpdate(){
     let user = this.context.usuario;
     if (this.props.name) {
@@ -58,6 +66,7 @@ static contextType = Auth
   }
 
   render () {
+    
     return (
       <div className="FileUpload card">
         <p className='card-header col-12 text-center'><strong>{this.props.title}</strong></p>

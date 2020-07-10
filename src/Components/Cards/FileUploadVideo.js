@@ -17,6 +17,14 @@ class FileUploadVideo extends React.Component {
     this.handleOnChange = this.handleOnChange.bind(this);
   }
 
+  componentDidMount(){
+    if (this.props.videoURL) {
+      this.setState({
+        video: this.props.videoURL
+      })
+    }
+  }
+
   componentDidUpdate(){
     if(this.props.name){
       storage.ref("Videos")

@@ -6,27 +6,14 @@ import { withRouter } from "react-router";
 
 const NewClassForm = (props) => {
 const { usuario } = useContext(Auth);
-const [count, setcount] =useState(0)
-const [finish, setfinish] = useState(false)
 const [picture,setpicture] = useState(null)
-
-
-useEffect(()=>{
-  if (props.Count) {
-    setcount(props.Count)
-  }
-
-  if(finish){
-      props.history.push('/misclases')
-    }
-})
 
 const handleClick = () =>{
     storage.ref('Pictures')
-             .child(usuario.uid+'-clase'+count)
+             .child(usuario.uid+'-'+props.claseID)
              .getDownloadURL()
              .then(url => {
-               db.collection("Instructors").doc(usuario.email).collection("Classes").doc('clase'+count).set({
+               db.collection("Instructors").doc(usuario.email).collection("Classes").doc(props.claseID).set({
                  imgURL: url
                },{ merge: true }) ;
             }).catch(function (error) {
@@ -34,10 +21,10 @@ const handleClick = () =>{
             });
 
     storage.ref('Videos')
-               .child(usuario.uid+'-clase'+count)
+               .child(usuario.uid+'-'+props.claseID)
                .getDownloadURL()
                .then(url => {
-                 db.collection("Instructors").doc(usuario.email).collection("Classes").doc('clase'+count).set({
+                 db.collection("Instructors").doc(usuario.email).collection("Classes").doc(props.claseID).set({
                    videoURL: url
                    },{ merge: true }) ;
                 }).catch(function (error) {
@@ -55,19 +42,19 @@ return errors;
 const formik = useFormik({
   enableReinitialize: true,
   initialValues: {
-    title: '',
-    description: '',
-    type: '',
-    level: '',
-    equipment: '',
-    duration: '',
-    zoomPrice: 0,
-    offlinePrice: 0
+    title: props.claseData.title,
+    description: props.claseData.description,
+    type: props.claseData.type,
+    level: props.claseData.level,
+    equipment: props.claseData.equipment,
+    duration: props.claseData.duration,
+    zoomPrice: props.claseData.zoomPrice,
+    offlinePrice: props.claseData.offlinePrice
 
   },
   validate,
   onSubmit: values => {
-    db.collection("Instructors").doc(usuario.email).collection("Classes").doc('clase'+count).set({
+    db.collection("Instructors").doc(usuario.email).collection("Classes").doc(props.claseID).set({
       title: values.title,
       description: values.description,
       type: values.type,
@@ -78,13 +65,9 @@ const formik = useFormik({
       offlinePrice: values.offlinePrice,
       imgURL: picture
     },{ merge: true })
-    alert('Tu clase se creo con éxito');
-
-    db.collection("Instructors").doc(usuario.email).set({
-      countClasses: count
-    },{ merge: true });
+    alert('Tu clase se editó con éxito');
     handleClick();
-    setfinish(true)
+    window.location.reload(false)
   },
 });
 

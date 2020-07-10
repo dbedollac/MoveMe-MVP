@@ -6,8 +6,11 @@ import { withRouter } from "react-router";
 import {Redirect} from "react-router-dom";
 import './MyClasses.css'
 import NewClass from './NewClass'
-import { PlusCircleFill, Search } from 'react-bootstrap-icons';
+import { PlusCircleFill, Search, X, PencilSquare, ArrowLeft } from 'react-bootstrap-icons';
 import ClassCard from '../Cards/ClassCard'
+import InstructorsDetailCard from '../Cards/InstructorsDetailCard'
+import EditClass from '../Molecules/EditClass'
+import CreateZoomMeeting from '../Atoms/CreateZoomMeeting'
 
 class MyClasses extends React.Component {
 static contextType = Auth
@@ -20,7 +23,10 @@ static contextType = Auth
       pictures: [],
       filtersType: '',
       filtersLevel: '',
-      filtersDuration: ''
+      filtersDuration: '',
+      detail: false,
+      claseDetail: null,
+      editClass: false
       }
     }
 
@@ -43,13 +49,6 @@ static contextType = Auth
         });
         this.setState({
           clases: Clases,
-          options : [
-                { key: 'estiramiento', text: 'Estiramiento (ej. Yoga)', value: 'estiramiento' },
-                { key: 'baile', text: 'Baile', value: 'baile' },
-                { key: 'funcional', text: 'Funcional', value: 'funcional' },
-                { key: 'pelea', text: 'Técnica de pela', value: 'pelea' },
-                { key: 'pesas', text: 'Con pesas', value: 'pesas' },
-              ]
         })
     });
 
@@ -175,7 +174,33 @@ static contextType = Auth
       )
   }
 
+  handleDetail = (event) =>{
+    var clase = this.state.clases.filter(item => item.id.includes(event.target.name));
+    this.setState((state)=>({
+      detail: !this.state.detail,
+      claseDetail: clase[0]
+    }))
+  }
+
+  handleEditClass = ()=>{
+    this.setState((state)=>({
+      editClass: !this.state.editClass,
+    }))
+  }
+
   render(){
+    if (this.state.editClass&&this.state.detail) {
+      return(
+        <div>
+          <Header type={1} />
+          <div className='d-flex flex-row align-items-center'>
+            <h2 className='col-10 text-center text-break' style={{color: '#F39119'}}>{this.state.claseDetail.data.title}</h2>
+            <button className='col-2 float-right btn-lg btn-secondary mt-2 mr-2' onClick={this.handleEditClass}><ArrowLeft /> Regresar</button>
+          </div>
+          <EditClass claseID={this.state.claseDetail.id} claseData={this.state.claseDetail.data} />
+        </div>
+      )
+    }
     if (this.state.newclass) {
     return(
       <Redirect to='nuevaclase' />
@@ -184,8 +209,9 @@ static contextType = Auth
     return (
       <div>
         <Header type={1} />
-          <div className='MyClasses-container d-flex flex-row'>
-            <div className='col-3 MyClasses-summary d-flex flex-column justify-content-start py-2'>
+          <div className='col-12 MyClasses-container d-flex flex-row'>
+             <div className='col-3 MyClasses-summary d-flex flex-column justify-content-start py-2'>
+             {!this.state.detail?
               <div className='my-1'>
                 <h2 className='text-center'>{this.state.clases.length} clases</h2>
                 <div className='d-flex flex-row align-items-center'>
@@ -233,18 +259,28 @@ static contextType = Auth
                     </select>
                   </div>
                 </form>
+                <div className='d-flex flex-row mt-5 align-items-center justify-content-center'>
+                  <PlusCircleFill size={'3em'} className='mr-2' onClick={this.handleClick} style={{cursor:'pointer'}}/>
+                  <h3>Nueva Clase</h3>
+                </div>
               </div>
-              <div className='d-flex flex-row mt-5 align-items-center justify-content-center'>
-                <h3>Nueva Clase</h3>
-                <button className='ml-2 btn-outline-dark' onClick={this.handleClick}>
-                  <PlusCircleFill size={'2em'}/>
-                </button>
-              </div>
+              :
+              <div className='d-flex flex-column'>
+                <CreateZoomMeeting />
+                <button className='btn-lg btn-secondary my-3' onClick={this.handleEditClass}>Editar clase <PencilSquare /></button>
+              </div> }
             </div>
-            <div className='mt-2 d-flex flex-row flex-wrap justify-content-start clases-container'>
-            {this.state.clases?this.state.clases.reverse().map(clase => (
-              <div className='col-3'>
-                <ClassCard title={clase.data.title} picture={clase.data.imgURL} />
+
+            <div className='p-2 d-flex flex-row flex-wrap justify-content-start clases-container'>
+            {this.state.detail&&this.state.claseDetail?
+              <div style={{position: 'relative'}}>
+                <InstructorsDetailCard data={this.state.claseDetail.data}/>
+                <X className='float-left'size={'2em'} onClick={this.handleDetail} style={{position: 'absolute', top:'0%', left:'0%',cursor:'pointer'}}/>
+              </div>:
+
+            this.state.clases?this.state.clases.reverse().map(clase => (
+              <div className='col-3' key={clase.id} onClick={this.handleDetail} style={{cursor:'pointer'}}>
+                <ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.id}/>
               </div>
             )):null}
             </div>

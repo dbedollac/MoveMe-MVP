@@ -17,7 +17,7 @@ class VideoPlayer extends React.Component{
         controls = {true}
         light={this.props.Image}
         width={this.props.videoWidth}
-        height={this.props.videoWidth}
+        height={this.props.videoHeight}
         config={{
           file: {
             attributes: {

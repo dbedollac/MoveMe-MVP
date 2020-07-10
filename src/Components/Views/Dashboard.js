@@ -9,6 +9,7 @@ import MarketPlace from './MarketPlace'
 import queryString from 'query-string'
 import {zoomID, zoomSecret, zoomRedirectURL} from '../../Config/ZoomCredentials'
 import {db} from '../../Config/firestore'
+import {proxyurl} from '../../Config/proxyURL'
 
 class Dashboard extends React.Component {
   static contextType = Auth
@@ -35,7 +36,7 @@ class Dashboard extends React.Component {
 
     const parsed = queryString.parse(this.props.location.search);
     if (parsed.code) {
-      const proxyurl = "https://cors-anywhere.herokuapp.com/"
+
       let url='https://zoom.us/oauth/token?grant_type=authorization_code&code='+parsed.code+'&redirect_uri='+zoomRedirectURL
       let header = "Basic "+ btoa(zoomID+':'+zoomSecret)
       fetch(proxyurl+url,

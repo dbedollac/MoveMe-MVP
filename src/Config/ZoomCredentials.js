@@ -2,7 +2,7 @@
 var ZoomConfig = {
   ClientID: '00JAMB1oTUCD6dKHm4RFSA',
   ClientSecret: '3QYHXYuCDSJnF9gBW2v4I0aGDvYqwmAn',
-  RedirectURL: 'http://a5ca7ec4d1ee.ngrok.io'
+  RedirectURL: 'http://2b0c1feb20cd.ngrok.io'
 }
 
 export const zoomID = ZoomConfig.ClientID
