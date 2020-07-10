@@ -73,7 +73,6 @@ const formik = useFormik({
 
   return(
   <form onSubmit={formik.handleSubmit} className='d-flex flex-column align-items-center' >
-  {console.log(picture)}
     <div className="d-flex flex-row flex-wrap mt-2">
         <div className='d-flex flex-column col-6 mb-2'>
             <label htmlFor="title">Título de la clase</label>

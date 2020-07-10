@@ -7,7 +7,6 @@ import { withRouter } from "react-router";
 const NewClassForm = (props) => {
 const { usuario } = useContext(Auth);
 const [count, setcount] =useState(0)
-const [finish, setfinish] = useState(false)
 const [picture,setpicture] = useState(null)
 
 
@@ -15,10 +14,6 @@ useEffect(()=>{
   if (props.Count) {
     setcount(props.Count)
   }
-
-  if(finish){
-      props.history.push('/misclases')
-    }
 })
 
 const handleClick = () =>{
@@ -84,13 +79,12 @@ const formik = useFormik({
       countClasses: count
     },{ merge: true });
     handleClick();
-    setfinish(true)
+    window.location.reload(false)
   },
 });
 
   return(
   <form onSubmit={formik.handleSubmit} className='d-flex flex-column align-items-center' >
-  {console.log(picture)}
     <div className="d-flex flex-row flex-wrap mt-2">
         <div className='d-flex flex-column col-6 mb-2'>
             <label htmlFor="title">Título de la clase</label>

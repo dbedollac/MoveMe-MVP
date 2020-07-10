@@ -45,12 +45,12 @@ const [aux, setaux] = useState(true)
         setclases(Clases)
     });
   }
-})
+  })
 
 
 
-  const handleNewClass = () =>{
-    setNewClass(!newclass)
+  const handleClick = () =>{
+    setNewClass(true)
   }
 
   const handleBuscador = (event) =>{
@@ -181,16 +181,9 @@ const handleEditClass = ()=>{
       )
     }
     if (newclass) {
-      return(
-        <div>
-          <Header type={1} />
-          <div className='d-flex flex-row align-items-center'>
-            <h2 className='col-10 text-center text-break' style={{color: '#F39119'}}>Clase Nueva</h2>
-            <button className='col-2 float-right btn-lg btn-secondary mt-2 mr-2' onClick={handleNewClass}><ArrowLeft /> Regresar</button>
-          </div>
-          <NewClass />
-        </div>
-      )
+    return(
+      <Redirect to='nuevaclase' />
+    )
     } else {
     return (
       <div>
@@ -246,7 +239,7 @@ const handleEditClass = ()=>{
                   </div>
                 </form>
                 <div className='d-flex flex-row mt-5 align-items-center justify-content-center'>
-                  <PlusCircleFill size={'3em'} className='mr-2' onClick={handleNewClass} style={{cursor:'pointer'}}/>
+                  <PlusCircleFill size={'3em'} className='mr-2' onClick={handleClick} style={{cursor:'pointer'}}/>
                   <h3>Nueva Clase</h3>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Header from "../Molecules/Header";
 import { Auth } from "../../Config/AuthContext";
 import { withRouter } from "react-router";
@@ -8,28 +8,18 @@ import {db, auth} from '../../Config/firestore'
 import NewClassForm from '../Forms/NewClassForm'
 import './NewClass.css'
 
-class NewClass extends React.Component {
-static contextType = Auth
+function NewClass(props) {
+const { usuario } = useContext(Auth);
+const [count, setcount] = useState(null)
 
-  constructor() {
-    super()
-    this.state = {
-      count: null,
-      uid: null,
-    }
-    }
 
-  componentDidMount(){
-    let user = this.context.usuario;
-    if (user) {
-    this.setState({uid: user.uid})
-    var docRef = db.collection("Instructors").doc(user.email);
+  useEffect(()=>{
+    if (usuario) {
+    var docRef = db.collection("Instructors").doc(usuario.email);
 
       docRef.get().then((doc)=> {
           if (doc.exists) {
-              this.setState({
-              count: doc.data().countClasses +1
-              })
+              setcount(doc.data().countClasses+1)
           } else {
               console.log("No such document!");
           }
@@ -38,33 +28,32 @@ static contextType = Auth
       });
     }
 
-    auth.onAuthStateChanged((user) => {
-      if (user===null) {
-          this.props.history.push("/login");
+    auth.onAuthStateChanged((usuario) => {
+      if (usuario===null) {
+          props.history.push("/login");
       }
     })
-  }
+  },[usuario,count])
 
-  render(){
     return (
       <div>
-      <Header type={1} />
+      {console.log(count)}
         <div className="col-12 NewClass-container d-flex flex-row align-items-start">
           <div className="col-5 d-flex flex-column align-items-start justify-content-between pt-2">
             <div className="video col-12">
-              <FileUpload fileType='Pictures' title="Portada de la clase (Opcional)" name={this.state.uid? this.state.uid +'-clase'+this.state.count:null}/>
+              <FileUpload fileType='Pictures' title="Portada de la clase (Opcional)" name={usuario.uid? usuario.uid +'-clase'+count:null}/>
             </div>
             <div className="video col-12 my-2">
-              <FileUploadVideo videoWidth='100%' videoHeight='100%' fileType='Videos' title="Video para rentar (Opcional)" name={this.state.uid? this.state.uid +'-clase'+this.state.count:null}/>
+              <FileUploadVideo videoWidth='100%' videoHeight='100%' fileType='Videos' title="Video para rentar (Opcional)" name={usuario.uid? usuario.uid +'-clase'+count:null}/>
             </div>
           </div>
           <div>
-            <NewClassForm Count={this.state.count}/>
+            <NewClassForm Count={count}/>
           </div>
         </div>
       </div>
     )
-  }
+
 
 
 }
