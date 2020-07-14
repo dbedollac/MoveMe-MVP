@@ -2,12 +2,17 @@ import React, { useState, useContext, useEffect } from "react";
 import {proxyurl} from '../../Config/proxyURL'
 import {db} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
+import { CameraVideoFill } from 'react-bootstrap-icons';
+import DeleteMeeting from '../Atoms/DeleteMeeting'
+
 
 function StartZoomMeeting(props) {
   const { usuario } = useContext(Auth);
   const [dateTime, setdateTime] = useState(null)
   const [show, setShow] = useState(null)
   const zoomDate = new Date(props.startTime)
+  const [claseTitle, setclaseTitle] = useState(null)
+  const [time,setTime] = useState(null)
 
   useEffect(()=>{
     if (zoomDate) {
@@ -17,11 +22,21 @@ function StartZoomMeeting(props) {
       var hour = zoomDate.getHours().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
       var minutes = zoomDate.getMinutes().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
 
-      if (minutes===0) {
-        minutes='00'
-      }
 
-      setdateTime(hour+':'+minutes+' '+days+'/'+month+'/'+year)
+      setdateTime(hour+':'+minutes+'h'+' '+days+'/'+month+'/'+year)
+      setTime(hour+':'+minutes+' h')
+    }
+
+    if(props.claseID){
+      var docRef = db.collection("Instructors").doc(usuario.email);
+      docRef.collection('Classes').doc(props.claseID)
+          .get()
+          .then( doc =>
+              setclaseTitle(doc.data().title)
+          )
+          .catch(function(error) {
+              console.log("Error getting documents: ", error);
+          });
     }
 
   })
@@ -66,8 +81,9 @@ function StartZoomMeeting(props) {
 
   return(
     <div className='card card-link d-flex flex-row align-items-center justify-content-around'>
-      <p className='mt-2'>{dateTime}</p>
-      <button className='btn-primary col-6' onClick={startMeeting}>{props.title}</button>
+      {props.monthlyProgram? <div className='col-1'><DeleteMeeting /></div>:null}
+      {props.monthlyProgram?<p className='mt-2 col-7'>{time} {claseTitle}</p>:<p className='mt-2'>{dateTime}</p>}
+      <button className='btn-primary' onClick={startMeeting}>{props.monthlyProgram?<CameraVideoFill />:null} {props.title}</button>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import MonthlyProgramDay from '../Atoms/MonthlyProgramDay'
+import MonthlyProgramDay from '../Molecules/MonthlyProgramDay'
 
 function MonthlyProgramWeek(props) {
   return(
@@ -7,7 +7,7 @@ function MonthlyProgramWeek(props) {
       <div className='card-header'>
         <h3 className='text-center'>Semana {props.number}</h3>
       </div>
-      <MonthlyProgramDay day='Lunes' week={1}/>
+      <MonthlyProgramDay dayName='Lunes' dayNumber={2} week={1}/>
     </div>
   )
 }

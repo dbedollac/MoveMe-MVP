@@ -4,7 +4,7 @@ import VideoPlayer from '../Atoms/VideoPlayer'
 import {db} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
 import RefreshToken from '../Atoms/RefreshToken'
-import GetZoomMeetingsPerClass from '../Cards/GetZoomMeetingsPerClass'
+import GetZoomMeetings from '../Molecules/GetZoomMeetings'
 
 function InstructorsDetailCard(props) {
 const { usuario } = useContext(Auth);
@@ -14,7 +14,7 @@ const { usuario } = useContext(Auth);
       var docRef = db.collection("Instructors").doc(usuario.email);
       docRef.get().then(async (doc)=>{
       if (doc.exists) {
-            RefreshToken(usuario.email, doc.data().zoomRefreshToken)
+            RefreshToken(usuario.email, doc.data().zoomRefreshToken).catch(error => window.location.reload(false))
         } else {
             console.log("No such document!");
         }
@@ -55,7 +55,7 @@ const { usuario } = useContext(Auth);
                 <h3>Clases por Zoom</h3>
               </div>
               <div style={{ overflowY: 'scroll', height:'10vw'}}>
-                <GetZoomMeetingsPerClass claseID={props.claseID} />
+                <GetZoomMeetings claseID={props.claseID} />
               </div>
             </div>
           </div>

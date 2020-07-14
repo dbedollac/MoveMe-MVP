@@ -44,7 +44,7 @@ function NavBar(props) {
           </ NavLink>
         </div>
         <div className="col-2 d-flex flex-column align-items-center  justify-content-center">
-          <DropdownButton  title='' id='secondary'>
+          <DropdownButton  title='' variant='dark'>
             <Dropdown.Item href="configuration-instructor"><GearFill className='mr-2'/>Configuración</Dropdown.Item>
             <Dropdown.Item href="account-type"><ArrowLeftRight className='mr-2'/>Cambiar tipo de cuenta</Dropdown.Item>
             <Dropdown.Divider />
