@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from "react";
 import RefreshToken from '../Atoms/RefreshToken'
 import {db} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
-import { PlusCircleFill} from 'react-bootstrap-icons';
 import {proxyurl} from '../../Config/proxyURL'
 
 function CreateZoomMeeting(props) {
@@ -90,8 +89,8 @@ const zoomDate = new Date()
 
   return(
       <div className='d-flex flex-row'>
+        <button className='btn-primary mr-2' onClick={setMeeting} disabled={(time!==null)?false:true}>Agregar</button>
         <input type="time" onChange={handleTime} className='col-8'/>
-        <PlusCircleFill size={'3em'} className='ml-2' onClick={setMeeting} style={{cursor:'pointer'}} disabled={(time!==null)?false:true}/>
       </div>
     )
 

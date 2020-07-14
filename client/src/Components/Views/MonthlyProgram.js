@@ -8,11 +8,12 @@ import './MonthlyProgram.css'
 
 function MonthlyProgram() {
   const { usuario } = useContext(Auth);
+  const [weeksDate, setweeksDate] = useState([])
 
   useEffect(()=>{
     if (usuario) {
       var docRef = db.collection("Instructors").doc(usuario.email);
-      docRef.get().then(async (doc)=>{
+      docRef.get().then( (doc)=>{
       if (doc.exists) {
             RefreshToken(usuario.email, doc.data().zoomRefreshToken)
         } else {
@@ -22,14 +23,37 @@ function MonthlyProgram() {
             console.log("Error getting document:", error);
         });
     }
-  })
+
+    var curr = new Date; // get current date
+    var month = curr.getMonth()+1
+    var year = curr.getFullYear()
+    var thisSunday = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
+    var thisWeek = Math.ceil(thisWeek/7)
+
+    for (var i = 0; i < 5; i++) {
+       setweeksDate({i:i+1})
+     }
+     console.log(weeksDate);
+   },[usuario])
 
   return (
     <div>
       <Header type={1}/>
-        <div className='MonthlyProgram-container d-flex flex-row flex-wrap justify-content-start'>
+        <div className='MonthlyProgram-container d-flex flex-row flex-wrap justify-content-center'>
           <div className='col-5 mt-2'>
-            <MonthlyProgramWeek number={1}/>
+            <MonthlyProgramWeek week={1}/>
+          </div>
+          <div className='col-5 mt-2'>
+            <MonthlyProgramWeek week={2}/>
+          </div>
+          <div className='col-5 mt-2'>
+            <MonthlyProgramWeek week={3}/>
+          </div>
+          <div className='col-5 mt-2'>
+            <MonthlyProgramWeek week={4}/>
+          </div>
+          <div className='col-5 mt-2'>
+            <MonthlyProgramWeek week={-1}/>
           </div>
         </div>
     </div>

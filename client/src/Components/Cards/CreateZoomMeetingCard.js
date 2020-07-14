@@ -86,7 +86,7 @@ const [timezone, setTimezone] = useState(null)
             <input type="time" onChange={handleTime}/>
           </div>
           <div className='d-flex align-self-center disabled' disabled={true}>
-            <button className='btn-lg btn-primary mt-2' onClick={setMeeting} disabled={(time!==null&&date!==null)?false:true}>Guardar</button>
+            <button className='btn-lg btn-primary mt-2' onClick={setMeeting} disabled={(time!==null&&date!==null&&props.claseID!==null)?false:true}>Guardar</button>
           </div>
         </div>
       </div>

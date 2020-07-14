@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import {Button, Modal, Collapse} from 'react-bootstrap'
 import CreateZoomMeeting from '../Atoms/CreateZoomMeeting'
-import { Search } from 'react-bootstrap-icons';
+import { Search, PlusCircleFill, ChevronCompactDown, ChevronCompactUp } from 'react-bootstrap-icons';
 import { Auth } from "../../Config/AuthContext";
 import {db, auth} from '../../Config/firestore'
 import ClassCard from '../Cards/ClassCard'
@@ -154,34 +154,34 @@ function MonthlyProgramDay(props) {
     }
 
   return(
-    <div className='card-link d-flex flex-row justify-content-around align-items-center'>
+    <div className='card-link'>
+      <div className='d-flex flex-row justify-content-around align-items-center '>
+        <p className='pt-2'><strong>{props.dayName}</strong></p>
+        {open?<ChevronCompactUp onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>
+        :<ChevronCompactDown onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>}
+      </div>
 
-      <p className='pt-2'><strong>{props.dayName}</strong></p>
-
-      <Button variant="secondary" onClick={handleShow} size="sm" className ='col-4'>
-        Ver clases
-      </Button>
+      <Collapse in={open}>
+        <div id="example-collapse-text ">
+          <div className ='col-12 d-flex flex-column align-items-center mb-2'>
+            <Button variant="outline-primary" onClick={handleShow} className='col-8'>
+              Agregar clase <PlusCircleFill/>
+            </Button>
+          </div>
+           <GetZoomMeetings week={props.week} dayNumber={props.dayNumber} />
+        </div>
+      </Collapse>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Semana {props.week} - {props.dayName}</Modal.Title>
+          <Modal.Title>
+          <div className='col-12'>
+            <CreateZoomMeeting meetingType={8} meetingTopic={claseDetail?claseDetail.data.title:null} week={props.week} dayNumber={props.dayNumber} dayName={props.dayName} claseID={claseDetail?claseDetail.id:null}/>
+          </div>
+          </Modal.Title>
         </Modal.Header>
-        <Modal.Body>  <GetZoomMeetings week={props.week} dayNumber={props.dayNumber} /></Modal.Body>
-        <Modal.Footer>
-          <Button
-            onClick={() => setOpen(!open)}
-            aria-controls="example-collapse-text"
-            aria-expanded={open}
-            variant='outline-primary'
-          > Agregar Clase </Button>
-        </Modal.Footer>
-
-        <Collapse in={open}>
-          <div id="example-collapse-text">
+        <Modal.Body>
           <div className='d-flex flex-row flex-wrap justify-content-start search-container'>
-            <div className='col-12'>
-              <CreateZoomMeeting meetingType={8} meetingTopic={claseDetail?claseDetail.data.title:null} week={props.week} dayNumber={props.dayNumber} dayName={props.dayName} claseID={claseDetail?claseDetail.id:null}/>
-            </div>
             <div className='d-flex flex-row align-items-center ml-1 mt-3'>
               <Search className='mr-2'/>
               <input type='search' placeholder='Buscar clase...' onChange={handleBuscador}/>
@@ -231,8 +231,7 @@ function MonthlyProgramDay(props) {
               </div>
             )):null}
           </div>
-          </div>
-        </Collapse>
+        </Modal.Body>
       </Modal>
     </div>
   )

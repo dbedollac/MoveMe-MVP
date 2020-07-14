@@ -9,7 +9,7 @@ import MarketPlace from './MarketPlace'
 import queryString from 'query-string'
 import {zoomID, zoomSecret, zoomRedirectURL} from '../../Config/ZoomCredentials'
 import {db} from '../../Config/firestore'
-import {proxyurl} from '../../Config/proxyURL'
+import {corsurl} from '../../Config/proxyURL'
 
 function Dashboard(props) {
 const { usuario } = useContext(Auth);
@@ -34,7 +34,7 @@ useEffect(()=>{
 
     let url='https://zoom.us/oauth/token?grant_type=authorization_code&code='+parsed.code+'&redirect_uri='+zoomRedirectURL
     let header = "Basic "+ btoa(zoomID+':'+zoomSecret)
-    fetch(proxyurl+url,
+    fetch(corsurl+url,
     {method: 'POST',
     headers:{
       "Authorization": header
