@@ -1,6 +1,6 @@
 import {zoomID, zoomSecret} from '../../Config/ZoomCredentials'
 import {db} from '../../Config/firestore'
-import {proxyurl} from '../../Config/proxyURL'
+import {corsurl} from '../../Config/proxyURL'
 
 function RefreshToken(email, token) {
 
@@ -9,7 +9,7 @@ function RefreshToken(email, token) {
   let url='https://zoom.us/oauth/token?grant_type=refresh_token&refresh_token='+token
   let header = "Basic "+ btoa(zoomID+':'+zoomSecret)
 
-  fetch(proxyurl+url,
+  fetch(corsurl+url,
   {method: 'POST',
   headers:{
     "Authorization": header

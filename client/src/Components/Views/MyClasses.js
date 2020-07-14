@@ -10,7 +10,7 @@ import { PlusCircleFill, Search, X, PencilSquare, ArrowLeft } from 'react-bootst
 import ClassCard from '../Cards/ClassCard'
 import InstructorsDetailCard from '../Cards/InstructorsDetailCard'
 import EditClass from '../Molecules/EditClass'
-import CreateZoomMeeting from '../Atoms/CreateZoomMeeting'
+import CreateZoomMeetingCard from '../Cards/CreateZoomMeetingCard'
 
 function MyClasses(props) {
 const { usuario } = useContext(Auth);
@@ -160,8 +160,8 @@ const [aux, setaux] = useState(true)
 
 const  handleDetail = (event) =>{
     var clase = clases.filter(item => item.id.includes(event.target.name));
-    setdetail(!detail)
     setclaseDetail(clase[0])
+    setdetail(!detail)
   }
 
 const handleEditClass = ()=>{
@@ -250,17 +250,17 @@ const handleEditClass = ()=>{
                   <h3>Nueva Clase</h3>
                 </div>
               </div>
-              :
+              :claseDetail?
               <div className='d-flex flex-column'>
-                <CreateZoomMeeting />
+                <CreateZoomMeetingCard meetingTopic={claseDetail.data.title} meetingType={2} claseID={claseDetail.id}/>
                 <button className='btn-lg btn-secondary my-3' onClick={handleEditClass}>Editar clase <PencilSquare /></button>
-              </div> }
+              </div>:null }
             </div>
 
             <div className='p-2 d-flex flex-row flex-wrap justify-content-start clases-container'>
             {detail&&claseDetail?
               <div style={{position: 'relative'}}>
-                <InstructorsDetailCard data={claseDetail.data}/>
+                <InstructorsDetailCard data={claseDetail.data} claseID={claseDetail.id}/>
                 <X className='float-left'size={'2em'} onClick={handleDetail} style={{position: 'absolute', top:'0%', left:'0%',cursor:'pointer'}}/>
               </div>:
 

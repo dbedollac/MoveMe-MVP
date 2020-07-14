@@ -1,3 +1,3 @@
 
-var url = "https://cors-anywhere.herokuapp.com/"
-export const proxyurl = url
+export const proxyurl = 'http://localhost:9000/'
+export const corsurl = "https://cors-anywhere.herokuapp.com/"

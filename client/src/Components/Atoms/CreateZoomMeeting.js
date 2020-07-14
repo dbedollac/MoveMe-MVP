@@ -1,49 +1,32 @@
 import React, { useState, useContext, useEffect } from "react";
-import { CameraVideoFill } from 'react-bootstrap-icons';
-import {zoomID, zoomRedirectURL} from '../../Config/ZoomCredentials'
-import {proxyurl} from '../../Config/proxyURL'
-import RefreshToken from './RefreshToken'
 import {db} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
 
 function CreateZoomMeeting(props) {
   const { usuario } = useContext(Auth);
-  const [token, setToken] = useState(null)
+  const [settings, setSettings] = useState({ topic: props.meetingTopic,
+           type: props.meetingType,
+           start_time: props.startTime,
+           timezone: props.timeZone,
+           settings: {
+             host_video: true,
+             join_before_host: true,
+             approval_type: 0,
+             registrants_email_notification: true}})
 
-  useEffect(()=>{
-    if (usuario) {
-      var docRef = db.collection("Instructors").doc(usuario.email);
-      docRef.get().then((doc)=>{
-      if (doc.exists) {
-          RefreshToken(usuario.email, doc.data().zoomRefreshToken)
-        } else {
-            console.log("No such document!");
-        }
-        }).catch(function(error) {
-            console.log("Error getting document:", error);
-        });
-    }
-  },[usuario])
 
    const setMeeting = () =>{
+     console.log(settings);
      var docRef = db.collection("Instructors").doc(usuario.email);
      docRef.get().then((doc)=>{
 
      if (doc.exists) {
-           let url="http://localhost:9000/zoomAPI"
+           let url=proxyurl+"zoomAPI"
 
            let init = {
              method: 'POST',
              body: JSON.stringify({
-              settings:{ topic: 'ya se guradan en firebase',
-                       type: 2,
-                       start_time: '2020-07-10T20:45:00',
-                       timezone: 'America/Mexico_City',
-                       settings: {
-                         host_video: true,
-                         join_before_host: true,
-                         approval_type: 0,
-                         registrants_email_notification: true}},
+              settings:props.settings,
               token: doc.data().zoomToken
               }),
               headers: {
@@ -75,7 +58,7 @@ function CreateZoomMeeting(props) {
 
   return(
     <div>
-      <button className='btn-lg btn-primary mt-2' onClick={setMeeting}> Agendar clase Zoom <CameraVideoFill /></button>
+      <button className='btn-lg btn-primary mt-2' onClick={setMeeting}>Guardar</button>
     </div>
   )
 }

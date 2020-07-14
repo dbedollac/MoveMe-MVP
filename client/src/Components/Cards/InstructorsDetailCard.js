@@ -1,8 +1,28 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { CameraVideoFill } from 'react-bootstrap-icons';
 import VideoPlayer from '../Atoms/VideoPlayer'
+import {db} from '../../Config/firestore'
+import { Auth } from "../../Config/AuthContext";
+import RefreshToken from '../Atoms/RefreshToken'
+import GetZoomMeetingsPerClass from '../Cards/GetZoomMeetingsPerClass'
 
 function InstructorsDetailCard(props) {
+const { usuario } = useContext(Auth);
+
+  useEffect(()=>{
+    if (usuario) {
+      var docRef = db.collection("Instructors").doc(usuario.email);
+      docRef.get().then(async (doc)=>{
+      if (doc.exists) {
+            RefreshToken(usuario.email, doc.data().zoomRefreshToken)
+        } else {
+            console.log("No such document!");
+        }
+        }).catch(function(error) {
+            console.log("Error getting document:", error);
+        });
+    }
+  })
 
       return(
         <div className='col-12 card'>
@@ -34,9 +54,9 @@ function InstructorsDetailCard(props) {
                 <CameraVideoFill size={'2em'} className='mr-2 mt-1' color="#2C8BFF" />
                 <h3>Clases por Zoom</h3>
               </div>
-              <p>Meeting</p>
-              <p>Meeting</p>
-              <p>Meeting</p>
+              <div style={{ overflowY: 'scroll', height:'10vw'}}>
+                <GetZoomMeetingsPerClass claseID={props.claseID} />
+              </div>
             </div>
           </div>
         </div>

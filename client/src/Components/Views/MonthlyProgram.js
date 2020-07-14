@@ -1,21 +1,20 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from "react";
 import Header from '../Molecules/Header'
+import MonthlyProgramWeek from '../Cards/MonthlyProgramWeek'
+import './MonthlyProgram.css'
 
-class MonthlyProgram extends React.Component {
-  constructor() {
-    super()
-  }
+function MonthlyProgram() {
 
-  render(){
-    return (
-      <div>
-        <Header type={1} />
-          <div>
-            <h1> Programa Mensual </h1>
+  return (
+    <div>
+      <Header type={1}/>
+        <div className='MonthlyProgram-container d-flex flex-row flex-wrap justify-content-start'>
+          <div className='col-5 mt-2'>
+            <MonthlyProgramWeek number={1}/>
           </div>
-      </div>
-    )
-  }
+        </div>
+    </div>
+  )
 }
 
 export default MonthlyProgram
