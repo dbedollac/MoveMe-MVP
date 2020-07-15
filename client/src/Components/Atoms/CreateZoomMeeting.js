@@ -89,7 +89,7 @@ const zoomDate = new Date()
 
   return(
       <div className='d-flex flex-row'>
-        <button className='btn-primary mr-2' onClick={setMeeting} disabled={(time!==null)?false:true}>Agregar</button>
+        <button className='btn-primary mr-2' onClick={setMeeting} disabled={(time!==null&&props.claseID!==null)?false:true}>Agregar</button>
         <input type="time" onChange={handleTime} className='col-8'/>
       </div>
     )

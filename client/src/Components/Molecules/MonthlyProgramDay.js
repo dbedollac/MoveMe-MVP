@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import {Button, Modal, Collapse} from 'react-bootstrap'
 import CreateZoomMeeting from '../Atoms/CreateZoomMeeting'
-import { Search, PlusCircleFill, ChevronCompactDown, ChevronCompactUp } from 'react-bootstrap-icons';
+import { Search, PlusCircleFill, ChevronCompactDown, ChevronCompactUp, AwardFill } from 'react-bootstrap-icons';
 import { Auth } from "../../Config/AuthContext";
 import {db, auth} from '../../Config/firestore'
 import ClassCard from '../Cards/ClassCard'
 import GetZoomMeetings from './GetZoomMeetings'
+import { withRouter } from "react-router";
 import './MonthlyProgramDay.css'
 
 function MonthlyProgramDay(props) {
@@ -21,17 +22,12 @@ function MonthlyProgramDay(props) {
   const [claseDetail, setclaseDetail] = useState(null)
   const [aux, setaux] = useState(true)
   const [open, setOpen] = useState(false);
+  const [date,setDate] = useState(null)
+  const [active,setActive] = useState(false)
+  const[anchor,setAnchor]=useState('fix')
 
 
     useEffect(()=>{
-      console.log(usuario);
-
-      auth.onAuthStateChanged((usuario) => {
-        if (usuario===null) {
-            props.history.push("/login");
-        }
-      })
-
       if(usuario&&aux){
       var Clases = []
       var docRef = db.collection("Instructors").doc(usuario.email).collection("Classes");
@@ -42,7 +38,23 @@ function MonthlyProgramDay(props) {
           setclases(Clases)
       });
     }
-  },[usuario])
+
+    if (props.dayDate) {
+      getDayDate()
+    }
+  })
+
+  const getDayDate = () =>{
+    var days = props.dayDate.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+    var month = (props.dayDate.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+    var year = props.dayDate.getFullYear()
+
+    setDate(days+'/'+month+'/'+year)
+
+    if (props.dayDate.getDate()===new Date().getDate()) {
+      setActive(true)
+    }
+  }
 
   const handleBuscador = (event) =>{
     var Clases = []
@@ -156,7 +168,7 @@ function MonthlyProgramDay(props) {
   return(
     <div className='card-link'>
       <div className='d-flex flex-row justify-content-around align-items-center '>
-        <p className='pt-2'><strong>{props.dayName}</strong></p>
+        <p className='pt-2 col-8' style={{color:active?'#F39119':'black'}}><strong>{props.dayName}</strong> {date}</p>
         {open?<ChevronCompactUp onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>
         :<ChevronCompactDown onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>}
       </div>
@@ -168,7 +180,7 @@ function MonthlyProgramDay(props) {
               Agregar clase <PlusCircleFill/>
             </Button>
           </div>
-           <GetZoomMeetings week={props.week} dayNumber={props.dayNumber} />
+           <GetZoomMeetings week={props.week<5?props.week:-1} dayNumber={props.dayNumber} />
         </div>
       </Collapse>
 
@@ -176,7 +188,7 @@ function MonthlyProgramDay(props) {
         <Modal.Header closeButton>
           <Modal.Title>
           <div className='col-12'>
-            <CreateZoomMeeting meetingType={8} meetingTopic={claseDetail?claseDetail.data.title:null} week={props.week} dayNumber={props.dayNumber} dayName={props.dayName} claseID={claseDetail?claseDetail.id:null}/>
+            <CreateZoomMeeting meetingType={8} meetingTopic={claseDetail?claseDetail.data.title:null} week={props.week<5?props.week:-1} dayNumber={props.dayNumber} dayName={props.dayName} claseID={claseDetail?claseDetail.id:null}/>
           </div>
           </Modal.Title>
         </Modal.Header>
@@ -237,4 +249,4 @@ function MonthlyProgramDay(props) {
   )
 }
 
-export default MonthlyProgramDay
+export default withRouter(MonthlyProgramDay)

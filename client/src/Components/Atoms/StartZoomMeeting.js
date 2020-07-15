@@ -82,7 +82,7 @@ function StartZoomMeeting(props) {
   return(
     <div className='card card-link d-flex flex-row align-items-center justify-content-around'>
       {props.monthlyProgram? <div className='col-1'><DeleteZoomMeeting meetingID={props.meetingID} meetingTitle={claseTitle} meetingTime={time} /></div>:null}
-      {props.monthlyProgram?<p className='mt-2 col-7'>{dateTime} {claseTitle}</p>:<p className='mt-2'>{dateTime}</p>}
+      {props.monthlyProgram?<p className='mt-2 col-7'>{time} {claseTitle}</p>:<p className='mt-2'>{dateTime}</p>}
       <button className='btn-primary' onClick={startMeeting}>{props.monthlyProgram?<CameraVideoFill />:null} {props.title}</button>
     </div>
   )

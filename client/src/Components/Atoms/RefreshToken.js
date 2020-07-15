@@ -3,7 +3,6 @@ import {db} from '../../Config/firestore'
 import {corsurl} from '../../Config/proxyURL'
 
 function RefreshToken(email, token) {
-  console.log(token);
 
   var newTokens = null
 
