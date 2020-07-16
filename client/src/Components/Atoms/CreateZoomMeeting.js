@@ -19,7 +19,7 @@ const zoomDate = new Date()
     var year = zoomDate.getFullYear()
 
     setDate(year+'-'+month+'-'+days)
-  })
+  },[usuario])
 
   const handleTime = (event) =>{
     setTime(event.target.value)
@@ -69,11 +69,9 @@ const zoomDate = new Date()
                   dayNumber: props.dayNumber,
                   dayName: props.dayName
                 })
-                window.location.reload(false)
                 alert('La clase se agendó con éxito')
               }
-
-              )
+            ).then(window.location.reload(false))
           }, function(error) {
               console.log(error.message)
               window.location.reload(false)})
@@ -89,6 +87,7 @@ const zoomDate = new Date()
 
   return(
       <div className='d-flex flex-row'>
+      {console.log(timezone)}
         <button className='btn-primary mr-2' onClick={setMeeting} disabled={(time!==null&&props.claseID!==null)?false:true}>Agregar</button>
         <input type="time" onChange={handleTime} className='col-8'/>
       </div>

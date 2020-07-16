@@ -7,8 +7,8 @@ function Header(props){
 
   if (props.type===0) {
     return(
-      <header>
-      <div className="col-12 col-sm-12 d-flex flex-row align-items-center">
+      <header className='fixed-top'>
+      <div className="col-12 col-sm-12 d-flex flex-row align-items-center ">
         <div className="col-4 col-md-2">
           <img src="./logo.png" alt="Logo"/>
         </div>
@@ -21,8 +21,8 @@ function Header(props){
   } else {
     if (props.type===1) {
       return(
-        <header>
-        <div className="col-12 d-flex flex-row align-items-center" >
+        <header className='fixed-top'>
+        <div className="col-12 d-flex flex-row align-items-center " >
             <div className="col-2">
               <img src="./logo.png" alt="Logo"/>
             </div>
@@ -34,8 +34,8 @@ function Header(props){
       );
     } else {
       return(
-        <header>
-        <div className="col-12 d-flex flex-row align-items-center" >
+        <header className='fixed-top'>
+        <div className="col-12 d-flex flex-row align-items-center " >
             <div className="col-8">
               <img src="./logo.png" alt="Logo"/>
             </div>

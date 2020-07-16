@@ -13,7 +13,7 @@ function NavBar(props) {
       <div className="d-flex flex-row justify-content-between">
         <div className="col-2 d-flex flex-column align-items-center pt-2 navbar-option" >
           <NavLink to='instructor-profile' className='text-center' activeClassName="navbar-selected">
-            <div className='col-12 m-1 pt-1'>
+            <div className='col-12 '>
               <PersonSquare size={'2em'}/>
               <p className="icon4">Perfil</p>
             </div>
@@ -21,7 +21,7 @@ function NavBar(props) {
         </div>
         <div className="col-2 d-flex flex-column align-items-center pt-2 navbar-option" activeClassName="navbar-selected" >
           <NavLink to='misclases' className='text-center' activeClassName="navbar-selected">
-            <div className='col-12 m-1 pt-1'>
+            <div className='col-12 '>
               <CollectionPlayFill size={'2em'}/>
               <p>Mis Clases</p>
               </div>
@@ -29,7 +29,7 @@ function NavBar(props) {
         </div>
         <div className="col-3 d-flex flex-column align-items-center pt-2 navbar-option" >
           <NavLink to='monthly-program' className='text-center col-12' activeClassName="navbar-selected">
-            <div className='col-12 m-1 pt-1'>
+            <div className='col-12 '>
               <Calendar3Fill size={'2em'}/>
               <p className='text-center'>Programa Mensual</p>
             </div>
@@ -37,7 +37,7 @@ function NavBar(props) {
         </div>
         <div className="col-2 d-flex flex-column align-items-center pt-2 navbar-option" >
           <NavLink to='sales' className='text-center' activeClassName="navbar-selected">
-            <div className='col-12 m-1 pt-1'>
+            <div className='col-12 '>
               <Wallet2 size={'2em'} />
               <p>Ventas</p>
             </div>

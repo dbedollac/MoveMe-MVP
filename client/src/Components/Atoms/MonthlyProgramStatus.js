@@ -48,7 +48,7 @@ function MonthlyProgramStatus(props) {
           keyboard={false}
         >
           <Modal.Header closeButton>
-          <Modal.Title>'Desactivar programa mensual'</Modal.Title>
+          <Modal.Title>Desactivar programa mensual</Modal.Title>
           </Modal.Header>
           <Modal.Body>
           ¿Deseas desactivar tu programa? Se cancelará el cobro mensual a todos tus clientes suscritos y no podrán acceder a tu contenido.

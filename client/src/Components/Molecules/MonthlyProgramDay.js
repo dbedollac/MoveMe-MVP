@@ -15,6 +15,7 @@ function MonthlyProgramDay(props) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [clases, setclases] = useState([])
+  const [clasesAll, setclasesAll] = useState([])
   const [pictures, setpictures] = useState([])
   const [filtersType, setfiltersType] = useState('')
   const [filtersLevel, setfiltersLevel] = useState('')
@@ -24,7 +25,8 @@ function MonthlyProgramDay(props) {
   const [open, setOpen] = useState(false);
   const [date,setDate] = useState(null)
   const [active,setActive] = useState(false)
-  const[anchor,setAnchor]=useState('fix')
+  const [dateAux, setdateAux] =useState(false)
+  const [clasesNumber, setclasesNumber] = useState(0)
 
 
     useEffect(()=>{
@@ -36,13 +38,15 @@ function MonthlyProgramDay(props) {
                Clases.push({id:doc.id, data: doc.data()});
           });
           setclases(Clases)
+          setclasesAll(Clases)
+          setdateAux(true)
       });
     }
 
     if (props.dayDate) {
       getDayDate()
     }
-  })
+  },[usuario,dateAux])
 
   const getDayDate = () =>{
     var days = props.dayDate.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
@@ -54,20 +58,22 @@ function MonthlyProgramDay(props) {
     if (props.dayDate.getDate()===new Date().getDate()) {
       setActive(true)
     }
+
+      var docRef = db.collection("Instructors").doc(usuario.email);
+      docRef.collection('ZoomMeetingsID').where("week", "==", props.week).where("dayNumber", "==", props.dayNumber)
+          .get()
+          .then(snap => setclasesNumber(snap.size))
+          .catch(function(error) {
+              console.log("Error getting documents: ", error);
+          });
+
   }
 
   const handleBuscador = (event) =>{
-    var Clases = []
     var Busca = event.target.value.toUpperCase()
-    var docRef = db.collection("Instructors").doc(usuario.email).collection("Classes");
-    docRef.get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-             Clases.push({id:doc.id, data: doc.data()});
-        });
-        var clases = Clases.filter(item => item.data.title.toUpperCase().includes(Busca));
+        var clases = clasesAll.filter(item => item.data.title.toUpperCase().includes(Busca));
         setclases(clases)
         setaux(false)
-    });
   }
 
   const handleTypeChange =(event) => {
@@ -76,13 +82,7 @@ function MonthlyProgramDay(props) {
       value = event.target.value
     }
 
-    const Clases = []
-      var docRef = db.collection("Instructors").doc(usuario.email).collection("Classes");
-      docRef.get().then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-               Clases.push({id:doc.id, data: doc.data()});
-          });
-          var clases0 = Clases.filter(item => item.data.type.includes(value));
+          var clases0 = clasesAll.filter(item => item.data.type.includes(value));
           var clases1 = clases0.filter(item => item.data.level.includes(filtersLevel));
           switch (filtersDuration) {
             case '0': var clases2 = clases1.filter(item => (item.data.duration<=30));
@@ -95,7 +95,6 @@ function MonthlyProgramDay(props) {
           }
           setclases(clases2)
           setaux(false)
-      });
 
       setfiltersType(value)
   }
@@ -106,13 +105,7 @@ function MonthlyProgramDay(props) {
       value = event.target.value
     }
 
-    const Clases = []
-      var docRef = db.collection("Instructors").doc(usuario.email).collection("Classes");
-      docRef.get().then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-               Clases.push({id:doc.id, data: doc.data()});
-          });
-          var clases0 = Clases.filter(item => item.data.type.includes(filtersType));
+          var clases0 = clasesAll.filter(item => item.data.type.includes(filtersType));
           var clases1 = clases0.filter(item => item.data.level.includes(value));
           switch (filtersDuration) {
             case '0': var clases2 = clases1.filter(item => (item.data.duration<=30));
@@ -125,7 +118,6 @@ function MonthlyProgramDay(props) {
           }
           setclases(clases2)
           setaux(false)
-      });
 
       setfiltersLevel(value)
   }
@@ -136,13 +128,8 @@ function MonthlyProgramDay(props) {
       value = event.target.value
     }
 
-    const Clases = []
-      var docRef = db.collection("Instructors").doc(usuario.email).collection("Classes");
-      docRef.get().then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-               Clases.push({id:doc.id, data: doc.data()});
-          });
-          var clases0 = Clases.filter(item => item.data.type.includes(filtersType));
+
+          var clases0 = clasesAll.filter(item => item.data.type.includes(filtersType));
           var clases1 = clases0.filter(item => item.data.level.includes(filtersLevel));
           switch (value) {
             case '0': var clases2 = clases1.filter(item => (item.data.duration<=30));
@@ -155,7 +142,6 @@ function MonthlyProgramDay(props) {
           }
           setclases(clases2)
           setaux(false)
-      });
 
       setfiltersDuration(value)
   }
@@ -168,7 +154,7 @@ function MonthlyProgramDay(props) {
   return(
     <div className='card-link'>
       <div className='d-flex flex-row justify-content-around align-items-center '>
-        <p className='pt-2 col-8' style={{color:active?'#F39119':'black'}}><strong>{props.dayName}</strong> {date}</p>
+        <p className='pt-2 col-8' style={{color:active?'#F39119':'black'}}>{clasesNumber>0?'('+clasesNumber+')':null} <strong>{props.dayName}</strong> {date}</p>
         {open?<ChevronCompactUp onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>
         :<ChevronCompactDown onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>}
       </div>

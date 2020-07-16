@@ -6,7 +6,7 @@ import { withRouter } from "react-router";
 import {Redirect} from "react-router-dom";
 import './MyClasses.css'
 import NewClass from '../Molecules/NewClass'
-import { PlusCircleFill, Search, X, PencilSquare, ArrowLeft } from 'react-bootstrap-icons';
+import { PlusCircleFill, Search, X, PencilSquare, ArrowLeft, ArrowRepeat } from 'react-bootstrap-icons';
 import ClassCard from '../Cards/ClassCard'
 import InstructorsDetailCard from '../Cards/InstructorsDetailCard'
 import EditClass from '../Molecules/EditClass'
@@ -16,6 +16,7 @@ function MyClasses(props) {
 const { usuario } = useContext(Auth);
 const [newclass, setNewClass] = useState(false)
 const [clases, setclases] = useState([])
+const [clasesAll, setclasesAll] = useState([])
 const [pictures, setpictures] = useState([])
 const [filtersType, setfiltersType] = useState('')
 const [filtersLevel, setfiltersLevel] = useState('')
@@ -27,7 +28,7 @@ const [aux, setaux] = useState(true)
 
 
   useEffect(()=>{
-    console.log(usuario);
+
 
     auth.onAuthStateChanged((usuario) => {
       if (usuario===null) {
@@ -43,6 +44,7 @@ const [aux, setaux] = useState(true)
              Clases.push({id:doc.id, data: doc.data()});
         });
         setclases(Clases)
+        setclasesAll(Clases)
     });
   }
 },[usuario])
@@ -54,17 +56,10 @@ const [aux, setaux] = useState(true)
   }
 
   const handleBuscador = (event) =>{
-    var Clases = []
     var Busca = event.target.value.toUpperCase()
-    var docRef = db.collection("Instructors").doc(usuario.email).collection("Classes");
-    docRef.get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-             Clases.push({id:doc.id, data: doc.data()});
-        });
-        var clases = Clases.filter(item => item.data.title.toUpperCase().includes(Busca));
+        var clases = clasesAll.filter(item => item.data.title.toUpperCase().includes(Busca));
         setclases(clases)
         setaux(false)
-    });
   }
 
   const handleTypeChange =(event) => {
@@ -73,13 +68,7 @@ const [aux, setaux] = useState(true)
       value = event.target.value
     }
 
-    const Clases = []
-      var docRef = db.collection("Instructors").doc(usuario.email).collection("Classes");
-      docRef.get().then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-               Clases.push({id:doc.id, data: doc.data()});
-          });
-          var clases0 = Clases.filter(item => item.data.type.includes(value));
+          var clases0 = clasesAll.filter(item => item.data.type.includes(value));
           var clases1 = clases0.filter(item => item.data.level.includes(filtersLevel));
           switch (filtersDuration) {
             case '0': var clases2 = clases1.filter(item => (item.data.duration<=30));
@@ -92,7 +81,6 @@ const [aux, setaux] = useState(true)
           }
           setclases(clases2)
           setaux(false)
-      });
 
       setfiltersType(value)
   }
@@ -104,13 +92,7 @@ const [aux, setaux] = useState(true)
       value = event.target.value
     }
 
-    const Clases = []
-      var docRef = db.collection("Instructors").doc(usuario.email).collection("Classes");
-      docRef.get().then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-               Clases.push({id:doc.id, data: doc.data()});
-          });
-          var clases0 = Clases.filter(item => item.data.type.includes(filtersType));
+          var clases0 = clasesAll.filter(item => item.data.type.includes(filtersType));
           var clases1 = clases0.filter(item => item.data.level.includes(value));
           switch (filtersDuration) {
             case '0': var clases2 = clases1.filter(item => (item.data.duration<=30));
@@ -123,7 +105,6 @@ const [aux, setaux] = useState(true)
           }
           setclases(clases2)
           setaux(false)
-      });
 
       setfiltersLevel(value)
   }
@@ -134,13 +115,8 @@ const [aux, setaux] = useState(true)
       value = event.target.value
     }
 
-    const Clases = []
-      var docRef = db.collection("Instructors").doc(usuario.email).collection("Classes");
-      docRef.get().then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-               Clases.push({id:doc.id, data: doc.data()});
-          });
-          var clases0 = Clases.filter(item => item.data.type.includes(filtersType));
+
+          var clases0 = clasesAll.filter(item => item.data.type.includes(filtersType));
           var clases1 = clases0.filter(item => item.data.level.includes(filtersLevel));
           switch (value) {
             case '0': var clases2 = clases1.filter(item => (item.data.duration<=30));
@@ -153,7 +129,6 @@ const [aux, setaux] = useState(true)
           }
           setclases(clases2)
           setaux(false)
-      });
 
       setfiltersDuration(value)
   }
@@ -162,11 +137,16 @@ const  handleDetail = (event) =>{
     var clase = clases.filter(item => item.id.includes(event.target.name));
     setclaseDetail(clase[0])
     setdetail(!detail)
+    setaux(true)
   }
 
 const handleEditClass = ()=>{
     seteditClass(!editClass)
   }
+
+const handleRefresh = () =>{
+  window.location.reload(false)
+}
 
     if (editClass&&detail) {
       return(
@@ -193,7 +173,7 @@ const handleEditClass = ()=>{
       )
     } else {
     return (
-      <div>
+      <div >
         <Header type={1} />
           <div className='col-12 MyClasses-container d-flex flex-row'>
              <div className='col-3 MyClasses-summary d-flex flex-column justify-content-start py-2'>
@@ -203,6 +183,7 @@ const handleEditClass = ()=>{
                 <div className='d-flex flex-row align-items-center'>
                   <Search className='mr-2'/>
                   <input type='search' placeholder='Buscar clase...' onChange={handleBuscador}/>
+                  <ArrowRepeat className='ml-2' size={'2em'} onClick={handleRefresh} style={{cursor:'pointer'}}/>
                 </div>
                 <form className='pt-3'>
                   <div className='d-flex flex-column justify-content-between'>
