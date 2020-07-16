@@ -3,6 +3,7 @@ import * as firebase from 'firebase'
 import {storage, db} from "../../Config/firestore.js"
 import VideoPlayer from '../Atoms/VideoPlayer'
 import { CameraVideoFill, CloudArrowUp } from 'react-bootstrap-icons';
+import { Spinner} from 'react-bootstrap'
 
 
 class FileUploadVideo extends React.Component {
@@ -12,7 +13,8 @@ class FileUploadVideo extends React.Component {
     this.state = {
       uploadValue: 0,
       picture: null,
-      video: null
+      video: null,
+      loading: false
     }
     this.handleOnChange = this.handleOnChange.bind(this);
   }
@@ -38,6 +40,9 @@ class FileUploadVideo extends React.Component {
   }}
 
   handleOnChange (e) {
+    this.setState({
+      loading:true
+    })
     var type = this.props.fileType
     var fileName = this.props.name
     const file = e.target.files[0]
@@ -57,7 +62,8 @@ class FileUploadVideo extends React.Component {
                .child(this.props.name)
                .getDownloadURL()
                .then(url => {
-                this.setState({video: url}) ;
+                this.setState({video: url,
+                              loading: false}) ;
               }).catch(function (error) {
                 console.error("Error", error);
               })
@@ -70,7 +76,7 @@ class FileUploadVideo extends React.Component {
       <div className="FileUpload card">
         <p className='card-header col-12 text-center'><strong>{this.props.title}</strong></p>
         <div className='card-body d-flex flex-column align-items-center justify-content-start'>
-        {this.state.video?<VideoPlayer videoWidth={this.props.videoWidth} videoHeight={this.props.videoHeight} Video={this.state.video} className="text-center card-img-top"/>
+        {this.state.loading?<Spinner animation="border" />:this.state.video?<VideoPlayer videoWidth={this.props.videoWidth} videoHeight={this.props.videoHeight} Video={this.state.video} className="text-center card-img-top"/>
         :  <label for='video-input'>
             <CloudArrowUp size={'10em'}/>
           </label>}

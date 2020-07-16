@@ -3,16 +3,19 @@ import {proxyurl} from '../../Config/proxyURL'
 import {db} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
 import { TrashFill } from 'react-bootstrap-icons';
-import {Button, Modal} from 'react-bootstrap'
+import {Button, Modal, Spinner} from 'react-bootstrap'
 
 function DeleteZoomMeeting(props) {
   const { usuario } = useContext(Auth);
   const [show, setShow] = useState(false);
+  const [loading,setLoading] = useState(false)
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+
   const deleteMeeting = () =>{
+    setLoading(true)
     var docRef = db.collection("Instructors").doc(usuario.email);
     docRef.get().then((doc)=>{
 
@@ -85,7 +88,7 @@ function DeleteZoomMeeting(props) {
          <Button variant="secondary" onClick={handleClose}>
            Cancelar
          </Button>
-         <Button variant="danger" onClick={deleteMeeting}>Borrar</Button>
+         <Button variant="danger" onClick={deleteMeeting}>{loading?<Spinner animation="border" />:'Borrar'}</Button>
        </Modal.Footer>
      </Modal>
     </div>

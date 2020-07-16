@@ -2,6 +2,7 @@ import React from 'react';
 import * as firebase from 'firebase'
 import {storage} from "../../Config/firestore.js"
 import { Image, CloudArrowUp } from 'react-bootstrap-icons';
+import { Spinner} from 'react-bootstrap'
 
 class FileUpload extends React.Component {
 
@@ -9,7 +10,8 @@ class FileUpload extends React.Component {
     super(props)
     this.state = {
       uploadValue: 0,
-      picture: null
+      picture: null,
+      loading: false
     }
     this.handleOnChange = this.handleOnChange.bind(this);
   }
@@ -37,6 +39,9 @@ class FileUpload extends React.Component {
   }
 
   handleOnChange (e) {
+    this.setState({
+      loading:true
+    })
     var type = this.props.fileType
     var fileName = this.props.name
     const file = e.target.files[0]
@@ -56,7 +61,8 @@ class FileUpload extends React.Component {
                .child(fileName)
                .getDownloadURL()
                .then(url => {
-                this.setState({picture: url}) ;
+                this.setState({picture: url,
+                              loading: false}) ;
               }).catch(function (error) {
                 console.error("No se ha subido ninguna foto de perfil ", error);
               })
@@ -70,7 +76,7 @@ class FileUpload extends React.Component {
         <p className='card-header col-12 text-center'><strong>{this.props.title}</strong></p>
         <div className='card-body d-flex flex-column align-items-center'>
           <label for='file-input'>
-            {this.state.picture?<img src={this.state.picture} className="text-center card-img-top"/>:
+            {this.state.loading?<Spinner animation="border" />:this.state.picture?<img src={this.state.picture} className="text-center card-img-top"/>:
             <CloudArrowUp size={'10em'}/>}
           </label>
           <div className='d-flex flex-row align-items-center'>

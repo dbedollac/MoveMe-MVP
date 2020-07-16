@@ -3,6 +3,7 @@ import RefreshToken from '../Atoms/RefreshToken'
 import {db} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
 import {proxyurl} from '../../Config/proxyURL'
+import {Spinner} from 'react-bootstrap'
 
 function CreateZoomMeeting(props) {
 const { usuario } = useContext(Auth);
@@ -10,6 +11,7 @@ const [time, setTime] = useState(null)
 const [date, setDate] = useState(null)
 const [timezone, setTimezone] = useState(null)
 const zoomDate = new Date()
+const [loading,setLoading] = useState(false)
 
 
   useEffect(()=>{
@@ -26,6 +28,7 @@ const zoomDate = new Date()
   }
 
   const setMeeting = () =>{
+    setLoading(true)
     if(time){
     var docRef = db.collection("Instructors").doc(usuario.email);
     docRef.get().then((doc)=>{
@@ -87,8 +90,9 @@ const zoomDate = new Date()
 
   return(
       <div className='d-flex flex-row'>
-      {console.log(timezone)}
+        {loading?<Spinner animation="border" /> :
         <button className='btn-primary mr-2' onClick={setMeeting} disabled={(time!==null&&props.claseID!==null)?false:true}>Agregar</button>
+        }
         <input type="time" onChange={handleTime} className='col-8'/>
       </div>
     )

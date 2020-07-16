@@ -4,12 +4,14 @@ import {db} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
 import { ChevronCompactDown, CameraVideoFill } from 'react-bootstrap-icons';
 import {proxyurl} from '../../Config/proxyURL'
+import {Spinner} from 'react-bootstrap'
 
 function CreateZoomMeetingCard(props) {
 const { usuario } = useContext(Auth);
 const [time, setTime] = useState(null)
 const [date, setDate] = useState(null)
 const [timezone, setTimezone] = useState(null)
+const [loading,setLoading] = useState(false)
 
   useEffect(()=>{
     setTimezone(Intl.DateTimeFormat().resolvedOptions().timeZone)
@@ -24,6 +26,7 @@ const [timezone, setTimezone] = useState(null)
   }
 
   const setMeeting = () =>{
+    setLoading(true)
     var docRef = db.collection("Instructors").doc(usuario.email);
     docRef.get().then((doc)=>{
 
@@ -59,8 +62,7 @@ const [timezone, setTimezone] = useState(null)
                 })
                 alert('La clase se agendó con éxito')
               }
-
-              )
+            ).then(window.location.reload(false))
           }, function(error) {
               console.log(error.message)
               window.location.reload(false)})
@@ -85,8 +87,10 @@ const [timezone, setTimezone] = useState(null)
             <input type="date" onChange={handleDate}/>
             <input type="time" onChange={handleTime}/>
           </div>
-          <div className='d-flex align-self-center disabled' disabled={true}>
+          <div className='d-flex align-self-center ' disabled={true}>
+          {loading?<Spinner animation="border" className='d-flex align-self-center'/>:
             <button className='btn-lg btn-primary mt-2' onClick={setMeeting} disabled={(time!==null&&date!==null&&props.claseID!==null)?false:true}>Guardar</button>
+          }
           </div>
         </div>
       </div>
