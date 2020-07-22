@@ -48,7 +48,7 @@ const handleAceptar = () =>{
   setAceptar(true)
     if (instructor) {
       if (newInstructor) {
-        db.collection("Instructors").doc(usuario.email).set({
+        db.collection("Instructors").doc(usuario.uid).set({
         email: usuario.email,
         uid: usuario.uid,
         profileName: '',
@@ -61,7 +61,12 @@ const handleAceptar = () =>{
         website: "",
         zoomToken: "",
         zoomRefreshToken: "",
-        countClasses: 0
+        countClasses: 0,
+        new: true,
+        monthlyProgram: {
+          Active: false,
+          Price: null
+        }
         });
       }
         } else {

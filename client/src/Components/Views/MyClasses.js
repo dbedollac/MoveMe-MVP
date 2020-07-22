@@ -38,7 +38,7 @@ const [aux, setaux] = useState(true)
 
     if(usuario&&aux){
     var Clases = []
-    var docRef = db.collection("Instructors").doc(usuario.email).collection("Classes");
+    var docRef = db.collection("Instructors").doc(usuario.uid).collection("Classes");
     docRef.get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
              Clases.push({id:doc.id, data: doc.data()});
@@ -246,7 +246,7 @@ const handleRefresh = () =>{
               </div>:
 
             clases?clases.map(clase => (
-              <div className='col-3' key={clase.id} onClick={handleDetail} style={{cursor:'pointer'}}>
+              <div className={`col-${clases.length>1?'3':'4'}`} key={clase.id} onClick={handleDetail} style={{cursor:'pointer'}}>
                 <ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.id}/>
               </div>
             )):null}

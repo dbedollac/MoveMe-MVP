@@ -2,7 +2,7 @@ import {zoomID, zoomSecret,zoomRedirectURL} from '../../Config/ZoomCredentials'
 import {db} from '../../Config/firestore'
 import {corsurl} from '../../Config/proxyURL'
 
-function RefreshToken(email, token) {
+function RefreshToken(uid, token) {
 
   const requestUserAuthorization = () =>{
     window.location.href = 'https://zoom.us/oauth/authorize?response_type=code&client_id='+zoomID+'&redirect_uri='+zoomRedirectURL
@@ -21,7 +21,7 @@ function RefreshToken(email, token) {
   }).then((response)=>{
       Promise.resolve(response.json()).then( (resp) =>{
         if (resp.access_token) {
-          db.collection("Instructors").doc(email).set({
+          db.collection("Instructors").doc(uid).set({
             zoomToken: resp.access_token,
             zoomRefreshToken: resp.refresh_token
           },{ merge: true }).then(console.log('Tokens refresheados')).catch((error)=>{

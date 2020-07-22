@@ -11,10 +11,10 @@ const { usuario } = useContext(Auth);
 
   useEffect(()=>{
     if (usuario) {
-      var docRef = db.collection("Instructors").doc(usuario.email);
+      var docRef = db.collection("Instructors").doc(usuario.uid);
       docRef.get().then(async (doc)=>{
       if (doc.exists) {
-            RefreshToken(usuario.email, doc.data().zoomRefreshToken).catch(error => window.location.reload(false))
+            RefreshToken(usuario.uid, doc.data().zoomRefreshToken).catch(error => window.location.reload(false))
         } else {
             console.log("No such document!");
         }
@@ -28,7 +28,7 @@ const { usuario } = useContext(Auth);
         <div className='col-12 card'>
           <h2 className='text-center text-break px-2' style={{color: '#F39119'}}>{props.data.title}</h2>
           <div className= 'card-body d-flex flex-row flex-wrap justify-content-start'>
-            
+
             <div className='col-6 d-flex flex-column'>
               <div className='d-flex flex-row alig-items-center justify-content-center'>
                 <CameraVideoFill size={'2em'} className='mr-2 mt-1' color="#2C8BFF" />

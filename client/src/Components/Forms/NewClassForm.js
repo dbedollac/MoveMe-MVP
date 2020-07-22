@@ -20,7 +20,7 @@ const handleClick = () =>{
              .child(usuario.uid+'-clase'+count)
              .getDownloadURL()
              .then(url => {
-               db.collection("Instructors").doc(usuario.email).collection("Classes").doc('clase'+count).set({
+               db.collection("Instructors").doc(usuario.uid).collection("Classes").doc('clase'+count).set({
                  imgURL: url
                },{ merge: true }) ;
             }).catch(function (error) {
@@ -31,7 +31,7 @@ const handleClick = () =>{
                .child(usuario.uid+'-clase'+count)
                .getDownloadURL()
                .then(url => {
-                 db.collection("Instructors").doc(usuario.email).collection("Classes").doc('clase'+count).set({
+                 db.collection("Instructors").doc(usuario.uid).collection("Classes").doc('clase'+count).set({
                    videoURL: url
                    },{ merge: true }) ;
                 }).catch(function (error) {
@@ -63,7 +63,7 @@ const formik = useFormik({
   },
   validate,
   onSubmit: values => {
-    db.collection("Instructors").doc(usuario.email).collection("Classes").doc('clase'+count).set({
+    db.collection("Instructors").doc(usuario.uid).collection("Classes").doc('clase'+count).set({
       title: values.title,
       description: values.description,
       type: values.type,
@@ -74,7 +74,7 @@ const formik = useFormik({
       offlinePrice: values.offlinePrice,
     },{ merge: true }).then(alert('Tu clase se creo con éxito'));
 
-    db.collection("Instructors").doc(usuario.email).set({
+    db.collection("Instructors").doc(usuario.uid).set({
       countClasses: count
     },{ merge: true });
     handleClick();

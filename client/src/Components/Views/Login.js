@@ -13,10 +13,11 @@ import { Asterisk } from 'react-bootstrap-icons';
 
 const Login = ({ history }) => {
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-
     const [signup, setsignup] = useState(false);
     const { usuario } = useContext(Auth);
     const [error, seterror] = useState('')
+    const [forgottenpassword,setForgottenpassword] = useState(false)
+    const [email, setEmail] = useState(null)
 
     useEffect(() => {
         if (usuario) {
@@ -52,8 +53,53 @@ const Login = ({ history }) => {
         });
     }
 
+    const resetPassword = () =>{
+        auth.sendPasswordResetEmail(email).then(function() {
+        console.log('Email sent.')
+      }).catch(function(error) {
+        console.log(error)
+      });
+    }
+
+    const forgottenPassword = () =>{
+      setForgottenpassword(!forgottenpassword)
+    }
+
+    const handleMail = (event) =>{
+      setEmail(event.target.value)
+    }
 
 
+    if (forgottenpassword) {
+      return(
+        <div>
+        <Header type={0} title='M O V E M E'/>
+              <div className="col-12 login-container">
+                <form className="form-group d-flex flex-column col-12 align-items-center " onSubmit={resetPassword}>
+                <div className="d-flex flex-column col-6 login-form">
+                    <div className="d-flex flex-column align-self-center col-10 m-2">
+                      <h3 className="text-center ">Enviar mail para restablecer contraseña</h3>
+                      <div className="text-center">
+                        <PersonCircle/>
+                        <input
+                            onChange={handleMail}
+                            className="col-9 ml-2"/>
+                      </div>
+                      <p className='text-right' onClick={forgottenPassword} style={{cursor:'pointer'}}><i>Regresar</i></p>
+                      </div>
+                          <div className="text-center m-2">
+                            <button
+                                className="btn-light col-4"
+                             >
+                                Enviar
+                            </button>
+                          </div>
+                    </div>
+                </form>
+              </div>
+        </div>
+    )
+    }else {
     return (
                 <div>
                 <Header type={0} title='M O V E M E'/>
@@ -79,6 +125,7 @@ const Login = ({ history }) => {
                                     placeholder="Clave"
                                     className="col-9 ml-2"/>
                               </div>
+                              <p className='text-right' onClick={forgottenPassword} style={{cursor:'pointer'}}><i>Olvidé mi contraseña</i></p>
                               </div>
                                   <div className="text-center m-2">
                                     <button
@@ -111,5 +158,6 @@ const Login = ({ history }) => {
                     )}
                 </div>
     );
+  }
 };
 export default withRouter(Login);

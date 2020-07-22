@@ -30,7 +30,7 @@ const [loading,setLoading] = useState(false)
   const setMeeting = () =>{
     setLoading(true)
     if(time){
-    var docRef = db.collection("Instructors").doc(usuario.email);
+    var docRef = db.collection("Instructors").doc(usuario.uid);
     docRef.get().then((doc)=>{
 
     if (doc.exists) {
@@ -64,7 +64,7 @@ const [loading,setLoading] = useState(false)
 
           fetch(url,init).then((response)=>{
               Promise.resolve(response.json()).then( (resp) =>{
-                db.collection("Instructors").doc(usuario.email).collection("ZoomMeetingsID").doc(resp.id.toString()).set({
+                db.collection("Instructors").doc(usuario.uid).collection("ZoomMeetingsID").doc(resp.id.toString()).set({
                   claseID: props.claseID,
                   meetingID: resp.id,
                   startTime: resp.occurrences[0].start_time,

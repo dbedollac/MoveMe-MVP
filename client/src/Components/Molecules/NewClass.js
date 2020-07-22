@@ -15,7 +15,7 @@ const [count, setcount] = useState(null)
 
   useEffect(()=>{
     if (usuario) {
-    var docRef = db.collection("Instructors").doc(usuario.email);
+    var docRef = db.collection("Instructors").doc(usuario.uid);
 
       docRef.get().then((doc)=> {
           if (doc.exists) {

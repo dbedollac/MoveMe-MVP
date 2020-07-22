@@ -19,6 +19,7 @@ const [instructor, setInstructor] = useState(false);
 const [user, setUser] = useState(false);
 
 useEffect(()=>{
+  console.log(usuario)
   let user = usuario;
   user?user.displayName? setNombre(user.displayName):setNombre(user.email):setNombre(null)
 
@@ -42,7 +43,7 @@ useEffect(()=>{
     }).then((response)=>{
         Promise.resolve(response.json()).then( (resp) =>{
           if(resp.access_token){
-            db.collection("Instructors").doc(usuario.email).set({
+            db.collection("Instructors").doc(usuario.uid).set({
               zoomToken: resp.access_token,
               zoomRefreshToken: resp.refresh_token
             },{ merge: true })
@@ -55,7 +56,7 @@ useEffect(()=>{
     })
   }
 
-    var docRef = db.collection("Instructors").doc(usuario.email);
+    var docRef = db.collection("Instructors").doc(usuario.uid);
     docRef.get().then((doc)=>{
     if (doc.exists) {
         setInstructor(true)

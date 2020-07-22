@@ -16,7 +16,7 @@ function DeleteZoomMeeting(props) {
 
   const deleteMeeting = () =>{
     setLoading(true)
-    var docRef = db.collection("Instructors").doc(usuario.email);
+    var docRef = db.collection("Instructors").doc(usuario.uid);
     docRef.get().then((doc)=>{
 
     if (doc.exists) {
@@ -37,7 +37,7 @@ function DeleteZoomMeeting(props) {
 
                 console.log(response);
 
-                var docRef = db.collection("Instructors").doc(usuario.email);
+                var docRef = db.collection("Instructors").doc(usuario.uid);
                 docRef.collection('ZoomMeetingsID').where("meetingID", "==", props.meetingID).get()
                     .then(function(querySnapshot) {
                       querySnapshot.forEach(function(doc) {

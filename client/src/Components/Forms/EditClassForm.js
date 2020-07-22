@@ -12,7 +12,7 @@ const handleClick = () =>{
              .child(usuario.uid+'-'+props.claseID)
              .getDownloadURL()
              .then(url => {
-               db.collection("Instructors").doc(usuario.email).collection("Classes").doc(props.claseID).set({
+               db.collection("Instructors").doc(usuario.uid).collection("Classes").doc(props.claseID).set({
                  imgURL: url
                },{ merge: true }) ;
             }).catch(function (error) {
@@ -23,7 +23,7 @@ const handleClick = () =>{
                .child(usuario.uid+'-'+props.claseID)
                .getDownloadURL()
                .then(url => {
-                 db.collection("Instructors").doc(usuario.email).collection("Classes").doc(props.claseID).set({
+                 db.collection("Instructors").doc(usuario.uid).collection("Classes").doc(props.claseID).set({
                    videoURL: url
                    },{ merge: true }) ;
                 }).catch(function (error) {
@@ -53,7 +53,7 @@ const formik = useFormik({
   },
   validate,
   onSubmit: values => {
-    db.collection("Instructors").doc(usuario.email).collection("Classes").doc(props.claseID).set({
+    db.collection("Instructors").doc(usuario.uid).collection("Classes").doc(props.claseID).set({
       title: values.title,
       description: values.description,
       type: values.type,

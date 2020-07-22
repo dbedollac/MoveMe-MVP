@@ -25,7 +25,7 @@ function GetZoomMeetings(props) {
       if (meetings.length === 0) {
       if (props.claseID) {
         var zoomMeetings = []
-        var docRef = db.collection("Instructors").doc(usuario.email);
+        var docRef = db.collection("Instructors").doc(usuario.uid);
         docRef.collection('ZoomMeetingsID').where("claseID", "==", props.claseID).get()
             .then(function(querySnapshot) {
               var now = new Date(Date.now()-3600000).toISOString()
@@ -42,7 +42,7 @@ function GetZoomMeetings(props) {
 
       if (props.week) {
         var zoomMeetings = []
-        var docRef = db.collection("Instructors").doc(usuario.email);
+        var docRef = db.collection("Instructors").doc(usuario.uid);
         docRef.collection('ZoomMeetingsID').where("week", "==", props.week).where("dayNumber", "==", props.dayNumber)
             .get()
             .then(function(querySnapshot) {

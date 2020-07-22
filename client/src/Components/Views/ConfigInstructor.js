@@ -13,13 +13,24 @@ function ConfigInstructor(props) {
 const { usuario } = useContext(Auth);
 const [uid, setUid] = useState(null);
 const [zoomButton, setZoomButton] = useState(true)
+const [newInstructor, setNewInstructor] = useState(true);
+
+const searchInstructor = () =>{
+    if(usuario){
+    db.collection("Instructors").doc(usuario.uid).get().then( (doc) => {
+      if (doc.data().zoomToken.length>0) {
+        setNewInstructor(doc.data().new)
+      }
+      });
+  }
+  }
 
 useEffect(()=>{
   let user = usuario;
 
   if(user){
   setUid(user.uid)
-  var docRef = db.collection("Instructors").doc(user.email);
+  var docRef = db.collection("Instructors").doc(user.uid);
   docRef.onSnapshot((doc)=>{
   if (doc.exists) {
     var data = doc.data()
@@ -35,11 +46,13 @@ useEffect(()=>{
           props.history.push("/login");
       }
     })
+
+    searchInstructor()
 })
 
     return (
       <div>
-        <Header type={1} title='Configuración'/>
+        <Header type={newInstructor?0:1} title='M O V E M E'/>
         <div className="col-12 configInstructor-container d-flex flex-row align-items-start pt-4">
           <div className="col-4 foto-perfil">
             <FileUpload fileType='Pictures' name={uid + '-profile'} title="Foto de perfil" overlay='profile'/>

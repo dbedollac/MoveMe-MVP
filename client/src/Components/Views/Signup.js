@@ -9,7 +9,11 @@ import { Asterisk } from 'react-bootstrap-icons';
 
 const Signup = ({ setsignup, history }) => {
     const [error, seterror] = useState("");
+    const [password,setPassword] = useState("");
+    const [password2,setPassword2] = useState("")
+
     const handleSignUp = async e => {
+      if (password===password2) {
         e.preventDefault();
         const { usuario, clave } = e.target.elements;
 
@@ -22,7 +26,20 @@ const Signup = ({ setsignup, history }) => {
             .catch(error => {
                 seterror(error.message);
             });
+      }else {
+        e.preventDefault()
+        seterror('Las contraseñas no coinciden')
+      }
     };
+
+    const handlePassword = (event) =>{
+      setPassword(event.target.value)
+    }
+
+    const handlePassword2 = (event) =>{
+      setPassword2(event.target.value)
+    }
+
     return (
       <div>
             <div className="col-12 login-container">
@@ -43,8 +60,18 @@ const Signup = ({ setsignup, history }) => {
                       <input
                           name="clave"
                           type="password"
-                          placeholder="Clave"
-                          className="col-9 ml-2"/>
+                          placeholder="Contraseña"
+                          className="col-9 ml-2"
+                          onChange={handlePassword}/>
+                    </div>
+                    <div className="text-center">
+                      <Asterisk/>
+                      <input
+                          name="clave2"
+                          type="password"
+                          placeholder="Confirmar contraseña"
+                          className="col-9 ml-2"
+                          onChange={handlePassword2}/>
                     </div>
                     </div>
                         <div className="text-center m-2">

@@ -11,7 +11,7 @@ function SetMonthlyProgramPrice() {
 
   useEffect(()=>{
     if (usuario) {
-    var docRef = db.collection("Instructors").doc(usuario.email);
+    var docRef = db.collection("Instructors").doc(usuario.uid);
       docRef.get().then((doc)=> {
           if (doc.exists) {
             setPrice(doc.data().monthlyProgram.Price)
@@ -29,7 +29,7 @@ function SetMonthlyProgramPrice() {
   }
 
   const handleSave = () =>{
-    db.collection("Instructors").doc(usuario.email).set({
+    db.collection("Instructors").doc(usuario.uid).set({
       monthlyProgram: {
         Price: price
       }

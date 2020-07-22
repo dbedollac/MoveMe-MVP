@@ -28,7 +28,7 @@ function StartZoomMeeting(props) {
     }
 
     if(props.claseID){
-      var docRef = db.collection("Instructors").doc(usuario.email);
+      var docRef = db.collection("Instructors").doc(usuario.uid);
       docRef.collection('Classes').doc(props.claseID)
           .get()
           .then( doc =>
@@ -42,7 +42,7 @@ function StartZoomMeeting(props) {
   })
 
   const startMeeting = () =>{
-    var docRef = db.collection("Instructors").doc(usuario.email);
+    var docRef = db.collection("Instructors").doc(usuario.uid);
     docRef.get().then((doc)=>{
 
     if (doc.exists) {

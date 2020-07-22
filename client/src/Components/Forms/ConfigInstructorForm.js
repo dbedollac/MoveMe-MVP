@@ -12,7 +12,7 @@ const [data,setdata] = useState({})
 
 useEffect(() => {
   if (usuario) {
-  var docRef = db.collection("Instructors").doc(usuario.email);
+  var docRef = db.collection("Instructors").doc(usuario.uid);
 
     docRef.get().then(function(doc) {
         if (doc.exists) {
@@ -32,7 +32,7 @@ useEffect(() => {
                .child(usuario.uid+'-profile')
                .getDownloadURL()
                .then(url => {
-                 db.collection("Instructors").doc(usuario.email).set({
+                 db.collection("Instructors").doc(usuario.uid).set({
                    imgURL: url
                  },{ merge: true }) ;
               }).catch(function (error) {
@@ -65,7 +65,7 @@ const formik = useFormik({
   },
   validate,
   onSubmit: values => {
-    db.collection("Instructors").doc(usuario.email).set({
+    db.collection("Instructors").doc(usuario.uid).set({
     profileName: values.profileName,
     firstName: values.firstName,
     lastName: values.lastName,
@@ -73,6 +73,7 @@ const formik = useFormik({
     noTarjeta: values.noTarjeta,
     selfDescription: values.selfDescription,
     disableTrialClasses: values.disableTrialClasses,
+    new: false
     },{ merge: true })
     alert('Tus datos se guardaron con éxito');
     handleClick()

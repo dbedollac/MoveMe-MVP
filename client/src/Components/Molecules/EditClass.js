@@ -22,7 +22,7 @@ static contextType = Auth
       let user = this.context.usuario;
       if (user) {
       this.setState({uid: user.uid})
-      var docRef = db.collection("Instructors").doc(user.email);
+      var docRef = db.collection("Instructors").doc(user.uid);
 
         docRef.get().then((doc)=> {
             if (doc.exists) {

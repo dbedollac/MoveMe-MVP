@@ -32,7 +32,7 @@ function MonthlyProgramDay(props) {
     useEffect(()=>{
       if(usuario&&aux){
       var Clases = []
-      var docRef = db.collection("Instructors").doc(usuario.email).collection("Classes");
+      var docRef = db.collection("Instructors").doc(usuario.uid).collection("Classes");
       docRef.get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
                Clases.push({id:doc.id, data: doc.data()});
@@ -59,7 +59,7 @@ function MonthlyProgramDay(props) {
       setActive(true)
     }
 
-      var docRef = db.collection("Instructors").doc(usuario.email);
+      var docRef = db.collection("Instructors").doc(usuario.uid);
       docRef.collection('ZoomMeetingsID').where("week", "==", props.week).where("dayNumber", "==", props.dayNumber)
           .get()
           .then(snap => setclasesNumber(snap.size))

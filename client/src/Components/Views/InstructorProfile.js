@@ -24,7 +24,7 @@ const [zoomMeetingsNumber,setZoomMeetingsNumber] = useState(0)
 
 
 const deleteMeeting = (meetingID) =>{
-  var docRef = db.collection("Instructors").doc(usuario.email);
+  var docRef = db.collection("Instructors").doc(usuario.uid);
   docRef.get().then((doc)=>{
 
   if (doc.exists) {
@@ -43,7 +43,7 @@ const deleteMeeting = (meetingID) =>{
 
         fetch(url,init).then((response)=>{
 
-              var docRef = db.collection("Instructors").doc(usuario.email);
+              var docRef = db.collection("Instructors").doc(usuario.uid);
               docRef.collection('ZoomMeetingsID').where("meetingID", "==", meetingID).get()
                   .then(function(querySnapshot) {
                     querySnapshot.forEach(function(doc) {
@@ -73,7 +73,7 @@ const deleteMeeting = (meetingID) =>{
 
 
 const updateMeeting = (meetingID) =>{
-     var docRef = db.collection("Instructors").doc(usuario.email);
+     var docRef = db.collection("Instructors").doc(usuario.uid);
      docRef.get().then((doc)=>{
 
      if (doc.exists) {
@@ -123,7 +123,7 @@ const updateMeeting = (meetingID) =>{
 
 
     if (usuario) {
-      var docRef = db.collection("Instructors").doc(usuario.email);
+      var docRef = db.collection("Instructors").doc(usuario.uid);
       docRef.get().then((doc) =>{
         setprofileName(doc.data().profileName)
         setprofilePicture(doc.data().imgURL)

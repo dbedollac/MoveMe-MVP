@@ -20,10 +20,10 @@ function MonthlyProgram(props) {
     })
 
     if (usuario) {
-      var docRef = db.collection("Instructors").doc(usuario.email);
+      var docRef = db.collection("Instructors").doc(usuario.uid);
       docRef.get().then( (doc)=>{
       if (doc.exists) {
-            RefreshToken(usuario.email, doc.data().zoomRefreshToken)
+            RefreshToken(usuario.uid, doc.data().zoomRefreshToken)
         } else {
             console.log("No such document!");
         }

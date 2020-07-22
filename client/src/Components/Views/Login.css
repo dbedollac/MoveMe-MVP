@@ -11,6 +11,14 @@
   color: white;
 }
 
+.login-container h3{
+  color: white;
+}
+
+.login-container p{
+  color: white;
+}
+
 .login-form{
   background-color: rgba(0,0,0,0.8);
 }

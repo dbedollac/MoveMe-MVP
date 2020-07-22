@@ -13,7 +13,7 @@ function MonthlyProgramStatus(props) {
 
   useEffect(()=>{
     if (usuario) {
-    var docRef = db.collection("Instructors").doc(usuario.email);
+    var docRef = db.collection("Instructors").doc(usuario.uid);
       docRef.get().then((doc)=> {
           if (doc.exists) {
             setActive(doc.data().monthlyProgram.Active)
@@ -27,7 +27,7 @@ function MonthlyProgramStatus(props) {
   },[usuario])
 
   const handleSave = () =>{
-    db.collection("Instructors").doc(usuario.email).set({
+    db.collection("Instructors").doc(usuario.uid).set({
       monthlyProgram: {
         Active: !active
       }
