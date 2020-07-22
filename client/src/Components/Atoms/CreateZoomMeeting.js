@@ -47,7 +47,8 @@ const [loading,setLoading] = useState(false)
                         type: 3,
                         repeat_interval: 1,
                         monthly_week: props.week,
-                        monthly_week_day: props.dayNumber
+                        monthly_week_day: props.dayNumber,
+                        end_times: 50
                       },
                       settings: {
                         host_video: true,
@@ -63,7 +64,7 @@ const [loading,setLoading] = useState(false)
 
           fetch(url,init).then((response)=>{
               Promise.resolve(response.json()).then( (resp) =>{
-                db.collection("Instructors").doc(usuario.email).collection("ZoomMeetingsID").doc().set({
+                db.collection("Instructors").doc(usuario.email).collection("ZoomMeetingsID").doc(resp.id.toString()).set({
                   claseID: props.claseID,
                   meetingID: resp.id,
                   startTime: resp.occurrences[0].start_time,
@@ -71,10 +72,11 @@ const [loading,setLoading] = useState(false)
                   week:props.week,
                   dayNumber: props.dayNumber,
                   dayName: props.dayName
+                }).then(window.location.reload(false)).catch(function(error) {
+                    console.log("Error setting documents: ", error);
                 })
-                alert('La clase se agendó con éxito')
               }
-            ).then(window.location.reload(false))
+            )
           }, function(error) {
               console.log(error.message)
               window.location.reload(false)})

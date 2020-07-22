@@ -10,6 +10,7 @@ import queryString from 'query-string'
 import {zoomID, zoomSecret, zoomRedirectURL} from '../../Config/ZoomCredentials'
 import {db} from '../../Config/firestore'
 import {corsurl} from '../../Config/proxyURL'
+import RefreshToken from '../Atoms/RefreshToken'
 
 function Dashboard(props) {
 const { usuario } = useContext(Auth);
@@ -19,7 +20,6 @@ const [user, setUser] = useState(false);
 
 useEffect(()=>{
   let user = usuario;
-  console.log(user);
   user?user.displayName? setNombre(user.displayName):setNombre(user.email):setNombre(null)
 
   auth.onAuthStateChanged((user) => {
@@ -67,7 +67,7 @@ useEffect(()=>{
         console.log("Error getting document:", error);
     });
   }
-})
+},[usuario])
 
 
     if ((!instructor&&!user)||(instructor&&user)) {

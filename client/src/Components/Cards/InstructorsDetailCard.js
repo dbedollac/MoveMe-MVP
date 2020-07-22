@@ -27,7 +27,18 @@ const { usuario } = useContext(Auth);
       return(
         <div className='col-12 card'>
           <h2 className='text-center text-break px-2' style={{color: '#F39119'}}>{props.data.title}</h2>
-          <div className= 'card-body d-flex flex-row flex-wrap justify-content-center'>
+          <div className= 'card-body d-flex flex-row flex-wrap justify-content-start'>
+            
+            <div className='col-6 d-flex flex-column'>
+              <div className='d-flex flex-row alig-items-center justify-content-center'>
+                <CameraVideoFill size={'2em'} className='mr-2 mt-1' color="#2C8BFF" />
+                <h3>Clases por Zoom</h3>
+              </div>
+              <div style={{ overflowY: 'scroll', height:'10vw'}}>
+                <GetZoomMeetings claseID={props.claseID} />
+              </div>
+            </div>
+
             {props.data.videoURL?
             <div className='col-6'>
               <VideoPlayer Video={props.data.videoURL} videoWidth='100%' videoHeight='100%' className="text-center card-img-top"/>
@@ -49,15 +60,6 @@ const { usuario } = useContext(Auth);
               <p>{props.data.description}</p>
             </div>:null}
 
-            <div className='col-6 d-flex flex-column'>
-              <div className='d-flex flex-row alig-items-center justify-content-center'>
-                <CameraVideoFill size={'2em'} className='mr-2 mt-1' color="#2C8BFF" />
-                <h3>Clases por Zoom</h3>
-              </div>
-              <div style={{ overflowY: 'scroll', height:'10vw'}}>
-                <GetZoomMeetings claseID={props.claseID} />
-              </div>
-            </div>
           </div>
         </div>
       )

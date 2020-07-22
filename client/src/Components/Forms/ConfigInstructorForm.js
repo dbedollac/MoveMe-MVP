@@ -1,10 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useFormik } from 'formik';
-import {db} from '../../Config/firestore'
+import {db, storage} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
 import './ConfigInstructorForm.css'
+import { withRouter } from "react-router";
+import { Redirect } from 'react-router-dom'
 
-const ConfigInstructorForm = () => {
+const ConfigInstructorForm = (props) => {
 const { usuario } = useContext(Auth);
 const [data,setdata] = useState({})
 
@@ -24,6 +26,20 @@ useEffect(() => {
     });
   }
   })
+
+  const handleClick = () =>{
+      storage.ref('Pictures')
+               .child(usuario.uid+'-profile')
+               .getDownloadURL()
+               .then(url => {
+                 db.collection("Instructors").doc(usuario.email).set({
+                   imgURL: url
+                 },{ merge: true }) ;
+              }).catch(function (error) {
+                console.error("No se ha subido ninguna foto de perfil ", error)
+              });
+
+  }
 
 const validate = values => {
 const errors = {};
@@ -59,6 +75,7 @@ const formik = useFormik({
     disableTrialClasses: values.disableTrialClasses,
     },{ merge: true })
     alert('Tus datos se guardaron con éxito');
+    handleClick()
   },
 });
 
@@ -166,9 +183,9 @@ const formik = useFormik({
               onBlur={formik.handleBlur}
             />
             <br/>
-            <button type="submit" className="mt-3 btn-secondary btn-lg col-12">Guardar</button>
           </div>
         </div>
+        <button type="submit" className="mt-3 btn-secondary btn-lg col-10 justify-self-center">Guardar</button>
     </div>
   </form>
 )

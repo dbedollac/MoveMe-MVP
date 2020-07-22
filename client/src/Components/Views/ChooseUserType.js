@@ -66,7 +66,7 @@ const handleAceptar = () =>{
       }
         } else {
             if (newUser) {
-              db.collection("Users").doc(usuario.email).set({
+              db.collection("Users").doc(usuario.uid).set({
               email: usuario.email,
               uid: usuario.uid
               })

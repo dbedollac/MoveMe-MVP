@@ -39,7 +39,7 @@ function MonthlyProgramStatus(props) {
   return(
     <div className={`p-2 rounded d-flex flex-column border border-${active?`primary`:`danger`}`} style={{backgroundColor: 'white'}}>
         <p><strong>Estatus:</strong> {active?'Activo':'Inactivo'}</p>
-        <button className={`col-12 btn-${active?`secondary`:`danger`}`} onClick={active?handleShow:handleSave}>{active?'Desactivar':'Activar'}</button>
+        <button className={`col-12 btn-${active?`secondary`:`danger`}`} onClick={active?handleShow:handleShow}>{active?'Desactivar':'Activar'}</button>
 
         <Modal
           show={show}
@@ -48,14 +48,14 @@ function MonthlyProgramStatus(props) {
           keyboard={false}
         >
           <Modal.Header closeButton>
-          <Modal.Title>Desactivar programa mensual</Modal.Title>
+          <Modal.Title>{active?'Desactivar programa mensual':'Activar programa mensual'}</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-          ¿Deseas desactivar tu programa? Se cancelará el cobro mensual a todos tus clientes suscritos y no podrán acceder a tu contenido.
+          <Modal.Body>{active?'¿Deseas desactivar tu programa? Se cancelará el cobro mensual a todos tus clientes suscritos y no podrán acceder a tu contenido.':
+        'A partir del próximo domingo se activará tu programa para que obtengas nuevos miembros y todas las clases que agendaste se ofreceran individualmente para compras por asistencia.'}
           </Modal.Body>
           <Modal.Footer>
-          <Button variant="danger" onClick={handleSave}>Desactivar</Button>
           <Button variant="secondary" onClick={handleClose}>Cancelar</Button>
+          <Button variant={active?"danger":'primary'} onClick={handleSave}>{active?'Desactivar':'Activar'}</Button>
           </Modal.Footer>
         </Modal>
     </div>

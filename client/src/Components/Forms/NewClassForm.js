@@ -37,6 +37,8 @@ const handleClick = () =>{
                 }).catch(function (error) {
                   console.error("No se ha subido ninguna foto de perfil ", error)
                 });
+
+    window.location.reload(false)
 }
 
 const validate = values => {
@@ -70,14 +72,12 @@ const formik = useFormik({
       duration: values.duration,
       zoomPrice: values.zoomPrice,
       offlinePrice: values.offlinePrice,
-    },{ merge: true })
-    alert('Tu clase se creo con éxito');
+    },{ merge: true }).then(alert('Tu clase se creo con éxito'));
 
     db.collection("Instructors").doc(usuario.email).set({
       countClasses: count
     },{ merge: true });
     handleClick();
-    window.location.reload(false)
   },
 });
 

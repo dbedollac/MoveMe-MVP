@@ -114,7 +114,7 @@ router.post('/delete', function(req, res, next) {
       "method": "DELETE",
       "hostname": "api.zoom.us",
       "port": null,
-      "path": "/v2/meetings/"+req.body.meetingID,
+      "path": "/v2/meetings/"+req.body.meetingID+"?show_previous_occurrences=false",
       "headers": {
         "authorization": "Bearer "+req.body.token
       }
