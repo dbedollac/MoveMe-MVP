@@ -82,14 +82,14 @@ const handleAceptar = () =>{
   useEffect(()=>{
     auth.onAuthStateChanged((usuario) => {
       if (usuario===null) {
-          props.history.push("/login");
+          props.history.push("/market");
       }
     })
 
     usuario?usuario.displayName? setNombre(usuario.displayName):setNombre(usuario.email):setNombre(null)
     searchInstructor()
     searchUser()
-  })
+  },[usuario])
 
 
     if (aceptar) {
@@ -99,6 +99,8 @@ const handleAceptar = () =>{
         } else {
           return <Redirect to="/"/>
         }
+      }else {
+        props.history.push('/market',[props.return])
       }
     }
 

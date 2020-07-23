@@ -15,6 +15,9 @@ export default function Errores({mensaje}) {
       case 'Password should be at least 6 characters':
           return (<p style={{color:'red'}}> La clave debe tener al menos 6 caractéres. </p>)
 
+      case 'The password must be 6 characters long or more.':
+          return (<p style={{color:'red'}}> La clave debe tener al menos 6 caractéres. </p>)
+
       default:
           return <p style={{color:'red'}}> {mensaje} </p>
       }

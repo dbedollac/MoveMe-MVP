@@ -2,45 +2,48 @@ import React from "react";
 import './Header.css';
 import NavBar from "./NavBarInstructors.js"
 import { withRouter } from "react-router";
+import logo from '../Views/Images/logo.png'
 
 function Header(props){
 
-  if (props.type===0) {
-    return(
-      <header className='fixed-top'>
-      <div className="col-12 col-sm-12 d-flex flex-row align-items-center ">
-        <div className="col-4 col-md-2">
-          <img src="./logo.png" alt="Logo"/>
-        </div>
-        <div className="col-8 col-md-8 d-flex flex-row justify-content-center align-items-center">
-          <h1>{props.title}</h1>
-        </div>
-      </div>
-      </header>
-    );
-  } else {
-    if (props.type===1) {
+    if (props.instructor) {
       return(
         <header className='fixed-top'>
         <div className="col-12 d-flex flex-row align-items-center " >
             <div className="col-2">
-              <img src="./logo.png" alt="Logo"/>
+              <img src={logo} alt="Logo"/>
             </div>
             <div className="col-10">
-              <NavBar />
+              <NavBar instructor={true}/>
             </div>
         </div>
         </header>
       );
     } else {
+      if (props.user) {
+        return(
+        <header className='fixed-top'>
+        <div className="col-12 d-flex flex-row align-items-center " >
+            <div className="col-2">
+              <img src={logo} alt="Logo"/>
+            </div>
+            <div className="col-10">
+              <NavBar user={true}/>
+            </div>
+        </div>
+        </header>)
+      } else {
       return(
         <header className='fixed-top'>
         <div className="col-12 d-flex flex-row align-items-center " >
-            <div className="col-8">
-              <img src="./logo.png" alt="Logo"/>
+            <div className="col-2">
+              <img src={logo} alt="Logo"/>
             </div>
-            <div className="col-4">
-              <NavBar />
+            <div className="col-7">
+              <h1 className='text-center'>M O V E M E</h1>
+            </div>
+            <div className='col-3'>
+              <NavBar/>
             </div>
         </div>
         </header>

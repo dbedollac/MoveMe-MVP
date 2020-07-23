@@ -32,7 +32,7 @@ const [aux, setaux] = useState(true)
 
     auth.onAuthStateChanged((usuario) => {
       if (usuario===null) {
-          props.history.push("/login");
+          props.history.push("/market");
       }
     })
 
@@ -151,7 +151,7 @@ const handleRefresh = () =>{
     if (editClass&&detail) {
       return(
         <div>
-          <Header type={1} />
+        <Header instructor={true} />
           <div className='d-flex flex-row align-items-center'>
             <h2 className='col-10 text-center text-break' style={{color: '#F39119'}}>{claseDetail.data.title}</h2>
             <button className='col-2 float-right btn-lg btn-secondary mt-2 mr-2' onClick={handleEditClass}><ArrowLeft /> Regresar</button>
@@ -163,7 +163,7 @@ const handleRefresh = () =>{
     if (newclass) {
       return(
         <div>
-          <Header type={1} />
+        <Header instructor={true} />
           <div className='d-flex flex-row align-items-center'>
             <h2 className='col-10 text-center text-break' style={{color: '#F39119'}}>Clase Nueva</h2>
             <button className='col-2 float-right btn-lg btn-secondary mt-2 mr-2' onClick={handleNewClass}><ArrowLeft /> Regresar</button>
@@ -174,7 +174,7 @@ const handleRefresh = () =>{
     } else {
     return (
       <div >
-        <Header type={1} />
+      <Header instructor={true} />
           <div className='col-12 MyClasses-container d-flex flex-row'>
              <div className='col-3 MyClasses-summary d-flex flex-column justify-content-start py-2'>
              {!detail?

@@ -117,7 +117,7 @@ const updateMeeting = (meetingID) =>{
     console.log(usuario)
     auth.onAuthStateChanged((usuario) => {
       if (usuario===null) {
-          props.history.push("/login");
+          props.history.push("/market");
       }
     })
 
@@ -182,7 +182,7 @@ const updateMeeting = (meetingID) =>{
                       console.log("Error getting documents: ", error);
                   });
          }
-       },[usuario,zoomMeetings])
+       },[usuario])
 
     const handleVerMonthlyProgram = () =>{
       props.history.push("/monthly-program")
@@ -192,7 +192,7 @@ const updateMeeting = (meetingID) =>{
       <div>
       {console.log(videoClases.length)}
       {console.log(zoomMeetings[0])}
-        <Header type={1}/>
+      <Header instructor={true} />
           <div className='InstructorProfile-container'>
               <div className='text-center InstructorProfile-container-header d-flex flex-row'>
                   <div className='col-6 profilePicture' style={{

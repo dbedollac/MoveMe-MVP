@@ -1,14 +1,36 @@
-import React from "react";
-import { CollectionPlayFill, Calendar3Fill, Wallet2, PersonSquare, ExclamationCircleFill, GearFill, ArrowLeftRight} from 'react-bootstrap-icons';
+import React, { useState, useContext } from "react";
+import { CollectionPlayFill, Calendar3Fill, Wallet2, PersonSquare, ExclamationCircleFill, GearFill, ArrowLeftRight, HouseDoorFill} from 'react-bootstrap-icons';
 import {DropdownButton, Dropdown} from 'react-bootstrap'
 import {auth} from "../../Config/firestore";
+import { Auth } from "../../Config/AuthContext";
 import { withRouter } from "react-router";
 import { NavLink } from "react-router-dom";
+import {Modal, Button} from 'react-bootstrap'
+import Login from '../Forms/Login'
+import Signup from '../Forms/Signup'
 import './NavBarInstructors.css'
 
 
 function NavBar(props) {
+  const { usuario } = useContext(Auth);
+  const [show, setShow] = useState(false);
+  const [login,setLogin] = useState(false)
 
+  const handleClose = () =>{
+      setShow(false)
+      setLogin(false)
+  }
+
+  const handleShowLogIn = () =>{
+      setShow(true)
+      setLogin(true)
+  }
+
+  const handleShowSignIn = () =>{
+      setShow(true)
+  }
+
+  if (props.instructor) {
   return(
       <div className="d-flex flex-row justify-content-between">
         <div className="col-2 d-flex flex-column align-items-center pt-2 navbar-option" >
@@ -52,7 +74,43 @@ function NavBar(props) {
           </DropdownButton>
         </div>
       </div>
-  )
+  )}else{
+    if (props.user) {
+      return(
+        <div className="col-2 d-flex flex-column align-items-center  justify-content-center">
+                <DropdownButton  title='' variant='dark'>
+                  <Dropdown.Item href="account-type"><ArrowLeftRight className='mr-2'/>Cambiar tipo de cuenta</Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item onClick={()=> {auth.signOut()}}><ExclamationCircleFill className='mr-2'/>Cerrar sesión</Dropdown.Item>
+                </DropdownButton>
+        </div>
+            )
+    }else {
+      return(
+        <div >
+          {usuario?null:
+          <div className='d-flex flex-row justify-content-between'>
+            <HouseDoorFill size={'2em'} />
+            <button className='btn-light rounded' onClick={handleShowLogIn}>Ingresar</button>
+            <button className='btn-primary rounded' onClick={handleShowSignIn}>Registrarse</button>
+          </div>
+            }
+          <Modal
+            show={show}
+            onHide={handleClose}
+            backdrop="static"
+            keyboard={false}
+          >
+
+            <Modal.Body >
+              {login?<Login />:<Signup />}
+            </Modal.Body>
+
+          </Modal>
+        </div>
+      )
+    }
+  }
 }
 
 export default withRouter(NavBar)

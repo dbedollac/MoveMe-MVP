@@ -9,7 +9,7 @@ class Sales extends React.Component {
   render(){
     return (
       <div>
-        <Header type={1} />
+        <Header instructor={true} />
           <div >
             <h1> Ventas </h1>
           </div>

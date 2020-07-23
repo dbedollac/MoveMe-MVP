@@ -15,7 +15,7 @@ function MonthlyProgram(props) {
 
     auth.onAuthStateChanged((usuario) => {
       if (usuario===null) {
-          props.history.push("/login");
+          props.history.push("/market");
       }
     })
 
@@ -35,7 +35,7 @@ function MonthlyProgram(props) {
 
   return (
     <div>
-      <Header type={1}/>
+    <Header instructor={true} />
         <div className='MonthlyProgram-container'>
           <SetMonthlyProgramPrice />
           <div className='d-flex flex-row flex-wrap justify-content-center'>

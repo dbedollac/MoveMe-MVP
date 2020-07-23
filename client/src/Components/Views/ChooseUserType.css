@@ -1,10 +1,6 @@
 .chooseUserType-container{
-  background-image: url("Images/fitness-home-gray.png");
-  background-position: center;
-  background-size: cover;
-  padding-top: 5%;
+  background-color: lightgray;
   min-height: 100vh;
-  color: white;
 }
 
 .chooseUserType-pregunta{

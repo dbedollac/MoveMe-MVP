@@ -28,11 +28,12 @@ const [count, setcount] = useState(null)
       });
     }
 
-    auth.onAuthStateChanged((usuario) => {
-      if (usuario===null) {
-          props.history.push("/login");
+    auth.onAuthStateChanged((user) => {
+      if (user===null) {
+          props.history.push("/market");
       }
     })
+
   },[usuario,count])
 
     return (

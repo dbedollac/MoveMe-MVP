@@ -18,6 +18,7 @@ const [nombre, setNombre] = useState(null);
 const [instructor, setInstructor] = useState(false);
 const [user, setUser] = useState(false);
 
+
 useEffect(()=>{
   console.log(usuario)
   let user = usuario;
@@ -25,7 +26,7 @@ useEffect(()=>{
 
   auth.onAuthStateChanged((user) => {
     if (user===null) {
-        props.history.push("/login");
+        props.history.push("/market");
     }
   })
 
@@ -67,17 +68,29 @@ useEffect(()=>{
     }).catch(function(error) {
         console.log("Error getting document:", error);
     });
+
+    var docRef = db.collection("Users").doc(usuario.uid);
+    docRef.get().then((doc)=>{
+    if (doc.exists) {
+        setUser(true)
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
   }
 },[usuario])
 
 
     if ((!instructor&&!user)||(instructor&&user)) {
-      return <ChooseUserType />
+      return <ChooseUserType return={props.location.state?props.location.state[0]:''}/>
     }else {
       if (instructor) {
         return <InstructorProfile />
       }else {
-        return <MarketPlace />
+        return <MarketPlace return={props.location.state?props.location.state[0]:''}/>
       }
     }
 

@@ -43,7 +43,7 @@ useEffect(()=>{
 
     auth.onAuthStateChanged((user) => {
       if (user===null) {
-          props.history.push("/login");
+          props.history.push("/market");
       }
     })
 
@@ -52,7 +52,7 @@ useEffect(()=>{
 
     return (
       <div>
-        <Header type={newInstructor?0:1} title='M O V E M E'/>
+        <Header instructor={newInstructor?false:true} />
         <div className="col-12 configInstructor-container d-flex flex-row align-items-start pt-4">
           <div className="col-4 foto-perfil">
             <FileUpload fileType='Pictures' name={uid + '-profile'} title="Foto de perfil" overlay='profile'/>
