@@ -2,40 +2,38 @@ var express = require('express');
 var router = express.Router();
 var http = require("https");
 
-//Get Token -----------------------------------------------------------------------
-  router.post('/token', function(req, res, next) {
+    //Refresh Token -----------------------------------------------------------------------
+      router.post('/refresh-token', function(req, res, next) {
+        console.log(req.body)
 
-    var options = {
-    "method": "POST",
-    "hostname": "zoom.us/oauth/",
-    "port": null,
-    "path": "token?grant_type=refresh_token&refresh_token="+req.body.token,
-    "headers": {
-      "Authorization": "Basic "+ btoa(req.body.zoomID+':'+req.body.zoomSecret)
-    }
-  };
+        var options = {
+        "method": "POST",
+        "hostname": "zoom.us/oauth",
+        "port": null,
+        "path": "/token?grant_type=refresh_token&refresh_token="+req.body.token,
+        "headers": {
+          "Authorization": "Basic "+ btoa(req.body.zoomID+':'+req.body.zoomSecret)
+        }
+        };
 
-    var reqZoom = http.request(options, function (resZoom) {
-      var chunks = [];
+        var reqZoom = http.request(options, function (resZoom) {
+          console.log(resZoom);
+          var chunks = [];
 
-      resZoom.on("data", function (chunk) {
-        chunks.push(chunk);
-      });
+          resZoom.on("data", function (chunk) {
+            chunks.push(chunk);
+          });
 
-      resZoom.on("end", function () {
-        var body = Buffer.concat(chunks);
-        console.log(body.toString());
-        res.send(body.toString())
-      });
-    });
+          resZoom.on("end", function () {
+            var body = Buffer.concat(chunks);
+            console.log(body.toString());
+            res.send(body.toString())
+          });
+        });
 
-    reqZoom.write(JSON.stringify(
-      req.body.settings
-     ));
+        reqZoom.end();
 
-    reqZoom.end();
-
-    });
+        });
 
 //CreateZoomMeeting -----------------------------------------------------------------------
   router.post('/', function(req, res, next) {

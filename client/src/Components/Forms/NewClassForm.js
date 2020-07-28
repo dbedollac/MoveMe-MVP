@@ -15,30 +15,44 @@ useEffect(()=>{
   }
 })
 
-const handleClick = () =>{
-    storage.ref('Pictures')
+const saveMedia = async (values) =>{
+  await storage.ref('Pictures')
+           .child(usuario.uid+'-clase'+count)
+           .getDownloadURL()
+           .then(url => {
+             db.collection("Instructors").doc(usuario.uid).collection("Classes").doc('clase'+count).set({
+               imgURL: url
+             },{ merge: true }) ;
+          }).catch(function (error) {
+            console.error("No se ha subido ninguna foto de perfil ", error)
+          });
+
+  await storage.ref('Videos')
              .child(usuario.uid+'-clase'+count)
              .getDownloadURL()
              .then(url => {
                db.collection("Instructors").doc(usuario.uid).collection("Classes").doc('clase'+count).set({
-                 imgURL: url
-               },{ merge: true }) ;
-            }).catch(function (error) {
-              console.error("No se ha subido ninguna foto de perfil ", error)
-            });
+                 videoURL: url
+                 },{ merge: true }) ;
+              }).catch(function (error) {
+                console.error("No se ha subido ninguna foto de perfil ", error)
+              });
 
-    storage.ref('Videos')
-               .child(usuario.uid+'-clase'+count)
-               .getDownloadURL()
-               .then(url => {
-                 db.collection("Instructors").doc(usuario.uid).collection("Classes").doc('clase'+count).set({
-                   videoURL: url
-                   },{ merge: true }) ;
-                }).catch(function (error) {
-                  console.error("No se ha subido ninguna foto de perfil ", error)
-                });
+  await db.collection("Instructors").doc(usuario.uid).collection("Classes").doc('clase'+count).set({
+                title: values.title,
+                description: values.description,
+                type: values.type,
+                level: values.level,
+                equipment: values.equipment,
+                duration: values.duration,
+                zoomPrice: values.zoomPrice,
+                offlinePrice: values.offlinePrice,
+              },{ merge: true })
 
-    window.location.reload(false)
+   await  db.collection("Instructors").doc(usuario.uid).set({
+                countClasses: count
+              },{ merge: true });
+  return alert('Tu clase se creo con éxito')
 }
 
 const validate = values => {
@@ -58,26 +72,14 @@ const formik = useFormik({
     equipment: '',
     duration: '',
     zoomPrice: 0,
-    offlinePrice: 0
-
+    offlinePrice: 0,
+    videoURL:null,
+    imgURL:null
   },
   validate,
-  onSubmit: values => {
-    db.collection("Instructors").doc(usuario.uid).collection("Classes").doc('clase'+count).set({
-      title: values.title,
-      description: values.description,
-      type: values.type,
-      level: values.level,
-      equipment: values.equipment,
-      duration: values.duration,
-      zoomPrice: values.zoomPrice,
-      offlinePrice: values.offlinePrice,
-    },{ merge: true }).then(alert('Tu clase se creo con éxito'));
-
-    db.collection("Instructors").doc(usuario.uid).set({
-      countClasses: count
-    },{ merge: true });
-    handleClick();
+  onSubmit: async values => {
+    await saveMedia(values)
+    window.location.reload(false)
   },
 });
 

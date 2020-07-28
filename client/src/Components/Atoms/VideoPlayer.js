@@ -1,34 +1,39 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {storage} from "../../Config/firestore.js"
 import ReactPlayer from 'react-player'
 
-class VideoPlayer extends React.Component{
-  constructor(props){
-    super(props)
+function VideoPlayer(props) {
+  const [play,setPlay] = useState(true)
+
+  const handlePreview = () =>{
+    setPlay(false)
   }
 
-  render(){
+
     return(
       <div>
         <ReactPlayer
         // Disable right click
         onContextMenu={e => e.preventDefault()}
-        url={this.props.Video}
-        controls = {true}
-        light={this.props.Image}
-        width={this.props.videoWidth}
-        height={this.props.videoHeight}
+        onStart={props.market?setInterval(handlePreview,60000):null}
+        playing={play}
+        url={props.Video}
+        controls = {play}
+        light={props.Image}
+        width={props.videoWidth}
+        height={props.videoHeight}
         config={{
           file: {
             attributes: {
               onContextMenu: e => e.preventDefault(),
-              controlsList: 'nodownload'
+              controlsList: `nodownload ${props.market?'nofullscreen':null}`,
+              disablePictureInPicture: true
             }
           }
         }}/>
       </div>
     )
-  }
+
 
 }
 

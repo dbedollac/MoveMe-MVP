@@ -3,7 +3,6 @@ import Header from '../Molecules/Header'
 import { Auth } from "../../Config/AuthContext";
 import {db, auth} from '../../Config/firestore'
 import { withRouter } from "react-router";
-import { Link } from "react-router-dom";
 import { CameraVideoFill } from 'react-bootstrap-icons';
 import DisplayCarousel from '../Molecules/DisplayCarousel'
 import {proxyurl} from '../../Config/proxyURL'
@@ -184,14 +183,9 @@ const updateMeeting = (meetingID) =>{
          }
        },[usuario])
 
-    const handleVerMonthlyProgram = () =>{
-      props.history.push("/monthly-program")
-    }
 
     return (
       <div>
-      {console.log(videoClases.length)}
-      {console.log(zoomMeetings[0])}
       <Header instructor={true} />
           <div className='InstructorProfile-container'>
               <div className='text-center InstructorProfile-container-header d-flex flex-row'>
@@ -219,7 +213,6 @@ const updateMeeting = (meetingID) =>{
                           <p>Clases en Video</p>
                         </div>
                       </div>
-                      <button className='btn-light m-3 rounded btn-lg' onClick={handleVerMonthlyProgram}>Ver</button>
                     </div>
                   </div>
               </div>
@@ -228,9 +221,6 @@ const updateMeeting = (meetingID) =>{
                   <div className='col-8 d-flex flex-row alig-items-center justify-content-start'>
                     <CameraVideoFill size={'2em'} className='mr-2 mt-1' color="#2C8BFF" />
                     <h3>Próximas Clases por Zoom</h3>
-                  </div>
-                  <div className='col-4 d-flex flex-row alig-items-center justify-content-end'>
-                    <Link to="/misclases"><i>Ver todas las clases</i></Link>
                   </div>
                 </div>
                 {zoomMeetingsNumber>0?

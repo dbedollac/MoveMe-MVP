@@ -20,7 +20,6 @@ function MonthlyProgramWeek(props) {
 
       var firstNextMonth = new Date(year,month+1,1).getDay()
       var firstSundayNextMonth=firstNextMonth===0?0:7-firstNextMonth+1
-      console.log(firstSundayNextMonth);
 
       if (props.week===thisWeek) {
         setActive(true)

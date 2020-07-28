@@ -1,10 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
 import {db} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
-import StartZoomMeeting from '../Atoms/StartZoomMeeting'
+import StartZoomMeeting from '../Molecules/StartZoomMeeting'
+import { withRouter } from "react-router";
 
 function GetZoomMeetings(props) {
-  const { usuario } = useContext(Auth);
+  var { usuario } = useContext(Auth);
   const [meetings, setMeetings] = useState([])
 
   const sortMeetings = (a,b) => {
@@ -20,18 +21,20 @@ function GetZoomMeetings(props) {
     return comparison;
   }
 
-  useEffect(()=>{
-    if (usuario) {
+  useEffect( ()=>{
+
+    if (usuario||props.match.params.uid) {
+
       if (meetings.length === 0) {
       if (props.claseID) {
         var zoomMeetings = []
-        var docRef = db.collection("Instructors").doc(usuario.uid);
+        var docRef = db.collection("Instructors").doc(props.match.params.uid?props.match.params.uid:usuario.uid);
         docRef.collection('ZoomMeetingsID').where("claseID", "==", props.claseID).get()
             .then(function(querySnapshot) {
               var now = new Date(Date.now()-3600000).toISOString()
                 querySnapshot.forEach(function(doc) {
                   if(doc.data().startTime>now){
-                  zoomMeetings.push({startTime:doc.data().startTime,meetingID:doc.data().meetingID})}
+                  zoomMeetings.push({startTime:doc.data().startTime,meetingID:doc.data().meetingID, claseID:doc.data().claseID})}
                 })
                 setMeetings(zoomMeetings)
             })
@@ -42,7 +45,7 @@ function GetZoomMeetings(props) {
 
       if (props.week) {
         var zoomMeetings = []
-        var docRef = db.collection("Instructors").doc(usuario.uid);
+        var docRef = db.collection("Instructors").doc(props.match.params.uid?props.match.params.uid:usuario.uid);
         docRef.collection('ZoomMeetingsID').where("week", "==", props.week).where("dayNumber", "==", props.dayNumber)
             .get()
             .then(function(querySnapshot) {
@@ -71,11 +74,12 @@ function GetZoomMeetings(props) {
           title='Iniciar'
           meetingID={meeting.meetingID}
           monthlyProgram={props.week?true:false}
-          claseID={meeting.claseID}/>
+          claseID={meeting.claseID}
+          market={props.match.params.uid?true:false}/>
         </div>
       )):null}
     </div>
   )
 }
 
-export default GetZoomMeetings
+export default withRouter(GetZoomMeetings)

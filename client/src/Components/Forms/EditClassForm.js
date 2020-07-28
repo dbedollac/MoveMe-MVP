@@ -7,8 +7,8 @@ import { withRouter } from "react-router";
 const EditClassForm = (props) => {
 const { usuario } = useContext(Auth);
 
-const handleClick = () =>{
-    storage.ref('Pictures')
+const saveMedia = async (values) =>{
+    await storage.ref('Pictures')
              .child(usuario.uid+'-'+props.claseID)
              .getDownloadURL()
              .then(url => {
@@ -19,7 +19,7 @@ const handleClick = () =>{
               console.error("No se ha subido ninguna foto de perfil ", error)
             });
 
-    storage.ref('Videos')
+    await storage.ref('Videos')
                .child(usuario.uid+'-'+props.claseID)
                .getDownloadURL()
                .then(url => {
@@ -29,6 +29,17 @@ const handleClick = () =>{
                 }).catch(function (error) {
                   console.error("No se ha subido ninguna foto de perfil ", error)
                 });
+    await db.collection("Instructors").doc(usuario.uid).collection("Classes").doc(props.claseID).set({
+                  title: values.title,
+                  description: values.description,
+                  type: values.type,
+                  level: values.level,
+                  equipment: values.equipment,
+                  duration: values.duration,
+                  zoomPrice: values.zoomPrice,
+                  offlinePrice: values.offlinePrice,
+                },{ merge: true })
+      return  alert('Tu clase se editó con éxito');
 }
 
 const validate = values => {
@@ -52,19 +63,8 @@ const formik = useFormik({
 
   },
   validate,
-  onSubmit: values => {
-    db.collection("Instructors").doc(usuario.uid).collection("Classes").doc(props.claseID).set({
-      title: values.title,
-      description: values.description,
-      type: values.type,
-      level: values.level,
-      equipment: values.equipment,
-      duration: values.duration,
-      zoomPrice: values.zoomPrice,
-      offlinePrice: values.offlinePrice,
-    },{ merge: true })
-    alert('Tu clase se editó con éxito');
-    handleClick();
+  onSubmit: async values => {
+    await saveMedia(values)
     window.location.reload(false)
   },
 });

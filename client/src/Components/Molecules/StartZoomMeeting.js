@@ -3,7 +3,9 @@ import {proxyurl} from '../../Config/proxyURL'
 import {db} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
 import { CameraVideoFill } from 'react-bootstrap-icons';
-import DeleteZoomMeeting from './DeleteZoomMeeting'
+import DeleteZoomMeeting from '../Atoms/DeleteZoomMeeting'
+import AddToCar from '../Atoms/AddToCar'
+import { withRouter } from "react-router";
 
 
 function StartZoomMeeting(props) {
@@ -13,8 +15,10 @@ function StartZoomMeeting(props) {
   const zoomDate = new Date(props.startTime)
   const [claseTitle, setclaseTitle] = useState(null)
   const [time,setTime] = useState(null)
+  const [price,setPrice] = useState(null)
 
   useEffect(()=>{
+
     if (zoomDate) {
       var days = zoomDate.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
       var month = (zoomDate.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
@@ -28,11 +32,23 @@ function StartZoomMeeting(props) {
     }
 
     if(props.claseID){
-      var docRef = db.collection("Instructors").doc(usuario.uid);
+      var docRef = db.collection("Instructors").doc(props.market?props.match.params.uid:usuario.uid);
       docRef.collection('Classes').doc(props.claseID)
           .get()
           .then( doc =>
               setclaseTitle(doc.data().title)
+          )
+          .catch(function(error) {
+              console.log("Error getting documents: ", error);
+          });
+    }
+
+    if (props.market&&props.claseID) {
+      var docRef = db.collection("Instructors").doc(props.match.params.uid);
+      docRef.collection('Classes').doc(props.claseID)
+          .get()
+          .then( doc =>
+              setPrice(doc.data().zoomPrice)
           )
           .catch(function(error) {
               console.log("Error getting documents: ", error);
@@ -81,11 +97,12 @@ function StartZoomMeeting(props) {
 
   return(
     <div className='card card-link d-flex flex-row align-items-center justify-content-around'>
-      {props.monthlyProgram? <div className='col-1'><DeleteZoomMeeting meetingID={props.meetingID} meetingTitle={claseTitle} meetingTime={time} /></div>:null}
-      {props.monthlyProgram?<p className='mt-2 col-7'>{time} {claseTitle}</p>:<p className='mt-2'>{dateTime}</p>}
-      <button className='btn-primary' onClick={startMeeting}>{props.monthlyProgram?<CameraVideoFill />:null} {props.title}</button>
+      {props.monthlyProgram? props.market?null:<div className='col-1'><DeleteZoomMeeting meetingID={props.meetingID} meetingTitle={claseTitle} meetingTime={time} /></div>:null}
+      {props.monthlyProgram?<p className='mt-2 col-7'>{props.market?'$'+price:null} {time} {claseTitle}</p>:<p className='mt-2'>{props.market?'$'+price:null} {dateTime}</p>}
+      {props.market?<AddToCar />
+      :<button className='btn-primary' onClick={startMeeting}>{props.monthlyProgram?<CameraVideoFill />:null} {props.title}</button>}
     </div>
   )
 }
 
-export default StartZoomMeeting
+export default withRouter(StartZoomMeeting)

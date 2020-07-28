@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
-import { CollectionPlayFill, Calendar3Fill, Wallet2, PersonSquare, ExclamationCircleFill, GearFill, ArrowLeftRight, HouseDoorFill} from 'react-bootstrap-icons';
+import { AwardFill, CollectionPlayFill, Calendar3Fill, Wallet2, PersonSquare, ExclamationCircleFill, GearFill, ArrowLeftRight, HouseDoorFill} from 'react-bootstrap-icons';
 import {DropdownButton, Dropdown} from 'react-bootstrap'
-import {auth} from "../../Config/firestore";
+import {db, auth} from "../../Config/firestore";
 import { Auth } from "../../Config/AuthContext";
 import { withRouter } from "react-router";
 import { NavLink } from "react-router-dom";
@@ -14,7 +14,8 @@ import './NavBarInstructors.css'
 function NavBar(props) {
   const { usuario } = useContext(Auth);
   const [show, setShow] = useState(false);
-  const [login,setLogin] = useState(false)
+  const [login,setLogin] = useState(false);
+  const [profileName,setprofileName] = useState("")
 
   const handleClose = () =>{
       setShow(false)
@@ -30,11 +31,25 @@ function NavBar(props) {
       setShow(true)
   }
 
+  const searchProfileName = () =>{
+      var docRef = db.collection("Instructors").doc(usuario.uid);
+      docRef.get().then((doc)=>{
+      if (doc.exists) {
+          setprofileName(doc.data().profileName)
+      } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+      }
+      }).catch(function(error) {
+          console.log("Error getting document:", error);
+      });
+  }
+
   if (props.instructor) {
   return(
       <div className="d-flex flex-row justify-content-between">
         <div className="col-2 d-flex flex-column align-items-center pt-2 navbar-option" >
-          <NavLink to='instructor-profile' className='text-center' activeClassName="navbar-selected">
+          <NavLink to='/instructor-profile' className='text-center' activeClassName="navbar-selected">
             <div className='col-12 '>
               <PersonSquare size={'2em'}/>
               <p className="icon4">Perfil</p>
@@ -42,7 +57,7 @@ function NavBar(props) {
           </ NavLink>
         </div>
         <div className="col-2 d-flex flex-column align-items-center pt-2 navbar-option" activeClassName="navbar-selected" >
-          <NavLink to='misclases' className='text-center' activeClassName="navbar-selected">
+          <NavLink to='/misclases' className='text-center' activeClassName="navbar-selected">
             <div className='col-12 '>
               <CollectionPlayFill size={'2em'}/>
               <p>Mis Clases</p>
@@ -50,15 +65,15 @@ function NavBar(props) {
           </ NavLink>
         </div>
         <div className="col-3 d-flex flex-column align-items-center pt-2 navbar-option" >
-          <NavLink to='monthly-program' className='text-center col-12' activeClassName="navbar-selected">
+          <NavLink to='/monthly-program' className='text-center col-12' activeClassName="navbar-selected">
             <div className='col-12 '>
               <Calendar3Fill size={'2em'}/>
               <p className='text-center'>Programa Mensual</p>
             </div>
           </ NavLink>
         </div>
-        <div className="col-2 d-flex flex-column align-items-center pt-2 navbar-option" >
-          <NavLink to='sales' className='text-center' activeClassName="navbar-selected">
+        <div className="col-2  d-flex flex-column align-items-center pt-2 navbar-option" >
+          <NavLink to='/sales' className='text-center' activeClassName="navbar-selected">
             <div className='col-12 '>
               <Wallet2 size={'2em'} />
               <p>Ventas</p>
@@ -66,9 +81,10 @@ function NavBar(props) {
           </ NavLink>
         </div>
         <div className="col-2 d-flex flex-column align-items-center  justify-content-center">
-          <DropdownButton  title='' variant='dark'>
-            <Dropdown.Item href="configuration-instructor"><GearFill className='mr-2'/>Configuración</Dropdown.Item>
-            <Dropdown.Item href="account-type"><ArrowLeftRight className='mr-2'/>Cambiar tipo de cuenta</Dropdown.Item>
+          <DropdownButton  title='' variant='dark' onClick={searchProfileName}>
+            <Dropdown.Item href={`coach-${profileName.replace(/ /g,'-')}/${usuario?usuario.uid:null}`}><AwardFill className='mr-2'/>Ver mi página comercial</Dropdown.Item>
+            <Dropdown.Item href="/configuration-instructor"><GearFill className='mr-2'/>Configuración</Dropdown.Item>
+            <Dropdown.Item href="/account-type"><ArrowLeftRight className='mr-2'/>Cambiar tipo de cuenta</Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item onClick={()=> {auth.signOut()}}><ExclamationCircleFill className='mr-2'/>Cerrar sesión</Dropdown.Item>
           </DropdownButton>
@@ -79,7 +95,7 @@ function NavBar(props) {
       return(
         <div className="col-2 d-flex flex-column align-items-center  justify-content-center">
                 <DropdownButton  title='' variant='dark'>
-                  <Dropdown.Item href="account-type"><ArrowLeftRight className='mr-2'/>Cambiar tipo de cuenta</Dropdown.Item>
+                  <Dropdown.Item href="/account-type"><ArrowLeftRight className='mr-2'/>Cambiar tipo de cuenta</Dropdown.Item>
                   <Dropdown.Divider />
                   <Dropdown.Item onClick={()=> {auth.signOut()}}><ExclamationCircleFill className='mr-2'/>Cerrar sesión</Dropdown.Item>
                 </DropdownButton>
@@ -113,4 +129,4 @@ function NavBar(props) {
   }
 }
 
-export default withRouter(NavBar)
+export default NavBar

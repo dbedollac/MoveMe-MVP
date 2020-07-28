@@ -46,6 +46,11 @@ function MonthlyProgramDay(props) {
     if (props.dayDate) {
       getDayDate()
     }
+
+    if(props.match.params.uid){
+      setdateAux(true)
+    }
+
   },[usuario,dateAux])
 
   const getDayDate = () =>{
@@ -59,7 +64,7 @@ function MonthlyProgramDay(props) {
       setActive(true)
     }
 
-      var docRef = db.collection("Instructors").doc(usuario.uid);
+      var docRef = db.collection("Instructors").doc(props.match.params.uid?props.match.params.uid:usuario.uid);
       docRef.collection('ZoomMeetingsID').where("week", "==", props.week).where("dayNumber", "==", props.dayNumber)
           .get()
           .then(snap => setclasesNumber(snap.size))
@@ -162,9 +167,10 @@ function MonthlyProgramDay(props) {
       <Collapse in={open}>
         <div id="example-collapse-text ">
           <div className ='col-12 d-flex flex-column align-items-center mb-2'>
+          {props.match.params.uid?null:
             <Button variant="outline-primary" onClick={handleShow} className='col-8'>
               Agregar clase <PlusCircleFill/>
-            </Button>
+            </Button>}
           </div>
            <GetZoomMeetings week={props.week<5?props.week:-1} dayNumber={props.dayNumber} />
         </div>

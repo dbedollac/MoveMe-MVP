@@ -25,20 +25,36 @@ const [detail, setdetail] = useState(false)
 const [claseDetail, setclaseDetail] = useState(null)
 const [editClass, seteditClass] = useState(false)
 const [aux, setaux] = useState(true)
+const [user, setUser] = useState(false);
 
 
   useEffect(()=>{
 
+    if (!props.market) {
+      auth.onAuthStateChanged((usuario) => {
+        if (usuario===null) {
+            props.history.push("/market");
+        }
+      })
+    }
 
-    auth.onAuthStateChanged((usuario) => {
-      if (usuario===null) {
-          props.history.push("/market");
+    if (usuario) {
+      var docRef = db.collection("Users").doc(usuario.uid);
+       docRef.get().then((doc)=>{
+      if (doc.exists) {
+          setUser(true)
+      } else {
+          // doc.data() will be undefined in this case
+          console.log("No es usuario");
       }
-    })
+      }).catch(function(error) {
+          console.log("Error getting document:", error);
+      });
+    }
 
-    if(usuario&&aux){
+    if((usuario||props.match.params.uid)&&aux){
     var Clases = []
-    var docRef = db.collection("Instructors").doc(usuario.uid).collection("Classes");
+    var docRef = db.collection("Instructors").doc(props.match.params.uid?props.match.params.uid:usuario.uid).collection("Classes");
     docRef.get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
              Clases.push({id:doc.id, data: doc.data()});
@@ -174,7 +190,7 @@ const handleRefresh = () =>{
     } else {
     return (
       <div >
-      <Header instructor={true} />
+      <Header instructor={usuario?user?false:true:null} user={usuario?user?true:false:null}/>
           <div className='col-12 MyClasses-container d-flex flex-row'>
              <div className='col-3 MyClasses-summary d-flex flex-column justify-content-start py-2'>
              {!detail?
@@ -226,16 +242,26 @@ const handleRefresh = () =>{
                     </select>
                   </div>
                 </form>
+                {props.market?
+                  <div className='d-flex flex-column'>
+                    <button className='btn-secondary rounded btn-lg' onClick={handleRefresh}><ArrowLeft /> Regresar</button>
+                  </div>
+                  :
                 <div className='d-flex flex-row mt-5 align-items-center justify-content-center'>
                   <PlusCircleFill size={'3em'} className='mr-2' onClick={handleNewClass} style={{cursor:'pointer'}}/>
                   <h3>Nueva Clase</h3>
-                </div>
+                </div>}
               </div>
-              :claseDetail?
+              :claseDetail? !props.market?
               <div className='d-flex flex-column'>
                 <CreateZoomMeetingCard meetingTopic={claseDetail.data.title} meetingType={2} claseID={claseDetail.id}/>
                 <button className='btn-lg btn-secondary my-3' onClick={handleEditClass}>Editar clase <PencilSquare /></button>
-              </div>:null }
+              </div>:
+              <div>
+                <h4>Clase por Zoom: ${claseDetail.data.zoomPrice}</h4>
+                <h4>Renta de Video: ${claseDetail.data.offlinePrice}</h4>
+              </div>
+                :null }
             </div>
 
             <div className='p-2 d-flex flex-row flex-wrap justify-content-start clases-container'>

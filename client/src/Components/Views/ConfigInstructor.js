@@ -54,19 +54,19 @@ useEffect(()=>{
       <div>
         <Header instructor={newInstructor?false:true} />
         <div className="col-12 configInstructor-container d-flex flex-row align-items-start pt-4">
-          <div className="col-4 foto-perfil">
+          <div className="col-4 foto-perfil d-flex flex-column justify-content-around">
             <FileUpload fileType='Pictures' name={uid + '-profile'} title="Foto de perfil" overlay='profile'/>
-          </div>
-          <div className="col-8 d-flex flex-column">
-            <div className="col-12 d-flex align-self-center">
-              <ConfigInstructorForm/>
-            </div>
             <div className='col-12 d-flex flex-row justify-content-center align-items-center zoom-button p-2 mt-2'>
               <div className='d-flex flex-column align-items-center'>
                 {zoomButton ? <p style={{color: 'gray'}}>Guarda primero tus datos de perfil</p> : null}
                 <GetZoomToken disable={zoomButton}/>
               </div>
                 <CameraVideoFill size={80} className='ml-5' color="#2C8BFF" />
+            </div>
+          </div>
+          <div className="col-8 d-flex flex-column">
+            <div className="col-12 d-flex align-self-center">
+              <ConfigInstructorForm/>
             </div>
           </div>
         </div>

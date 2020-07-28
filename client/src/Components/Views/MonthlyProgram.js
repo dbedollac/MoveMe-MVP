@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import Header from '../Molecules/Header'
 import MonthlyProgramWeek from '../Cards/MonthlyProgramWeek'
 import RefreshToken from '../Atoms/RefreshToken'
-import SetMonthlyProgramPrice from '../Atoms/SetMonthlyProgramPrice'
+import SetMonthlyProgramPrice from '../Molecules/SetMonthlyProgramPrice'
 import {db,auth} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
 import { withRouter } from "react-router";
@@ -10,14 +10,17 @@ import './MonthlyProgram.css'
 
 function MonthlyProgram(props) {
   const { usuario } = useContext(Auth);
+  const [user, setUser] = useState(false);
 
   useEffect(()=>{
 
-    auth.onAuthStateChanged((usuario) => {
-      if (usuario===null) {
-          props.history.push("/market");
-      }
-    })
+    if (!props.market) {
+      auth.onAuthStateChanged((usuario) => {
+        if (usuario===null) {
+            props.history.push("/market");
+        }
+      })
+    }
 
     if (usuario) {
       var docRef = db.collection("Instructors").doc(usuario.uid);
@@ -30,14 +33,26 @@ function MonthlyProgram(props) {
         }).catch(function(error) {
             console.log("Error getting document:", error);
         });
+
+        var docRef2 = db.collection("Users").doc(usuario.uid);
+        docRef2.get().then((doc)=>{
+       if (doc.exists) {
+           setUser(true)
+       } else {
+           // doc.data() will be undefined in this case
+           console.log("No es usuario");
+       }
+       }).catch(function(error) {
+           console.log("Error getting document:", error);
+       });
     }
   },[usuario])
 
   return (
     <div>
-    <Header instructor={true} />
+    <Header instructor={usuario?user?false:true:null} user={usuario?user?true:false:null}/>
         <div className='MonthlyProgram-container'>
-          <SetMonthlyProgramPrice />
+          <SetMonthlyProgramPrice market={props.match.params.uid?true:false}/>
           <div className='d-flex flex-row flex-wrap justify-content-center'>
             <div className='col-5 mt-2'>
               <MonthlyProgramWeek week={1}/>
