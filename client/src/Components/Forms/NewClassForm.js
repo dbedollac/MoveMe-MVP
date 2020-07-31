@@ -7,6 +7,8 @@ import { withRouter } from "react-router";
 const NewClassForm = (props) => {
 const { usuario } = useContext(Auth);
 const [count, setcount] =useState(0)
+const [img,setIMG] = useState(null)
+const [video,setVideo] = useState(null)
 
 
 useEffect(()=>{
@@ -20,6 +22,7 @@ const saveMedia = async (values) =>{
            .child(usuario.uid+'-clase'+count)
            .getDownloadURL()
            .then(url => {
+             setIMG(url)
              db.collection("Instructors").doc(usuario.uid).collection("Classes").doc('clase'+count).set({
                imgURL: url
              },{ merge: true }) ;
@@ -31,6 +34,7 @@ const saveMedia = async (values) =>{
              .child(usuario.uid+'-clase'+count)
              .getDownloadURL()
              .then(url => {
+               setVideo(url)
                db.collection("Instructors").doc(usuario.uid).collection("Classes").doc('clase'+count).set({
                  videoURL: url
                  },{ merge: true }) ;
@@ -46,7 +50,7 @@ const saveMedia = async (values) =>{
                 equipment: values.equipment,
                 duration: values.duration,
                 zoomPrice: values.zoomPrice,
-                offlinePrice: values.offlinePrice,
+                offlinePrice: values.offlinePrice
               },{ merge: true })
 
    await  db.collection("Instructors").doc(usuario.uid).set({
@@ -67,14 +71,12 @@ const formik = useFormik({
   initialValues: {
     title: '',
     description: '',
-    type: '',
-    level: '',
+    type: 'estiramiento',
+    level: 'principiantes',
     equipment: '',
     duration: '',
     zoomPrice: 0,
-    offlinePrice: 0,
-    videoURL:null,
-    imgURL:null
+    offlinePrice: 0
   },
   validate,
   onSubmit: async values => {

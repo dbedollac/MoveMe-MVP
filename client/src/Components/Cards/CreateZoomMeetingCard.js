@@ -65,7 +65,7 @@ const [loading,setLoading] = useState(false)
             ).then(window.location.reload(false))
           }, function(error) {
               console.log(error.message)
-              window.location.reload(false)})
+              })
 
         } else {
          console.log("No such document!");

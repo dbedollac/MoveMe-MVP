@@ -32,7 +32,7 @@ function StartZoomMeeting(props) {
     }
 
     if(props.claseID){
-      var docRef = db.collection("Instructors").doc(props.market?props.match.params.uid:usuario.uid);
+      var docRef = db.collection("Instructors").doc(props.match.params.uid?props.match.params.uid:props.instructor?props.instructor.id:usuario.uid);
       docRef.collection('Classes').doc(props.claseID)
           .get()
           .then( doc =>
@@ -44,7 +44,7 @@ function StartZoomMeeting(props) {
     }
 
     if (props.market&&props.claseID) {
-      var docRef = db.collection("Instructors").doc(props.match.params.uid);
+      var docRef = db.collection("Instructors").doc(props.match.params.uid?props.match.params.uid:props.instructor?props.instructor.id:usuario.uid);
       docRef.collection('Classes').doc(props.claseID)
           .get()
           .then( doc =>

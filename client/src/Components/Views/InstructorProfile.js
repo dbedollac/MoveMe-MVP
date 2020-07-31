@@ -14,12 +14,11 @@ const [profileName, setprofileName] = useState(null)
 const [profilePicture, setprofilePicture] = useState(null)
 const [selfDescription, setselfDescription] = useState(null)
 const [monthlyProgramPrice, setmonthlyProgramPrice] = useState(null)
-const [clasesNumber, setclasesNumber] = useState(0)
-const [videosNumber, setvideosNumber] = useState(0)
-const [videoClases, setvideoClases] = useState([])
+const [instructor, setInstructor] = useState(null)
 const [allClases, setallClases] = useState([])
 const [zoomMeetings,setZoomMeetings] = useState([])
-const [zoomMeetingsNumber,setZoomMeetingsNumber] = useState(0)
+const [zoomMeetingsProgram,setZoomMeetingsProgram] = useState(0)
+const [videoClases, setvideoClases] = useState([])
 
 
 const deleteMeeting = (meetingID) =>{
@@ -128,60 +127,41 @@ const updateMeeting = (meetingID) =>{
         setprofilePicture(doc.data().imgURL)
         setselfDescription(doc.data().selfDescription)
         setmonthlyProgramPrice(doc.data().monthlyProgram.Price)
+        setInstructor(doc.data())
       })
 
-      docRef.collection('ZoomMeetingsID').where("monthlyProgram", "==", true)
-          .get()
-          .then(snap => setclasesNumber(snap.size))
-          .catch(function(error) {
-              console.log("Error getting documents: ", error);
-          })
-
-      docRef.collection('Classes').where("videoURL", ">=", "")
-              .get()
-              .then((querySnapshot) => {
-                  querySnapshot.forEach((doc) => {
-                       videoClases.push({id:doc.id, data: doc.data()});
-                  });
-                  setvideosNumber(videoClases.length)
-              })
-              .catch(function(error) {
-                  console.log("Error getting documents: ", error);
-              })
-
-      docRef.collection('Classes')
+      if (allClases.length===0) {
+       docRef.collection('Classes')
                       .get()
                       .then((querySnapshot) => {
+                          setvideoClases(allClases.filter(item => item.data.videoURL!==undefined))
                           querySnapshot.forEach((doc) => {
                                allClases.push({id:doc.id, data: doc.data()});
                           });
                       })
                       .catch(function(error) {
                           console.log("Error getting documents: ", error);
-                      })
+                      })}
 
-      docRef.collection('ZoomMeetingsID').get()
+      if (zoomMeetings.length===0) {
+       docRef.collection('ZoomMeetingsID').get()
                   .then(function(querySnapshot) {
+                    setZoomMeetingsProgram(zoomMeetings.filter(item => item.monthlyProgram===true))
                     var now = new Date(Date.now()-3600000).toISOString()
-                    setZoomMeetingsNumber(querySnapshot.size)
                       querySnapshot.forEach(function(doc) {
                         if(doc.data().startTime>now){
-                        zoomMeetings.push({startTime:doc.data().startTime,meetingID:doc.data().meetingID,claseID:doc.data().claseID})}
-                        else {
-                        if(!doc.data().monthlyProgram){
-                          deleteMeeting(doc.data().meetingID)
-                        }else{
-                          updateMeeting(doc.data().meetingID)
-                          }
-                        }
-                      })
-                      setZoomMeetings(zoomMeetings)
+                        zoomMeetings.push({startTime:doc.data().startTime,meetingID:doc.data().meetingID,claseID:doc.data().claseID, monthlyProgram:doc.data().monthlyProgram})}
+                      }
+
+                    )
                   })
                   .catch(function(error) {
                       console.log("Error getting documents: ", error);
                   });
+                }
+
          }
-       },[usuario])
+       },[profileName,usuario])
 
 
     return (
@@ -205,11 +185,11 @@ const updateMeeting = (meetingID) =>{
                       </div>
                       <div className='d-flex flex-row'>
                         <div className='col-6 monthlyProgram-clasesZoom d-flex flex-column'>
-                          <p style={{ fontSize: '40px'}}>{clasesNumber}</p>
+                          <p style={{ fontSize: '40px'}}>{zoomMeetingsProgram.length}</p>
                           <p>Clases por Zoom</p>
                         </div>
                         <div className='col-6 d-flex flex-column'>
-                          <p style={{ fontSize: '40px'}}>{videosNumber}</p>
+                          <p style={{ fontSize: '40px'}}>{videoClases.length}</p>
                           <p>Clases en Video</p>
                         </div>
                       </div>
@@ -223,14 +203,14 @@ const updateMeeting = (meetingID) =>{
                     <h3>Próximas Clases por Zoom</h3>
                   </div>
                 </div>
-                {zoomMeetingsNumber>0?
-                <DisplayCarousel allClases={allClases} zoomMeetings={zoomMeetings}/>:
+                {zoomMeetings.length>0?
+                <DisplayCarousel allClases={allClases} zoomMeetings={zoomMeetings} instructor={{data:instructor,id:usuario.uid}}/>:
                 <h4 style={{color:'gray'}} className='text-center py-5'><i>No se ha agendado ninguna clase por Zoom</i></h4>}
                 <div className='d-flex flex-row'>
                     <h3>Clases en Video</h3>
                 </div>
                 {videoClases.length>0?
-                <DisplayCarousel allClases={allClases} array={videoClases}/>:
+                <DisplayCarousel allClases={allClases} array={videoClases} instructor={{data:instructor,id:usuario.uid}}/>:
                 <h4 style={{color:'gray'}} className='text-center py-5'><i>No hay clases con video</i></h4>}
             </div>
       </div>

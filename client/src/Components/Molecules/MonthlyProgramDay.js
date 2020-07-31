@@ -172,7 +172,7 @@ function MonthlyProgramDay(props) {
               Agregar clase <PlusCircleFill/>
             </Button>}
           </div>
-           <GetZoomMeetings week={props.week<5?props.week:-1} dayNumber={props.dayNumber} />
+           <GetZoomMeetings week={props.week<5?props.week:-1} dayNumber={props.dayNumber} instructor={props.instructor}/>
         </div>
       </Collapse>
 

@@ -23,13 +23,19 @@ function GetZoomMeetings(props) {
 
   useEffect( ()=>{
 
-    if (usuario||props.match.params.uid) {
+    if (usuario||props.match.params.uid||props.instructor) {
+
 
       if (meetings.length === 0) {
       if (props.claseID) {
         var zoomMeetings = []
-        var docRef = db.collection("Instructors").doc(props.match.params.uid?props.match.params.uid:usuario.uid);
-        docRef.collection('ZoomMeetingsID').where("claseID", "==", props.claseID).get()
+        var docRef = db.collection("Instructors").doc(props.match.params.uid?props.match.params.uid:props.instructor?props.instructor.id:usuario.uid);
+        if (props.instructor&&!props.instructor.data.monthlyProgram.Active) {
+          var ref = docRef.collection('ZoomMeetingsID').where("claseID", "==", props.claseID).where('monthlyProgram','==',false)
+        } else {
+          var ref = docRef.collection('ZoomMeetingsID').where("claseID", "==", props.claseID)
+        }
+        ref.get()
             .then(function(querySnapshot) {
               var now = new Date(Date.now()-3600000).toISOString()
                 querySnapshot.forEach(function(doc) {
@@ -45,9 +51,13 @@ function GetZoomMeetings(props) {
 
       if (props.week) {
         var zoomMeetings = []
-        var docRef = db.collection("Instructors").doc(props.match.params.uid?props.match.params.uid:usuario.uid);
-        docRef.collection('ZoomMeetingsID').where("week", "==", props.week).where("dayNumber", "==", props.dayNumber)
-            .get()
+        var docRef = db.collection("Instructors").doc(props.match.params.uid?props.match.params.uid:props.instructor?props.instructor.id:usuario.uid);
+        if (props.instructor&&!props.instructor.data.monthlyProgram.Active) {
+          var ref = docRef.collection('ZoomMeetingsID').where("week", "==", props.week).where("dayNumber", "==", props.dayNumber).where('monthlyProgram','==',false)
+        } else {
+          var ref = docRef.collection('ZoomMeetingsID').where("week", "==", props.week).where("dayNumber", "==", props.dayNumber)
+        }
+        ref.get()
             .then(function(querySnapshot) {
               var now = new Date(Date.now()-3600000).toISOString()
                 querySnapshot.forEach(function(doc) {
@@ -60,8 +70,8 @@ function GetZoomMeetings(props) {
                 console.log("Error getting documents: ", error);
             });
       }
-
     }
+
           }
         })
 
@@ -75,7 +85,8 @@ function GetZoomMeetings(props) {
           meetingID={meeting.meetingID}
           monthlyProgram={props.week?true:false}
           claseID={meeting.claseID}
-          market={props.match.params.uid?true:false}/>
+          market={props.match.params.uid||props.market?true:false}
+          instructor={props.instructor}/>
         </div>
       )):null}
     </div>

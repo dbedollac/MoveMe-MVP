@@ -23,6 +23,7 @@ function MonthlyProgram(props) {
     }
 
     if (usuario) {
+      if(!props.market){
       var docRef = db.collection("Instructors").doc(usuario.uid);
       docRef.get().then( (doc)=>{
       if (doc.exists) {
@@ -32,7 +33,7 @@ function MonthlyProgram(props) {
         }
         }).catch(function(error) {
             console.log("Error getting document:", error);
-        });
+        });}
 
         var docRef2 = db.collection("Users").doc(usuario.uid);
         docRef2.get().then((doc)=>{
@@ -50,24 +51,24 @@ function MonthlyProgram(props) {
 
   return (
     <div>
-    <Header instructor={usuario?user?false:true:null} user={usuario?user?true:false:null}/>
+    <Header instructor={usuario?user?!props.match.params.uid?true:false:true:null} user={usuario?user?true:false:null}/>
         <div className='MonthlyProgram-container'>
-          <SetMonthlyProgramPrice market={props.match.params.uid?true:false}/>
+          <SetMonthlyProgramPrice market={props.match.params.uid?true:false} instructor={props.instructor}/>
           <div className='d-flex flex-row flex-wrap justify-content-center'>
             <div className='col-5 mt-2'>
-              <MonthlyProgramWeek week={1}/>
+              <MonthlyProgramWeek week={1} instructor={props.instructor}/>
             </div>
             <div className='col-5 mt-2'>
-              <MonthlyProgramWeek week={2}/>
+              <MonthlyProgramWeek week={2} instructor={props.instructor}/>
             </div>
             <div className='col-5 mt-2'>
-              <MonthlyProgramWeek week={3}/>
+              <MonthlyProgramWeek week={3} instructor={props.instructor}/>
             </div>
             <div className='col-5 mt-2'>
-              <MonthlyProgramWeek week={4}/>
+              <MonthlyProgramWeek week={4} instructor={props.instructor}/>
             </div>
             <div className='col-5 mt-2'>
-              <MonthlyProgramWeek week={5}/>
+              <MonthlyProgramWeek week={5} instructor={props.instructor}/>
             </div>
           </div>
         </div>

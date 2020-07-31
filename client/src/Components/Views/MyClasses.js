@@ -190,7 +190,7 @@ const handleRefresh = () =>{
     } else {
     return (
       <div >
-      <Header instructor={usuario?user?false:true:null} user={usuario?user?true:false:null}/>
+        <Header instructor={usuario?user?!props.match.params.uid?true:false:true:null} user={usuario?user?true:false:null}/>
           <div className='col-12 MyClasses-container d-flex flex-row'>
              <div className='col-3 MyClasses-summary d-flex flex-column justify-content-start py-2'>
              {!detail?
@@ -267,7 +267,7 @@ const handleRefresh = () =>{
             <div className='p-2 d-flex flex-row flex-wrap justify-content-start clases-container'>
             {detail&&claseDetail?
               <div style={{position: 'relative'}}>
-                <InstructorsDetailCard data={claseDetail.data} claseID={claseDetail.id}/>
+                <InstructorsDetailCard data={claseDetail.data} claseID={claseDetail.id} market={props.market?props.market:false} instructor={props.instructor}/>
                 <X className='float-left'size={'2em'} onClick={handleDetail} style={{position: 'absolute', top:'0%', left:'0%',cursor:'pointer'}}/>
               </div>:
 

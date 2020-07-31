@@ -45,6 +45,12 @@ function SetMonthlyProgramPrice(props) {
     window.location.reload(false)
   }
 
+  if (props.instructor&&!props.instructor.data.monthlyProgram.Active) {
+    return (<div className='d-flex flex-row align-items-center justify-content-around p-3'>
+              <h3 style={{color:'gray'}}><i>Este programa no está activo</i></h3>
+              <button className='btn-secondary rounded btn-lg' onClick={handleBack}><ArrowLeft /> Regresar</button>
+            </div>)
+  } else {
   return(
       <div className='card-header d-flex flex-row'>
         <div className='col-10 d-flex flex-row p-3 justify-content-center align-items-center'>
@@ -77,6 +83,6 @@ function SetMonthlyProgramPrice(props) {
             <MonthlyProgramStatus />
         </div>}
       </div>
-            )
+    )}
 }
   export default withRouter(SetMonthlyProgramPrice)

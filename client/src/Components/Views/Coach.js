@@ -17,6 +17,7 @@ function Coach(props) {
   const [profilePicture, setprofilePicture] = useState(null)
   const [selfDescription, setselfDescription] = useState(null)
   const [monthlyProgramPrice, setmonthlyProgramPrice] = useState(null)
+  const [instructor, setInstructor] = useState(null)
   const [allClases, setallClases] = useState([])
   const [zoomMeetings,setZoomMeetings] = useState([])
   const [zoomMeetingsProgram,setZoomMeetingsProgram] = useState(0)
@@ -55,13 +56,14 @@ function Coach(props) {
         setprofilePicture(doc.data().imgURL)
         setselfDescription(doc.data().selfDescription)
         setmonthlyProgramPrice(doc.data().monthlyProgram.Price)
+        setInstructor(doc.data())
       })
 
       if (allClases.length===0) {
        docRef.collection('Classes')
                       .get()
                       .then((querySnapshot) => {
-                          setvideoClases(allClases.filter(item => item.data.videoURL!==null))
+                          setvideoClases(allClases.filter(item => item.data.videoURL!==undefined))
                           querySnapshot.forEach((doc) => {
                                allClases.push({id:doc.id, data: doc.data()});
                           });
@@ -74,7 +76,6 @@ function Coach(props) {
        docRef.collection('ZoomMeetingsID').get()
                   .then(function(querySnapshot) {
                     setZoomMeetingsProgram(zoomMeetings.filter(item => item.monthlyProgram===true))
-                    setZoomMeetings(zoomMeetings)
                     var now = new Date(Date.now()-3600000).toISOString()
                       querySnapshot.forEach(function(doc) {
                         if(doc.data().startTime>now){
@@ -91,10 +92,10 @@ function Coach(props) {
        },[profileName])
 
   if (monthlyProgram) {
-    return <MonthlyProgram market={props.match.params.uid?true:false}/>
+    return <MonthlyProgram market={props.match.params.uid?true:false} instructor={{data:instructor,id:uid}}/>
   }else {
     if (myClasses) {
-      return <MyClasses market={props.match.params.uid?true:false}/>
+      return <MyClasses market={props.match.params.uid?true:false} instructor={{data:instructor,id:uid}}/>
     }
   }
 
@@ -142,13 +143,18 @@ function Coach(props) {
                   </div>
                 </div>
                 {zoomMeetings.length>0?
-                <DisplayCarousel allClases={allClases} zoomMeetings={zoomMeetings}/>:
+                <DisplayCarousel allClases={allClases} zoomMeetings={zoomMeetings} market={true} instructor={{data:instructor,id:uid}}/>:
                 <h4 style={{color:'gray'}} className='text-center py-5'><i>No se ha agendado ninguna clase por Zoom</i></h4>}
                 <div className='d-flex flex-row'>
-                    <h3>Clases en Video</h3>
+                    <div className='col-8 d-flex flex-row alig-items-center justify-content-start'>
+                        <h3>Clases en Video</h3>
+                      </div>
+                      <div className='col-4 d-flex flex-row alig-items-center justify-content-end'>
+                      <i onClick={handleVerClases} style={{cursor:'pointer',fontSize:'large'}}>Ver todas las clases</i>
+                    </div>
                 </div>
-                {allClases.filter(item => item.videoURL!==null).length>0?
-                <DisplayCarousel allClases={allClases} array={videoClases}/>:
+                {videoClases.length>0?
+                <DisplayCarousel allClases={allClases} array={videoClases} market={true}  instructor={{data:instructor,id:uid}}/>:
                 <h4 style={{color:'gray'}} className='text-center py-5'><i>No hay clases con video</i></h4>}
             </div>
       </div>

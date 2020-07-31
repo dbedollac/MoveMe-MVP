@@ -106,7 +106,7 @@ function NavBar(props) {
         <div >
           {usuario?null:
           <div className='d-flex flex-row justify-content-between'>
-            <HouseDoorFill size={'2em'} />
+            <HouseDoorFill size={'2em'} style={{cursor:'pointer'}} onClick={()=>{props.history.push('/')}}/>
             <button className='btn-light rounded' onClick={handleShowLogIn}>Ingresar</button>
             <button className='btn-primary rounded' onClick={handleShowSignIn}>Registrarse</button>
           </div>
@@ -129,4 +129,4 @@ function NavBar(props) {
   }
 }
 
-export default NavBar
+export default withRouter(NavBar)

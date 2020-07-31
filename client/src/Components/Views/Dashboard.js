@@ -88,7 +88,7 @@ useEffect(()=>{
       return <ChooseUserType return={props.location.state?props.location.state[0]:''}/>
     }else {
       if (instructor) {
-        return <InstructorProfile />
+        return <Redirect to='instructor-profile' />
       }else {
         return <MarketPlace return={props.location.state?props.location.state[0]:''}/>
       }

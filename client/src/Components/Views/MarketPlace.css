@@ -2,3 +2,7 @@
   background-color: lightgray;
   min-height: 100vh
 }
+
+.MarketPlace-container img{
+  height: 15vw;
+}

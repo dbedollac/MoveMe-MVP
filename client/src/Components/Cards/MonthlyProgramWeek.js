@@ -62,25 +62,25 @@ function MonthlyProgramWeek(props) {
         {props.week!==5?null:<p style={{color: 'gray'}}>Solo aplica si el mes tiene más de 4 semanas (5 domingos)</p>}
       </div>
       <div className='list-group'>
-        <MonthlyProgramDay dayDate={week?week.sunday:null} dayName={'Domingo'} dayNumber={1} week={props.week} className='list-group-item'/>
+        <MonthlyProgramDay dayDate={week?week.sunday:null} dayName={'Domingo'} dayNumber={1} week={props.week} className='list-group-item' instructor={props.instructor}/>
       </div>
       <div className='list-group'>
-        <MonthlyProgramDay dayDate={week?week.monday:null} dayName={'Lunes'} dayNumber={2} week={props.week} className='list-group-item'/>
+        <MonthlyProgramDay dayDate={week?week.monday:null} dayName={'Lunes'} dayNumber={2} week={props.week} className='list-group-item' instructor={props.instructor}/>
       </div>
       <div className='list-group'>
-        <MonthlyProgramDay dayDate={week?week.tuesday:null} dayName={'Martes'} dayNumber={3} week={props.week} className='list-group-item'/>
+        <MonthlyProgramDay dayDate={week?week.tuesday:null} dayName={'Martes'} dayNumber={3} week={props.week} className='list-group-item' instructor={props.instructor}/>
       </div>
       <div className='list-group'>
-        <MonthlyProgramDay dayDate={week?week.wednesday:null} dayName={'Miércoles'} dayNumber={4} week={props.week} className='list-group-item'/>
+        <MonthlyProgramDay dayDate={week?week.wednesday:null} dayName={'Miércoles'} dayNumber={4} week={props.week} className='list-group-item' instructor={props.instructor}/>
       </div>
       <div className='list-group'>
-        <MonthlyProgramDay dayDate={week?week.thursday:null} dayName={'Jueves'} dayNumber={5} week={props.week} className='list-group-item'/>
+        <MonthlyProgramDay dayDate={week?week.thursday:null} dayName={'Jueves'} dayNumber={5} week={props.week} className='list-group-item' instructor={props.instructor}/>
       </div>
       <div className='list-group'>
-        <MonthlyProgramDay dayDate={week?week.friday:null} dayName={'Viernes'} dayNumber={6} week={props.week} className='list-group-item'/>
+        <MonthlyProgramDay dayDate={week?week.friday:null} dayName={'Viernes'} dayNumber={6} week={props.week} className='list-group-item' instructor={props.instructor}/>
       </div>
       <div className='list-group'>
-        <MonthlyProgramDay dayDate={week?week.saturday:null} dayName={'Sábado'} dayNumber={7} week={props.week} className='list-group-item'/>
+        <MonthlyProgramDay dayDate={week?week.saturday:null} dayName={'Sábado'} dayNumber={7} week={props.week} className='list-group-item' instructor={props.instructor}/>
       </div>
     </div>
   )
