@@ -126,6 +126,7 @@ const formik = useFormik({
               placeholder='Describe de manera breve en qué consiste la clase'
               onChange={formik.handleChange}
               value={formik.values.description}
+              required
             />
         </div>
         <div className='d-flex flex-column col-6 mb-2'>

@@ -60,6 +60,7 @@ useEffect(()=>{
     var docRef = db.collection("Instructors").doc(usuario.uid);
     docRef.get().then((doc)=>{
     if (doc.exists) {
+        parsed.code?console.log('Cuenta Zoom recién enlazada'):RefreshToken(usuario.uid,doc.data().zoomRefreshToken)
         setInstructor(true)
     } else {
         // doc.data() will be undefined in this case

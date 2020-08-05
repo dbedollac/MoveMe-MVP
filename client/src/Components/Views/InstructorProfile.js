@@ -70,7 +70,7 @@ const deleteMeeting = (meetingID) =>{
    }
 
 
-const updateMeeting = (meetingID) =>{
+  const updateMeeting = (meetingID) =>{
      var docRef = db.collection("Instructors").doc(usuario.uid);
      docRef.get().then((doc)=>{
 
@@ -90,12 +90,15 @@ const updateMeeting = (meetingID) =>{
 
            fetch(url,init).then((response)=>{
                Promise.resolve(response.json()).then((resp) =>{
+              if (resp.occurrences){
                 if(resp.occurrences.length > 0){
                 docRef.collection('ZoomMeetingsID').doc(meetingID.toString()).set({
                   startTime: resp.occurrences[0].start_time
-                },{ merge: true })}else {
+                },{ merge: true })
+              }else {
                   deleteMeeting(meetingID)
                 }
+              }
                }
                )
            }, function(error) {
@@ -128,7 +131,7 @@ const updateMeeting = (meetingID) =>{
         setselfDescription(doc.data().selfDescription)
         setmonthlyProgramPrice(doc.data().monthlyProgram.Price)
         setInstructor(doc.data())
-      })
+        })
 
       if (allClases.length===0) {
        docRef.collection('Classes')
@@ -145,12 +148,19 @@ const updateMeeting = (meetingID) =>{
 
       if (zoomMeetings.length===0) {
        docRef.collection('ZoomMeetingsID').get()
-                  .then(function(querySnapshot) {
+                  .then(async function(querySnapshot) {
                     setZoomMeetingsProgram(zoomMeetings.filter(item => item.monthlyProgram===true))
                     var now = new Date(Date.now()-3600000).toISOString()
                       querySnapshot.forEach(function(doc) {
                         if(doc.data().startTime>now){
-                        zoomMeetings.push({startTime:doc.data().startTime,meetingID:doc.data().meetingID,claseID:doc.data().claseID, monthlyProgram:doc.data().monthlyProgram})}
+                        zoomMeetings.push({startTime:doc.data().startTime,meetingID:doc.data().meetingID,claseID:doc.data().claseID, monthlyProgram:doc.data().monthlyProgram})
+                      } else {
+                        if(!doc.data().monthlyProgram){
+                          deleteMeeting(doc.data().meetingID)
+                        }else{
+                          updateMeeting(doc.data().meetingID)
+                          }
+                        }
                       }
 
                     )
@@ -204,13 +214,13 @@ const updateMeeting = (meetingID) =>{
                   </div>
                 </div>
                 {zoomMeetings.length>0?
-                <DisplayCarousel allClases={allClases} zoomMeetings={zoomMeetings} instructor={{data:instructor,id:usuario.uid}}/>:
+                <DisplayCarousel allClases={allClases} zoomMeetings={zoomMeetings} instructor={usuario?{data:instructor,id:usuario.uid}:null}/>:
                 <h4 style={{color:'gray'}} className='text-center py-5'><i>No se ha agendado ninguna clase por Zoom</i></h4>}
                 <div className='d-flex flex-row'>
                     <h3>Clases en Video</h3>
                 </div>
                 {videoClases.length>0?
-                <DisplayCarousel allClases={allClases} array={videoClases} instructor={{data:instructor,id:usuario.uid}}/>:
+                <DisplayCarousel allClases={allClases} array={videoClases} instructor={usuario?{data:instructor,id:usuario.uid}:null}/>:
                 <h4 style={{color:'gray'}} className='text-center py-5'><i>No hay clases con video</i></h4>}
             </div>
       </div>

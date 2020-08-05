@@ -50,19 +50,23 @@ function DisplayCarousel(props) {
     superLargeDesktop: {
       // the naming can be any, depends on you.
       breakpoint: { max: 4000, min: 3000 },
-      items: 6
+      items: 6,
+      slidesToSlide: 4
     },
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 6
+      items: 6,
+      slidesToSlide: 4
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 4
+      items: 4,
+      slidesToSlide: 3
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 3
+      items: 3,
+      slidesToSlide: 3
     }
   };
 
@@ -125,11 +129,11 @@ function DisplayCarousel(props) {
             ))
             :videoClases? videoClases.slice(0,50).map(item => (
             <div key={item.id} onClick={handleDetail} style={{cursor:'pointer'}}>
-              <ClassCard title={item.data.title} picture={item.data.imgURL} name={item.instructor?item.instructor.id:item.id} id={item.id}/>
+              <ClassCard title={item.data.title} picture={item.data.imgURL} name={item.instructor?item.instructor.id:item.id} id={item.id} price={item.data.offlinePrice}/>
             </div>
           )): meetings.sort(sortMeetings).slice(0,50).map(item => (
             <div key={item.id} onClick={handleDetail} style={{cursor:'pointer'}}>
-              <ClassCard title={item.data.title} picture={item.data.imgURL} name={item.instructor?item.instructor.id:item.id} id={item.id} startTime={item.startTime} onClick={handleDetail}/>
+              <ClassCard title={item.data.title} picture={item.data.imgURL} name={item.instructor?item.instructor.id:item.id} id={item.id} startTime={item.startTime} onClick={handleDetail} price={item.data.zoomPrice}/>
             </div>
           ))}
       </Carousel >

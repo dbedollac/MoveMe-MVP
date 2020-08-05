@@ -18,3 +18,13 @@
   background-color: rgba(0,0,0,0.5);
   color: white
   }
+
+.navbar-cart{
+  color: black !important;
+  right:10%;
+  bottom:40%;
+  position: absolute;
+  text-align: center;
+  background-color: #F39119 !important;
+  font-size: small
+}

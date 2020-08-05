@@ -15,7 +15,8 @@ function MarketPlace(props) {
   const [zoomMeetings,setZoomMeetings] = useState([])
   const [allInstructors, setallInstructors] = useState([])
   const [verClasesZoom, setverClasesZoom] = useState(false)
-  const [verClasesVideo, setverClasesVideo] = useState(true)
+  const [verClasesVideo, setverClasesVideo] = useState(false)
+  const [verProgramas, setverProgramas] = useState(false)
 
   const handleVerClasesZoom = () =>{
     setverClasesZoom(!verClasesZoom)
@@ -26,7 +27,7 @@ function MarketPlace(props) {
   }
 
   const handleVerProgramas = () =>{
-    console.log('ver programa')
+    setverProgramas(!verProgramas)
   }
 
   useEffect(()=>{
@@ -37,9 +38,11 @@ function MarketPlace(props) {
     }
 
     if (props.location.state) {
+      if (props.location.state[0]){
       if (props.location.state[0].includes('coach')) {
-        props.history.push(props.location.state[0])
-      }
+            props.history.push(props.location.state[0])
+          }
+        }
     }
 
     var docRef = db.collection("Instructors")
@@ -123,12 +126,34 @@ function MarketPlace(props) {
 
 
   },[allClases])
+    if (verProgramas) {
+      return (
+        <>
+          <Header  user={usuario?true:false}/>
+          <div className='MarketPlace-container'>
+            <MarketAllClasses allInstructors={allInstructors}/>
+          </div>
+        </>
+      )
+    }
+
     if (verClasesZoom) {
       return (
         <>
           <Header  user={usuario?true:false}/>
           <div className='MarketPlace-container'>
             <MarketAllClasses allClases={allClases} zoomMeetings={zoomMeetings}/>
+          </div>
+        </>
+      )
+    }
+
+    if (verClasesVideo) {
+      return (
+        <>
+          <Header  user={usuario?true:false}/>
+          <div className='MarketPlace-container'>
+            <MarketAllClasses allClases={allClases} array={videoClases}/>
           </div>
         </>
       )
@@ -156,7 +181,7 @@ function MarketPlace(props) {
                   <h3>Próximas Clases por Zoom</h3>
                 </div>
                 <div className='col-4 d-flex flex-row alig-items-center justify-content-end'>
-                <i onClick={handleVerClasesZoom} style={{cursor:'pointer',fontSize:'large'}}>Ver todas las clases</i>
+                <i onClick={handleVerClasesZoom} style={{cursor:'pointer',fontSize:'large'}}>Ver todas las clases por Zoom</i>
               </div>
           </div>
             {zoomMeetings.length>0?
@@ -168,7 +193,7 @@ function MarketPlace(props) {
                     <h3>Clases en Video</h3>
                   </div>
                   <div className='col-4 d-flex flex-row alig-items-center justify-content-end'>
-                  <i onClick={handleVerClasesVideo} style={{cursor:'pointer',fontSize:'large'}}>Ver todas las clases</i>
+                  <i onClick={handleVerClasesVideo} style={{cursor:'pointer',fontSize:'large'}}>Ver todas las clases en video</i>
                 </div>
             </div>
             {videoClases.length>0?

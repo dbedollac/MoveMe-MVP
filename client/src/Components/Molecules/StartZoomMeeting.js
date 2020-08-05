@@ -4,7 +4,7 @@ import {db} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
 import { CameraVideoFill } from 'react-bootstrap-icons';
 import DeleteZoomMeeting from '../Atoms/DeleteZoomMeeting'
-import AddToCar from '../Atoms/AddToCar'
+import AddToCar from '../Molecules/AddToCar'
 import { withRouter } from "react-router";
 
 
@@ -16,6 +16,7 @@ function StartZoomMeeting(props) {
   const [claseTitle, setclaseTitle] = useState(null)
   const [time,setTime] = useState(null)
   const [price,setPrice] = useState(null)
+  const [claseData,setclaseData] = useState(null)
 
   useEffect(()=>{
 
@@ -47,8 +48,10 @@ function StartZoomMeeting(props) {
       var docRef = db.collection("Instructors").doc(props.match.params.uid?props.match.params.uid:props.instructor?props.instructor.id:usuario.uid);
       docRef.collection('Classes').doc(props.claseID)
           .get()
-          .then( doc =>
+          .then( doc =>{
               setPrice(doc.data().zoomPrice)
+              setclaseData(doc.data())
+            }
           )
           .catch(function(error) {
               console.log("Error getting documents: ", error);
@@ -99,7 +102,7 @@ function StartZoomMeeting(props) {
     <div className='card card-link d-flex flex-row align-items-center justify-content-around'>
       {props.monthlyProgram? props.market?null:<div className='col-1'><DeleteZoomMeeting meetingID={props.meetingID} meetingTitle={claseTitle} meetingTime={time} /></div>:null}
       {props.monthlyProgram?<p className='mt-2 col-7'>{props.market?'$'+price:null} {time} {claseTitle}</p>:<p className='mt-2'>{props.market?'$'+price:null} {dateTime}</p>}
-      {props.market?<AddToCar />
+      {props.market?<AddToCar claseZoom={claseData} instructor={props.instructor} meetingID={props.meetingID} startTime={{time:dateTime,startTime:props.startTime}}/>
       :<button className='btn-primary' onClick={startMeeting}>{props.monthlyProgram?<CameraVideoFill />:null} {props.title}</button>}
     </div>
   )

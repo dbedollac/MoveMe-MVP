@@ -1,0 +1,12 @@
+.Carrito-container{
+  background-color: lightgray;
+  min-height: 100vh
+}
+
+.Carrito-container-total{
+  background-color: rgba(0,0,0,.03);
+  color: black;
+  border-color: gray;
+  border-width: 2px;
+  border-style: solid;
+}

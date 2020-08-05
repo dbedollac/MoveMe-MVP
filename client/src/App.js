@@ -10,6 +10,10 @@ import ConfigInstructor from "./Components/Views/ConfigInstructor";
 import ChooseUserType from "./Components/Views/ChooseUserType";
 import MarketPlace from './Components/Views/MarketPlace'
 import Coach from './Components/Views/Coach'
+import ClasesZoom from './Components/Views/ClasesZoom'
+import MisVideos from './Components/Views/MisVideos'
+import Carrito from './Components/Views/Carrito'
+import MisCompras from './Components/Views/MisCompras'
 import Errores from "./Components/Atoms/Errores";
 import { AuthContext } from "./Config/AuthContext";
 
@@ -25,6 +29,10 @@ const App = () => (
         <Route path="/misclases" component={MyClasses} exact />
         <Route path="/monthly-program" component={MonthlyProgram} exact />
         <Route path="/sales" component={Sales} exact />
+        <Route path="/clasesZoom" component={ClasesZoom} exact />
+        <Route path="/misVideos" component={MisVideos} exact />
+        <Route path="/carrito" component={Carrito} exact />
+        <Route path="/misCompras" component={MisCompras} exact />
         <Route path="/:name/:uid" component={Coach} exact />
         <Route path="*" component={Error} />
       </Switch>

@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import {UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap'
 import MonthlyProgramStatus from '../Atoms/MonthlyProgramStatus'
-import AddToCar from '../Atoms/AddToCar'
+import AddToCar from '../Molecules/AddToCar'
 import { ArrowLeft, InfoCircleFill} from 'react-bootstrap-icons';
 import {db} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
@@ -10,6 +10,7 @@ import { withRouter } from "react-router";
 function SetMonthlyProgramPrice(props) {
   const { usuario } = useContext(Auth);
   const [price,setPrice] = useState(null)
+  const [instructorData, setinstructorData] = useState(null)
 
   useEffect(()=>{
     if (usuario||props.match.params.uid) {
@@ -17,6 +18,7 @@ function SetMonthlyProgramPrice(props) {
       docRef.get().then((doc)=> {
           if (doc.exists) {
             setPrice(doc.data().monthlyProgram.Price)
+            setinstructorData(doc.data())
           } else {
               console.log("No such document!");
           }
@@ -71,7 +73,7 @@ function SetMonthlyProgramPrice(props) {
                 <input type='number' min='100'step='50' placeholder='400' onChange={handlePrice} value={price}/>}
                 {props.market?null:<p className='ml-1 pt-2'>pesos mexicanos (MXN)</p>}
               </div>
-              {props.market?<AddToCar size='lg'/>:
+              {props.market?<AddToCar size='lg' instructor={instructorData} monthlyProgram={true}/>:
               <button className='btn-lg btn-primary' onClick={handleSave}>Guardar</button>}
         </div>
         {props.market?

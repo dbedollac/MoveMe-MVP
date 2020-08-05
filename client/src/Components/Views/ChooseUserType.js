@@ -117,12 +117,14 @@ const handleAceptar = () =>{
                       <div className="d-flex flex-column m-1 align-items-center col-6 chooseUserType-options text-center"
                         onClick={handleInstructorClick}
                         style={{backgroundColor: instructor ? '#F39119' : 'white'}}>
+                        <h4>Instructor</h4>
                         <img src='./Instructor.png' alt='Instructor'/>
                         <p> ¡Quiero ofrecer ofrecer mis servicios fitness! </p>
                       </div>
                       <div className="d-flex flex-column m-1 align-items-center col-6 chooseUserType-options text-center"
                         onClick={handleUserClick}
                         style={{backgroundColor: instructor? 'white' : '#F39119'}}>
+                        <h4>Usuario</h4>
                         <img src='./User.png' alt='Instructor'/>
                         <p> ¡Quiero hacer ejercicio! </p>
                       </div>

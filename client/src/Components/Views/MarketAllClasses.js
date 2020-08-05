@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import ClassCard from '../Cards/ClassCard'
+import CoachCard from '../Cards/CoachCard'
 import InstructorsDetailCard from '../Cards/InstructorsDetailCard'
-import { X, Search } from 'react-bootstrap-icons';
+import { ArrowLeft, X, Search } from 'react-bootstrap-icons';
 
 function MarketAllClasses(props) {
   const [clases, setclases] = useState([])
@@ -13,6 +14,7 @@ function MarketAllClasses(props) {
   const [filterSearchClass,setfilterSearchClass] = useState('')
   const [filterSearchCoach,setfilterSearchCoach] = useState('')
   const [filterDateTime,setfilterDateTime] = useState('')
+  const [filterSort,setfilterSort] = useState('')
   const [detail, setdetail] = useState(false)
   const [claseDetail, setclaseDetail] = useState(null)
   const [aux, setaux] = useState(true)
@@ -33,6 +35,29 @@ function MarketAllClasses(props) {
       comparison = -1;
     }
     return comparison;
+  }
+
+  const shuffleArray= (array) => {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array
+    }
+
+  const handleOrdenar = (event) =>{
+    switch (event.target.value) {
+      case '': var clases = clasesAll;
+        break;
+      case 'low': var clases = clasesAll.sort((a, b) => parseFloat(props.allInstructors?a.data.monthlyProgram.Price:a.data.offlinePrice) - parseFloat(props.allInstructors?b.data.monthlyProgram.Price:b.data.offlinePrice));
+        break;
+      case 'high': var clases = clasesAll.sort((a, b) => parseFloat(props.allInstructors?b.data.monthlyProgram.Price:b.data.offlinePrice) - parseFloat(props.allInstructors?a.data.monthlyProgram.Price:a.data.offlinePrice));
+        break;
+      default: var clases = clases.filter(item => (item.data.duration<=1000));
+    }
+
+    setclasesAll(clases)
+    setfilterSort(event.target.value)
   }
 
   const resetFilters = () =>{
@@ -69,9 +94,10 @@ function MarketAllClasses(props) {
 
   const handleBuscador = (event) =>{
     var Busca = event.target.value
+
         var clases00 = clasesAll.filter(item => item.instructor.data.profileName.toUpperCase().includes(filterSearchCoach.toUpperCase()))
         var clases01 = clases00.filter(item => item.data.title.toUpperCase().includes(Busca.toUpperCase()))
-        var clases02 = clases01.filter(item => item.startTime>=filterDateTime)
+        var clases02 = props.zoomMeetings?clases01.filter(item => item.startTime>=filterDateTime):clases01
 
         var clases0 = clases02.filter(item => item.data.type.includes(filtersType));
         var clases1 = clases0.filter(item => item.data.level.includes(filtersLevel));
@@ -92,20 +118,24 @@ function MarketAllClasses(props) {
 
   const handleBuscadorCoach = (event) =>{
     var Busca = event.target.value
-        var clases00 = clasesAll.filter(item => item.instructor.data.profileName.toUpperCase().includes(Busca.toUpperCase()))
-        var clases01 = clases00.filter(item => item.data.title.toUpperCase().includes(filterSearchClass.toUpperCase()))
-        var clases02 = clases01.filter(item => item.startTime>=filterDateTime)
+        if (!props.allInstructors) {
+          var clases00 = clasesAll.filter(item => item.instructor.data.profileName.toUpperCase().includes(Busca.toUpperCase()))
+          var clases01 = clases00.filter(item => item.data.title.toUpperCase().includes(filterSearchClass.toUpperCase()))
+          var clases02 = props.zoomMeetings?clases01.filter(item => item.startTime>=filterDateTime):clases01
 
-        var clases0 = clases02.filter(item => item.data.type.includes(filtersType));
-        var clases1 = clases0.filter(item => item.data.level.includes(filtersLevel));
-        switch (filtersDuration) {
-          case '0': var clases2 = clases1.filter(item => (item.data.duration<=30));
-            break;
-          case '1': var clases2 = clases1.filter(item => (item.data.duration<=60&&item.data.duration>30));
-            break;
-          case '2': var clases2 = clases1.filter(item => (item.data.duration>60));
-            break;
-          default: var clases2 = clases1.filter(item => (item.data.duration<=1000));
+          var clases0 = clases02.filter(item => item.data.type.includes(filtersType));
+          var clases1 = clases0.filter(item => item.data.level.includes(filtersLevel));
+          switch (filtersDuration) {
+            case '0': var clases2 = clases1.filter(item => (item.data.duration<=30));
+              break;
+            case '1': var clases2 = clases1.filter(item => (item.data.duration<=60&&item.data.duration>30));
+              break;
+            case '2': var clases2 = clases1.filter(item => (item.data.duration>60));
+              break;
+            default: var clases2 = clases1.filter(item => (item.data.duration<=1000));
+          }
+        }else {
+          var clases2 = clasesAll.filter(item => item.data.profileName.toUpperCase().includes(Busca.toUpperCase()))
         }
 
         setclases(clases2)
@@ -120,7 +150,7 @@ function MarketAllClasses(props) {
     }
           var clases00 = clasesAll.filter(item => item.instructor.data.profileName.toUpperCase().includes(filterSearchCoach.toUpperCase()))
           var clases01 = clases00.filter(item => item.data.title.toUpperCase().includes(filterSearchClass.toUpperCase()))
-          var clases02 = clases01.filter(item => item.startTime>=filterDateTime)
+          var clases02 = props.zoomMeetings?clases01.filter(item => item.startTime>=filterDateTime):clases01
 
           var clases0 = clases02.filter(item => item.data.type.includes(value));
           var clases1 = clases0.filter(item => item.data.level.includes(filtersLevel));
@@ -147,7 +177,7 @@ function MarketAllClasses(props) {
     }
           var clases00 = clasesAll.filter(item => item.instructor.data.profileName.toUpperCase().includes(filterSearchCoach.toUpperCase()))
           var clases01 = clases00.filter(item => item.data.title.toUpperCase().includes(filterSearchClass.toUpperCase()))
-          var clases02 = clases01.filter(item => item.startTime>=filterDateTime)
+          var clases02 = props.zoomMeetings?clases01.filter(item => item.startTime>=filterDateTime):clases01
 
           var clases0 = clases02.filter(item => item.data.type.includes(filtersType));
           var clases1 = clases0.filter(item => item.data.level.includes(value));
@@ -174,7 +204,7 @@ function MarketAllClasses(props) {
 
           var clases00 = clasesAll.filter(item => item.instructor.data.profileName.toUpperCase().includes(filterSearchCoach.toUpperCase()))
           var clases01 = clases00.filter(item => item.data.title.toUpperCase().includes(filterSearchClass.toUpperCase()))
-          var clases02 = clases01.filter(item => item.startTime>=filterDateTime)
+          var clases02 = props.zoomMeetings?clases01.filter(item => item.startTime>=filterDateTime):clases01
 
           var clases0 = clases02.filter(item => item.data.type.includes(filtersType));
           var clases1 = clases0.filter(item => item.data.level.includes(filtersLevel));
@@ -223,65 +253,91 @@ function MarketAllClasses(props) {
       }
     }
 
-},[])
+    if(props.array&&aux){
+      setclases(shuffleArray(props.array))
+      setclasesAll(shuffleArray(props.array))
+    }
+
+    if(props.allInstructors){
+      setclases(shuffleArray(props.allInstructors))
+      setclasesAll(shuffleArray(props.allInstructors))
+    }
+
+},[props.array])
 
 
   return(
 
     <div className='d-flex flex-column align-items-center'>
-    {console.log(clases)}
-      <form className='pt-3'>
+      <div className='col-12'>
+        <button className='btn-secondary rounded mt-2 float-right' onClick={()=>{window.location.reload(false)}}><ArrowLeft /> Regresar</button>
+      </div>
+      <form>
         <div className='d-flex flex-row justify-content-end align-items-center flex-wrap'>
 
-            <p className='text-center mr-1 pt-4'><strong>Filtros</strong> <br/><i style={{fontSize:'small',cursor:'pointer'}} onClick={resetFilters}>Quitar</i></p>
-            <select id="type"
-              name="type"
-              onChange={handleTypeChange}
-              className='mb-2'
-              value={filtersType}
+            {!props.allInstructors?
+            <div className='d-flex flex-row justify-content-end align-items-center'>
+              <p className='text-center mr-1 pt-4'><strong>Filtros</strong> <br/><i style={{fontSize:'small',cursor:'pointer'}} onClick={resetFilters}>Quitar</i></p>
+              <select id="type"
+                name="type"
+                onChange={handleTypeChange}
+                className=''
+                value={filtersType}
+                >
+                <option value="todos" >Tipo de ejercicio (Todos)</option>
+                <option value="estiramiento">Estiramiento (ej. Yoga)</option>
+                <option value="baile">Baile</option>
+                <option value="funcional">Funcional</option>
+                <option value="pelea">Técnica de pelea</option>
+                <option value="pesas">Con pesas</option>
+                <option value="otro">Otro</option>
+              </select>
+
+            <select id="level"
+              name="level"
+              className=''
+              onChange={handleLevelChange}
+              value={filtersLevel}
               >
-              <option value="todos" >Tipo de ejercicio (Todos)</option>
-              <option value="estiramiento">Estiramiento (ej. Yoga)</option>
-              <option value="baile">Baile</option>
-              <option value="funcional">Funcional</option>
-              <option value="pelea">Técnica de pelea</option>
-              <option value="pesas">Con pesas</option>
-              <option value="otro">Otro</option>
+              <option value="todos" >Dificultad de la clase (Todas)</option>
+              <option value="principiantes">Para principiantes</option>
+              <option value="intermedia">Intermedia</option>
+              <option value="avanzada">Avanzada</option>
             </select>
 
-          <select id="level"
-            name="level"
-            className='mb-2'
-            onChange={handleLevelChange}
-            value={filtersLevel}
-            >
-            <option value="todos" >Dificultad de la clase (Todas)</option>
-            <option value="principiantes">Para principiantes</option>
-            <option value="intermedia">Intermedia</option>
-            <option value="avanzada">Avanzada</option>
-          </select>
+            <select id="duration"
+              name="duration"
+              className=''
+              onChange={handleDurationChange}
+              value={filtersDuration}
+              >
+              <option value='todos'>Duración (Todas)</option>
+              <option value={'0'}>0 - 30 min</option>
+              <option value={'1'}>30 - 60 min</option>
+              <option value={'2'}>Más de 60 min</option>
+            </select>
 
-          <select id="duration"
-            name="duration"
-            className='mb-2'
-            onChange={handleDurationChange}
-            value={filtersDuration}
-            >
-            <option value='todos'>Duración (Todas)</option>
-            <option value={'0'}>0 - 30 min</option>
-            <option value={'1'}>30 - 60 min</option>
-            <option value={'2'}>Más de 60 min</option>
-          </select>
+            <div className='d-flex flex-row align-items-center ml-1'>
+              <input type='search' placeholder='Buscar clase...' onChange={handleBuscador} value={filterSearchClass}/>
+            </div>
+          </div>
+          :null}
 
           <div className='d-flex flex-row align-items-center ml-1'>
             <input type='search' placeholder='Buscar coach...' onChange={handleBuscadorCoach} value={filterSearchCoach}/>
           </div>
 
-          <div className='d-flex flex-row align-items-center ml-1'>
-            <input type='search' placeholder='Buscar clase...' onChange={handleBuscador} value={filterSearchClass}/>
-          </div>
-
-          <input type="datetime-local" className='ml-1' onChange={handleDateTime} value={filterDateTime}/>
+          {props.zoomMeetings?<input type="datetime-local" className='ml-1' onChange={handleDateTime} value={filterDateTime}/>
+          :<select id="ordenar"
+              name="ordenar"
+              className='ml-1'
+              onChange={handleOrdenar}
+              value={filterSort}
+              >
+                <option value=''>Ordenar</option>
+                <option value={'low'}>Precio: de más bajo a más alto</option>
+                <option value={'high'}>Precio: de más alto a más bajo</option>
+          </select>}
 
         </div>
       </form>
@@ -294,10 +350,10 @@ function MarketAllClasses(props) {
         </div>
         :
         clases.length>0?clases.slice(0,showMore).map(clase => (
-        <div className={`col-${clases.length>1?'2':'4'}`} key={clase.id+clase.instructor.id+clase.startTime} onClick={handleDetail} style={{cursor:'pointer'}} >
-          {props.zoomMeetings?
-          <ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.instructor?clase.instructor.id:clase.id} id={clase.id} startTime={clase.startTime}/>
-          :<ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.instructor?clase.instructor.id:clase.id} id={clase.id} />}
+        <div className={`col-${clases.length>1?'2':'4'}`} key={props.allInstructors?clase.uid:clase.id+clase.instructor.id+clase.startTime} onClick={handleDetail} style={{cursor:'pointer'}} >
+          {props.allInstructors? <CoachCard data={clase.data} uid={clase.uid}/>
+          :props.zoomMeetings?<ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.instructor?clase.instructor.id:clase.id} id={clase.id} startTime={clase.startTime} price={clase.data.zoomPrice}/>
+          :<ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.instructor?clase.instructor.id:clase.id} id={clase.id} price={clase.data.offlinePrice}/>}
         </div>
       )):<h4 style={{color:'gray'}} className='text-center py-5'><i>No hay clases disponibles</i></h4>}
       </div>
