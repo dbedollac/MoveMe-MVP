@@ -58,7 +58,7 @@ function StartZoomMeeting(props) {
           });
     }
 
-  })
+  },[usuario])
 
   const startMeeting = () =>{
     var docRef = db.collection("Instructors").doc(usuario.uid);
@@ -101,7 +101,7 @@ function StartZoomMeeting(props) {
   return(
     <div className='card card-link d-flex flex-row align-items-center justify-content-around'>
       {props.monthlyProgram? props.market?null:<div className='col-1'><DeleteZoomMeeting meetingID={props.meetingID} meetingTitle={claseTitle} meetingTime={time} /></div>:null}
-      {props.monthlyProgram?<p className='mt-2 col-7'>{props.market?'$'+price:null} {time} {claseTitle}</p>:<p className='mt-2'>{props.market?'$'+price:null} {dateTime}</p>}
+      {props.monthlyProgram?<p className='mt-2 col-6'>{props.market?'$'+price:null} {time} {claseTitle}</p>:<p className='mt-2'>{props.market?'$'+price:null} {dateTime}</p>}
       {props.market?<AddToCar claseZoom={claseData} instructor={props.instructor} meetingID={props.meetingID} startTime={{time:dateTime,startTime:props.startTime}}/>
       :<button className='btn-primary' onClick={startMeeting}>{props.monthlyProgram?<CameraVideoFill />:null} {props.title}</button>}
     </div>

@@ -60,7 +60,7 @@ function MonthlyProgramDay(props) {
 
     setDate(days+'/'+month+'/'+year)
 
-    if (props.dayDate.getDate()===new Date().getDate()) {
+    if ((props.dayDate.getDate()===new Date().getDate())&&(props.dayDate.getMonth()===new Date().getMonth())) {
       setActive(true)
     }
 

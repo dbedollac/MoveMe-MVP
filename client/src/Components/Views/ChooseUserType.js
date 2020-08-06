@@ -6,6 +6,7 @@ import { withRouter } from "react-router";
 import {Redirect} from "react-router-dom";
 import {db, auth} from '../../Config/firestore'
 import logo from './Images/logo.jpg'
+import {proxyurl} from '../../Config/proxyURL'
 
 function ChooseUserType(props) {
 const { usuario } = useContext(Auth);
@@ -15,6 +16,25 @@ const [newUser, setNewUser] = useState(true);
 const [newInstructor, setNewInstructor] = useState(true);
 const [aceptar, setAceptar] = useState(false);
 
+const createSrtipeCustomer = () =>{
+  fetch(proxyurl+'stripeAPI/create-customer', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: usuario.email,
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        db.collection('Users').doc(usuario.uid).set({
+          stripeCustomerID:result.customer.id
+        },{merge: true}).catch(error=>console.log(error))
+      });
+}
 
 const  handleInstructorClick = () => {
   setInstructor(true)
@@ -74,7 +94,8 @@ const handleAceptar = () =>{
               db.collection("Users").doc(usuario.uid).set({
               email: usuario.email,
               uid: usuario.uid
-              })
+            },{merge:true})
+              createSrtipeCustomer()
             }
               }
             }

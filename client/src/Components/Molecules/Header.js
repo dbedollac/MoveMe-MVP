@@ -5,21 +5,6 @@ import { withRouter } from "react-router";
 import logo from '../Views/Images/logo.png'
 
 function Header(props){
-
-    if (props.instructor) {
-      return(
-        <header className='fixed-top'>
-        <div className="col-12 d-flex flex-row align-items-center " >
-            <div className="col-2">
-              <img src={logo} alt="Logo" onClick={()=>{props.history.push('/')}} style={{cursor:'pointer'}}/>
-            </div>
-            <div className="col-10">
-              <NavBar instructor={true}/>
-            </div>
-        </div>
-        </header>
-      );
-    } else {
       if (props.user) {
         return(
         <header className='fixed-top'>
@@ -32,7 +17,23 @@ function Header(props){
             </div>
         </div>
         </header>)
-      } else {
+      }
+     else {
+      if (props.instructor) {
+        return(
+          <header className='fixed-top'>
+          <div className="col-12 d-flex flex-row align-items-center " >
+              <div className="col-2">
+                <img src={logo} alt="Logo" onClick={()=>{props.history.push('/')}} style={{cursor:'pointer'}}/>
+              </div>
+              <div className="col-10">
+                <NavBar instructor={true}/>
+              </div>
+          </div>
+          </header>
+        );
+      }
+       else {
       return(
         <header className='fixed-top'>
         <div className="col-12 d-flex flex-row align-items-center " >

@@ -96,8 +96,9 @@ const formik = useFormik({
               onChange={formik.handleChange}
               value={formik.values.profileName}
               required
+              className='col-10'
             />
-            <label htmlFor="selfDescription">Cuéntale a tus potenciales clientes sobre ti</label>
+            <label htmlFor="selfDescription">Cuéntale al mundo de ti</label>
             <br/>
             <textarea
               id="selfDescription"
@@ -105,7 +106,7 @@ const formik = useFormik({
               type="text"
               rows='4'
               cols="50"
-              placeholder={'Describe tu experiencia'}
+              placeholder={'Describe tu experiencia fitness (promociona aquí tu reto mensual)'}
               onChange={formik.handleChange}
               value={formik.values.selfDescription}
             />

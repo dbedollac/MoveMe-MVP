@@ -165,15 +165,15 @@ function MarketPlace(props) {
         <div className='MarketPlace-container'>
           <div className='d-flex flex-row'>
               <div className='col-8 d-flex flex-row alig-items-center justify-content-start'>
-                  <h3>Programas Mensuales</h3>
+                  <h3>Retos Mensuales</h3>
                 </div>
                 <div className='col-4 d-flex flex-row alig-items-center justify-content-end'>
-                <i onClick={handleVerProgramas} style={{cursor:'pointer',fontSize:'large'}}>Ver todos los programas</i>
+                <i onClick={handleVerProgramas} style={{cursor:'pointer',fontSize:'large'}}>Ver todos los retos</i>
               </div>
           </div>
             {allInstructors.length>0?
             <DisplayCarousel allInstructors={allInstructors} market={true} home={true}/>:
-            <h4 style={{color:'gray'}} className='text-center py-5'><i>No hay programas mensuales activos</i></h4>}
+            <h4 style={{color:'gray'}} className='text-center py-5'><i>No hay retos mensuales activos</i></h4>}
 
           <div className='d-flex flex-row'>
               <div className='col-8 d-flex flex-row alig-items-center justify-content-start'>

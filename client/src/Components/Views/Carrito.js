@@ -4,13 +4,14 @@ import {db, auth} from '../../Config/firestore'
 import Header from '../Molecules/Header'
 import { withRouter } from "react-router";
 import CarritoProduct from '../Cards/CarritoProduct'
+import PayButton from '../Atoms/PayButton'
+import StripeFee from '../Atoms/StripeFee'
 import './Carrito.css'
 
 function Carrito(props) {
   const { usuario } = useContext(Auth);
   const [products,setProducts] = useState([])
   const [subtotal,setSubtotal] = useState(0)
-  const [total,setTotal] = useState(0)
   const [expire,setExpire] = useState(new Date(Date.now()+(24*28 * 60 * 60 * 1000)))
 
   useEffect(()=>{
@@ -20,10 +21,6 @@ function Carrito(props) {
       }
     })
 
-    if (subtotal>0) {
-      var stripe = 0.036
-      setTotal((subtotal+3)/(1-stripe))
-    }
 
     if (usuario) {
       var Products = []
@@ -52,7 +49,6 @@ function Carrito(props) {
 
     setProducts([])
     setSubtotal(0)
-    setTotal(0)
   }
 
   return(
@@ -62,11 +58,11 @@ function Carrito(props) {
         <div className='col-6 d-flex flex-row justify-content-around Carrito-container-total rounded p-1'>
           <div className='d-flex flex-column'>
             <h6>Subtotal: ${subtotal.toFixed(2)}</h6>
-            <h6>Tarifa por transferencia: ${(total.toFixed(2)-subtotal.toFixed(2)).toFixed(2)}</h6>
-            <h4><strong>Total: ${total.toFixed(2)}</strong></h4>
+            <h6>Tarifa por transacción: ${StripeFee(subtotal).toFixed(2)}</h6>
+            <h4><strong>Total: ${(subtotal+StripeFee(subtotal)).toFixed(2)}</strong></h4>
           </div>
           <div className='d-flex flex-column justify-content-around'>
-            <button className='btn-info rounded'>Proceder al pago</button>
+            <PayButton subtotal={subtotal} cart={true}/>
             <p style={{cursor:'pointer'}} onClick={vaciarCarrito}><i>Vaciar Carrito</i></p>
           </div>
         </div>

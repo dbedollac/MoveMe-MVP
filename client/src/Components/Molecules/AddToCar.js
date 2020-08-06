@@ -5,6 +5,7 @@ import { Auth } from "../../Config/AuthContext";
 import {db} from "../../Config/firestore";
 import { withRouter } from "react-router";
 import Login from '../Forms/Login'
+import PayButton from '../Atoms/PayButton'
 
 function AddToCar(props) {
   const { usuario } = useContext(Auth);
@@ -65,7 +66,13 @@ function AddToCar(props) {
 
   return(
     <>
-      <button className={`btn-primary btn-${props.size}`} onClick={handleCart}><CartPlus /> Agregar al Carrito</button>
+      <div className='d-flex flex-row align-items-center'>
+        <button className={`btn-primary btn-${props.size} mr-1 rounded`} onClick={handleCart}><CartPlus /> Agregar al Carrito</button>
+        <PayButton size={props.size}
+          subtotal={props.claseZoom?props.claseZoom.zoomPrice:props.claseVideo?props.claseVideo.offlinePrice:props.monthlyProgram?props.instructor?Number(props.instructor.monthlyProgram.Price):null:null}
+          type={props.claseZoom?'Zoom':props.claseVideo?'Video':'Program'}
+        />
+      </div>
 
       <Modal
         show={show}
