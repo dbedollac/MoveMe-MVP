@@ -3,12 +3,11 @@ import MonthlyProgramDay from '../Molecules/MonthlyProgramDay'
 
 function MonthlyProgramWeek(props) {
   const[week,setweek]=useState(null)
-  const[anchor,setAnchor]=useState('fix')
   const[active,setActive]=useState(false)
 
     useEffect(()=>{
       getWeekDates()
-    },[anchor])
+    },[])
 
     const getWeekDates = () =>{
       var curr = new Date(); // get current date

@@ -38,7 +38,7 @@ function SetMonthlyProgramPrice(props) {
         Price: price
       }
     },{ merge: true }).then(
-      alert('Se fijó el precio de tu programa con éxito')
+      alert('Se fijó el precio de tu reto con éxito')
     ).catch(error => console.log(error))
     window.location.reload(false)
   }
@@ -49,7 +49,7 @@ function SetMonthlyProgramPrice(props) {
 
   if (props.instructor&&!props.instructor.data.monthlyProgram.Active) {
     return (<div className='d-flex flex-row align-items-center justify-content-around p-3'>
-              <h3 style={{color:'gray'}}><i>Este programa no está activo</i></h3>
+              <h3 style={{color:'gray'}}><i>Este reto no está activo</i></h3>
               <button className='btn-secondary rounded btn-lg' onClick={handleBack}><ArrowLeft /> Regresar</button>
             </div>)
   } else {
@@ -58,13 +58,13 @@ function SetMonthlyProgramPrice(props) {
         <div className='col-10 d-flex flex-row p-3 justify-content-center align-items-center'>
               <InfoCircleFill size={'3em'} color='gray' style={{cursor:'pointer'}} id='price-info'/>
               <UncontrolledPopover trigger="focus" placement="bottom" target="price-info">
-                <PopoverHeader>Programa Mensual</PopoverHeader>
+                <PopoverHeader>Reto Mensual</PopoverHeader>
                 {props.market?<PopoverBody>
-                    Al suscribirte a este programa tendrás acceso a todas las clases de Zoom agendadas en esta página, así como a todo las clases en video del coach.
-                    Se cargará a tu tarjeta este monto todos los meses de manera automática, puedes suspender tu suscripción cuando quieras.
+                    El reto incluye todas las clases por Zoom agendadas en esta página más todas las clases en video del coach por un mes.
                   </PopoverBody>:
-                <PopoverBody>El precio que fijes se cobrará automáticamente todos los meses
-                a aquellos usuarios que se suscriban a tu programa. Podrán unirse a todas las clases que agendes aquí, así como ver todos los videos que hayas subido para rentar.
+                <PopoverBody><strong>¡Activa tu Reto!</strong>
+                <br/>Los usuarios que adquieran tu reto tendrán acceso por un mes a todas las clases por Zoom que agendes en esta página más todos los videos que hayas subido.
+                Las clases de tu reto se agendarán de manera automática cada mes mientras se encuentre activo.
                 </PopoverBody>}
               </UncontrolledPopover>
               <div className='d-flex flex-row align-items-center justify-content-center col-6'>

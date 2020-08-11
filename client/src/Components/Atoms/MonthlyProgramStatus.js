@@ -48,10 +48,10 @@ function MonthlyProgramStatus(props) {
           keyboard={false}
         >
           <Modal.Header closeButton>
-          <Modal.Title>{active?'Desactivar programa mensual':'Activar programa mensual'}</Modal.Title>
+          <Modal.Title>{active?'Desactivar reto mensual':'Activar reto mensual'}</Modal.Title>
           </Modal.Header>
-          <Modal.Body>{active?'¿Deseas desactivar tu programa? Se cancelará el cobro mensual a todos tus clientes suscritos y no podrán acceder a tu contenido.':
-        'A partir del próximo domingo se activará tu programa para que obtengas nuevos miembros y todas las clases que agendaste se ofreceran individualmente para compras por asistencia.'}
+          <Modal.Body>{active?'¿Deseas desactivar tu reto? Se cancelará el cobro a tus clientes suscritos y no podrán acceder a tu contenido.':
+        'A partir del próximo domingo se activará tu reto para que obtengas nuevos miembros y todas las clases que agendaste se ofreceran individualmente para compras por asistencia.'}
           </Modal.Body>
           <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>Cancelar</Button>

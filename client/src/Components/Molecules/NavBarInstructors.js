@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useCallback} from "react";
-import {CreditCard, CameraVideoFill,Cart3, Receipt, AwardFill, CollectionPlayFill, Calendar3Fill, Wallet2, PersonSquare, ExclamationCircleFill, GearFill, ArrowLeftRight, HouseDoorFill} from 'react-bootstrap-icons';
+import { CameraVideoFill,Cart3, Receipt, AwardFill, CollectionPlayFill, Calendar3Fill, Wallet2, PersonSquare, ExclamationCircleFill, GearFill, ArrowLeftRight, HouseDoorFill} from 'react-bootstrap-icons';
 import {DropdownButton, Dropdown} from 'react-bootstrap'
 import {db, auth} from "../../Config/firestore";
 import { Auth } from "../../Config/AuthContext";
@@ -142,7 +142,6 @@ function NavBar(props) {
           <div className="col-2 d-flex flex-column align-items-center  justify-content-center">
                   <DropdownButton  title='' variant='dark'>
                     <Dropdown.Item href="/misCompras"><Receipt className='mr-2'/>Mis Compras</Dropdown.Item>
-                    <Dropdown.Item href="/metodos-pago"><CreditCard className='mr-2'/>Métodos de pago</Dropdown.Item>
                     <Dropdown.Item href="/account-type"><ArrowLeftRight className='mr-2'/>Cambiar tipo de cuenta</Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item onClick={()=> {auth.signOut()}}><ExclamationCircleFill className='mr-2'/>Cerrar sesión</Dropdown.Item>

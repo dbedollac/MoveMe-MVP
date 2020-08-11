@@ -17,7 +17,7 @@ const [monthlyProgramPrice, setmonthlyProgramPrice] = useState(null)
 const [instructor, setInstructor] = useState(null)
 const [allClases, setallClases] = useState([])
 const [zoomMeetings,setZoomMeetings] = useState([])
-const [zoomMeetingsProgram,setZoomMeetingsProgram] = useState(0)
+const [zoomMeetingsProgram,setZoomMeetingsProgram] = useState([])
 const [videoClases, setvideoClases] = useState([])
 
 
@@ -149,9 +149,11 @@ const deleteMeeting = (meetingID) =>{
       if (zoomMeetings.length===0) {
        docRef.collection('ZoomMeetingsID').get()
                   .then(async function(querySnapshot) {
-                    setZoomMeetingsProgram(zoomMeetings.filter(item => item.monthlyProgram===true))
                     var now = new Date(Date.now()-3600000).toISOString()
                       querySnapshot.forEach(function(doc) {
+                        if (doc.data().monthlyProgram===true&&!zoomMeetingsProgram.includes(doc.id)) {
+                          zoomMeetingsProgram.push(doc.id)
+                        }
                         if(doc.data().startTime>now){
                         zoomMeetings.push({startTime:doc.data().startTime,meetingID:doc.data().meetingID,claseID:doc.data().claseID, monthlyProgram:doc.data().monthlyProgram})
                       } else {
@@ -190,7 +192,7 @@ const deleteMeeting = (meetingID) =>{
                     <p className='text-left'>{selfDescription}</p>
                     <div className='InstructorProfile-container-programa p-2'>
                       <div className='d-flex flex-row align-items-center justify-content-around'>
-                        <h2>Programa Mensual</h2>
+                        <h2>Reto Mensual</h2>
                         <div className='rounded col-4' style={{backgroundColor: 'lightgray', fontSize: '20px'}}> {monthlyProgramPrice?'$ '+monthlyProgramPrice:null} </div>
                       </div>
                       <div className='d-flex flex-row'>

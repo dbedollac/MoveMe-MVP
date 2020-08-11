@@ -39,7 +39,7 @@ function CarritoProduct(props) {
           <TrashFill size={'2em'} onClick={deleteProduct} style={{cursor:'pointer'}}/>
         </div>
         <h5 className="card-subtitle mb-2 text-muted">{props.claseData?props.claseData.title:'Se aplicará este cargo cada xxx de mes'}</h5>
-        <p>${props.type.includes('Programa')?props.instructor.monthlyProgram.Price
+        <p>${props.type.includes('Reto')?props.instructor.monthlyProgram.Price
           :props.type.includes('Zoom')?props.claseData.zoomPrice
           :props.claseData.offlinePrice}
         </p>

@@ -58,7 +58,7 @@ function AddToCar(props) {
       if (props.monthlyProgram) {
         await docRef.doc().set({
           instructor: props.instructor,
-          type: 'Programa Mensual'
+          type: 'Reto Mensual'
         }).catch(error => console.log(error))
       }
     }

@@ -12,9 +12,9 @@ function PayButton(props) {
   const { usuario } = useContext(Auth);
   const [show, setShow] = useState(false);
   const [showLogin,setshowLogin] = useState(false)
+  const curr = new Date()
+  const expire = new Date(curr.getFullYear(),curr.getMonth()+1,curr.getDate())
 
-
-  var expire=new Date(Date.now()+(24*28 * 60 * 60 * 1000))
   var days = expire.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
   var month = (expire.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
   var year = expire.getFullYear()

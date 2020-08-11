@@ -12,7 +12,8 @@ function Carrito(props) {
   const { usuario } = useContext(Auth);
   const [products,setProducts] = useState([])
   const [subtotal,setSubtotal] = useState(0)
-  const [expire,setExpire] = useState(new Date(Date.now()+(24*28 * 60 * 60 * 1000)))
+  const curr = new Date()
+  const expire = new Date(curr.getFullYear(),curr.getMonth()+1,curr.getDate())
 
   useEffect(()=>{
     auth.onAuthStateChanged((usuario) => {
@@ -29,7 +30,7 @@ function Carrito(props) {
       docRef.get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
                Products.push({id:doc.id,data:doc.data()});
-               doc.data().type.includes('Programa')?Prices.push(Number(doc.data().instructor.monthlyProgram.Price))
+               doc.data().type.includes('Reto')?Prices.push(Number(doc.data().instructor.monthlyProgram.Price))
                  :doc.data().type.includes('Zoom')?Prices.push(Number(doc.data().claseData.zoomPrice))
                  :Prices.push(Number(doc.data().claseData.offlinePrice))
           });
