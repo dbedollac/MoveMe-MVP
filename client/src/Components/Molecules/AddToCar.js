@@ -10,6 +10,8 @@ import PayButton from '../Atoms/PayButton'
 function AddToCar(props) {
   const { usuario } = useContext(Auth);
   const [show, setShow] = useState(false);
+  const curr = new Date()
+  const expire = new Date(curr.getFullYear(),curr.getMonth()+1,curr.getDate())
 
   const handleClose = () =>{
       setShow(false)
@@ -70,7 +72,15 @@ function AddToCar(props) {
         <button className={`btn-primary btn-${props.size} mr-1 rounded`} onClick={handleCart}><CartPlus /> Agregar al Carrito</button>
         <PayButton size={props.size}
           subtotal={props.claseZoom?props.claseZoom.zoomPrice:props.claseVideo?props.claseVideo.offlinePrice:props.monthlyProgram?props.instructor?Number(props.instructor.monthlyProgram.Price):null:null}
-          type={props.claseZoom?'Zoom':props.claseVideo?'Video':'Program'}
+          type={props.claseZoom?'Zoom':props.claseVideo?'Video':'Reto'}
+          products={[{
+            data:{instructor: props.monthlyProgram?props.instructor:props.instructor.data,
+            claseData: props.claseZoom?props.claseZoom:props.claseVideo?props.claseVideo:null,
+            meetingID: props.claseZoom?props.meetingID:null,
+            startTime: props.claseZoom?props.startTime:null,
+            type: props.claseZoom?'Clase por Zoom':props.claseVideo?'Clase en Video':'Reto Mensual'},
+            expire: expire
+          }]}
         />
       </div>
 

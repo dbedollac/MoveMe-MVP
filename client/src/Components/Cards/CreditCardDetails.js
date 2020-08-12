@@ -5,6 +5,7 @@ import {proxyurl} from '../../Config/proxyURL'
 import {CreditCard} from 'react-bootstrap-icons'
 import visaCard from '../Cards/Images/Visa.png'
 import masterCard from '../Cards/Images/MasterCard.png'
+import americanCard from '../Cards/Images/AmericanExpress.png'
 
 function CreditCardDetails(props) {
   const { usuario } = useContext(Auth);
@@ -17,7 +18,9 @@ function CreditCardDetails(props) {
           {props.details?props.details.card.brand.includes('visa')?
           <img src={visaCard} alt='Logo Visa' width='50px'/>
           :props.details.card.brand.includes('master')?
-          <img src={masterCard} alt={'Logo MasterCard'}/>
+          <img src={masterCard} alt={'Logo MasterCard'} width='50px'/>
+          :props.details.card.brand.includes('amex')?
+          <img src={americanCard} alt={'Logo AmericanExpress'} width='50px'/>
           :<CreditCard size={'30px'}/>:null}
         </div>
         <p>{props.details?props.details.card.brand:null} que termina en {props.details?props.details.card.last4:null}</p>

@@ -3,11 +3,14 @@ import { useFormik } from 'formik';
 import {db, storage} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
 import { withRouter } from "react-router";
+import { Spinner} from 'react-bootstrap'
 
 const EditClassForm = (props) => {
 const { usuario } = useContext(Auth);
+const [loading,setLoading] = useState(false)
 
 const saveMedia = async (values) =>{
+    await setLoading(true)
     await storage.ref('Pictures')
              .child(usuario.uid+'-'+props.claseID)
              .getDownloadURL()
@@ -66,6 +69,7 @@ const formik = useFormik({
   onSubmit: async values => {
     await saveMedia(values)
     window.location.reload(false)
+    setLoading(false)
   },
 });
 
@@ -170,7 +174,7 @@ const formik = useFormik({
                 </div>
         </div>
         <div className='d-flex flex-column col-6 mb-2'>
-              <label htmlFor="offlinePrice">Precio por renta mensual del video</label>
+              <label htmlFor="offlinePrice">Precio por renta del video (1 mes)</label>
               <div>
                 <input
                   id="offlinePrice"
@@ -187,7 +191,7 @@ const formik = useFormik({
                 </div>
         </div>
     </div>
-    <button type="submit" className="mt-5 btn-secondary btn-lg col-6">Guardar</button>
+    {loading?<Spinner animation="border" />:<button type="submit" className="mt-5 btn-secondary btn-lg col-6">Guardar</button>}
   </form>
 )
 

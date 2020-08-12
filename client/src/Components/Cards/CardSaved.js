@@ -4,8 +4,8 @@ import { Auth } from "../../Config/AuthContext"
 import CreditCardDetails from '../Cards/CreditCardDetails'
 import {db} from '../../Config/firestore'
 import {proxyurl} from '../../Config/proxyURL'
-import {TrashFill, PencilSquare, CheckCircleFill} from 'react-bootstrap-icons'
-import { Spinner, Modal, Button} from 'react-bootstrap'
+import {TrashFill, PencilSquare, CheckCircleFill, ChevronCompactDown, ChevronCompactUp} from 'react-bootstrap-icons'
+import { Spinner, Modal, Button, Collapse} from 'react-bootstrap'
 import Errores from '../Atoms/Errores'
 import * as firebase from "firebase/app";
 
@@ -22,6 +22,7 @@ const CardSaved = (props) => {
   const [name,setName] = useState('')
   const [paymentMethod,setpaymentMethod] = useState(null)
   const [showDelete,setShowDelete] = useState(false)
+  const [open, setOpen] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleCloseDelete = () => setShowDelete(false);
@@ -159,15 +160,22 @@ const CardSaved = (props) => {
   },[usuario])
 
   return(
-    <div className='d-flex flex-row justify-content-around'>
-      <div>
+    <div>
+      <div className='d-flex flex-row align-items-center justify-content-around'>
         <h4>Método de pago predeterminado</h4>
-        {details?<CreditCardDetails details={details} />:<h5 style={{color:'gray'}} className='text-center py-5'><i>No hay ningún método guardado</i></h5>}
+        {open?<ChevronCompactUp onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>
+        :<ChevronCompactDown onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>}
       </div>
-      <div className='d-flex flex-column align-items-center justify-content-around mt-3'>
-        <PencilSquare size={'30px'} style={{cursor:'pointer'}} onClick={()=>{setShow(true)}}/>
-        <TrashFill size={'30px'} style={{cursor:'pointer'}} onClick={()=>{setShowDelete(true)}}/>
-      </div>
+
+      <Collapse in={open}>
+        <div>
+          <div className='d-flex flex-row align-items-center justify-content-around'>
+            {details?<CreditCardDetails details={details} />:<h5 style={{color:'gray'}} className='text-center py-5'><i>No hay ningún método guardado</i></h5>}
+            <PencilSquare size={'30px'} style={{cursor:'pointer'}} onClick={()=>{setShow(true)}}/>
+            <TrashFill size={'30px'} style={{cursor:'pointer'}} onClick={()=>{setShowDelete(true)}}/>
+          </div>
+        </div>
+      </Collapse>
 
       <Modal
         show={show}

@@ -29,7 +29,7 @@ function Carrito(props) {
       var docRef = db.collection("Users").doc(usuario.uid).collection("ShoppingCart");
       docRef.get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-               Products.push({id:doc.id,data:doc.data()});
+               Products.push({id:doc.id,data:doc.data(),expire:expire});
                doc.data().type.includes('Reto')?Prices.push(Number(doc.data().instructor.monthlyProgram.Price))
                  :doc.data().type.includes('Zoom')?Prices.push(Number(doc.data().claseData.zoomPrice))
                  :Prices.push(Number(doc.data().claseData.offlinePrice))
@@ -63,7 +63,7 @@ function Carrito(props) {
             <h4><strong>Total: ${(subtotal+StripeFee(subtotal)).toFixed(2)}</strong></h4>
           </div>
           <div className='d-flex flex-column justify-content-around'>
-            <PayButton subtotal={subtotal} cart={true}/>
+            <PayButton subtotal={subtotal} cart={true} products={products}/>
             <p style={{cursor:'pointer'}} onClick={vaciarCarrito}><i>Vaciar Carrito</i></p>
           </div>
         </div>
@@ -77,7 +77,7 @@ function Carrito(props) {
               meetingID={product.data.meetingID?product.data.meetingID:null}
               startTime={product.data.startTime?product.data.startTime:null}
               type={product.data.type}
-              expire={product.data.type.includes('Video')?expire:null}
+              expire={product.data.type.includes('Video')||product.data.type.includes('Reto')?expire:null}
               id={product.id}/>
             </div>
           ))}

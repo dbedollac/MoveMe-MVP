@@ -153,6 +153,10 @@ const PaymentForm = (props) => {
                 handlePaymentMethod()
               }
               setError(null)
+              addSales()
+              if (props.cart) {
+                vaciarCarrito()
+              }
                             // Show a success message to your customer
               // There's a risk of the customer closing the window before callback
               // execution. Set up a webhook or plugin to listen for the
@@ -187,6 +191,10 @@ const PaymentForm = (props) => {
               setSuccess(true)
               setLoading(false)
               setError(null)
+              addSales()
+              if (props.cart) {
+                vaciarCarrito()
+              }
             }
         })
       })
@@ -215,6 +223,33 @@ const PaymentForm = (props) => {
         return result;
       })
     )
+  }
+
+  const addSales = () =>{
+    for (var i = 0; i < props.products.length; i++) {
+      db.collection('Sales').doc().set({
+        data: props.products[i].data,
+        instructor: {uid:props.products[i].data.instructor.uid, email: props.products[i].data.instructor.email},
+        type: props.products[i].data.type,
+        price: props.products[i].data.type.includes('Reto')? Number(props.products[i].data.instructor.monthlyProgram.Price)
+          :props.products[i].data.type.includes('Zoom')?Number(props.products[i].data.claseData.zoomPrice)
+          :Number(props.products[i].data.claseData.offlinePrice),
+        user: {uid:usuario.uid, email:usuario.email},
+        expire: props.expire.toISOString(),
+        date: props.now.toISOString()
+      })
+    }
+  }
+
+  const vaciarCarrito = async () =>{
+    var docRef = db.collection("Users").doc(usuario.uid).collection("ShoppingCart")
+     await docRef.get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+      doc.ref.delete()
+    })
+    }).catch(error => console.log(error))
+
+    window.location.reload(false)
   }
 
   useEffect(()=>{
@@ -250,6 +285,7 @@ const PaymentForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
+    {console.log(props.products)}
         <input type='text' placeholder='Nombre en la tarjeta' onChange={handleName} className='col-12 rounded' required/>
         <CardElement />
         <Errores mensaje={error} />

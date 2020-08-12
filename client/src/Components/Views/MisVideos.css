@@ -1,0 +1,8 @@
+.MisVideos-container{
+  background-color: lightgray;
+  min-height: 100vh
+}
+
+.MisVideos-container img{
+  height: 15vw;
+}

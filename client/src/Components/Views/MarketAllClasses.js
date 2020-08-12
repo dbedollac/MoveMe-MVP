@@ -350,7 +350,7 @@ function MarketAllClasses(props) {
         </div>
         :
         clases.length>0?clases.slice(0,showMore).map(clase => (
-        <div className={`col-${clases.length>1?'2':'4'}`} key={props.allInstructors?clase.uid:clase.id+clase.instructor.id+clase.startTime} onClick={handleDetail} style={{cursor:'pointer'}} >
+        <div className='col-2' key={props.allInstructors?clase.uid:clase.id+clase.instructor.id+clase.startTime} onClick={handleDetail} style={{cursor:'pointer'}} >
           {props.allInstructors? <CoachCard data={clase.data} uid={clase.uid}/>
           :props.zoomMeetings?<ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.instructor?clase.instructor.id:clase.id} id={clase.id} startTime={clase.startTime} price={clase.data.zoomPrice}/>
           :<ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.instructor?clase.instructor.id:clase.id} id={clase.id} price={clase.data.offlinePrice}/>}

@@ -54,7 +54,7 @@ function SetMonthlyProgramPrice(props) {
             </div>)
   } else {
   return(
-      <div className='card-header d-flex flex-row'>
+      <div className='card-header d-flex flex-row rounded' style={{backgroundColor:'white'}}>
         <div className='col-10 d-flex flex-row p-3 justify-content-center align-items-center'>
               <InfoCircleFill size={'3em'} color='gray' style={{cursor:'pointer'}} id='price-info'/>
               <UncontrolledPopover trigger="focus" placement="bottom" target="price-info">

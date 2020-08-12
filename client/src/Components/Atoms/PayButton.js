@@ -57,7 +57,7 @@ function PayButton(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <PaymentForm total={(props.subtotal+StripeFee(props.subtotal)).toFixed(2)}/>
+          <PaymentForm total={(props.subtotal+StripeFee(props.subtotal)).toFixed(2)} products={props.products} cart={props.cart?true:false} expire={expire} now={curr}/>
         </Modal.Body>
         {!props.cart?props.type!=='Zoom'?
         <Modal.Footer>

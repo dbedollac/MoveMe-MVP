@@ -66,7 +66,7 @@ const [open, setOpen] = useState(false);
                 <div className='card card-link'>
                   <div className='d-flex flex-row justify-content-around align-items-center'>
                     <p className='text-center'>
-                    <strong>Video para rentar</strong> <br/>(4 semenas) {props.match.params.uid||props.market? '$'+props.data.offlinePrice:null}</p>
+                    <strong>Video para rentar</strong> <br/>(1 mes) {props.match.params.uid||props.market? '$'+props.data.offlinePrice:null}</p>
                     {props.market?<AddToCar instructor={instructor} claseVideo={props.data}/>:null}
                     {open?<ChevronCompactUp onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>
                     :<EyeFill onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>}
@@ -74,7 +74,7 @@ const [open, setOpen] = useState(false);
                   <Collapse in={open}>
                     {open?
                     <div>
-                      <VideoPlayer Video={props.data.videoURL} videoWidth='100%' videoHeight='100%' className="text-center card-img-top" market={props.match.params.uid||props.market?true:false}/>
+                      <VideoPlayer Video={props.data.videoURL} videoWidth='100%' videoHeight='300px' className="text-center card-img-top" market={props.match.params.uid||props.market?true:false}/>
                     </div>:
                     <p>MoveMe</p>}
                   </Collapse>

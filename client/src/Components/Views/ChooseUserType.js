@@ -46,20 +46,20 @@ const  handleUserClick = () => {
 
 const searchInstructor = () =>{
     if(usuario){
-    db.collection("Instructors").where("uid", "==", usuario.uid).get().then( (querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      setNewInstructor(false)
-          });
+    db.collection("Instructors").doc(usuario.uid).get().then( (doc) => {
+      if (doc.exists) {
+        setNewInstructor(false)
+      }
       });
   }
   }
 
 const searchUser = () =>{
     if (usuario) {
-    db.collection("Users").where("uid", "==", usuario.uid).get().then( (querySnapshot) => {
-    querySnapshot.forEach((doc) => {
+    db.collection("Users").doc(usuario.uid).get().then( (doc) => {
+    if (doc.exists) {
       setNewUser(false)
-          });
+    }
       });
   }
   }
@@ -127,6 +127,7 @@ const handleAceptar = () =>{
 
     return(
       <div>
+      {console.log(newUser)}
           <Header type={newInstructor?0:1} title='M O V E M E'/>
               <div className="col-12 chooseUserType-container d-flex flex-column justify-content-start align-items-center ">
                 <div className="d-flex flex-column m-2">
