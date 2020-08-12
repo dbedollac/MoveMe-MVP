@@ -24,6 +24,7 @@ function Coach(props) {
   const [videoClases, setvideoClases] = useState([])
   const [monthlyProgram,setMonthlyProgram] = useState(false)
   const [myClasses,setmyClasses] = useState(false)
+  const [aux,setAux] = useState([])
 
   const handleVerMonthlyProgram = () =>{
     setMonthlyProgram(!monthlyProgram)
@@ -66,7 +67,10 @@ function Coach(props) {
                           zoomMeetingsProgram.push(doc.id)
                         }
                         if(doc.data().startTime>now){
-                        zoomMeetings.push({startTime:doc.data().startTime,meetingID:doc.data().meetingID,claseID:doc.data().claseID, monthlyProgram:doc.data().monthlyProgram})}
+                          if (!aux.includes(doc.id)) {
+                            aux.push(doc.id)
+                            zoomMeetings.push({startTime:doc.data().startTime,meetingID:doc.data().meetingID,claseID:doc.data().claseID, monthlyProgram:doc.data().monthlyProgram})}
+                          }
                       }
 
                     )

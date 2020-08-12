@@ -58,7 +58,8 @@ const [loading,setLoading] = useState(false)
                   claseID: props.claseID,
                   meetingID: resp.id,
                   startTime: resp.start_time,
-                  monthlyProgram: props.meetingType===2?false:true
+                  monthlyProgram: props.meetingType===2?false:true,
+                  joinURL: resp.join_url
                 })
                 alert('La clase se agendó con éxito')
               }

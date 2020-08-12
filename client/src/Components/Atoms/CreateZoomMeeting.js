@@ -71,7 +71,8 @@ const [loading,setLoading] = useState(false)
                   monthlyProgram: props.meetingType===2?false:true,
                   week:props.week,
                   dayNumber: props.dayNumber,
-                  dayName: props.dayName
+                  dayName: props.dayName,
+                  joinURL: resp.join_url
                 }).then(window.location.reload(false)).catch(function(error) {
                     console.log("Error setting documents: ", error);
                 })

@@ -22,7 +22,7 @@ const [open, setOpen] = useState(false);
       var docRef = db.collection("Instructors").doc(usuario.uid);
       docRef.get().then( (doc)=>{
       if (doc.exists) {
-            RefreshToken(usuario.uid, doc.data().zoomRefreshToken).catch(error => window.location.reload(false))
+            RefreshToken(usuario.uid, doc.data().zoomRefreshToken,doc.data().zoomToken)
         } else {
             console.log("No such document!");
         }

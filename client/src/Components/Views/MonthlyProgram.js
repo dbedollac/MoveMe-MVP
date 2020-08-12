@@ -25,9 +25,10 @@ function MonthlyProgram(props) {
     if (usuario) {
       if(!props.market){
       var docRef = db.collection("Instructors").doc(usuario.uid);
-      docRef.get().then( (doc)=>{
+      docRef.get().then( async (doc)=>{
       if (doc.exists) {
-            RefreshToken(usuario.uid, doc.data().zoomRefreshToken)
+            await RefreshToken(usuario.uid, doc.data().zoomRefreshToken, doc.data().zoomToken)
+            console.log('listo')
         } else {
             console.log("No such document!");
         }

@@ -42,10 +42,7 @@ function DeleteZoomMeeting(props) {
                     .then(function(querySnapshot) {
                       querySnapshot.forEach(function(doc) {
                         console.log(doc)
-                        doc.ref.delete()
-                        .then(
-                          window.location.reload(false)
-                          )
+                        doc.ref.delete().then(window.location.reload(false))
                         .catch(function(error) {
                             console.log("Error getting documents: ", error)
                           })

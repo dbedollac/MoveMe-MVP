@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import ClassCard from '../Cards/ClassCard'
 import CoachCard from '../Cards/CoachCard'
 import InstructorsDetailCard from '../Cards/InstructorsDetailCard'
+import UsersDetailCard from '../Cards/UsersDetailCard'
 import { ArrowLeft, X, Search } from 'react-bootstrap-icons';
 
 function MarketAllClasses(props) {
@@ -254,8 +255,8 @@ function MarketAllClasses(props) {
     }
 
     if(props.array&&aux){
-      setclases(shuffleArray(props.array))
-      setclasesAll(shuffleArray(props.array))
+      setclases(props.misVideos?props.array:shuffleArray(props.array))
+      setclasesAll(props.misVideos?props.array:shuffleArray(props.array))
     }
 
     if(props.allInstructors){
@@ -269,9 +270,10 @@ function MarketAllClasses(props) {
   return(
 
     <div className='d-flex flex-column align-items-center'>
-      <div className='col-12'>
+    {console.log(clases)}
+      {props.misVideos?null:<div className='col-12'>
         <button className='btn-secondary rounded mt-2 float-right' onClick={()=>{window.location.reload(false)}}><ArrowLeft /> Regresar</button>
-      </div>
+      </div>}
       <form>
         <div className='d-flex flex-row justify-content-end align-items-center flex-wrap'>
 
@@ -328,6 +330,7 @@ function MarketAllClasses(props) {
           </div>
 
           {props.zoomMeetings?<input type="datetime-local" className='ml-1' onChange={handleDateTime} value={filterDateTime}/>
+          :props.misVideos?null
           :<select id="ordenar"
               name="ordenar"
               className='ml-1'
@@ -345,7 +348,8 @@ function MarketAllClasses(props) {
       <div className='p-2 d-flex flex-row flex-wrap justify-content-start'>
       {detail&&claseDetail?
         <div style={{position: 'relative'}} className='p-2 col-12'>
-          <InstructorsDetailCard data={claseDetail.data} claseID={claseDetail.id} market={true} instructor={claseDetail.instructor?claseDetail.instructor:props.instructor}/>
+          {props.misVideos?<UsersDetailCard data={claseDetail.data} claseID={claseDetail.id} instructor={claseDetail.instructor?claseDetail.instructor:props.instructor} misVideos={true}/>
+          :<InstructorsDetailCard data={claseDetail.data} claseID={claseDetail.id} market={true} instructor={claseDetail.instructor?claseDetail.instructor:props.instructor}/>}
           <X className='float-left'size={'2em'} onClick={handleDetail} style={{position: 'absolute', top:'2%', left:'2%',cursor:'pointer'}}/>
         </div>
         :
@@ -353,7 +357,7 @@ function MarketAllClasses(props) {
         <div className='col-2' key={props.allInstructors?clase.uid:clase.id+clase.instructor.id+clase.startTime} onClick={handleDetail} style={{cursor:'pointer'}} >
           {props.allInstructors? <CoachCard data={clase.data} uid={clase.uid}/>
           :props.zoomMeetings?<ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.instructor?clase.instructor.id:clase.id} id={clase.id} startTime={clase.startTime} price={clase.data.zoomPrice}/>
-          :<ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.instructor?clase.instructor.id:clase.id} id={clase.id} price={clase.data.offlinePrice}/>}
+          :<ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.instructor?clase.instructor.id:clase.id} id={clase.id} price={clase.data.offlinePrice} misVideos={props.misVideos?true:false} expire={props.misVideos?clase.expire:null}/>}
         </div>
       )):<h4 style={{color:'gray'}} className='text-center py-5'><i>{props.allInstructors?'No hay retos disponibles':'No hay clases disponibles'}</i></h4>}
       </div>

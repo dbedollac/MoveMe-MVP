@@ -2,6 +2,37 @@ var express = require('express');
 var router = express.Router();
 var http = require("https");
 
+    //Check Token ------------------------------------------------------------------------.
+    router.post('/check-token',function (req, res, next) {
+      var http = require("https");
+
+        var options = {
+          "method": "GET",
+          "hostname": "api.zoom.us",
+          "port": null,
+          "path": "/v2/users/me",
+          "headers": {
+            "authorization": "Bearer "+req.body.token
+          }
+        };
+
+        var reqZoom = http.request(options, function (resZoom) {
+          var chunks = [];
+
+          resZoom.on("data", function (chunk) {
+            chunks.push(chunk);
+          });
+
+          resZoom.on("end", function () {
+            var body = Buffer.concat(chunks);
+            console.log(body.toString());
+            res.send(body.toString())
+          });
+        });
+
+        reqZoom.end();
+    })
+
     //Refresh Token -----------------------------------------------------------------------
       router.post('/refresh-token', function(req, res, next) {
         console.log(req.body)

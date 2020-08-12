@@ -19,6 +19,7 @@ const [allClases, setallClases] = useState([])
 const [zoomMeetings,setZoomMeetings] = useState([])
 const [zoomMeetingsProgram,setZoomMeetingsProgram] = useState([])
 const [videoClases, setvideoClases] = useState([])
+const [aux,setAux] = useState([])
 
 
 const deleteMeeting = (meetingID) =>{
@@ -155,7 +156,10 @@ const deleteMeeting = (meetingID) =>{
                           zoomMeetingsProgram.push(doc.id)
                         }
                         if(doc.data().startTime>now){
-                        zoomMeetings.push({startTime:doc.data().startTime,meetingID:doc.data().meetingID,claseID:doc.data().claseID, monthlyProgram:doc.data().monthlyProgram})
+                          if (!aux.includes(doc.id)) {
+                            aux.push(doc.id)
+                            zoomMeetings.push({startTime:doc.data().startTime,meetingID:doc.data().meetingID,claseID:doc.data().claseID, monthlyProgram:doc.data().monthlyProgram})
+                          }
                       } else {
                         if(!doc.data().monthlyProgram){
                           deleteMeeting(doc.data().meetingID)
