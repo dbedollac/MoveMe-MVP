@@ -27,8 +27,7 @@ function MonthlyProgram(props) {
       var docRef = db.collection("Instructors").doc(usuario.uid);
       docRef.get().then( async (doc)=>{
       if (doc.exists) {
-            await RefreshToken(usuario.uid, doc.data().zoomRefreshToken, doc.data().zoomToken)
-            console.log('listo')
+            await RefreshToken(usuario.uid, doc.data().zoomRefreshToken)
         } else {
             console.log("No such document!");
         }
@@ -42,7 +41,6 @@ function MonthlyProgram(props) {
            setUser(true)
        } else {
            // doc.data() will be undefined in this case
-           console.log("No es usuario");
        }
        }).catch(function(error) {
            console.log("Error getting document:", error);

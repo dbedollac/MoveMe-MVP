@@ -42,7 +42,7 @@ const [loading,setLoading] = useState(false)
                       timezone: timezone,
                       settings: {
                         host_video: true,
-                        join_before_host: true,
+                        join_before_host: false,
                         approval_type: 0,
                         registrants_email_notification: true}},
              token: doc.data().zoomToken

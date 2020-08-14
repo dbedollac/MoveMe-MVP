@@ -4,6 +4,7 @@ import CoachCard from '../Cards/CoachCard'
 import Carousel from "react-multi-carousel";
 import InstructorsDetailCard from '../Cards/InstructorsDetailCard'
 import { X } from 'react-bootstrap-icons';
+import UsersDetailCard from '../Cards/UsersDetailCard'
 import "react-multi-carousel/lib/styles.css";
 
 function DisplayCarousel(props) {
@@ -22,15 +23,17 @@ function DisplayCarousel(props) {
     }
 
   const  handleDetail = (event) =>{
-      if (props.home) {
+      if (props.home||props.ClasesZoom) {
         var clasesInstructor = props.allClases.filter(item => item.instructor.id.includes(event.target.name));
-        var clase = clasesInstructor.filter(item => item.id.includes(event.target.alt))
+        var clase = {data:clasesInstructor.filter(item => item.id.includes(event.target.alt))[0],joinURL:props.ClasesZoom?event.target.id:null}
       } else {
-        var clase = props.allClases.filter(item => item.id.includes(event.target.name));
+        var clase = {data:props.allClases.filter(item => item.id.includes(event.target.name))[0]}
       }
 
-      setclaseDetail(clase[0])
+      setclaseDetail(clase)
       setdetail(!detail)
+
+      console.log(event.target.tagName)
     }
 
   const sortMeetings = (a,b) => {
@@ -72,12 +75,11 @@ function DisplayCarousel(props) {
 
   useEffect(()=>{
     if(props.zoomMeetings){
-      if (meetings.length === 0) {
 
           var Meetings = []
           var now = new Date(Date.now()-3600000).toISOString()
             for (var i = 0; i < props.zoomMeetings.length; i++) {
-              if (props.home) {
+              if (props.home||props.ClasesZoom) {
                 var clasesInstructor = props.allClases.filter(item => item.instructor.id.includes(props.zoomMeetings[i].instructor.id));
                 var clase = clasesInstructor.filter(item => item.id.includes(props.zoomMeetings[i].claseID))
               } else {
@@ -88,7 +90,8 @@ function DisplayCarousel(props) {
                 id: clase[0].id,
                 data: clase[0].data,
                 instructor: props.zoomMeetings[i].instructor,
-                monthlyProgram: props.zoomMeetings[i].monthlyProgram
+                monthlyProgram: props.zoomMeetings[i].monthlyProgram,
+                joinURL:props.zoomMeetings[i].joinURL
               })
             }
         if (props.instructor&&!props.instructor.data.monthlyProgram.Active) {
@@ -96,7 +99,7 @@ function DisplayCarousel(props) {
         }else {
           setMeetings(Meetings)
         }
-      }
+
     }
 
     if (props.home) {
@@ -107,12 +110,13 @@ function DisplayCarousel(props) {
       setallInstructors(props.allInstructors)
     }
 
-  },[props.array])
+  },[props.array,props.zoomMeetings])
 
-  if (detail&&claseDetail) {
+  if (detail&&claseDetail.data) {
     return(
       <div style={{position: 'relative'}} className='p-2'>
-        <InstructorsDetailCard data={claseDetail.data} claseID={claseDetail.id} market={props.market?props.market:false} instructor={claseDetail.instructor?claseDetail.instructor:props.instructor}/>
+      {props.ClasesZoom?<UsersDetailCard data={claseDetail.data.data} claseID={claseDetail.data.id} instructor={claseDetail.data.instructor?claseDetail.data.instructor:props.data.instructor} ClasesZoom={true} joinURL={claseDetail.joinURL}/>
+      :<InstructorsDetailCard data={claseDetail.data.data} claseID={claseDetail.data.id} market={true} instructor={claseDetail.data.instructor?claseDetail.data.instructor:props.data.instructor}/>}
         <X className='float-left'size={'2em'} onClick={handleDetail} style={{position: 'absolute', top:'2%', left:'2%',cursor:'pointer'}}/>
       </div>
     )
@@ -131,9 +135,16 @@ function DisplayCarousel(props) {
             <div key={item.id} onClick={handleDetail} style={{cursor:'pointer'}}>
               <ClassCard title={item.data.title} picture={item.data.imgURL} name={item.instructor?item.instructor.id:item.id} id={item.id} price={item.data.offlinePrice}/>
             </div>
-          )): meetings.sort(sortMeetings).slice(0,50).map(item => (
-            <div key={item.id} onClick={handleDetail} style={{cursor:'pointer'}}>
-              <ClassCard title={item.data.title} picture={item.data.imgURL} name={item.instructor?item.instructor.id:item.id} id={item.id} startTime={item.startTime} onClick={handleDetail} price={item.data.zoomPrice}/>
+          )): meetings.sort(sortMeetings).slice(0,50).map((item,index) => (
+            <div key={item.id+index} onClick={handleDetail} style={{cursor:'pointer'}}>
+              <ClassCard title={item.data.title}
+                picture={item.data.imgURL}
+                name={item.instructor?item.instructor.id:item.id}
+                id={item.id}
+                startTime={item.startTime}
+                price={!props.ClasesZoom?item.data.zoomPrice:null}
+                joinURL={props.ClasesZoom?item.joinURL:null}
+                />
             </div>
           ))}
       </Carousel >

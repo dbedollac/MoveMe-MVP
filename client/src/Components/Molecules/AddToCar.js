@@ -45,7 +45,10 @@ function AddToCar(props) {
           claseData: props.claseZoom,
           meetingID: props.meetingID,
           startTime: props.startTime,
-          type: 'Clase por Zoom'
+          type: 'Clase por Zoom',
+          joinURL: props.joinURL,
+          claseID: props.claseID,
+          monthlyProgram: props.zoomMonthlyProgram
         }).catch(error => console.log(error))
       }
 
@@ -75,10 +78,13 @@ function AddToCar(props) {
           type={props.claseZoom?'Zoom':props.claseVideo?'Video':'Reto'}
           products={[{
             data:{instructor: props.monthlyProgram?props.instructor:props.instructor.data,
-            claseData: props.claseZoom?props.claseZoom:props.claseVideo?props.claseVideo:null,
-            meetingID: props.claseZoom?props.meetingID:null,
-            startTime: props.claseZoom?props.startTime:null,
-            type: props.claseZoom?'Clase por Zoom':props.claseVideo?'Clase en Video':'Reto Mensual'},
+              claseData: props.claseZoom?props.claseZoom:props.claseVideo?props.claseVideo:null,
+              meetingID: props.claseZoom?props.meetingID:null,
+              startTime: props.claseZoom?props.startTime:null,
+              type: props.claseZoom?'Clase por Zoom':props.claseVideo?'Clase en Video':'Reto Mensual',
+              joinURL: props.claseZoom?props.joinURL:null,
+              claseID: props.claseZoom?props.claseID:null,
+              monthlyProgram: props.claseZoom?props.zoomMonthlyProgram:null},
             expire: expire
           }]}
         />

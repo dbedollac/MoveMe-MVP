@@ -3,10 +3,12 @@ import VideoPlayer from '../Atoms/VideoPlayer'
 import {db} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
 import CoachName from '../Atoms/CoachName'
+import { CameraVideoFill} from 'react-bootstrap-icons';
 import { withRouter } from "react-router";
 
 function UserDetailCard(props) {
   const { usuario } = useContext(Auth);
+  const now = new Date().toISOString()
 
       return(
         <div className='col-12 card'>
@@ -23,12 +25,20 @@ function UserDetailCard(props) {
                 <div className='col-12 d-flex flex-column'>
                   <VideoPlayer Video={props.data.videoURL} videoWidth='100%' videoHeight='450px' className="text-center card-img-top" market={false}/>
                 </div>
-              :null}
+              :
+                <div className='col-12 d-flex flex-row justify-content-center mb-4'>
+                  <button className={`rounded btn${props.startTime>now?'-outline-secondary':'-primary'} btn-lg`} onClick={()=>{window.location.href = props.joinURL}}>
+                    <CameraVideoFill size={'30px'}/> Unirme a la clase por Zoom
+                  </button>
+                </div>
+                }
 
-              {props.data.description.length > 0?
-              <div className='col-6 d-flex flex-column'>
-                <h3>Descripción</h3>
-                <p>{props.data.description}</p>
+              {props.data.description.length>0?
+                <div className='col-6 d-flex flex-column'>
+                  <div className='d-flex flex-column'>
+                    <h3>Descripción</h3>
+                    <p>{props.data.description}</p>
+                  </div>
               </div>:null}
 
             <div className='col-6 d-flex flex-column'>

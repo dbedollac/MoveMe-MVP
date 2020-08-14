@@ -40,7 +40,12 @@ function GetZoomMeetings(props) {
               var now = new Date(Date.now()-3600000).toISOString()
                 querySnapshot.forEach(function(doc) {
                   if(doc.data().startTime>now){
-                  zoomMeetings.push({startTime:doc.data().startTime,meetingID:doc.data().meetingID, claseID:doc.data().claseID})}
+                  zoomMeetings.push({startTime:doc.data().startTime,
+                    meetingID:doc.data().meetingID,
+                    claseID:doc.data().claseID,
+                    joinURL:doc.data().joinURL,
+                    monthlyProgram:doc.data().monthlyProgram})
+                  }
                 })
                 setMeetings(zoomMeetings)
             })
@@ -62,7 +67,12 @@ function GetZoomMeetings(props) {
               var now = new Date(Date.now()-3600000).toISOString()
                 querySnapshot.forEach(function(doc) {
                   if(doc.data().startTime>now){
-                  zoomMeetings.push({startTime:doc.data().startTime,meetingID:doc.data().meetingID,claseID:doc.data().claseID})}
+                  zoomMeetings.push({startTime:doc.data().startTime,
+                    meetingID:doc.data().meetingID,
+                    claseID:doc.data().claseID,
+                    joinURL:doc.data().joinURL,
+                    monthlyProgram:doc.data().monthlyProgram}
+                  )}
                 })
                 setMeetings(zoomMeetings)
             })
@@ -86,7 +96,9 @@ function GetZoomMeetings(props) {
           monthlyProgram={props.week?true:false}
           claseID={meeting.claseID}
           market={props.match.params.uid||props.market?true:false}
-          instructor={props.instructor}/>
+          instructor={props.instructor}
+          joinURL={meeting.joinURL}
+          zoomMonthlyProgram={meeting.monthlyProgram}/>
         </div>
       )):null}
     </div>

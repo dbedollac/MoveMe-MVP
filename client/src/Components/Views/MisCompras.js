@@ -58,7 +58,7 @@ function MisCompras(props) {
         <div className='MisCompras-container-paymentMethod col-6 rounded p-1'>
           <CardSaved/>
         </div>
-        {purchases?purchases.sort(sortPurchases).slice(0,showMore).map(purchase => (
+        {purchases.length>0?purchases.sort(sortPurchases).slice(0,showMore).map(purchase => (
           <div className='col-6 mt-2'>
             <Purchases
               expire={new Date(purchase.expire)}
@@ -69,7 +69,7 @@ function MisCompras(props) {
               instructor={purchase.data.instructor}
             />
           </div>
-        )):null}
+        )):<h4 style={{color:'gray'}} className='text-center py-5'><i>No hay compras registradas en los últimos 6 meses</i></h4>}
         {purchases.length>showMore?<button className='btn-secondary rounded col-4 my-2' onClick={handleVerMas}>Ver más</button>:null}
       </div>
     </div>

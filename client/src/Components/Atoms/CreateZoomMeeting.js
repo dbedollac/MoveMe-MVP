@@ -52,7 +52,7 @@ const [loading,setLoading] = useState(false)
                       },
                       settings: {
                         host_video: true,
-                        join_before_host: true,
+                        join_before_host: false,
                         approval_type: 0,
                         registrants_email_notification: true}},
              token: doc.data().zoomToken
@@ -73,7 +73,8 @@ const [loading,setLoading] = useState(false)
                   dayNumber: props.dayNumber,
                   dayName: props.dayName,
                   joinURL: resp.join_url
-                }).then(window.location.reload(false)).catch(function(error) {
+                }).then(window.location.reload(false))
+                .catch(function(error) {
                     console.log("Error setting documents: ", error);
                 })
               }
@@ -93,7 +94,7 @@ const [loading,setLoading] = useState(false)
 
   return(
       <div className='d-flex flex-row'>
-        {loading?<Spinner animation="border" /> :
+        {loading?<Spinner animation="border" className='mr-2'/> :
         <button className='btn-primary mr-2' onClick={setMeeting} disabled={(time!==null&&props.claseID!==null)?false:true}>Agregar</button>
         }
         <input type="time" onChange={handleTime} className='col-8'/>

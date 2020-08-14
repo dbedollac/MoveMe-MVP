@@ -17,6 +17,7 @@ function StartZoomMeeting(props) {
   const [time,setTime] = useState(null)
   const [price,setPrice] = useState(null)
   const [claseData,setclaseData] = useState(null)
+  const now = new Date(Date.now()+3600000).toISOString()
 
   useEffect(()=>{
 
@@ -29,7 +30,7 @@ function StartZoomMeeting(props) {
 
 
       setdateTime(hour+':'+minutes+'h'+' '+days+'/'+month+'/'+year)
-      setTime(hour+':'+minutes+' h')
+      setTime(hour+':'+minutes+'h')
     }
 
     if(props.claseID){
@@ -101,9 +102,20 @@ function StartZoomMeeting(props) {
   return(
     <div className='card card-link d-flex flex-row align-items-center justify-content-around'>
       {props.monthlyProgram? props.market?null:<div className='col-1'><DeleteZoomMeeting meetingID={props.meetingID} meetingTitle={claseTitle} meetingTime={time} /></div>:null}
-      {props.monthlyProgram?<p className='mt-2 col-6'>{props.market?'$'+price:null} {time} {claseTitle}</p>:<p className='mt-2'>{props.market?'$'+price:null} {dateTime}</p>}
-      {props.market?<AddToCar claseZoom={claseData} instructor={props.instructor} meetingID={props.meetingID} startTime={{time:dateTime,startTime:props.startTime}}/>
-      :<button className='btn-primary' onClick={startMeeting}>{props.monthlyProgram?<CameraVideoFill />:null} {props.title}</button>}
+      {props.monthlyProgram?<p className='pt-3'>{props.market?'$'+price:null} {time} {claseTitle}</p>:<p className='mt-2'>{props.market?'$'+price:null} {dateTime}</p>}
+      {props.market?<AddToCar claseZoom={claseData}
+        instructor={props.instructor}
+        meetingID={props.meetingID}
+        startTime={{time:dateTime,startTime:props.startTime}}
+        joinURL={props.joinURL}
+        claseID={props.claseID}
+        zoomMonthlyProgram={props.zoomMonthlyProgram}
+        />
+      :<button
+        className={`rounded btn${props.startTime>now?'-outline-secondary':'-primary'}`}
+        onClick={startMeeting}
+        disabled={props.startTime>now}
+        >{props.monthlyProgram?<CameraVideoFill />:null} {props.title}</button>}
     </div>
   )
 }
