@@ -26,6 +26,12 @@ function Coach(props) {
   const [myClasses,setmyClasses] = useState(false)
   const [aux,setAux] = useState([])
 
+  const today = new Date()
+  const firstMonthDay = new Date(today.getFullYear(),today.getMonth(),1)
+  const firstMonthSunday = firstMonthDay.getDay()===0?0:7-firstMonthDay.getDay()+1
+  const fiveWeeks = (new Date(today.getFullYear(),today.getMonth(),firstMonthSunday+28).getMonth() === today.getMonth())
+  const fiveWeeks0= fiveWeeks?-2:0
+
   const handleVerMonthlyProgram = () =>{
     setMonthlyProgram(!monthlyProgram)
   }
@@ -63,7 +69,7 @@ function Coach(props) {
                   .then(function(querySnapshot) {
                     var now = new Date(Date.now()-3600000).toISOString()
                       querySnapshot.forEach(function(doc) {
-                        if (doc.data().monthlyProgram===true&&!zoomMeetingsProgram.includes(doc.id)) {
+                        if (doc.data().monthlyProgram===true&&doc.data().week>fiveWeeks0&&!zoomMeetingsProgram.includes(doc.id)) {
                           zoomMeetingsProgram.push(doc.id)
                         }
                         if(doc.data().startTime>now){
@@ -145,7 +151,7 @@ function Coach(props) {
                     </div>
                 </div>
                 {videoClases.length>0?
-                <DisplayCarousel allClases={allClases} array={videoClases} market={true}  instructor={{data:instructor,id:uid}}/>:
+                <DisplayCarousel allClases={allClases} array={videoClases} market={true}  instructor={{data:instructor,id:uid}} />:
                 <h4 style={{color:'gray'}} className='text-center py-5'><i>No hay clases con video</i></h4>}
             </div>
       </div>

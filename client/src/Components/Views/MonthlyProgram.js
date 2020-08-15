@@ -23,7 +23,7 @@ function MonthlyProgram(props) {
     }
 
     if (usuario) {
-      if(!props.market){
+      if(!props.market&&!props.ClasesZoom){
       var docRef = db.collection("Instructors").doc(usuario.uid);
       docRef.get().then( async (doc)=>{
       if (doc.exists) {
@@ -35,7 +35,7 @@ function MonthlyProgram(props) {
             console.log("Error getting document:", error);
         });}
 
-        var docRef2 = db.collection("Users").doc(usuario.uid);
+        if(!props.ClasesZoom){var docRef2 = db.collection("Users").doc(usuario.uid);
         docRef2.get().then((doc)=>{
        if (doc.exists) {
            setUser(true)
@@ -45,29 +45,30 @@ function MonthlyProgram(props) {
        }).catch(function(error) {
            console.log("Error getting document:", error);
        });
+     }
     }
   },[usuario])
 
   return (
     <div>
-    <Header instructor={usuario?user?!props.match.params.uid?true:false:true:null} user={usuario?user?true:false:null}/>
+    {props.ClasesZoom?null:<Header instructor={usuario?user?!props.match.params.uid?true:false:true:null} user={usuario?user?true:false:null}/>}
         <div className='MonthlyProgram-container'>
-          <SetMonthlyProgramPrice market={props.match.params.uid?true:false} instructor={props.instructor}/>
+          {props.ClasesZoom?null:<SetMonthlyProgramPrice market={props.match.params.uid?true:false} instructor={props.instructor}/>}
           <div className='d-flex flex-row flex-wrap justify-content-center'>
             <div className='col-5 mt-2'>
-              <MonthlyProgramWeek week={1} instructor={props.instructor}/>
+              <MonthlyProgramWeek week={1} instructor={props.ClasesZoom?null:props.instructor} zoomMeetings={props.ClasesZoom?props.zoomMeetings:null}/>
             </div>
             <div className='col-5 mt-2'>
-              <MonthlyProgramWeek week={2} instructor={props.instructor}/>
+              <MonthlyProgramWeek week={2} instructor={props.ClasesZoom?null:props.instructor} zoomMeetings={props.ClasesZoom?props.zoomMeetings:null}/>
             </div>
             <div className='col-5 mt-2'>
-              <MonthlyProgramWeek week={3} instructor={props.instructor}/>
+              <MonthlyProgramWeek week={3} instructor={props.ClasesZoom?null:props.instructor} zoomMeetings={props.ClasesZoom?props.zoomMeetings:null}/>
             </div>
             <div className='col-5 mt-2'>
-              <MonthlyProgramWeek week={4} instructor={props.instructor}/>
+              <MonthlyProgramWeek week={4} instructor={props.ClasesZoom?null:props.instructor} zoomMeetings={props.ClasesZoom?props.zoomMeetings:null}/>
             </div>
             <div className='col-5 mt-2'>
-              <MonthlyProgramWeek week={5} instructor={props.instructor}/>
+              <MonthlyProgramWeek week={5} instructor={props.ClasesZoom?null:props.instructor} zoomMeetings={props.ClasesZoom?props.zoomMeetings:null}/>
             </div>
           </div>
         </div>

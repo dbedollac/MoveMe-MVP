@@ -1,0 +1,12 @@
+.Sales-container{
+  background-color: lightgray;
+  min-height: 100vh
+}
+
+.Sales-container-totales{
+  background-color: white;
+  color: black;
+  border-color: gray;
+  border-width: 2px;
+  border-style: solid;
+}

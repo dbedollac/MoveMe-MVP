@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../Molecules/Header'
+import './Sales.css'
 
 class Sales extends React.Component {
   constructor() {
@@ -9,8 +10,8 @@ class Sales extends React.Component {
   render(){
     return (
       <div>
-        <Header instructor={true} />
-          <div >
+        <Header instructor={true}/>
+          <div className='Sales-container'>
             <h1> Ventas </h1>
           </div>
       </div>

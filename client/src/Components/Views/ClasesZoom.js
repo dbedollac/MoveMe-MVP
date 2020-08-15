@@ -4,6 +4,7 @@ import DisplayCarousel from '../Molecules/DisplayCarousel'
 import { Auth } from "../../Config/AuthContext"
 import {db, auth} from '../../Config/firestore'
 import { withRouter } from "react-router";
+import MonthlyProgram from '../Views/MonthlyProgram'
 import './ClasesZoom.css'
 
 function ClasesZoom(props) {
@@ -35,24 +36,32 @@ function ClasesZoom(props) {
                                                 console.log("Error getting documents: ", error);
                                             })
 
-        await db.collection("Instructors").doc(purchase.instructor.uid)
-                                          .collection('ZoomMeetingsID').where('monthlyProgram','==',true)
-                                            .get()
-                                            .then((querySnapshot) => {
-                                                querySnapshot.forEach((doc) => {
-                                                    retoMeetings.push({
-                                                    startTime:doc.data().startTime,
-                                                    meetingID:doc.data().meetingID,
-                                                    claseID:doc.data().claseID,
-                                                    monthlyProgram:doc.data().monthlyProgram,
-                                                    instructor:{id:purchase.instructor.uid,data:purchase.data.instructor},
-                                                    joinURL:doc.data().joinURL
-                                                    })
-                                                })
-                                            })
-                                            .catch(function(error) {
-                                                console.log("Error getting documents: ", error);
-                                            })
+        await db.collection("Instructors").doc(purchase.instructor.uid).get().then( async (doc) =>{
+          if (doc.data().monthlyProgram.Active) {
+
+          await db.collection("Instructors").doc(purchase.instructor.uid)
+                                            .collection('ZoomMeetingsID').where('monthlyProgram','==',true)
+                                              .get()
+                                              .then((querySnapshot) => {
+                                                  querySnapshot.forEach((doc) => {
+
+                                                      retoMeetings.push({
+                                                      startTime:doc.data().startTime,
+                                                      meetingID:doc.data().meetingID,
+                                                      claseID:doc.data().claseID,
+                                                      monthlyProgram:doc.data().monthlyProgram,
+                                                      instructor:{id:purchase.instructor.uid,data:purchase.data.instructor},
+                                                      joinURL:doc.data().joinURL,
+                                                      week: doc.data().week,
+                                                      dayNumber: doc.data().dayNumber
+                                                      })
+                                                  })
+                                              })
+                                              .catch(function(error) {
+                                                  console.log("Error getting documents: ", error);
+                                              })
+                                            }
+                                        })
       }
     }
     setclasesAll(retoClases.concat(zoomClases))
@@ -72,6 +81,10 @@ function ClasesZoom(props) {
         var Meetings=[]
         querySnapshot.forEach((doc)=>{
           if (doc.data().type.includes('Zoom')) {
+            var date = new Date(doc.data().data.startTime.startTime)
+            var sunday = date.getDate() - date.getDay()
+            var week = Math.ceil(sunday/7)
+
             if (doc.data().data.startTime.startTime>now) {
               Zoom.push({instructor:{id:doc.data().instructor.uid,data:doc.data().data.instructor},id:doc.data().data.claseID, data: doc.data().data.claseData, expire:doc.data().expire})
               Meetings.push({
@@ -80,7 +93,9 @@ function ClasesZoom(props) {
               claseID:doc.data().data.claseID,
               monthlyProgram:doc.data().data.monthlyProgram,
               instructor:{id:doc.data().instructor.uid,data:doc.data().data.instructor},
-              joinURL:doc.data().data.joinURL
+              joinURL:doc.data().data.joinURL,
+              week: week,
+              dayNumber: date.getDay()+1
               })
             }
         }
@@ -100,6 +115,10 @@ function ClasesZoom(props) {
         <div className='pt-2 pl-2'>
           <h3>Próximas Clases</h3>
           <DisplayCarousel allClases={retoClases.concat(zoomClases)} zoomMeetings={retoMeetings.concat(zoomMeetings)} ClasesZoom={true}/>
+        </div>
+        <div className='pt-2 pl-2'>
+          <h3>Clases del Mes</h3>
+          <MonthlyProgram ClasesZoom={true} zoomMeetings={retoMeetings.concat(zoomMeetings)}/>
         </div>
       </div>
     </div>

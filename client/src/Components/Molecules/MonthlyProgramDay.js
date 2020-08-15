@@ -27,6 +27,7 @@ function MonthlyProgramDay(props) {
   const [active,setActive] = useState(false)
   const [dateAux, setdateAux] =useState(false)
   const [clasesNumber, setclasesNumber] = useState(0)
+  const [meetings, setMeetings] = useState([])
 
 
     useEffect(()=>{
@@ -51,7 +52,7 @@ function MonthlyProgramDay(props) {
       setdateAux(true)
     }
 
-  },[usuario,dateAux])
+  },[usuario,dateAux,props.zoomMeetings])
 
   const getDayDate = () =>{
     var days = props.dayDate.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
@@ -64,6 +65,7 @@ function MonthlyProgramDay(props) {
       setActive(true)
     }
 
+    if (!props.zoomMeetings) {
       var docRef = db.collection("Instructors").doc(props.match.params.uid?props.match.params.uid:usuario.uid);
       docRef.collection('ZoomMeetingsID').where("week", "==", props.week).where("dayNumber", "==", props.dayNumber)
           .get()
@@ -71,7 +73,25 @@ function MonthlyProgramDay(props) {
           .catch(function(error) {
               console.log("Error getting documents: ", error);
           });
+        }else {
+          var meetings0 = props.zoomMeetings.filter(item => item.week === props.week)
+          var meetings1 = meetings0.filter(item => item.dayNumber === props.dayNumber)
+          setclasesNumber(meetings1.length)
 
+          var zoomMeetings = []
+
+          meetings1.forEach(function(doc) {
+            zoomMeetings.push({startTime:doc.startTime,
+              meetingID:doc.meetingID,
+              claseID:doc.claseID,
+              joinURL:doc.joinURL,
+              monthlyProgram:doc.monthlyProgram,
+              instructor: doc.instructor
+              }
+            )
+          })
+          setMeetings(zoomMeetings)
+        }
   }
 
   const handleBuscador = (event) =>{
@@ -167,12 +187,12 @@ function MonthlyProgramDay(props) {
       <Collapse in={open}>
         <div id="example-collapse-text ">
           <div className ='col-12 d-flex flex-column align-items-center mb-2'>
-          {props.match.params.uid?null:
+          {props.match.params.uid||props.zoomMeetings?null:
             <Button variant="outline-primary" onClick={handleShow} className='col-8'>
               Agregar clase <PlusCircleFill/>
             </Button>}
           </div>
-           <GetZoomMeetings week={props.week<5?props.week:-1} dayNumber={props.dayNumber} instructor={props.instructor}/>
+           <GetZoomMeetings week={props.week<5||props.zoomMeetings?props.week:-1} dayNumber={props.dayNumber} instructor={props.instructor} zoomMeetings={props.zoomMeetings?meetings:false}/>
         </div>
       </Collapse>
 

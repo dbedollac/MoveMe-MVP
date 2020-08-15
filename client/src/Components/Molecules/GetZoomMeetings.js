@@ -54,7 +54,7 @@ function GetZoomMeetings(props) {
             });
       }
 
-      if (props.week) {
+      if (props.week&&!props.zoomMeetings) {
         var zoomMeetings = []
         var docRef = db.collection("Instructors").doc(props.match.params.uid?props.match.params.uid:props.instructor?props.instructor.id:usuario.uid);
         if (props.instructor&&!props.instructor.data.monthlyProgram.Active) {
@@ -83,24 +83,39 @@ function GetZoomMeetings(props) {
     }
 
           }
-        })
+        },[props.zoomMeetings])
 
   return(
       <div>
-        {meetings?meetings.sort(sortMeetings).map(meeting => (
-        <div key={meeting.meetingID}>
+        {meetings.length>0?meetings.sort(sortMeetings).map((meeting,index) => (
+        <div key={meeting.meetingID+index}>
           <StartZoomMeeting
           startTime={meeting.startTime}
-          title='Iniciar'
+          title={props.zoomMeetings?'Unirme':'Iniciar'}
           meetingID={meeting.meetingID}
           monthlyProgram={props.week?true:false}
           claseID={meeting.claseID}
           market={props.match.params.uid||props.market?true:false}
-          instructor={props.instructor}
+          instructor={props.zoomMeetings?meeting.instructor:props.instructor}
           joinURL={meeting.joinURL}
-          zoomMonthlyProgram={meeting.monthlyProgram}/>
+          zoomMonthlyProgram={meeting.monthlyProgram}
+          ClasesZoom={props.zoomMeetings?true:false}/>
         </div>
-      )):null}
+      )):props.zoomMeetings?props.zoomMeetings.sort(sortMeetings).map((meeting,index) => (
+      <div key={meeting.meetingID+index}>
+        <StartZoomMeeting
+        startTime={meeting.startTime}
+        title={props.zoomMeetings?'Unirme':'Iniciar'}
+        meetingID={meeting.meetingID}
+        monthlyProgram={props.week?true:false}
+        claseID={meeting.claseID}
+        market={props.match.params.uid||props.market?true:false}
+        instructor={props.zoomMeetings?meeting.instructor:props.instructor}
+        joinURL={meeting.joinURL}
+        zoomMonthlyProgram={meeting.monthlyProgram}
+        ClasesZoom={props.zoomMeetings?true:false}/>
+      </div>)):null
+      }
     </div>
   )
 }

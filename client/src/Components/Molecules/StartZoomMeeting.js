@@ -34,6 +34,17 @@ function StartZoomMeeting(props) {
     }
 
     if(props.claseID){
+      if (props.ClasesZoom) {
+        var docRef = db.collection("Instructors").doc(props.instructor.id);
+        docRef.collection('Classes').doc(props.claseID)
+            .get()
+            .then( doc =>
+                setclaseTitle(doc.data().title)
+            )
+            .catch(function(error) {
+                console.log("Error getting documents: ", error);
+            });
+      }else{
       var docRef = db.collection("Instructors").doc(props.match.params.uid?props.match.params.uid:props.instructor?props.instructor.id:usuario.uid);
       docRef.collection('Classes').doc(props.claseID)
           .get()
@@ -43,6 +54,7 @@ function StartZoomMeeting(props) {
           .catch(function(error) {
               console.log("Error getting documents: ", error);
           });
+        }
     }
 
     if (props.market&&props.claseID) {
@@ -62,6 +74,8 @@ function StartZoomMeeting(props) {
   },[usuario])
 
   const startMeeting = () =>{
+    if (!props.ClasesZoom) {
+
     var docRef = db.collection("Instructors").doc(usuario.uid);
     docRef.get().then((doc)=>{
 
@@ -97,12 +111,16 @@ function StartZoomMeeting(props) {
      }).catch(function(error) {
          console.log("Error getting document:", error);
      });
-     }
+   }else {
+     window.location.href = props.joinURL
+   }
+  }
+
 
   return(
     <div className='card card-link d-flex flex-row align-items-center justify-content-around'>
-      {props.monthlyProgram? props.market?null:<div className='col-1'><DeleteZoomMeeting meetingID={props.meetingID} meetingTitle={claseTitle} meetingTime={time} /></div>:null}
-      {props.monthlyProgram?<p className='pt-3'>{props.market?'$'+price:null} {time} {claseTitle}</p>:<p className='mt-2'>{props.market?'$'+price:null} {dateTime}</p>}
+      {props.monthlyProgram? props.market||props.ClasesZoom?null:<div className='col-1'><DeleteZoomMeeting meetingID={props.meetingID} meetingTitle={claseTitle} meetingTime={time} /></div>:null}
+      {props.monthlyProgram?<p className={`pt-3 ${props.ClasesZoom?'col-7':null}`}>{props.market?'$'+price:null} {time} {claseTitle}</p>:<p className='mt-2'>{props.market?'$'+price:null} {dateTime}</p>}
       {props.market?<AddToCar claseZoom={claseData}
         instructor={props.instructor}
         meetingID={props.meetingID}

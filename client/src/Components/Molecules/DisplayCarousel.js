@@ -33,7 +33,6 @@ function DisplayCarousel(props) {
       setclaseDetail(clase)
       setdetail(!detail)
 
-      console.log(event.target.tagName)
     }
 
   const sortMeetings = (a,b) => {
@@ -113,10 +112,11 @@ function DisplayCarousel(props) {
   },[props.array,props.zoomMeetings])
 
   if (detail&&claseDetail.data) {
+    console.log(claseDetail)
     return(
       <div style={{position: 'relative'}} className='p-2'>
-      {props.ClasesZoom?<UsersDetailCard data={claseDetail.data.data} claseID={claseDetail.data.id} instructor={claseDetail.data.instructor?claseDetail.data.instructor:props.data.instructor} ClasesZoom={true} joinURL={claseDetail.joinURL}/>
-      :<InstructorsDetailCard data={claseDetail.data.data} claseID={claseDetail.data.id} market={true} instructor={claseDetail.data.instructor?claseDetail.data.instructor:props.data.instructor}/>}
+      {props.ClasesZoom?<UsersDetailCard data={claseDetail.data.data} claseID={claseDetail.data.id} instructor={claseDetail.data.instructor?claseDetail.data.instructor:props.instructor} ClasesZoom={true} joinURL={claseDetail.joinURL}/>
+      :<InstructorsDetailCard data={claseDetail.data.data} claseID={claseDetail.data.id} market={props.market?props.market:false} instructor={claseDetail.data.instructor?claseDetail.data.instructor:props.instructor}/>}
         <X className='float-left'size={'2em'} onClick={handleDetail} style={{position: 'absolute', top:'2%', left:'2%',cursor:'pointer'}}/>
       </div>
     )

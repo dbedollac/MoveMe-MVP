@@ -6,6 +6,12 @@ function CoachCard(props) {
   const [videosNumber, setvideosNumber] = useState(null)
   const [zoomMeetingsNumber, setZoomMeetingsNumber] = useState(null)
 
+  const today = new Date()
+  const firstMonthDay = new Date(today.getFullYear(),today.getMonth(),1)
+  const firstMonthSunday = firstMonthDay.getDay()===0?0:7-firstMonthDay.getDay()+1
+  const fiveWeeks = (new Date(today.getFullYear(),today.getMonth(),firstMonthSunday+28).getMonth() === today.getMonth())
+  const fiveWeeks0= fiveWeeks?-2:0
+
   const handleClick = () =>{
     props.history.push(`/coach-${props.data.profileName.replace(/ /g,'-')}/${props.uid}`)
   }
@@ -13,7 +19,8 @@ function CoachCard(props) {
   useEffect(()=>{
     var docRef = db.collection("Instructors").doc(props.uid)
 
-    docRef.collection('ZoomMeetingsID').where("monthlyProgram", "==", true)
+
+    docRef.collection('ZoomMeetingsID').where('week','>',fiveWeeks0)
         .get()
         .then(snap => setZoomMeetingsNumber(snap.size))
         .catch(function(error) {

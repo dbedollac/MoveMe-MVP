@@ -21,6 +21,12 @@ const [zoomMeetingsProgram,setZoomMeetingsProgram] = useState([])
 const [videoClases, setvideoClases] = useState([])
 const [aux,setAux] = useState([])
 
+const today = new Date()
+const firstMonthDay = new Date(today.getFullYear(),today.getMonth(),1)
+const firstMonthSunday = firstMonthDay.getDay()===0?0:7-firstMonthDay.getDay()+1
+const fiveWeeks = (new Date(today.getFullYear(),today.getMonth(),firstMonthSunday+28).getMonth() === today.getMonth())
+const fiveWeeks0= fiveWeeks?-2:0
+
 
 const deleteMeeting = (meetingID) =>{
   var docRef = db.collection("Instructors").doc(usuario.uid);
@@ -152,7 +158,7 @@ const deleteMeeting = (meetingID) =>{
                   .then(async function(querySnapshot) {
                     var now = new Date(Date.now()-3600000).toISOString()
                       querySnapshot.forEach(function(doc) {
-                        if (doc.data().monthlyProgram===true&&!zoomMeetingsProgram.includes(doc.id)) {
+                        if (doc.data().monthlyProgram===true&&doc.data().week>fiveWeeks0&&!zoomMeetingsProgram.includes(doc.id)) {
                           zoomMeetingsProgram.push(doc.id)
                         }
                         if(doc.data().startTime>now){
