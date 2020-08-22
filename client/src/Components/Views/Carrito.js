@@ -6,6 +6,7 @@ import { withRouter } from "react-router";
 import CarritoProduct from '../Cards/CarritoProduct'
 import PayButton from '../Atoms/PayButton'
 import StripeFee from '../Atoms/StripeFee'
+import {iva} from '../../Config/Fees'
 import './Carrito.css'
 
 function Carrito(props) {
@@ -56,19 +57,20 @@ function Carrito(props) {
     <div>
     <Header  user={usuario?true:false}/>
       <div className='Carrito-container d-flex flex-column pt-2 align-items-center'>
-        <div className='col-6 d-flex flex-row justify-content-around Carrito-container-total rounded p-1'>
+        <div className='col-10 col-md-7 d-flex flex-column flex-md-row justify-content-around Carrito-container-total rounded p-1'>
           <div className='d-flex flex-column'>
+            <h4><strong>Total: ${(subtotal*(1+iva)+StripeFee(subtotal*(1+iva))).toFixed(2)}</strong></h4>
             <h6>Subtotal: ${subtotal.toFixed(2)}</h6>
-            <h6>Tarifa por transacción: ${StripeFee(subtotal).toFixed(2)}</h6>
-            <h4><strong>Total: ${(subtotal+StripeFee(subtotal)).toFixed(2)}</strong></h4>
+            <h6>IVA: ${(subtotal*iva).toFixed(2)}</h6>
+            <h6>Tarifa por transacción: ${StripeFee(subtotal*(1+iva)).toFixed(2)}</h6>
           </div>
           <div className='d-flex flex-column justify-content-around'>
             <PayButton subtotal={subtotal} cart={true} products={products}/>
-            <p style={{cursor:'pointer'}} onClick={vaciarCarrito}><i>Vaciar Carrito</i></p>
+            <p style={{cursor:'pointer'}} onClick={vaciarCarrito} className='mt-2'><i>Vaciar Carrito</i></p>
           </div>
         </div>
 
-        <div className='col-6'>
+        <div className='col-11'>
           {products.length===0? <h4 style={{color:'gray'}} className='text-center py-5'><i>Tu carrito está vacío</i></h4>
             :products.map(product =>(
             <div className='pt-2' key={product.id}>

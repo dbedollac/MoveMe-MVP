@@ -1,9 +1,30 @@
 .ClassCard-container p{
-     white-space: nowrap;
+     white-space: normal;
      overflow: hidden;
      text-overflow: ellipsis;
+     font-size: 15px;
+     height: 25px
 }
 .ClassCard-titulo{
   background-color: rgba(0,0,0,0.8);
   color: white
+}
+
+.ClassCard-container img{
+    height: 200px;
+}
+
+@media (max-width: 768px) {
+  .ClassCard-container p{
+       white-space:normal;
+       height: 40px
+  }
+
+  .ClassCard-container img{
+      height: 130px;
+  }
+
+  .ClassCard-titulo p{
+    font-size: 14px
+  }
 }

@@ -82,10 +82,9 @@ const formik = useFormik({
 
   return(
   <form onSubmit={formik.handleSubmit} >
-    <div className="d-flex flex-column">
-      <div className="d-flex flex-row">
-          <div className="col-7">
-          <p><strong>Datos para crear tu perfil de instructor</strong></p>
+      <div className="d-flex flex-row flex-wrap">
+          <div className="col-md-7">
+          <p><strong>Datos para crear tu perfil</strong></p>
             <label htmlFor="profileName">Nombre del perfil</label>
             <br/>
             <input
@@ -96,7 +95,7 @@ const formik = useFormik({
               onChange={formik.handleChange}
               value={formik.values.profileName}
               required
-              className='col-10'
+              className='col-md-10'
             />
             <label htmlFor="selfDescription">Cuéntale al mundo de ti</label>
             <br/>
@@ -105,14 +104,14 @@ const formik = useFormik({
               name="selfDescription"
               type="text"
               rows='4'
-              cols="50"
               placeholder={'Describe tu experiencia fitness (promociona aquí tu reto mensual)'}
               onChange={formik.handleChange}
               value={formik.values.selfDescription}
+              className='col-md-10'
             />
             <br/>
             <div>
-              <label htmlFor="disableTrialClasses" className='mr-2'>Deshabilitar clases prueba</label>
+              <label htmlFor="disableTrialClasses" className='mr-md-2'>Deshabilitar clases prueba</label>
               <input
                 id="disableTrialClasses"
                 name="disableTrialClasses"
@@ -122,8 +121,8 @@ const formik = useFormik({
                 value={formik.values.trialClasses}
                 defaultChecked={data.disableTrialClasses}
               />
-              <div className="clasesPrueba col-7">
-                <p>MoveMe ofrece a los usuarios nuevos tomar su primer clase (prueba) gratis, al deshabilitar esta opción tus clases no serán ofrecidas como clases prueba.</p>
+              <div className="clasesPrueba col-md-7">
+                <p>Tus nuevos clientes tienen derecho a tomar su <strong>primer clase (prueba) gratis</strong>, al deshabilitar esta opción tendrán que pagar desde la primer clase.</p>
               </div>
             </div>
           </div>
@@ -138,6 +137,7 @@ const formik = useFormik({
               placeholder={'Nombre como en tarjeta'}
               onChange={formik.handleChange}
               value={formik.values.firstName}
+              className='col-12'
               required
             />
             <br/>
@@ -150,6 +150,7 @@ const formik = useFormik({
               placeholder={'Apellido(s) como en tarjeta'}
               onChange={formik.handleChange}
               value={formik.values.lastName}
+              className='col-12'
               required
             />
             <br/>
@@ -160,13 +161,14 @@ const formik = useFormik({
               id="CLABE"
               name="CLABE"
               type="tel"
-              inputmode="numeric"
+              inputMode="numeric"
               pattern="[0-9\s]{13,19}"
-              maxlength="19"
+              maxLength="19"
               placeholder={data.CLABE}
               onChange={formik.handleChange}
               value={formik.values.CLABE}
               onBlur={formik.handleBlur}
+              className='col-12'
             />
             <br/>
             <label htmlFor="noTarjeta">Tarjeta de débito</label>
@@ -175,20 +177,23 @@ const formik = useFormik({
               id="noTarjeta"
               name="noTarjeta"
               type="tel"
-              inputmode="numeric"
+              inputMode="numeric"
               pattern="[0-9\s]{13,19}"
-              autocomplete="cc-number"
-              maxlength="19"
+              autoComplete="cc-number"
+              maxLength="19"
               placeholder={data.noTarjeta}
               onChange={formik.handleChange}
               value={formik.values.noTarjeta}
               onBlur={formik.handleBlur}
+              className='col-12'
             />
             <br/>
           </div>
         </div>
-        <button type="submit" className="mt-3 btn-secondary btn-lg col-10 justify-self-center">Guardar</button>
-    </div>
+
+        <div className='text-center'>
+          <button type="submit" className="mt-3 btn-secondary btn-lg col-10">Guardar</button>
+        </div>
   </form>
 )
 

@@ -7,6 +7,7 @@ import Login from '../Forms/Login'
 import { Auth } from "../../Config/AuthContext";
 import {db} from "../../Config/firestore";
 import { withRouter } from "react-router";
+import {iva} from '../../Config/Fees'
 
 function PayButton(props) {
   const { usuario } = useContext(Auth);
@@ -14,6 +15,7 @@ function PayButton(props) {
   const [showLogin,setshowLogin] = useState(false)
   const curr = new Date()
   const expire = new Date(curr.getFullYear(),curr.getMonth()+1,curr.getDate())
+  const [trialClass,settrialClass] = useState(null)
 
   var days = expire.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
   var month = (expire.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
@@ -29,6 +31,9 @@ function PayButton(props) {
         var docRef = db.collection("Users").doc(usuario.uid);
          docRef.get().then((doc)=>{
         if (doc.exists) {
+            if (!props.cart&&props.type==='Zoom') {
+            settrialClass(doc.data().trialClass)
+            }
             setShow(true)
         } else {
             setshowLogin(true)
@@ -43,7 +48,7 @@ function PayButton(props) {
 
   return(
     <>
-      <button className={`btn-info btn-${props.size} rounded`} onClick={searchUsuario}><CheckSquare/> {props.cart?'Proceder al pago':'Comprar ahora'}</button>
+      <button className={`btn-info btn-${props.size} rounded`} onClick={searchUsuario}><CheckSquare/> {props.cart?'Proceder al pago':props.trialClass===0?'Clase prueba':'Comprar ahora'}</button>
 
       <Modal
         show={show}
@@ -52,12 +57,15 @@ function PayButton(props) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Total a pagar: ${(props.subtotal+StripeFee(props.subtotal)).toFixed(2)}<br/>
-          {!props.cart?<p style={{color:'gray',fontSize:'small'}}>(Tarifa por transacción: ${StripeFee(props.subtotal).toFixed(2)})</p>:null}
+          <Modal.Title>Total a pagar: ${(props.subtotal*(1+iva)+StripeFee(props.subtotal*(1+iva))).toFixed(2)}<br/>
+            {!props.cart?<div clasaName='d-flex flex-row'>
+              <p style={{color:'gray',fontSize:'small'}}>Subtotal: ${props.subtotal} / IVA: ${(props.subtotal*iva).toFixed(2)} / Tarifa por transacción: ${StripeFee(props.subtotal*(1+iva)).toFixed(2)}</p>
+            </div>:null}
+          {(props.subtotal*(1+iva)+StripeFee(props.subtotal*(1+iva))).toFixed(2)<=10?<p style={{color:'red',fontSize:'small'}}>Tu total a pagar debe ser mayor a $10</p>:null}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <PaymentForm total={(props.subtotal+StripeFee(props.subtotal)).toFixed(2)} products={props.products} cart={props.cart?true:false} expire={expire} now={curr}/>
+          <PaymentForm trialClass={trialClass} total={(props.subtotal*(1+iva)+StripeFee(props.subtotal*(1+iva))).toFixed(2)} products={props.products} cart={props.cart?true:false} expire={expire} now={curr}/>
         </Modal.Body>
         {!props.cart?props.type!=='Zoom'?
         <Modal.Footer>

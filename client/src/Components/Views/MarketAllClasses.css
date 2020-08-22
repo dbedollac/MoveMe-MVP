@@ -1,0 +1,9 @@
+.MarketAllClasses-card{
+  width: 200px
+}
+
+@media (max-width: 768px) {
+  .MarketAllClasses-card{
+    width: 120px
+    }
+}

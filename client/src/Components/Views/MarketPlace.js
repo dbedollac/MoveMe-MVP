@@ -5,7 +5,7 @@ import {db, auth} from '../../Config/firestore'
 import { withRouter } from "react-router";
 import DisplayCarousel from '../Molecules/DisplayCarousel'
 import MarketAllClasses from './MarketAllClasses'
-import { CameraVideoFill } from 'react-bootstrap-icons';
+import { CameraVideoFill, CollectionPlayFill } from 'react-bootstrap-icons';
 import './MarketPlace.css'
 
 function MarketPlace(props) {
@@ -163,11 +163,11 @@ function MarketPlace(props) {
       <div>
         <Header  user={usuario?true:false}/>
         <div className='MarketPlace-container'>
-          <div className='d-flex flex-row'>
-              <div className='col-8 d-flex flex-row alig-items-center justify-content-start'>
-                  <h3>Retos Mensuales</h3>
+          <div className='d-flex flex-column flex-md-row pt-2'>
+              <div className='col-md-8 d-flex flex-row alig-items-center justify-content-start'>
+                  <h4>Retos Mensuales</h4>
                 </div>
-                <div className='col-4 d-flex flex-row alig-items-center justify-content-end'>
+                <div className='col-md-4 d-flex flex-row alig-items-center justify-content-md-end'>
                 <i onClick={handleVerProgramas} style={{cursor:'pointer',fontSize:'large'}}>Ver todos los retos</i>
               </div>
           </div>
@@ -175,12 +175,12 @@ function MarketPlace(props) {
             <DisplayCarousel allInstructors={allInstructors} market={true} home={true}/>:
             <h4 style={{color:'gray'}} className='text-center py-5'><i>No hay retos mensuales activos</i></h4>}
 
-          <div className='d-flex flex-row'>
-              <div className='col-8 d-flex flex-row alig-items-center justify-content-start'>
-                  <CameraVideoFill size={'2em'} className='mr-2 mt-1' color="#2C8BFF" />
-                  <h3>Próximas Clases por Zoom</h3>
+          <div className='d-flex flex-column flex-md-row my-2'>
+              <div className='col-md-8 d-flex flex-row alig-items-center justify-content-start'>
+                  <CameraVideoFill size={'2em'} className='mr-2' color="#2C8BFF" />
+                  <h4>Próximas Clases por Zoom</h4>
                 </div>
-                <div className='col-4 d-flex flex-row alig-items-center justify-content-end'>
+                <div className='col-md-4 d-flex flex-row alig-items-center justify-content-md-end'>
                 <i onClick={handleVerClasesZoom} style={{cursor:'pointer',fontSize:'large'}}>Ver todas las clases por Zoom</i>
               </div>
           </div>
@@ -188,11 +188,12 @@ function MarketPlace(props) {
             <DisplayCarousel allClases={allClases} zoomMeetings={zoomMeetings} market={true} home={true}/>:
             <h4 style={{color:'gray'}} className='text-center py-5'><i>No se ha agendado ninguna clase por Zoom</i></h4>}
 
-            <div className='d-flex flex-row'>
-                <div className='col-8 d-flex flex-row alig-items-center justify-content-start'>
-                    <h3>Clases en Video</h3>
+            <div className='d-flex flex-column flex-md-row my-2'>
+                <div className='col-md-8 d-flex flex-row alig-items-center justify-content-start'>
+                    <CollectionPlayFill size={'2em'} className='mr-2'/>
+                    <h4>Clases en Video</h4>
                   </div>
-                  <div className='col-4 d-flex flex-row alig-items-center justify-content-end'>
+                  <div className='col-md-4 d-flex flex-row alig-items-center justify-content-md-end'>
                   <i onClick={handleVerClasesVideo} style={{cursor:'pointer',fontSize:'large'}}>Ver todas las clases en video</i>
                 </div>
             </div>

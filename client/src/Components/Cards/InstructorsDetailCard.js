@@ -7,6 +7,7 @@ import RefreshToken from '../Atoms/RefreshToken'
 import GetZoomMeetings from '../Molecules/GetZoomMeetings'
 import AddToCar from '../Molecules/AddToCar'
 import CoachName from '../Atoms/CoachName'
+import AddFreeVideo from '../Atoms/AddFreeVideo'
 import {Collapse} from 'react-bootstrap'
 import { withRouter } from "react-router";
 
@@ -14,6 +15,7 @@ function InstructorsDetailCard(props) {
 const { usuario } = useContext(Auth);
 const [instructor, setInstructor] = useState(props.instructor)
 const [open, setOpen] = useState(false);
+const [trialClass,settrialClass] = useState(null)
 
   useEffect(()=>{
 
@@ -23,6 +25,17 @@ const [open, setOpen] = useState(false);
       docRef.get().then( (doc)=>{
       if (doc.exists) {
             RefreshToken(usuario.uid, doc.data().zoomRefreshToken)
+        } else {
+            console.log("No such document!");
+        }
+        }).catch(function(error) {
+            console.log("Error getting document:", error);
+        });
+    }else {
+      var docRef = db.collection("Users").doc(usuario.uid);
+      docRef.get().then( (doc)=>{
+      if (doc.exists) {
+            settrialClass(doc.data().trialClass)
         } else {
             console.log("No such document!");
         }
@@ -44,32 +57,49 @@ const [open, setOpen] = useState(false);
               console.log("Error getting document:", error);
           });
       }
+  }else{
+    settrialClass(0)
   }
 },[usuario])
 
       return(
         <div className='col-12 card'>
-          <div className='d-flex flex-row align-items-center justify-content-start pl-5 pt-1'>
-            <div className='col-5'>
+          <div className='d-flex flex-column flex-md-row align-items-center justify-content-center pl-5 pt-1'>
+            <h3 className='text-center text-break' style={{color: '#F39119'}}>{props.data.title}</h3>
+            <div className=' d-flex flex-row justify-content-end ml-md-5'>
               {props.match.params.uid||props.market? <CoachName uid={props.instructor.id} profileName={props.instructor.data.profileName} profilePicture={props.instructor.data.imgURL?props.instructor.data.imgURL:null}/>:null}
             </div>
-            <h2 className='text-left text-break px-2' style={{color: '#F39119'}}>{props.data.title}</h2>
           </div>
 
-          <div className= 'card-body d-flex flex-row flex-wrap justify-content-start'>
+          <div className= 'card-body d-flex flex-row flex-wrap justify-content-between'>
 
               {props.data.description.length > 0?
-              <div className='col-6 d-flex flex-column'>
-                <h3>Descripción</h3>
+              <div className='col-12 col-md-6 mb-5 mb-md-0 d-flex flex-column'>
+                <h4>Descripción</h4>
                 <p>{props.data.description}</p>
                 {props.data.videoURL?
-                <div className='card card-link'>
-                  <div className='d-flex flex-row justify-content-around align-items-center'>
-                    <p className='text-center'>
-                    <strong>Video para rentar</strong> <br/>(1 mes) {props.match.params.uid||props.market? '$'+props.data.offlinePrice:null}</p>
-                    {props.market?<AddToCar instructor={instructor} claseVideo={props.data}/>:null}
+                <div className='card card-link py-1'>
+                  <div className='d-flex flex-column flex-md-row justify-content-around align-items-center'>
+
+                  <div className='d-flex flex-row-reverse flex-md-row align-items-center justify-content-between'>
                     {open?<ChevronCompactUp onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>
                     :<EyeFill onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>}
+                    <p className='text-center mx-2'>
+                    <strong>Video para rentar</strong> <br/>(1 mes) {props.match.params.uid||props.market?!props.data.freeVideo? '$'+props.data.offlinePrice:null:null}</p>
+                  </div>
+
+                    {props.market?!props.data.freeVideo?<AddToCar instructor={instructor} claseVideo={props.data}/>
+                    :<AddFreeVideo product={{
+                      data:{instructor: instructor.data,
+                        claseData: props.data,
+                        meetingID: null,
+                        startTime: null,
+                        type: 'Clase en Video',
+                        joinURL: null,
+                        claseID: null,
+                        monthlyProgram: null}
+                    }}/>
+                    :null}
                   </div>
                   <Collapse in={open}>
                     {open?
@@ -81,23 +111,23 @@ const [open, setOpen] = useState(false);
                 </div>:null}
               </div>:null}
 
-              <div className='col-6 d-flex flex-column'>
-                <div className='d-flex flex-row alig-items-center justify-content-center'>
+              <div className='col-12 col-md-6 d-flex flex-column'>
+                <div className=' d-flex flex-row alig-items-center justify-content-center'>
                   <CameraVideoFill size={'2em'} className='mr-2 mt-1' color="#2C8BFF" />
-                  <h3>Clases por Zoom</h3>
+                  <h4>Clases por Zoom</h4>
                 </div>
-                <div style={{ overflowY: 'scroll', height:'20vw'}}>
-                  <GetZoomMeetings claseID={props.claseID} instructor={instructor} market={props.market?props.market:false}/>
+                <div style={{ overflowY: 'scroll', height:'250px'}}>
+                  <GetZoomMeetings claseID={props.claseID} instructor={instructor} market={props.market?props.market:false} usertrialClass={trialClass}/>
                 </div>
               </div>
 
-            <div className='col-6 d-flex flex-column'>
+            <div className='col-12 col-md-6 d-flex flex-column'>
                <p><strong>Tipo de ejercicio: </strong>{props.data.type}</p>
                <p><strong>Dificultad: </strong>{props.data.level}</p>
                <p><strong>Equipo necesario: </strong>{props.data.equipment.length>0? props.data.equipment:'Ninguno'}</p>
                <p><strong>Duración: </strong>{props.data.duration} minutos</p>
                <p><strong>Precio por clase en Zoom: </strong>${props.data.zoomPrice} MXN</p>
-               <p><strong>Precio por renta mensual del video: </strong>${props.data.offlinePrice} MXN</p>
+               <p><strong>Precio por renta mensual del video: </strong>{props.data.freeVideo?'gratis':'$'+props.data.offlinePrice+' MXN'}</p>
             </div>
 
 

@@ -12,10 +12,20 @@ const [time, setTime] = useState(null)
 const [date, setDate] = useState(null)
 const [timezone, setTimezone] = useState(null)
 const [loading,setLoading] = useState(false)
+const today = new Date()
 
   useEffect(()=>{
     setTimezone(Intl.DateTimeFormat().resolvedOptions().timeZone)
   })
+
+  const getDate = (date) => {
+    var saleDate = new Date(date)
+    var days = saleDate.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+    var month = (saleDate.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+    var year = saleDate.getFullYear()
+
+      return(year+'-'+month+'-'+days)
+  }
 
   const handleTime = (event) =>{
     setTime(event.target.value)
@@ -85,7 +95,7 @@ const [loading,setLoading] = useState(false)
       <div className={`card-body pt-2`}>
         <div className='d-flex flex-column justify-content-around'>
           <div className='d-flex flex-column col-10'>
-            <input type="date" onChange={handleDate}/>
+            <input type="date" onChange={handleDate} min={getDate(today)}/>
             <input type="time" onChange={handleTime}/>
           </div>
           <div className='d-flex align-self-center ' disabled={true}>

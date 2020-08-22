@@ -9,7 +9,7 @@ const GetZoomToken = (props) =>{
 
     return(
       <div>
-      <button disabled={props.disable} className="btn-outline-primary btn-lg" onClick={requestUserAuthorization}>Enlazar mi cuenta Zoom</button>
+        <button disabled={props.disable} className="btn-outline-primary btn-lg" onClick={requestUserAuthorization}>Enlazar mi cuenta Zoom</button>
       </div>
     )
   }

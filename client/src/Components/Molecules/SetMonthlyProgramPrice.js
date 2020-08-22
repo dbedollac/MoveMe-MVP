@@ -71,7 +71,7 @@ function SetMonthlyProgramPrice(props) {
                 <h4 className='mr-2'>Precio</h4>
                 {props.market?<h4>$ {price}</h4>:
                 <input type='number' min='100'step='50' placeholder='400' onChange={handlePrice} value={price}/>}
-                {props.market?null:<p className='ml-1 pt-2'>pesos mexicanos (MXN)</p>}
+                {props.market?null:<p className='ml-1 pt-2'>MXN</p>}
               </div>
               {props.market?<AddToCar size='lg' instructor={instructorData} monthlyProgram={true}/>:
               <button className='btn-lg btn-primary' onClick={handleSave}>Guardar</button>}

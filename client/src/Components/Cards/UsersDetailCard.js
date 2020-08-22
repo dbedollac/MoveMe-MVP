@@ -12,11 +12,11 @@ function UserDetailCard(props) {
 
       return(
         <div className='col-12 card'>
-          <div className='d-flex flex-row align-items-center justify-content-start pl-5 pt-1'>
-            <div className='col-5'>
+          <div className='d-flex flex-column flex-md-row align-items-center justify-content-start pl-5 pt-1'>
+            <h3 className='text-center text-break' style={{color: '#F39119'}}>{props.data.title}</h3>
+            <div className='col-12 col-md-5'>
               <CoachName uid={props.instructor.id} profileName={props.instructor.data.profileName} profilePicture={props.instructor.data.imgURL?props.instructor.data.imgURL:null}/>
             </div>
-            <h2 className='text-left text-break px-2' style={{color: '#F39119'}}>{props.data.title}</h2>
           </div>
 
           <div className= 'card-body d-flex flex-row flex-wrap justify-content-start'>
@@ -34,20 +34,18 @@ function UserDetailCard(props) {
                 }
 
               {props.data.description.length>0?
-                <div className='col-6 d-flex flex-column'>
+                <div className='col-12 col-md-6 d-flex flex-column'>
                   <div className='d-flex flex-column'>
                     <h3>Descripción</h3>
                     <p>{props.data.description}</p>
                   </div>
               </div>:null}
 
-            <div className='col-6 d-flex flex-column'>
+            <div className='col-12 col-md-6 d-flex flex-column'>
                <p><strong>Tipo de ejercicio: </strong>{props.data.type}</p>
                <p><strong>Dificultad: </strong>{props.data.level}</p>
                <p><strong>Equipo necesario: </strong>{props.data.equipment.length>0? props.data.equipment:'Ninguno'}</p>
                <p><strong>Duración: </strong>{props.data.duration} minutos</p>
-               <p><strong>Precio por clase en Zoom: </strong>${props.data.zoomPrice} MXN</p>
-               <p><strong>Precio por renta mensual del video: </strong>${props.data.offlinePrice} MXN</p>
             </div>
 
 

@@ -4,6 +4,7 @@ import CoachCard from '../Cards/CoachCard'
 import InstructorsDetailCard from '../Cards/InstructorsDetailCard'
 import UsersDetailCard from '../Cards/UsersDetailCard'
 import { ArrowLeft, X, Search } from 'react-bootstrap-icons';
+import './MarketAllClasses.css'
 
 function MarketAllClasses(props) {
   const [clases, setclases] = useState([])
@@ -50,9 +51,9 @@ function MarketAllClasses(props) {
     switch (event.target.value) {
       case '': var clases = clasesAll;
         break;
-      case 'low': var clases = clasesAll.sort((a, b) => parseFloat(props.allInstructors?a.data.monthlyProgram.Price:a.data.offlinePrice) - parseFloat(props.allInstructors?b.data.monthlyProgram.Price:b.data.offlinePrice));
+      case 'low': var clases = clasesAll.sort((a, b) => parseFloat(props.allInstructors?a.data.monthlyProgram.Price:a.data.freeVideo?0:a.data.offlinePrice) - parseFloat(props.allInstructors?b.data.monthlyProgram.Price:b.data.freeVideo?0:b.data.offlinePrice));
         break;
-      case 'high': var clases = clasesAll.sort((a, b) => parseFloat(props.allInstructors?b.data.monthlyProgram.Price:b.data.offlinePrice) - parseFloat(props.allInstructors?a.data.monthlyProgram.Price:a.data.offlinePrice));
+      case 'high': var clases = clasesAll.sort((a, b) => parseFloat(props.allInstructors?b.data.monthlyProgram.Price:b.data.freeVideo?0:b.data.offlinePrice) - parseFloat(props.allInstructors?a.data.monthlyProgram.Price:a.data.freeVideo?0:a.data.offlinePrice));
         break;
       default: var clases = clases.filter(item => (item.data.duration<=1000));
     }
@@ -74,7 +75,7 @@ function MarketAllClasses(props) {
   const  handleDateTime = (event) =>{
     var clases00 = clasesAll.filter(item => item.instructor.data.profileName.toUpperCase().includes(filterSearchCoach.toUpperCase()))
     var clases01 = clases00.filter(item => item.data.title.toUpperCase().includes(filterSearchClass.toUpperCase()))
-    var clases02 = clases01.filter(item => item.startTime>=event.target.value)
+    var clases02 = clases01.filter(item => item.startTime>=new Date(event.target.value).toISOString())
 
     var clases0 = clases02.filter(item => item.data.type.includes(filtersType));
     var clases1 = clases0.filter(item => item.data.level.includes(filtersLevel));
@@ -270,70 +271,73 @@ function MarketAllClasses(props) {
   return(
 
     <div className='d-flex flex-column align-items-center'>
-    {console.log(clases)}
       {props.misVideos?null:<div className='col-12'>
         <button className='btn-secondary rounded mt-2 float-right' onClick={()=>{window.location.reload(false)}}><ArrowLeft /> Regresar</button>
       </div>}
-      <form>
-        <div className='d-flex flex-row justify-content-end align-items-center flex-wrap'>
+      <form className='my-2'>
+        <div className='d-flex flex-row justify-content-start align-items-center flex-wrap'>
+
+          <div className='d-flex flex-column flex-md-row justify-content-between align-items-start col-6'>
+            {!props.allInstructors?
+              <div>
+                <select id="type"
+                  name="type"
+                  onChange={handleTypeChange}
+                  className='custom-select'
+                  value={filtersType}
+                  >
+                  <option value="todos" >Tipo de ejercicio (Todos)</option>
+                  <option value="estiramiento">Estiramiento (ej. Yoga)</option>
+                  <option value="baile">Baile</option>
+                  <option value="funcional">Funcional</option>
+                  <option value="pelea">Técnica de pelea</option>
+                  <option value="pesas">Con pesas</option>
+                  <option value="otro">Otro</option>
+                </select>
+              </div>:null}
 
             {!props.allInstructors?
-            <div className='d-flex flex-row justify-content-end align-items-center'>
-              <p className='text-center mr-1 pt-4'><strong>Filtros</strong> <br/><i style={{fontSize:'small',cursor:'pointer'}} onClick={resetFilters}>Quitar</i></p>
-              <select id="type"
-                name="type"
-                onChange={handleTypeChange}
-                className=''
-                value={filtersType}
+            <div>
+              <select id="level"
+                name="level"
+                className='custom-select'
+                onChange={handleLevelChange}
+                value={filtersLevel}
                 >
-                <option value="todos" >Tipo de ejercicio (Todos)</option>
-                <option value="estiramiento">Estiramiento (ej. Yoga)</option>
-                <option value="baile">Baile</option>
-                <option value="funcional">Funcional</option>
-                <option value="pelea">Técnica de pelea</option>
-                <option value="pesas">Con pesas</option>
-                <option value="otro">Otro</option>
+                <option value="todos" >Dificultad de la clase (Todas)</option>
+                <option value="principiantes">Para principiantes</option>
+                <option value="intermedia">Intermedia</option>
+                <option value="avanzada">Avanzada</option>
               </select>
+            </div>:null}
 
-            <select id="level"
-              name="level"
-              className=''
-              onChange={handleLevelChange}
-              value={filtersLevel}
-              >
-              <option value="todos" >Dificultad de la clase (Todas)</option>
-              <option value="principiantes">Para principiantes</option>
-              <option value="intermedia">Intermedia</option>
-              <option value="avanzada">Avanzada</option>
-            </select>
+            {!props.allInstructors?
+            <div>
+              <select id="duration"
+                name="duration"
+                className='custom-select'
+                onChange={handleDurationChange}
+                value={filtersDuration}
+                >
+                <option value='todos'>Duración (Todas)</option>
+                <option value={'0'}>0 - 30 min</option>
+                <option value={'1'}>30 - 60 min</option>
+                <option value={'2'}>Más de 60 min</option>
+              </select>
+            </div>:null}
+        </div>
 
-            <select id="duration"
-              name="duration"
-              className=''
-              onChange={handleDurationChange}
-              value={filtersDuration}
-              >
-              <option value='todos'>Duración (Todas)</option>
-              <option value={'0'}>0 - 30 min</option>
-              <option value={'1'}>30 - 60 min</option>
-              <option value={'2'}>Más de 60 min</option>
-            </select>
+        <div className={`d-flex ${!props.allInstructors?'flex-column flex-md-row':'flex-row'} justify-content-between align-items-start ${!props.allInstructors?'col-md-2 col-6':null}`}>
+          {!props.allInstructors?
+          <input type='search' placeholder='Buscar clase...' onChange={handleBuscador} value={filterSearchClass} className='col-12 py-1'/>:null}
 
-            <div className='d-flex flex-row align-items-center ml-1'>
-              <input type='search' placeholder='Buscar clase...' onChange={handleBuscador} value={filterSearchClass}/>
-            </div>
-          </div>
-          :null}
+          <input type='search' placeholder='Buscar coach...' onChange={handleBuscadorCoach} value={filterSearchCoach} className={`rounded ${!props.allInstructors?'col-12':'col-6'} py-1`}/>
 
-          <div className='d-flex flex-row align-items-center ml-1'>
-            <input type='search' placeholder='Buscar coach...' onChange={handleBuscadorCoach} value={filterSearchCoach}/>
-          </div>
-
-          {props.zoomMeetings?<input type="datetime-local" className='ml-1' onChange={handleDateTime} value={filterDateTime}/>
+          {props.zoomMeetings?<input type="datetime-local" onChange={handleDateTime} value={filterDateTime} className='col-12 py-1'/>
           :props.misVideos?null
           :<select id="ordenar"
               name="ordenar"
-              className='ml-1'
+              className={`custom-select ${!props.allInstructors?'col-12':'col-6'}`}
               onChange={handleOrdenar}
               value={filterSort}
               >
@@ -341,11 +345,13 @@ function MarketAllClasses(props) {
                 <option value={'low'}>Precio: de más bajo a más alto</option>
                 <option value={'high'}>Precio: de más alto a más bajo</option>
           </select>}
+        </div>
 
         </div>
+        {!props.allInstructors?<i className='pl-2' style={{fontSize:'small',cursor:'pointer'}} onClick={resetFilters}>Quitar filtros</i>:null}
       </form>
 
-      <div className='p-2 d-flex flex-row flex-wrap justify-content-start'>
+      <div className='d-flex flex-row flex-wrap justify-content-center'>
       {detail&&claseDetail?
         <div style={{position: 'relative'}} className='p-2 col-12'>
           {props.misVideos?<UsersDetailCard data={claseDetail.data} claseID={claseDetail.id} instructor={claseDetail.instructor?claseDetail.instructor:props.instructor} misVideos={true}/>
@@ -353,11 +359,11 @@ function MarketAllClasses(props) {
           <X className='float-left'size={'2em'} onClick={handleDetail} style={{position: 'absolute', top:'2%', left:'2%',cursor:'pointer'}}/>
         </div>
         :
-        clases.length>0?clases.slice(0,showMore).map(clase => (
-        <div className='col-2' key={props.allInstructors?clase.uid:clase.id+clase.instructor.id+clase.startTime} onClick={handleDetail} style={{cursor:'pointer'}} >
+        clases.length>0?clases.slice(0,showMore).map((clase,index) => (
+        <div className='MarketAllClasses-card' key={props.allInstructors?clase.uid+index:clase.id+index+clase.instructor.id+clase.startTime} onClick={handleDetail} style={{cursor:'pointer'}} >
           {props.allInstructors? <CoachCard data={clase.data} uid={clase.uid}/>
           :props.zoomMeetings?<ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.instructor?clase.instructor.id:clase.id} id={clase.id} startTime={clase.startTime} price={clase.data.zoomPrice}/>
-          :<ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.instructor?clase.instructor.id:clase.id} id={clase.id} price={clase.data.offlinePrice} misVideos={props.misVideos?true:false} expire={props.misVideos?clase.expire:null}/>}
+          :<ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.instructor?clase.instructor.id:clase.id} id={clase.id} price={clase.data.offlinePrice} freeVideo={clase.data.freeVideo} misVideos={props.misVideos?true:false} expire={props.misVideos?clase.expire:null}/>}
         </div>
       )):<h4 style={{color:'gray'}} className='text-center py-5'><i>{props.allInstructors?'No hay retos disponibles':'No hay clases disponibles'}</i></h4>}
       </div>

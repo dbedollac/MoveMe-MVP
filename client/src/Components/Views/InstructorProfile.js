@@ -3,7 +3,7 @@ import Header from '../Molecules/Header'
 import { Auth } from "../../Config/AuthContext";
 import {db, auth} from '../../Config/firestore'
 import { withRouter } from "react-router";
-import { CameraVideoFill } from 'react-bootstrap-icons';
+import { CameraVideoFill, CollectionPlayFill } from 'react-bootstrap-icons';
 import DisplayCarousel from '../Molecules/DisplayCarousel'
 import {proxyurl} from '../../Config/proxyURL'
 import './InstructorProfile.css'
@@ -190,19 +190,19 @@ const deleteMeeting = (meetingID) =>{
       <div>
       <Header instructor={true} />
           <div className='InstructorProfile-container'>
-              <div className='text-center InstructorProfile-container-header d-flex flex-row'>
-                  <div className='col-6 profilePicture' style={{
+              <div className='text-center InstructorProfile-container-header d-flex flex-column flex-md-row'>
+                  <div className='col-12 col-md-6 profilePicture' style={{
                     backgroundImage: `url(${profilePicture})`,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover'}}>
-                    {profilePicture?null:<img src='/logo.jpg' className='card-img-top p-2' style={{height: '30vw'}}/>}
+                    {profilePicture?null:<img src='/logo.jpg' className='p-2 rounded-circle'/>}
                   </div>
-                  <div className='col-6 d-flex flex-column'>
-                    <h1>{profileName}</h1>
+                  <div className='col-12 col-md-6 d-flex flex-column'>
+                    <h2>{profileName}</h2>
                     <p className='text-left'>{selfDescription}</p>
                     <div className='InstructorProfile-container-programa p-2'>
                       <div className='d-flex flex-row align-items-center justify-content-around'>
-                        <h2>Reto Mensual</h2>
+                        <h3>Reto Mensual</h3>
                         <div className='rounded col-4' style={{backgroundColor: 'lightgray', fontSize: '20px'}}> {monthlyProgramPrice?'$ '+monthlyProgramPrice:null} </div>
                       </div>
                       <div className='d-flex flex-row'>
@@ -219,18 +219,25 @@ const deleteMeeting = (meetingID) =>{
                   </div>
               </div>
               <div>
-                <div className='d-flex flex-row'>
-                  <div className='col-8 d-flex flex-row alig-items-center justify-content-start'>
-                    <CameraVideoFill size={'2em'} className='mr-2 mt-1' color="#2C8BFF" />
-                    <h3>Próximas Clases por Zoom</h3>
+
+                <div className='d-flex flex-row my-2'>
+                  <div className='d-flex flex-row alig-items-center justify-content-start'>
+                    <CameraVideoFill size={'2em'} className='mr-2' color="#2C8BFF" />
+                    <h4>Próximas Clases por Zoom</h4>
                   </div>
                 </div>
+
                 {zoomMeetings.length>0?
                 <DisplayCarousel allClases={allClases} zoomMeetings={zoomMeetings} instructor={usuario?{data:instructor,id:usuario.uid}:null}/>:
                 <h4 style={{color:'gray'}} className='text-center py-5'><i>No se ha agendado ninguna clase por Zoom</i></h4>}
-                <div className='d-flex flex-row'>
-                    <h3>Clases en Video</h3>
+
+                <div className='d-flex flex-row my-2'>
+                  <div className='d-flex flex-row alig-items-center justify-content-start'>
+                    <CollectionPlayFill size={'2em'} className='mr-2'/>
+                    <h4>Clases en Video</h4>
+                  </div>
                 </div>
+
                 {videoClases.length>0?
                 <DisplayCarousel allClases={allClases} array={videoClases} instructor={usuario?{data:instructor,id:usuario.uid}:null}/>:
                 <h4 style={{color:'gray'}} className='text-center py-5'><i>No hay clases con video</i></h4>}

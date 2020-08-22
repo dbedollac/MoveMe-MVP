@@ -3,7 +3,7 @@ import Header from '../Molecules/Header'
 import { Auth } from "../../Config/AuthContext";
 import {db, auth} from '../../Config/firestore'
 import { withRouter } from "react-router";
-import { CameraVideoFill } from 'react-bootstrap-icons';
+import { CameraVideoFill, CollectionPlayFill } from 'react-bootstrap-icons';
 import DisplayCarousel from '../Molecules/DisplayCarousel'
 import MonthlyProgram from './MonthlyProgram'
 import MyClasses from './MyClasses'
@@ -25,6 +25,7 @@ function Coach(props) {
   const [monthlyProgram,setMonthlyProgram] = useState(false)
   const [myClasses,setmyClasses] = useState(false)
   const [aux,setAux] = useState([])
+  const [user,setUser] = useState(false)
 
   const today = new Date()
   const firstMonthDay = new Date(today.getFullYear(),today.getMonth(),1)
@@ -41,6 +42,27 @@ function Coach(props) {
   }
 
   useEffect( ()=>{
+
+        if (usuario) {
+          auth.onAuthStateChanged((usuario) => {
+            if (usuario===null) {
+                props.history.push("/market");
+            }
+          })
+
+        var docRef = db.collection("Users").doc(usuario.uid);
+         docRef.get().then((doc)=>{
+        if (doc.exists) {
+            setUser(true)
+        } else {
+            if (usuario.uid!==props.match.params.uid) {
+              setUser(true)
+            }
+        }
+        }).catch(function(error) {
+            console.log("Error getting document:", error);
+        });
+      }
 
       var docRef = db.collection("Instructors").doc(uid);
        docRef.get().then((doc) =>{
@@ -98,21 +120,21 @@ function Coach(props) {
 
   return(
     <>
-      <Header  user={usuario?true:false}/>
+      <Header instructor={usuario?user?false:true:null} user={usuario?user?true:false:null}/>
           <div className='InstructorProfile-container'>
-              <div className='text-center InstructorProfile-container-header d-flex flex-row'>
-                  <div className='col-6 profilePicture' style={{
+              <div className='text-center InstructorProfile-container-header d-flex flex-column flex-md-row'>
+                  <div className='col-12 col-md-6 profilePicture' style={{
                     backgroundImage: `url(${profilePicture})`,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover'}}>
-                    {profilePicture?null:<img src='/logo.jpg' className='card-img-top p-2' style={{height: '30vw'}}/>}
+                    {profilePicture?null:<img src='/logo.jpg' className='p-2 rounded-circle'/>}
                   </div>
-                  <div className='col-6 d-flex flex-column'>
-                    <h1>{profileName}</h1>
+                  <div className='col-12 col-md-6 d-flex flex-column'>
+                    <h2>{profileName}</h2>
                     <p className='text-left'>{selfDescription}</p>
                     <div className='InstructorProfile-container-programa p-2'>
                       <div className='d-flex flex-row align-items-center justify-content-around'>
-                        <h2>Reto Mensual</h2>
+                        <h3>Reto Mensual</h3>
                         <div className='rounded col-4' style={{backgroundColor: 'lightgray', fontSize: '20px'}}> {monthlyProgramPrice?'$ '+monthlyProgramPrice:null} </div>
                       </div>
                       <div className='d-flex flex-row'>
@@ -130,26 +152,31 @@ function Coach(props) {
                   </div>
               </div>
               <div>
-                <div className='d-flex flex-row'>
-                  <div className='col-8 d-flex flex-row alig-items-center justify-content-start'>
-                    <CameraVideoFill size={'2em'} className='mr-2 mt-1' color="#2C8BFF" />
-                    <h3>Próximas Clases por Zoom</h3>
+
+                <div className='d-flex flex-column flex-md-row my-2'>
+                  <div className='col-md-8 d-flex flex-row alig-items-center justify-content-start'>
+                    <CameraVideoFill size={'2em'} className='mr-2' color="#2C8BFF" />
+                    <h4>Próximas Clases por Zoom</h4>
                   </div>
-                  <div className='col-4 d-flex flex-row alig-items-center justify-content-end'>
+                  <div className='col-md-4 d-flex flex-row alig-items-center justify-content-md-end'>
                   <i onClick={handleVerClases} style={{cursor:'pointer',fontSize:'large'}}>Ver todas las clases</i>
                   </div>
                 </div>
+
                 {zoomMeetings.length>0?
                 <DisplayCarousel allClases={allClases} zoomMeetings={zoomMeetings} market={true} instructor={{data:instructor,id:uid}}/>:
                 <h4 style={{color:'gray'}} className='text-center py-5'><i>No se ha agendado ninguna clase por Zoom</i></h4>}
-                <div className='d-flex flex-row'>
-                    <div className='col-8 d-flex flex-row alig-items-center justify-content-start'>
-                        <h3>Clases en Video</h3>
-                      </div>
-                      <div className='col-4 d-flex flex-row alig-items-center justify-content-end'>
-                      <i onClick={handleVerClases} style={{cursor:'pointer',fontSize:'large'}}>Ver todas las clases</i>
-                    </div>
+
+                <div className='d-flex flex-column flex-md-row my-2'>
+                  <div className='col-md-8 d-flex flex-row alig-items-center justify-content-start'>
+                    <CollectionPlayFill size={'2em'} className='mr-2' />
+                    <h4>Clases en Video</h4>
+                  </div>
+                  <div className='col-md-4 d-flex flex-row alig-items-center justify-content-md-end'>
+                  <i onClick={handleVerClases} style={{cursor:'pointer',fontSize:'large'}}>Ver todas las clases</i>
+                  </div>
                 </div>
+
                 {videoClases.length>0?
                 <DisplayCarousel allClases={allClases} array={videoClases} market={true}  instructor={{data:instructor,id:uid}} />:
                 <h4 style={{color:'gray'}} className='text-center py-5'><i>No hay clases con video</i></h4>}

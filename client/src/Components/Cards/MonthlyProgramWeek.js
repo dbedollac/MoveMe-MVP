@@ -10,11 +10,10 @@ function MonthlyProgramWeek(props) {
     },[])
 
     const getWeekDates = () =>{
-      var curr = new Date(); // get current date
-      var month = curr.getMonth()
-      var year = curr.getFullYear()
+      var month = props.thisSunday.getMonth()
+      var year = props.thisSunday.getFullYear()
 
-      var thisSunday = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
+      var thisSunday = props.thisSunday.getDate() // First day is the day of the month - the day of the week
       var thisWeek = Math.ceil(thisSunday/7)
 
       var firstNextMonth = new Date(year,month+1,1).getDay()
@@ -57,29 +56,28 @@ function MonthlyProgramWeek(props) {
   return(
     <div className='card'>
       <div className='card-header d-flex flex-column'>
-        <h3 className='text-center' style={{color:active?'#F39119':'black'}}>{props.week!==5?null:'Última'} Semana {props.week!==5?props.week:null}</h3>
-        {props.week!==5?null:<p style={{color: 'gray'}}>Solo aplica si el mes tiene más de 4 semanas (5 domingos)</p>}
+        <h3 className='text-center' style={{color:active?'#F39119':'black'}}>Semana {props.week}</h3>
       </div>
       <div className='list-group'>
-        <MonthlyProgramDay dayDate={week?week.sunday:null} dayName={'Domingo'} dayNumber={1} week={props.week===5?-1:props.week} className='list-group-item' instructor={props.instructor} zoomMeetings={props.zoomMeetings?props.zoomMeetings:false}/>
+        <MonthlyProgramDay trialClass={props.trialClass} dayDate={week?week.sunday:null} dayName={'Domingo'} dayNumber={1} week={props.week===5?-1:props.week} className='list-group-item' instructor={props.instructor} zoomMeetings={props.zoomMeetings?props.zoomMeetings:false}/>
       </div>
       <div className='list-group'>
-        <MonthlyProgramDay dayDate={week?week.monday:null} dayName={'Lunes'} dayNumber={2} week={props.week===5?-1:props.week} className='list-group-item' instructor={props.instructor} zoomMeetings={props.zoomMeetings?props.zoomMeetings:false}/>
+        <MonthlyProgramDay trialClass={props.trialClass} dayDate={week?week.monday:null} dayName={'Lunes'} dayNumber={2} week={props.week===5?-1:props.week} className='list-group-item' instructor={props.instructor} zoomMeetings={props.zoomMeetings?props.zoomMeetings:false}/>
       </div>
       <div className='list-group'>
-        <MonthlyProgramDay dayDate={week?week.tuesday:null} dayName={'Martes'} dayNumber={3} week={props.week===5?-1:props.week} className='list-group-item' instructor={props.instructor} zoomMeetings={props.zoomMeetings?props.zoomMeetings:false}/>
+        <MonthlyProgramDay trialClass={props.trialClass} dayDate={week?week.tuesday:null} dayName={'Martes'} dayNumber={3} week={props.week===5?-1:props.week} className='list-group-item' instructor={props.instructor} zoomMeetings={props.zoomMeetings?props.zoomMeetings:false}/>
       </div>
       <div className='list-group'>
-        <MonthlyProgramDay dayDate={week?week.wednesday:null} dayName={'Miércoles'} dayNumber={4} week={props.week===5?-1:props.week} className='list-group-item' instructor={props.instructor} zoomMeetings={props.zoomMeetings?props.zoomMeetings:false}/>
+        <MonthlyProgramDay trialClass={props.trialClass} dayDate={week?week.wednesday:null} dayName={'Miércoles'} dayNumber={4} week={props.week===5?-1:props.week} className='list-group-item' instructor={props.instructor} zoomMeetings={props.zoomMeetings?props.zoomMeetings:false}/>
       </div>
       <div className='list-group'>
-        <MonthlyProgramDay dayDate={week?week.thursday:null} dayName={'Jueves'} dayNumber={5} week={props.week===5?-1:props.week} className='list-group-item' instructor={props.instructor} zoomMeetings={props.zoomMeetings?props.zoomMeetings:false}/>
+        <MonthlyProgramDay trialClass={props.trialClass} dayDate={week?week.thursday:null} dayName={'Jueves'} dayNumber={5} week={props.week===5?-1:props.week} className='list-group-item' instructor={props.instructor} zoomMeetings={props.zoomMeetings?props.zoomMeetings:false}/>
       </div>
       <div className='list-group'>
-        <MonthlyProgramDay dayDate={week?week.friday:null} dayName={'Viernes'} dayNumber={6} week={props.week===5?-1:props.week} className='list-group-item' instructor={props.instructor} zoomMeetings={props.zoomMeetings?props.zoomMeetings:false}/>
+        <MonthlyProgramDay trialClass={props.trialClass} dayDate={week?week.friday:null} dayName={'Viernes'} dayNumber={6} week={props.week===5?-1:props.week} className='list-group-item' instructor={props.instructor} zoomMeetings={props.zoomMeetings?props.zoomMeetings:false}/>
       </div>
       <div className='list-group'>
-        <MonthlyProgramDay dayDate={week?week.saturday:null} dayName={'Sábado'} dayNumber={7} week={props.week===5?-1:props.week} className='list-group-item' instructor={props.instructor} zoomMeetings={props.zoomMeetings?props.zoomMeetings:false}/>
+        <MonthlyProgramDay trialClass={props.trialClass} dayDate={week?week.saturday:null} dayName={'Sábado'} dayNumber={7} week={props.week===5?-1:props.week} className='list-group-item' instructor={props.instructor} zoomMeetings={props.zoomMeetings?props.zoomMeetings:false}/>
       </div>
     </div>
   )

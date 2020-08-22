@@ -1,0 +1,18 @@
+.FirstSteps-container{
+  background-color: lightgray;
+  min-height: 100vh
+}
+
+.FirstSteps-container h2{
+  color:#F39119
+}
+
+.FirstSteps-container p{
+  font-size: large
+}
+
+@media (max-width: 768px) {
+  .FirstSteps-container p{
+    font-size: 15px
+  }
+}

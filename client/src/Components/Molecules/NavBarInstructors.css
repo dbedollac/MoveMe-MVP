@@ -1,6 +1,10 @@
 .navbar-option{
   border-radius: 10px;
-  height: 70px
+  height: 70px;
+}
+
+.navbar-option p{
+  font-size: 15px
 }
 
 .navbar-option a{

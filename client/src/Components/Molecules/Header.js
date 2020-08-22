@@ -8,10 +8,8 @@ function Header(props){
       if (props.instructor) {
         return(
           <header className='fixed-top'>
-          <div className="col-12 d-flex flex-row align-items-center " >
-              <div className="col-2">
-                <img src={logo} alt="Logo" onClick={()=>{props.history.push('/')}} style={{cursor:'pointer'}}/>
-              </div>
+          <div className="col-12 d-flex flex-row align-items-center justify-content-between" >
+              <img src={logo} alt="Logo" onClick={()=>{props.history.push('/')}} style={{cursor:'pointer'}}/>
               <div className="col-10">
                 <NavBar instructor={true}/>
               </div>
@@ -23,10 +21,8 @@ function Header(props){
        if (props.user) {
          return(
          <header className='fixed-top'>
-         <div className="col-12 d-flex flex-row align-items-center " >
-             <div className="col-2">
-               <img src={logo} alt="Logo" onClick={()=>{props.history.push('/')}} style={{cursor:'pointer'}}/>
-             </div>
+         <div className="col-12 d-flex flex-row align-items-center justify-content-between " >
+              <img src={logo} alt="Logo" onClick={()=>{props.history.push('/')}} style={{cursor:'pointer'}}/>
              <div className="col-10">
                <NavBar user={true}/>
              </div>
@@ -36,14 +32,11 @@ function Header(props){
        else {
       return(
         <header className='fixed-top'>
-        <div className="col-12 d-flex flex-row align-items-center " >
-            <div className="col-2">
-              <img src={logo} alt="Logo" onClick={()=>{props.history.push('/')}} style={{cursor:'pointer'}}/>
-            </div>
-            <div className="col-7">
-              <h1 className='text-center'>M O V E M E</h1>
-            </div>
-            <div className='col-3'>
+        <div className="col-12 d-flex flex-row align-items-center justify-content-between" >
+            <img src={logo} alt="Logo" onClick={()=>{props.history.push('/')}} style={{cursor:'pointer'}}/>
+            {props.empty? <h1 className='col-10 text-center'>M O V E M E</h1>
+            :<h1 className='col-8 d-none d-md-inline text-center pl-5'>M O V E M E</h1>}
+            <div className='col-11 col-sm-3 pt-3 ml-1 d-flex flex-row-reverse'>
               <NavBar/>
             </div>
         </div>

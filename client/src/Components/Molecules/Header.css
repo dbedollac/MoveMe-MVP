@@ -13,3 +13,9 @@ header h1{
   color: #F39119;
   font-size: 300%;
 }
+
+@media (max-width: 768px) {
+  header img{
+    width: 3em;
+  }
+}

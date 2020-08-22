@@ -5,6 +5,7 @@ import Carousel from "react-multi-carousel";
 import InstructorsDetailCard from '../Cards/InstructorsDetailCard'
 import { X } from 'react-bootstrap-icons';
 import UsersDetailCard from '../Cards/UsersDetailCard'
+import { Spinner} from 'react-bootstrap'
 import "react-multi-carousel/lib/styles.css";
 
 function DisplayCarousel(props) {
@@ -13,6 +14,8 @@ function DisplayCarousel(props) {
   const [claseDetail, setclaseDetail] = useState(null)
   const [videoClases, setvideoClases] = useState(null)
   const [allInstructors, setallInstructors] = useState(null)
+  const [loading,setLoading] = useState(true)
+  setInterval(()=>{setLoading(false)},10000)
 
   const shuffleArray= (array) => {
         for (let i = array.length - 1; i > 0; i--) {
@@ -79,10 +82,9 @@ function DisplayCarousel(props) {
           var now = new Date(Date.now()-3600000).toISOString()
             for (var i = 0; i < props.zoomMeetings.length; i++) {
               if (props.home||props.ClasesZoom) {
-                var clasesInstructor = props.allClases.filter(item => item.instructor.id.includes(props.zoomMeetings[i].instructor.id));
-                var clase = clasesInstructor.filter(item => item.id.includes(props.zoomMeetings[i].claseID))
+                var clase = props.allClases.filter(item => item.instructor.id===props.zoomMeetings[i].instructor.id).filter(item => item.id===props.zoomMeetings[i].claseID)
               } else {
-                var clase = props.allClases.filter(item => item.id.includes(props.zoomMeetings[i].claseID))
+                var clase = props.allClases.filter(item => item.id===props.zoomMeetings[i].claseID)
               }
               Meetings.push({startTime:props.zoomMeetings[i].startTime,
                 meetingID: props.zoomMeetings[i].meetingID,
@@ -112,7 +114,6 @@ function DisplayCarousel(props) {
   },[props.array,props.zoomMeetings])
 
   if (detail&&claseDetail.data) {
-    console.log(claseDetail)
     return(
       <div style={{position: 'relative'}} className='p-2'>
       {props.ClasesZoom?<UsersDetailCard data={claseDetail.data.data} claseID={claseDetail.data.id} instructor={claseDetail.data.instructor?claseDetail.data.instructor:props.instructor} ClasesZoom={true} joinURL={claseDetail.joinURL}/>
@@ -122,18 +123,22 @@ function DisplayCarousel(props) {
     )
   }else{
   if (meetings.length===0&&!props.allInstructors&&!videoClases) {
-    return <h4 style={{color:'gray'}} className='text-center py-5'><i>No se ha agendado ninguna clase por Zoom</i></h4>
+    if (loading) {
+      return <div className='text-center'><Spinner animation="border" /></div>
+    } else {
+      return <h4 style={{color:'gray'}} className='text-center px-2'><i>No se ha agendado ninguna clase por Zoom</i></h4>
+    }
   } else {
   return(
       <Carousel responsive={responsive}>
-          {props.allInstructors?props.allInstructors.slice(0,50).map(item => (
-              <div key={item.uid} style={{cursor:'pointer'}}>
+          {props.allInstructors?props.allInstructors.slice(0,50).map((item,index) => (
+              <div key={item.uid+index} style={{cursor:'pointer'}}>
                 <CoachCard data={item.data} uid={item.uid}/>
               </div>
             ))
-            :videoClases? videoClases.slice(0,50).map(item => (
-            <div key={item.id} onClick={handleDetail} style={{cursor:'pointer'}}>
-              <ClassCard title={item.data.title} picture={item.data.imgURL} name={item.instructor?item.instructor.id:item.id} id={item.id} price={item.data.offlinePrice}/>
+            :videoClases? videoClases.slice(0,50).map((item,index) => (
+            <div key={item.id+index} onClick={handleDetail} style={{cursor:'pointer'}}>
+              <ClassCard title={item.data.title} picture={item.data.imgURL} name={item.instructor?item.instructor.id:item.id} id={item.id} price={item.data.offlinePrice} freeVideo={item.data.freeVideo?true:false}/>
             </div>
           )): meetings.sort(sortMeetings).slice(0,50).map((item,index) => (
             <div key={item.id+index} onClick={handleDetail} style={{cursor:'pointer'}}>

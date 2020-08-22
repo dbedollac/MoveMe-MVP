@@ -3,18 +3,16 @@
   min-height: 100vh
 }
 
-.InstructorProfile-container h1{
+.InstructorProfile-container h2{
   color: #F39119;
   font-family: "Corbel";
 }
 
-.InstructorProfile-container h2{
-  font-family: "Corbel";
+.InstructorProfile-container h3{
+  font-weight: normal;
+  color: lightgray
 }
 
-.InstructorProfile-container img{
-  height: 15vw;
-}
 
 .InstructorProfile-container-header{
   background-color: #676664;
@@ -24,6 +22,14 @@
 .InstructorProfile-container-header p{
   color: white;
   font-size: large;
+}
+
+.profilePicture{
+  min-height: 200px
+}
+
+.profilePicture img{
+  max-height: 350px
 }
 
 .InstructorProfile-container-programa{
@@ -37,4 +43,10 @@
 
 .monthlyProgram-clasesZoom{
   border-right: solid;
+}
+
+@media (max-width: 768px) {
+  .profilePicture img{
+    max-height: 200px
+  }
 }

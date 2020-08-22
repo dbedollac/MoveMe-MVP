@@ -48,7 +48,6 @@ useEffect(()=>{
               zoomToken: resp.access_token,
               zoomRefreshToken: resp.refresh_token
             },{ merge: true })
-            alert('Tu cuenta de Zoom se enlazó correctamente');
           }
         }
         )

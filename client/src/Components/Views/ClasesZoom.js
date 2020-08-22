@@ -44,7 +44,7 @@ function ClasesZoom(props) {
                                               .get()
                                               .then((querySnapshot) => {
                                                   querySnapshot.forEach((doc) => {
-
+                                                    if(doc.data().startTime>now){
                                                       retoMeetings.push({
                                                       startTime:doc.data().startTime,
                                                       meetingID:doc.data().meetingID,
@@ -55,6 +55,7 @@ function ClasesZoom(props) {
                                                       week: doc.data().week,
                                                       dayNumber: doc.data().dayNumber
                                                       })
+                                                    }
                                                   })
                                               })
                                               .catch(function(error) {
@@ -80,6 +81,8 @@ function ClasesZoom(props) {
         var Zoom=[]
         var Meetings=[]
         querySnapshot.forEach((doc)=>{
+          handlePurchases(doc.data())
+          
           if (doc.data().type.includes('Zoom')) {
             var date = new Date(doc.data().data.startTime.startTime)
             var sunday = date.getDate() - date.getDay()
@@ -99,7 +102,7 @@ function ClasesZoom(props) {
               })
             }
         }
-          handlePurchases(doc.data())
+
         })
         setzoomClases(Zoom)
         setZoomMeetings(Meetings)
@@ -114,7 +117,7 @@ function ClasesZoom(props) {
       <div className='ClasesZoom-container'>
         <div className='pt-2 pl-2'>
           <h3>Próximas Clases</h3>
-          <DisplayCarousel allClases={retoClases.concat(zoomClases)} zoomMeetings={retoMeetings.concat(zoomMeetings)} ClasesZoom={true}/>
+          <DisplayCarousel allClases={retoClases.concat(zoomClases)} zoomMeetings={retoMeetings.concat(zoomMeetings)} ClasesZoom={true} />
         </div>
         <div className='pt-2 pl-2'>
           <h3>Clases del Mes</h3>

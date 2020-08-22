@@ -2,9 +2,10 @@ import React, { useState, useContext, useEffect } from "react";
 import {proxyurl} from '../../Config/proxyURL'
 import {db} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
-import { CameraVideoFill } from 'react-bootstrap-icons';
+import { CameraVideoFill, PeopleFill } from 'react-bootstrap-icons';
 import DeleteZoomMeeting from '../Atoms/DeleteZoomMeeting'
 import AddToCar from '../Molecules/AddToCar'
+import {UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap'
 import { withRouter } from "react-router";
 
 
@@ -17,9 +18,22 @@ function StartZoomMeeting(props) {
   const [time,setTime] = useState(null)
   const [price,setPrice] = useState(null)
   const [claseData,setclaseData] = useState(null)
+  const [usersLength,setusersLength] = useState(null)
+  const today = new Date()
   const now = new Date(Date.now()+3600000).toISOString()
+  const now2 = new Date(Date.now()-3600000).toISOString()
+
 
   useEffect(()=>{
+
+
+      if (!props.market&&props.sales) {
+        if (props.zoomMonthlyProgram) {
+          setusersLength(props.sales.filter(item=>item.type.includes('Reto')).filter(item=>item.expire>today.toISOString()).length+props.sales.filter(item=>item.type.includes('Zoom')).filter(item=>item.data.meetingID===props.meetingID).length)
+        }else {
+          setusersLength(props.sales.filter(item=>item.type.includes('Zoom')).filter(item=>item.data.meetingID===props.meetingID).length)
+        }
+     }
 
     if (zoomDate) {
       var days = zoomDate.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
@@ -118,9 +132,16 @@ function StartZoomMeeting(props) {
 
 
   return(
-    <div className='card card-link d-flex flex-row align-items-center justify-content-around'>
-      {props.monthlyProgram? props.market||props.ClasesZoom?null:<div className='col-1'><DeleteZoomMeeting meetingID={props.meetingID} meetingTitle={claseTitle} meetingTime={time} /></div>:null}
-      {props.monthlyProgram?<p className={`pt-3 ${props.ClasesZoom?'col-7':null}`}>{props.market?'$'+price:null} {time} {claseTitle}</p>:<p className='mt-2'>{props.market?'$'+price:null} {dateTime}</p>}
+    <div className={`card card-link d-flex ${props.monthlyProgram&&!props.ClasesZoom?'flex-row':'flex-column'} flex-md-row align-items-center justify-content-around py-1`}>
+      <div className={`d-flex flex-row align-items-center justify-content-around ${props.monthlyProgram?'col-md-9':null}`}>
+        {usersLength!==null?
+          <div className='d-flex flex-row align-items-center mr-5'>
+              <PeopleFill />
+              <p className='pt-3 ml-1'>{usersLength}</p>
+          </div>:null}
+        {props.monthlyProgram?<p className='pt-3'>{props.market?'$'+price:null} {time} {claseTitle}</p>:<p className='mt-3'>{props.market?'$'+price:null} {dateTime}</p>}
+      </div>
+
       {props.market?<AddToCar claseZoom={claseData}
         instructor={props.instructor}
         meetingID={props.meetingID}
@@ -128,12 +149,15 @@ function StartZoomMeeting(props) {
         joinURL={props.joinURL}
         claseID={props.claseID}
         zoomMonthlyProgram={props.zoomMonthlyProgram}
+        trialClass={props.instructor.data.disableTrialClasses?-1:props.trialClass}
         />
       :<button
-        className={`rounded btn${props.startTime>now?'-outline-secondary':'-primary'}`}
+        className={`rounded btn${props.startTime>now||props.startTime<now2?'-outline-secondary':'-primary'}`}
         onClick={startMeeting}
-        disabled={props.startTime>now}
+        disabled={(props.startTime>now||props.startTime<now2)}
         >{props.monthlyProgram?<CameraVideoFill />:null} {props.title}</button>}
+
+        {props.monthlyProgram? props.market||props.ClasesZoom?null:<div className='col-1'><DeleteZoomMeeting meetingID={props.meetingID} meetingTitle={claseTitle} meetingTime={time} /></div>:null}
     </div>
   )
 }

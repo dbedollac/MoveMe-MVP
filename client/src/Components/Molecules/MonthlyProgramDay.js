@@ -178,7 +178,7 @@ function MonthlyProgramDay(props) {
 
   return(
     <div className='card-link'>
-      <div className='d-flex flex-row justify-content-around align-items-center '>
+      <div className='d-flex flex-row justify-content-around align-items-center dayName'>
         <p className='pt-2 col-8' style={{color:active?'#F39119':'black'}}>{clasesNumber>0?'('+clasesNumber+')':null} <strong>{props.dayName}</strong> {date}</p>
         {open?<ChevronCompactUp onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>
         :<ChevronCompactDown onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>}
@@ -192,7 +192,7 @@ function MonthlyProgramDay(props) {
               Agregar clase <PlusCircleFill/>
             </Button>}
           </div>
-           <GetZoomMeetings week={props.week<5||props.zoomMeetings?props.week:-1} dayNumber={props.dayNumber} instructor={props.instructor} zoomMeetings={props.zoomMeetings?meetings:false}/>
+           <GetZoomMeetings usertrialClass={props.trialClass} week={props.week<5||props.zoomMeetings?props.week:-1} dayNumber={props.dayNumber} instructor={props.instructor} zoomMeetings={props.zoomMeetings?meetings:false}/>
         </div>
       </Collapse>
 
@@ -249,8 +249,8 @@ function MonthlyProgramDay(props) {
                   <option value={'2'}>Más de 60 min</option>
                 </select>
             </form>
-            {clases?clases.map(clase => (
-              <div className='col-3' key={clase.id} onClick={handleDetail} style={{cursor:'pointer'}} >
+            {clases?clases.map((clase,index) => (
+              <div className='col-3' key={clase.id+index} onClick={handleDetail} style={{cursor:'pointer'}} >
                 <ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.id}/>
               </div>
             )):null}

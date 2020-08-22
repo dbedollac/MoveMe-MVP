@@ -33,19 +33,17 @@ function CarritoProduct(props) {
 
   return(
     <div className='card'>
-      <div className='card-body'>
-        <div className='card-title d-flex flex-row justify-content-between'>
-          <h4>{props.type} {props.startTime?'('+props.startTime.time+')':null}{props.type.includes('Video')||props.type.includes('Reto')?'(Vigente hasta '+expireDate+')':null}</h4>
-          <TrashFill size={'2em'} onClick={deleteProduct} style={{cursor:'pointer'}}/>
-        </div>
-        <h5 className="card-subtitle mb-2 text-muted">{props.claseData?props.claseData.title:null}</h5>
-        <p>${props.type.includes('Reto')?props.instructor.monthlyProgram.Price
+      <div className='card-body d-flex flex-column flex-md-row align-items-end justify-content-start'>
+        <h5 className='col-12 col-md-6'>{props.type} {props.startTime?'('+props.startTime.time+')':null}{props.type.includes('Video')||props.type.includes('Reto')?'(Vigente hasta '+expireDate+')':null}</h5>
+        <h6 className="card-subtitle mb-2 text-muted col-12 col-md-5">{props.claseData?props.claseData.title:null}</h6>
+        <TrashFill size={'2em'} onClick={deleteProduct} style={{cursor:'pointer'}}/>
+      </div>
+      <div className='card-footer d-flex flex-row justify-content-between align-items-center'>
+        <CoachName uid={props.instructor.uid} profileName={props.instructor.profileName} profilePicture={props.instructor.imgURL?props.instructor.imgURL:null}/>
+        <h5>${props.type.includes('Reto')?props.instructor.monthlyProgram.Price
           :props.type.includes('Zoom')?props.claseData.zoomPrice
           :props.claseData.offlinePrice}
-        </p>
-      </div>
-      <div className='card-footer'>
-        <CoachName uid={props.instructor.uid} profileName={props.instructor.profileName} profilePicture={props.instructor.imgURL?props.instructor.imgURL:null}/>
+        </h5>
       </div>
     </div>
   )

@@ -7,6 +7,7 @@ import { withRouter } from "react-router";
 function GetZoomMeetings(props) {
   var { usuario } = useContext(Auth);
   const [meetings, setMeetings] = useState([])
+  const [sales,setSales] = useState([])
 
   const sortMeetings = (a,b) => {
     const meetingA = a.startTime;
@@ -24,6 +25,20 @@ function GetZoomMeetings(props) {
   useEffect( ()=>{
 
     if (usuario||props.match.params.uid||props.instructor) {
+
+      if (usuario&&!props.market&&!props.match.params.uid) {
+        var Sales = []
+        db.collection('Sales').where('instructor.uid','==',usuario.uid).get()
+            .then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
+                  Sales.push(doc.data())
+                })
+                setSales(Sales)
+            })
+            .catch(function(error) {
+                console.log("Error getting documents: ", error);
+            });
+      }
 
 
       if (meetings.length === 0) {
@@ -83,7 +98,7 @@ function GetZoomMeetings(props) {
     }
 
           }
-        },[props.zoomMeetings])
+        },[props.zoomMeetings,usuario])
 
   return(
       <div>
@@ -99,7 +114,9 @@ function GetZoomMeetings(props) {
           instructor={props.zoomMeetings?meeting.instructor:props.instructor}
           joinURL={meeting.joinURL}
           zoomMonthlyProgram={meeting.monthlyProgram}
-          ClasesZoom={props.zoomMeetings?true:false}/>
+          ClasesZoom={props.zoomMeetings?true:false}
+          trialClass={props.usertrialClass}
+          sales={sales}/>
         </div>
       )):props.zoomMeetings?props.zoomMeetings.sort(sortMeetings).map((meeting,index) => (
       <div key={meeting.meetingID+index}>

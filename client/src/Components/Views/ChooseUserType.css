@@ -14,9 +14,10 @@
   border-width: 1px;
   border-color: black;
   border-style: solid;
-  color: black
+  color: black;
+  height: 200px
 }
 
 .chooseUserType-options img{
-  width: 150px;
+  width: 6em;
 }

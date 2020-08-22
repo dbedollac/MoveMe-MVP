@@ -93,7 +93,8 @@ const handleAceptar = () =>{
             if (newUser) {
               db.collection("Users").doc(usuario.uid).set({
               email: usuario.email,
-              uid: usuario.uid
+              uid: usuario.uid,
+              trialClass: 0
             },{merge:true})
               createSrtipeCustomer()
             }
@@ -116,7 +117,7 @@ const handleAceptar = () =>{
     if (aceptar) {
       if (instructor) {
         if (newInstructor) {
-          return <Redirect to="/configuration-instructor"/>
+          return <Redirect to="/como-iniciar"/>
         } else {
           return <Redirect to="/"/>
         }
@@ -127,23 +128,22 @@ const handleAceptar = () =>{
 
     return(
       <div>
-      {console.log(newUser)}
-          <Header type={newInstructor?0:1} title='M O V E M E'/>
-              <div className="col-12 chooseUserType-container d-flex flex-column justify-content-start align-items-center ">
-                <div className="d-flex flex-column m-2">
-                  <h2>Hola {nombre} :)</h2>
-                </div>
-                <div className="chooseUserType-pregunta text-center pt-2 col-8"><p>¿Cómo quieres utilizar MoveMe?</p></div>
-                  <div className="d-flex flex-column align-items-center">
-                    <div className="d-flex flex-row col-12 justify-content-between">
-                      <div className="d-flex flex-column m-1 align-items-center col-6 chooseUserType-options text-center"
+          <Header empty={true}/>
+              <div className="col-12 chooseUserType-container">
+
+                <h3 className='text-center pt-2'>Hola {nombre} :)</h3>
+                <div className="chooseUserType-pregunta text-center pt-2"><p>¿Cómo quieres utilizar MoveMe?</p></div>
+
+                    <div className="d-flex flex-column flex-md-row col-12 justify-content-around align-items-center">
+                      <div className="d-flex flex-column align-items-center col-10 col-md-5 chooseUserType-options text-center"
                         onClick={handleInstructorClick}
                         style={{backgroundColor: instructor ? '#F39119' : 'white'}}>
                         <h4>Instructor</h4>
                         <img src='./Instructor.png' alt='Instructor'/>
                         <p> ¡Quiero ofrecer ofrecer mis servicios fitness! </p>
                       </div>
-                      <div className="d-flex flex-column m-1 align-items-center col-6 chooseUserType-options text-center"
+
+                      <div className="d-flex flex-column align-items-center col-10 col-md-5 chooseUserType-options text-center"
                         onClick={handleUserClick}
                         style={{backgroundColor: instructor? 'white' : '#F39119'}}>
                         <h4>Usuario</h4>
@@ -151,9 +151,11 @@ const handleAceptar = () =>{
                         <p> ¡Quiero hacer ejercicio! </p>
                       </div>
                     </div>
-                  </div>
-                  <button className="btn-primary col-3 m-2" onClick={handleAceptar}>Aceptar</button>
-              </div>
+
+                <div className='col-12 text-center'>
+                  <button className="btn-primary btn-lg col-5 mt-4" onClick={handleAceptar}>Aceptar</button>
+                </div>
+            </div>
       </div>
     )
 

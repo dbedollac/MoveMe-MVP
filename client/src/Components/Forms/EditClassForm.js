@@ -41,6 +41,7 @@ const saveMedia = async (values) =>{
                   duration: values.duration,
                   zoomPrice: values.zoomPrice,
                   offlinePrice: values.offlinePrice,
+                  freeVideo: values.freeVideo
                 },{ merge: true })
       return  alert('Tu clase se editó con éxito');
 }
@@ -62,7 +63,8 @@ const formik = useFormik({
     equipment: props.claseData.equipment,
     duration: props.claseData.duration,
     zoomPrice: props.claseData.zoomPrice,
-    offlinePrice: props.claseData.offlinePrice
+    offlinePrice: props.claseData.offlinePrice,
+    freeVideo: props.claseData.freeVideo
 
   },
   validate,
@@ -152,6 +154,7 @@ const formik = useFormik({
                 className='mr-1'
                 onChange={formik.handleChange}
                 value={formik.values.duration}
+                step='5'
                 required
               />
               minutos
@@ -168,9 +171,10 @@ const formik = useFormik({
                   className='mr-1'
                   onChange={formik.handleChange}
                   value={formik.values.zoomPrice}
+                  step='5'
                   required
                 />
-                pesos mexicanos (MXN)
+                MXN
                 </div>
         </div>
         <div className='d-flex flex-column col-6 mb-2'>
@@ -180,14 +184,27 @@ const formik = useFormik({
                   id="offlinePrice"
                   name="offlinePrice"
                   type="number"
-                  min={10}
+                  min={0}
                   className='mr-1'
                   onChange={formik.handleChange}
                   value={formik.values.offlinePrice}
                   onBlur={formik.handleBlur}
+                  step='5'
                   required
                 />
-                pesos mexicanos (MXN)
+                MXN
+                </div>
+                <div className='d-flex flex-row align-items-center'>
+                  <label htmlFor="freeVideo" className='mr-2 mt-1'><i>Video gratis</i></label>
+                  <input
+                    id="freeVideo"
+                    name="freeVideo"
+                    type="checkbox"
+                    className="checkbox"
+                    onChange={formik.handleChange}
+                    value={formik.values.freeVideo}
+                    defaultChecked={formik.values.freeVideo}
+                  />
                 </div>
         </div>
     </div>

@@ -27,14 +27,14 @@ function ClassCard(props) {
 
       setTime(days+'/'+month+'/'+year)
     }
-  },[time])
+  })
 
       return(
         <div className='card d-flex flex-column ClassCard-container'>
           {props.picture?<img src={props.picture} className='card-img-top' name={props.name} alt={props.id} id={props.joinURL}/>:
           <img src='/logo.jpg' className='card-img-top' name={props.name} alt={props.id} id={props.joinURL}/>}
           <div className='card-img-overlay-bottom ClassCard-titulo d-flex flex-column justify-content-around' >
-            <p className='text-center px-1' >{props.price&&!props.misVideos?'$'+props.price:null} {props.title}</p>
+            <p className='text-center px-1' >{props.price?props.price>-1&&!props.misVideos?props.freeVideo?'$0':'$'+props.price:null:null} {props.title}</p>
             {props.startTime?<p className='text-center px-1' >{time}</p>:null}
             {props.expire?<p className='text-center px-1' >Expira: {time}</p>:null}
           </div>

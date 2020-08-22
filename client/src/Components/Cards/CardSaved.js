@@ -5,7 +5,7 @@ import CreditCardDetails from '../Cards/CreditCardDetails'
 import {db} from '../../Config/firestore'
 import {proxyurl} from '../../Config/proxyURL'
 import {TrashFill, PencilSquare, CheckCircleFill, ChevronCompactDown, ChevronCompactUp} from 'react-bootstrap-icons'
-import { Spinner, Modal, Button, Collapse} from 'react-bootstrap'
+import { Spinner, Modal, Button} from 'react-bootstrap'
 import Errores from '../Atoms/Errores'
 import * as firebase from "firebase/app";
 
@@ -161,21 +161,12 @@ const CardSaved = (props) => {
 
   return(
     <div>
+      <h4>Método de pago predeterminado</h4>
       <div className='d-flex flex-row align-items-center justify-content-around'>
-        <h4>Método de pago predeterminado</h4>
-        {open?<ChevronCompactUp onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>
-        :<ChevronCompactDown onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>}
+        {details?<CreditCardDetails details={details} />:<h5 style={{color:'gray'}} className='text-center py-5'><i>No hay ningún método guardado</i></h5>}
+        <PencilSquare size={'30px'} style={{cursor:'pointer'}} onClick={()=>{setShow(true)}}/>
+        <TrashFill size={'30px'} style={{cursor:'pointer'}} onClick={()=>{setShowDelete(true)}}/>
       </div>
-
-      <Collapse in={open}>
-        <div>
-          <div className='d-flex flex-row align-items-center justify-content-around'>
-            {details?<CreditCardDetails details={details} />:<h5 style={{color:'gray'}} className='text-center py-5'><i>No hay ningún método guardado</i></h5>}
-            <PencilSquare size={'30px'} style={{cursor:'pointer'}} onClick={()=>{setShow(true)}}/>
-            <TrashFill size={'30px'} style={{cursor:'pointer'}} onClick={()=>{setShowDelete(true)}}/>
-          </div>
-        </div>
-      </Collapse>
 
       <Modal
         show={show}

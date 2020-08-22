@@ -3,10 +3,11 @@ import {CardElement, useStripe, useElements} from '@stripe/react-stripe-js';
 import {proxyurl} from '../../Config/proxyURL'
 import Errores from '../Atoms/Errores'
 import { Spinner} from 'react-bootstrap'
-import {CheckCircleFill} from 'react-bootstrap-icons'
+import {CheckCircleFill, CheckSquare} from 'react-bootstrap-icons'
 import {db} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
 import CreditCardDetails from '../Cards/CreditCardDetails'
+import TrialZoomClass from '../Atoms/TrialZoomClass'
 import './PaymentForm.css'
 
 const PaymentForm = (props) => {
@@ -22,6 +23,8 @@ const PaymentForm = (props) => {
   const [stripeID,setstripeID] = useState(null)
   const [paymentMethod,setpaymentMethod] = useState(null)
   const [otherCard,setotherCard] = useState(false)
+  const [trialClass,settrialClass] = useState(props.trialClass)
+
 
   const deletePaymentMethod = () =>{
     fetch(proxyurl+'stripeAPI/delete-card', {
@@ -236,7 +239,9 @@ const PaymentForm = (props) => {
           :Number(props.products[i].data.claseData.offlinePrice),
         user: {uid:usuario.uid, email:usuario.email},
         expire: props.expire.toISOString(),
-        date: props.now.toISOString()
+        date: props.now.toISOString(),
+        settle: false,
+        refund: false
       })
     }
   }
@@ -265,13 +270,26 @@ const PaymentForm = (props) => {
     }
   },[usuario])
 
+  if (props.products[0]) {
+    if (!props.products[0].data.instructor.disableTrialClasses) {
+      if (trialClass===0) {
+        return(
+          <div className='d-flex flex-column align-items-end'>
+            <TrialZoomClass product={props.products[0]}/>
+            <button className={`btn-info btn-${props.size} rounded col-5 mt-3`} onClick={()=>{settrialClass(-1)}}><CheckSquare/> Comprar ahora</button>
+          </div>
+        )
+      }
+    }
+  }
+
 
   if (details&&!otherCard) {
     return (
       <form onSubmit={handleSubmitAuto}>
           <CreditCardDetails details={details} />
           <Errores mensaje={error} />
-          <div className='d-flex flex-column align-items-center'>
+          <div className='d-flex flex-column align-items-center justify-content-center'>
             {loading?<Spinner animation="border" />
             :success?<CheckCircleFill color='green' size={'2em'}/>:
             <button type="submit" className='btn-success col-10 rounded' disabled={!stripe||(props.total<=10)}>
@@ -285,7 +303,6 @@ const PaymentForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-    {console.log(props.products)}
         <input type='text' placeholder='Nombre en la tarjeta' onChange={handleName} className='col-12 rounded' required/>
         <CardElement />
         <Errores mensaje={error} />

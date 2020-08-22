@@ -53,7 +53,8 @@ const saveMedia = async (values) =>{
                 equipment: values.equipment,
                 duration: values.duration,
                 zoomPrice: values.zoomPrice,
-                offlinePrice: values.offlinePrice
+                offlinePrice: values.offlinePrice,
+                freeVideo: values.freeVideo
               },{ merge: true })
 
    await  db.collection("Instructors").doc(usuario.uid).set({
@@ -79,7 +80,8 @@ const formik = useFormik({
     equipment: '',
     duration: '',
     zoomPrice: 0,
-    offlinePrice: 0
+    offlinePrice: 0,
+    freeVideo:false
   },
   validate,
   onSubmit: async values => {
@@ -169,6 +171,7 @@ const formik = useFormik({
                 className='mr-1'
                 onChange={formik.handleChange}
                 value={formik.values.duration}
+                step='5'
                 required
               />
               minutos
@@ -185,9 +188,10 @@ const formik = useFormik({
                   className='mr-1'
                   onChange={formik.handleChange}
                   value={formik.values.zoomPrice}
+                  step='5'
                   required
                 />
-                pesos mexicanos (MXN)
+                MXN
                 </div>
         </div>
         <div className='d-flex flex-column col-6 mb-2'>
@@ -197,15 +201,28 @@ const formik = useFormik({
                   id="offlinePrice"
                   name="offlinePrice"
                   type="number"
-                  min={10}
+                  min={0}
                   className='mr-1'
                   onChange={formik.handleChange}
                   value={formik.values.offlinePrice}
                   onBlur={formik.handleBlur}
+                  step='5'
                   required
                 />
-                pesos mexicanos (MXN)
+                MXN
                 </div>
+              <div className='d-flex flex-row align-items-center'>
+                <label htmlFor="freeVideo" className='mr-2 mt-1'><i>Video gratis</i></label>
+                <input
+                  id="freeVideo"
+                  name="freeVideo"
+                  type="checkbox"
+                  className="checkbox"
+                  onChange={formik.handleChange}
+                  value={formik.values.freeVideo}
+                  defaultChecked={false}
+                />
+              </div>
         </div>
     </div>
     {loading?<Spinner animation="border" />:<button type="submit" className="mt-5 btn-secondary btn-lg col-6">Guardar</button>}

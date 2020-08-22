@@ -3,10 +3,10 @@
   min-height: 100vh
 }
 
-.Sales-container-totales{
-  background-color: white;
-  color: black;
-  border-color: gray;
-  border-width: 2px;
-  border-style: solid;
+.Sales-totales{
+  background-color: white
+}
+
+.Sales-detalle{
+  background-color: rgba(0, 0, 0, 0.1);
 }

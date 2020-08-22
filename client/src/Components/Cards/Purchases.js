@@ -30,19 +30,14 @@ function CarritoProduct(props) {
 
   return(
     <div className='card'>
-      <div className='card-body'>
-        <div className='card-title d-flex flex-row justify-content-between'>
-          <h4>{props.type} {props.startTime?'('+props.startTime.time+')':null}{props.type.includes('Video')||props.type.includes('Reto')?'(Vigente hasta '+expireDate+')':null}</h4>
-        </div>
-        <h5 className="card-subtitle text-muted">{props.claseData?props.claseData.title:null}</h5>
-        <p>${props.type.includes('Reto')?props.instructor.monthlyProgram.Price
-          :props.type.includes('Zoom')?props.claseData.zoomPrice
-          :props.claseData.offlinePrice}
-        </p>
-        <p><strong>Comprado el {purchaseDate}</strong></p>
+      <div className='card-body d-flex flex-row align-items-center justify-content-start'>
+        <h5 className='col-5'>{props.type} {props.startTime?'('+props.startTime.time+')':null}{props.type.includes('Video')||props.type.includes('Reto')?'(Vigente hasta '+expireDate+')':null}</h5>
+        <h6 className="card-subtitle text-muted col-4">{props.claseData?props.claseData.title:null}</h6>
+        <p className='col-3'><strong>Comprado el {purchaseDate}</strong></p>
       </div>
-      <div className='card-footer'>
+      <div className='card-footer d-flex flex-row justify-content-between align-items-center'>
         <CoachName uid={props.instructor.uid} profileName={props.instructor.profileName} profilePicture={props.instructor.imgURL?props.instructor.imgURL:null}/>
+        <h5 className='col-1'>${props.price}</h5>
       </div>
     </div>
   )

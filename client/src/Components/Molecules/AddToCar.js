@@ -22,22 +22,22 @@ function AddToCar(props) {
         var docRef = db.collection("Users").doc(usuario.uid);
          docRef.get().then((doc)=>{
         if (doc.exists) {
-            console.log("Es usuario")
+            return console.log("Es usuario")
         } else {
-            setShow(true)
+            return setShow(true)
         }
         }).catch(function(error) {
             return console.log("Error getting document:", error);
         });
       }else {
-              setShow(true)
+              return setShow(true)
             }
   }
 
   const handleCart = async () =>{
       await searchUsuario()
 
-      if (usuario) {
+      if (usuario&&!show) {
       var docRef = db.collection("Users").doc(usuario.uid).collection('ShoppingCart')
       if(props.claseZoom){
         await docRef.doc().set({
@@ -87,6 +87,7 @@ function AddToCar(props) {
               monthlyProgram: props.claseZoom?props.zoomMonthlyProgram:null},
             expire: expire
           }]}
+          trialClass={props.trialClass}
         />
       </div>
 

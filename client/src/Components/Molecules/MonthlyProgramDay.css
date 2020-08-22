@@ -5,3 +5,9 @@
 .search-container p{
   font-size: small
 }
+
+@media (max-width: 768px) {
+  .dayName p{
+    font-size: 14px
+  }
+}

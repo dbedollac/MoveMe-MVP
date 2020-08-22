@@ -48,29 +48,36 @@ useEffect(()=>{
     })
 
     searchInstructor()
-})
+},[usuario])
 
     return (
-      <div>
+      <>
         <Header instructor={newInstructor?false:true} />
-        <div className="col-12 configInstructor-container d-flex flex-row align-items-start pt-4">
-          <div className="col-4 foto-perfil d-flex flex-column justify-content-around">
-            <FileUpload fileType='Pictures' name={uid + '-profile'} title="Foto de perfil" overlay='profile'/>
-            <div className='col-12 d-flex flex-row justify-content-center align-items-center zoom-button pt-2 mt-2'>
-              <div className='d-flex flex-column align-items-center'>
-                {zoomButton ? <p style={{color: 'gray'}}>Guarda primero tus datos de perfil</p> : null}
-                <GetZoomToken disable={zoomButton}/>
+          <div className='configInstructor-container'>
+
+            <div className="d-flex flex-column flex-lg-row align-items-start pt-4">
+              <div className="col-lg-4 foto-perfil d-flex flex-column justify-content-around">
+
+                <div className='d-flex flex-row justify-content-center align-items-center zoom-button mb-2 pb-3'>
+                  <div className='d-flex flex-column align-items-center'>
+                    {zoomButton ? <p style={{color: 'gray'}}>Guarda primero tus datos de perfil</p> : null}
+                    <GetZoomToken disable={zoomButton}/>
+                  </div>
+                    <CameraVideoFill size={'50px'} className='ml-5' color="#2C8BFF" />
+                </div>
+
+                <FileUpload fileType='Pictures' name={uid + '-profile'} title="Foto de perfil" overlay='profile'/>
               </div>
-                <CameraVideoFill size={80} className='ml-5' color="#2C8BFF" />
+
+              <div className="col-lg-8 d-flex flex-column pt-lg-0 pt-4 mb-3">
+                <div className="d-flex align-self-center">
+                  <ConfigInstructorForm/>
+                </div>
+              </div>
             </div>
+
           </div>
-          <div className="col-8 d-flex flex-column">
-            <div className="col-12 d-flex align-self-center">
-              <ConfigInstructorForm/>
-            </div>
-          </div>
-        </div>
-      </div>
+      </>
     )
 
 }

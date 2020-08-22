@@ -75,7 +75,7 @@ class FileUpload extends React.Component {
       <div className="FileUpload card">
         <p className='card-header col-12 text-center'><strong>{this.props.title}</strong></p>
         <div className='card-body d-flex flex-column align-items-center'>
-          <label for='file-input'>
+          <label htmlFor='file-input'>
             {this.state.loading?<Spinner animation="border" />:this.state.picture?<img src={this.state.picture} className="text-center card-img-top"/>:
             <CloudArrowUp size={'10em'}/>}
           </label>
@@ -86,9 +86,11 @@ class FileUpload extends React.Component {
             {Math.round(this.state.uploadValue*100)/100} %
           </div>
         </div>
-        <div className="card-footer col-12 d-flex flex-row justify-content-between align-items-center">
-          <Image size={'2em'}/>
-          <input id='file-input' type='file' onChange={this.handleOnChange.bind(this)} accept='image/*'/>
+        <div className="card-footer d-flex flex-row justify-content-between align-items-center">
+          <div className='custom-file'>
+            <input id='customFile' type='file' onChange={this.handleOnChange.bind(this)} accept='image/*' className='custom-file-input'/>
+            <label className="custom-file-label" htmlFor="customFile"><Image size='2em'/> Selecciona una foto</label>
+          </div>
         </div>
       </div>
     )

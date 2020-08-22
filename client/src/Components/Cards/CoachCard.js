@@ -1,6 +1,7 @@
 import React,{useEffect, useState} from 'react'
 import { withRouter } from "react-router";
 import {db} from '../../Config/firestore'
+import './ClassCard.css'
 
 function CoachCard(props) {
   const [videosNumber, setvideosNumber] = useState(null)

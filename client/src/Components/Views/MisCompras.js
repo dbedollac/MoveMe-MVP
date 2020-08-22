@@ -59,7 +59,7 @@ function MisCompras(props) {
           <CardSaved/>
         </div>
         {purchases.length>0?purchases.sort(sortPurchases).slice(0,showMore).map(purchase => (
-          <div className='col-6 mt-2'>
+          <div className='col-11 mt-2'>
             <Purchases
               expire={new Date(purchase.expire)}
               date={new Date(purchase.date)}
@@ -67,6 +67,7 @@ function MisCompras(props) {
               startTime ={purchase.type.includes('Zoom')?purchase.data.startTime:null}
               claseData={purchase.data.claseData}
               instructor={purchase.data.instructor}
+              price={purchase.price}
             />
           </div>
         )):<h4 style={{color:'gray'}} className='text-center py-5'><i>No hay compras registradas en los últimos 6 meses</i></h4>}
