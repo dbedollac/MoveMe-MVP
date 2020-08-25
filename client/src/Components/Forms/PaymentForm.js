@@ -148,7 +148,7 @@ const PaymentForm = (props) => {
             setSuccess(false)
           } else {
             // The payment has been processed!
-            console.log(result.paymentIntent.status)
+            console.log(result)
             if (result.paymentIntent.status === 'succeeded') {
               setSuccess(true)
               setLoading(false)
@@ -156,7 +156,7 @@ const PaymentForm = (props) => {
                 handlePaymentMethod()
               }
               setError(null)
-              addSales()
+              addSales(result.paymentIntent.id,result.paymentIntent.amount)
               if (props.cart) {
                 vaciarCarrito()
               }
@@ -185,16 +185,17 @@ const PaymentForm = (props) => {
         "content-type": "application/json"
       }
     }).then(function(result) {
-        Promise.resolve(result.text()).then((resp) =>{
-          if (resp === 'error') {
+        Promise.resolve(result.json()).then((resp) =>{
+          if (resp.error) {
               setError('¡Algo salió mal! Intenta con otra tarjeta')
               setLoading(false)
               setSuccess(false)
             } else {
+              console.log(resp)
               setSuccess(true)
               setLoading(false)
               setError(null)
-              addSales()
+              addSales(resp.id, resp.amount)
               if (props.cart) {
                 vaciarCarrito()
               }
@@ -228,20 +229,24 @@ const PaymentForm = (props) => {
     )
   }
 
-  const addSales = () =>{
+  const addSales = (paymentID,paymentAmount) =>{
     for (var i = 0; i < props.products.length; i++) {
+      var Price = props.products[i].data.type.includes('Reto')? Number(props.products[i].data.instructor.monthlyProgram.Price)
+        :props.products[i].data.type.includes('Zoom')?Number(props.products[i].data.claseData.zoomPrice)
+        :Number(props.products[i].data.claseData.offlinePrice)
+
       db.collection('Sales').doc().set({
         data: props.products[i].data,
         instructor: {uid:props.products[i].data.instructor.uid, email: props.products[i].data.instructor.email},
         type: props.products[i].data.type,
-        price: props.products[i].data.type.includes('Reto')? Number(props.products[i].data.instructor.monthlyProgram.Price)
-          :props.products[i].data.type.includes('Zoom')?Number(props.products[i].data.claseData.zoomPrice)
-          :Number(props.products[i].data.claseData.offlinePrice),
+        price: Price,
         user: {uid:usuario.uid, email:usuario.email},
         expire: props.expire.toISOString(),
         date: props.now.toISOString(),
         settle: false,
-        refund: false
+        refund: false,
+        paymentID:paymentID,
+        paymentAmount:paymentAmount*Price/props.subtotal
       })
     }
   }
@@ -254,7 +259,7 @@ const PaymentForm = (props) => {
     })
     }).catch(error => console.log(error))
 
-    window.location.reload(false)
+    //window.location.reload(false)
   }
 
   useEffect(()=>{

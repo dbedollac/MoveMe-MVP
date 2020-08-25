@@ -125,7 +125,7 @@ function Sales(props) {
                 </tr>
                 <tr>
                   <td colSpan='2'><strong>Total</strong> ({movemeFee*100}% contribución a MoveMe)</td>
-                  <td><strong>${sales.length>0?sales.filter(item=>item.refund===false).reduce((a,b)=>{return a+b.price},0).toFixed(2):0}</strong> (${sales.length>0?sales.reduce((a,b)=>{return a+b.price},0)*movemeFee.toFixed(2):0})</td>
+                  <td><strong>${sales.length>0?sales.filter(item=>item.refund===false).reduce((a,b)=>{return a+b.price},0).toFixed(2):0}</strong> (${sales.length>0?sales.filter(item=>item.refund===false).reduce((a,b)=>{return a+b.price},0)*movemeFee.toFixed(2):0})</td>
                 </tr>
                 <tr>
                   <td colSpan='2'><i>Por pagar</i></td>
@@ -138,7 +138,7 @@ function Sales(props) {
               </tbody>
             </Table>
 
-          <div className='card mx-1 px-3 RetoSales-detail'>
+          <div className='card mx-1 px-3 py-2 RetoSales-detail'>
             <div className='d-flex flex-row justify-content-between align-items-center '>
               <h5 className='mr-4'>Ventas de Reto Mensual</h5>
               {openRetos?<ChevronCompactUp onClick={() => setOpenRetos(!openRetos)} style={{cursor:'pointer'}} size={'2em'}/>
@@ -170,7 +170,7 @@ function Sales(props) {
               </Collapse>
             </div>
 
-            <div className='card mt-3 mx-1 px-3 ZoomSales-detail'>
+            <div className='card mt-3 mx-1 px-3 py-2 ZoomSales-detail'>
               <div className='d-flex flex-row justify-content-between align-items-center '>
                 <h5 className='mr-4'>Ventas de Clases por Zoom</h5>
                 {openZoom?<ChevronCompactUp onClick={() => setOpenZoom(!openZoom)} style={{cursor:'pointer'}} size={'2em'}/>
@@ -204,7 +204,7 @@ function Sales(props) {
                 </Collapse>
               </div>
 
-              <div className='card mt-3 mx-1 px-3 VideoSales-detail'>
+              <div className='card mt-3 mx-1 px-3 py-2 VideoSales-detail'>
                 <div className='d-flex flex-row justify-content-between align-items-center '>
                   <h5 className='mr-4'>Renta de Videos</h5>
                   {openVideos?<ChevronCompactUp onClick={() => setOpenVideos(!openVideos)} style={{cursor:'pointer'}} size={'2em'}/>

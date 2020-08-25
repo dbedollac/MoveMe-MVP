@@ -18,12 +18,27 @@ router.post('/charge-card', async (req,res) =>{
     off_session: true,
     confirm: true
   }).catch((error)=>{
-    res.send('error');
+    res.send({error:'error'});
   })
 
   if (paymentIntent.status === "succeeded") {
-    res.send('succeeded');
+    res.send(paymentIntent);
   }
+})
+
+router.post('/refund', async (req,res) =>{
+
+  const refund = await stripe.refunds.create({
+    payment_intent: req.body.paymentID,
+    amount: req.body.paymentAmount
+  }).catch((error)=>{
+    res.send({error:error});
+  })
+
+  if (refund.status === "succeeded") {
+    res.send(refund)
+  }
+
 })
 
 router.post('/card-details',async (req,res) => {

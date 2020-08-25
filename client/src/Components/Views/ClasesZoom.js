@@ -20,7 +20,7 @@ function ClasesZoom(props) {
 
   const handlePurchases = async (purchase) =>{
 
-    if (purchase.expire>new Date().toISOString()) {
+    if (purchase.expire>new Date().toISOString()&&!purchase.refund) {
 
       if (purchase.type.includes('Reto')) {
 
@@ -82,13 +82,13 @@ function ClasesZoom(props) {
         var Meetings=[]
         querySnapshot.forEach((doc)=>{
           handlePurchases(doc.data())
-          
+
           if (doc.data().type.includes('Zoom')) {
             var date = new Date(doc.data().data.startTime.startTime)
             var sunday = date.getDate() - date.getDay()
             var week = Math.ceil(sunday/7)
 
-            if (doc.data().data.startTime.startTime>now) {
+            if (doc.data().data.startTime.startTime>now&&!doc.data().refund) {
               Zoom.push({instructor:{id:doc.data().instructor.uid,data:doc.data().data.instructor},id:doc.data().data.claseID, data: doc.data().data.claseData, expire:doc.data().expire})
               Meetings.push({
               startTime:doc.data().data.startTime.startTime,

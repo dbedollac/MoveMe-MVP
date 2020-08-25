@@ -11,6 +11,7 @@ function MisCompras(props) {
   const { usuario } = useContext(Auth);
   const [purchases,setPurchases] = useState([])
   const [showMore, setshowMore] = useState(10)
+  const [refundsNum,setrefundsNum] = useState(0)
 
   const handleVerMas = () =>{
     setshowMore(showMore + 10)
@@ -41,9 +42,10 @@ function MisCompras(props) {
       db.collection('Sales').where('user.uid','==',usuario.uid).get()
           .then(function(querySnapshot) {
               querySnapshot.forEach(function(doc) {
-                Purchases.push(doc.data())
+                Purchases.push({data:doc.data(),id:doc.id})
               })
               setPurchases(Purchases)
+              setrefundsNum(Purchases.filter(item => item.data.refund===true).length)
           })
           .catch(function(error) {
               console.log("Error getting documents: ", error);
@@ -59,15 +61,20 @@ function MisCompras(props) {
           <CardSaved/>
         </div>
         {purchases.length>0?purchases.sort(sortPurchases).slice(0,showMore).map((purchase,index) => (
-          <div className='col-12 col-md-10 mt-2' key={purchase.user.uid+index}>
+          <div className='col-12 col-md-10 mt-2' key={purchase.id}>
             <Purchases
-              expire={new Date(purchase.expire)}
-              date={new Date(purchase.date)}
-              type= {purchase.type}
-              startTime ={purchase.type.includes('Zoom')?purchase.data.startTime:null}
-              claseData={purchase.data.claseData}
-              instructor={purchase.data.instructor}
-              price={purchase.price}
+              expire={new Date(purchase.data.expire)}
+              date={new Date(purchase.data.date)}
+              type= {purchase.data.type}
+              startTime ={purchase.data.type.includes('Zoom')?purchase.data.data.startTime:null}
+              claseData={purchase.data.data.claseData}
+              instructor={purchase.data.data.instructor}
+              price={purchase.data.price}
+              paymentID={purchase.data.paymentID}
+              paymentAmount={purchase.data.paymentAmount}
+              refund={purchase.data.refund}
+              refundsNum={refundsNum}
+              id={purchase.id}
             />
           </div>
         )):<h4 style={{color:'gray'}} className='text-center py-5'><i>No hay compras registradas en los últimos 6 meses</i></h4>}

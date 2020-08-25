@@ -22,7 +22,12 @@ function PayButton(props) {
   var year = expire.getFullYear()
   const [expireDate] = useState(days+'/'+month+'/'+year)
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false)
+    if (props.cart) {
+      window.location.reload(false)
+    }
+  }
   const handleCloseLogin = () => setshowLogin(false);
   const handleShowLogin = () => setshowLogin(true);
 
@@ -65,7 +70,7 @@ function PayButton(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <PaymentForm trialClass={trialClass} total={(props.subtotal*(1+iva)+StripeFee(props.subtotal*(1+iva))).toFixed(2)} products={props.products} cart={props.cart?true:false} expire={expire} now={curr}/>
+          <PaymentForm trialClass={trialClass} subtotal={props.subtotal} total={(props.subtotal*(1+iva)+StripeFee(props.subtotal*(1+iva))).toFixed(2)} products={props.products} cart={props.cart?true:false} expire={expire} now={curr}/>
         </Modal.Body>
         {!props.cart?props.type!=='Zoom'?
         <Modal.Footer>

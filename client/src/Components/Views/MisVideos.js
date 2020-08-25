@@ -14,7 +14,7 @@ function MisVideos(props) {
 
   const handlePurchases = async (purchase) =>{
 
-    if (purchase.expire>new Date().toISOString()) {
+    if (purchase.expire>new Date().toISOString()&&!purchase.refund) {
 
       if (purchase.type.includes('Reto')) {
 
