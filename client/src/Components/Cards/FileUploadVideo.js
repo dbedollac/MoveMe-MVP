@@ -73,23 +73,27 @@ class FileUploadVideo extends React.Component {
 
   render () {
     return (
-      <div className="FileUpload card">
-        <p className='card-header col-12 text-center'><strong>{this.props.title}</strong></p>
-        <div className='card-body d-flex flex-column align-items-center justify-content-start'>
-        {this.state.loading?<Spinner animation="border" />:this.state.video?<VideoPlayer videoWidth={this.props.videoWidth} videoHeight={this.props.videoHeight} Video={this.state.video} className="text-center card-img-top"/>
-        :  <label for='video-input'>
-            <CloudArrowUp size={'10em'}/>
-          </label>}
-          <div className='d-flex flex-row align-items-center'>
-            <progress value={this.state.uploadValue} max='100' className="progres-bar mr-2">
-              {this.state.uploadValue} %
-            </progress>
-            {Math.round(this.state.uploadValue*100)/100} %
+      <div className='col-12'>
+        <div className="FileUpload card">
+          <p className='card-header text-center'><strong>{this.props.title}</strong></p>
+          <div className='card-body d-flex flex-column align-items-center justify-content-start'>
+          {this.state.loading?<Spinner animation="border" />:this.state.video?<VideoPlayer videoWidth={this.props.videoWidth} videoHeight={this.props.videoHeight} Video={this.state.video} className="text-center card-img-top"/>
+          :  <label for='customFile-Video'>
+              <CloudArrowUp size={'7em'}/>
+            </label>}
+            <div className='d-flex flex-row align-items-center'>
+              <progress value={this.state.uploadValue} max='100' className="progres-bar mr-2">
+                {this.state.uploadValue} %
+              </progress>
+              {Math.round(this.state.uploadValue*100)/100} %
+            </div>
           </div>
-        </div>
-        <div className="card-footer col-12 d-flex flex-row justify-content-between align-items-center">
-          <CameraVideoFill size={'2em'}/>
-          <input id='video-input' type='file' onChange={this.handleOnChange.bind(this)} accept='video/*'/>
+          <div className="card-footer d-flex flex-row justify-content-between align-items-center">
+            <div className='custom-file'>
+              <input id='customFile-Video' type='file' onChange={this.handleOnChange.bind(this)} accept='video/*' className='custom-file-input'/>
+              <label className="custom-file-label" htmlFor="customFile"><CameraVideoFill size='2em'/> Seleccionar video</label>
+            </div>
+          </div>
         </div>
       </div>
     )

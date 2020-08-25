@@ -10,3 +10,9 @@
 .Sales-detalle{
   background-color: rgba(0, 0, 0, 0.1);
 }
+
+@media (max-width: 576px) {
+  .Sales-detalle{
+    font-size: 9px
+  }
+}

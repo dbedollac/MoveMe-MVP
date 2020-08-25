@@ -7,7 +7,7 @@ import {Spinner} from 'react-bootstrap'
 
 function CreateZoomMeeting(props) {
 const { usuario } = useContext(Auth);
-const [time, setTime] = useState(null)
+const [time, setTime] = useState('08:00')
 const [date, setDate] = useState(null)
 const [timezone, setTimezone] = useState(null)
 const zoomDate = new Date()
@@ -97,7 +97,7 @@ const [loading,setLoading] = useState(false)
         {loading?<Spinner animation="border" className='mr-2'/> :
         <button className='btn-primary mr-2' onClick={setMeeting} disabled={(time!==null&&props.claseID!==null)?false:true}>Agregar</button>
         }
-        <input type="time" onChange={handleTime} className='col-8'/>
+        <input type="time" onChange={handleTime} className='col-md-8 col-6' value={time}/>
       </div>
     )
 

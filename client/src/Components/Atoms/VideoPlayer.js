@@ -3,22 +3,15 @@ import {storage} from "../../Config/firestore.js"
 import ReactPlayer from 'react-player'
 
 function VideoPlayer(props) {
-  const [play,setPlay] = useState(true)
-
-  const handlePreview = () =>{
-    setPlay(false)
-  }
-
 
     return(
       <div>
         <ReactPlayer
         // Disable right click
         onContextMenu={e => e.preventDefault()}
-        onStart={props.market?setInterval(handlePreview,60000):null}
-        playing={play}
+        playing
         url={props.Video}
-        controls = {play}
+        controls = {true}
         light={props.Image}
         width={props.videoWidth}
         height={props.videoHeight}

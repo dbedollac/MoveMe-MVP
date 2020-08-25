@@ -161,11 +161,13 @@ const CardSaved = (props) => {
 
   return(
     <div>
-      <h4>Método de pago predeterminado</h4>
-      <div className='d-flex flex-row align-items-center justify-content-around'>
+      <h5>Método de pago predeterminado</h5>
+      <div className='d-flex flex-column flex-lg-row align-items-center justify-content-around'>
         {details?<CreditCardDetails details={details} />:<h5 style={{color:'gray'}} className='text-center py-5'><i>No hay ningún método guardado</i></h5>}
-        <PencilSquare size={'30px'} style={{cursor:'pointer'}} onClick={()=>{setShow(true)}}/>
-        <TrashFill size={'30px'} style={{cursor:'pointer'}} onClick={()=>{setShowDelete(true)}}/>
+        <div className='d-flex flex-row align-items-center justify-content-between col-12 col-lg-2'>
+          <PencilSquare size={'30px'} style={{cursor:'pointer'}} onClick={()=>{setShow(true)}}/>
+          <TrashFill size={'30px'} style={{cursor:'pointer'}} onClick={()=>{setShowDelete(true)}}/>
+        </div>
       </div>
 
       <Modal

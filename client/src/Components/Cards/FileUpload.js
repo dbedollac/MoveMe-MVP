@@ -72,24 +72,26 @@ class FileUpload extends React.Component {
   render () {
 
     return (
-      <div className="FileUpload card">
-        <p className='card-header col-12 text-center'><strong>{this.props.title}</strong></p>
-        <div className='card-body d-flex flex-column align-items-center'>
-          <label htmlFor='file-input'>
-            {this.state.loading?<Spinner animation="border" />:this.state.picture?<img src={this.state.picture} className="text-center card-img-top"/>:
-            <CloudArrowUp size={'10em'}/>}
-          </label>
-          <div className='d-flex flex-row align-items-center'>
-            <progress value={this.state.uploadValue} max='100' className="progres-bar mr-2">
-              {this.state.uploadValue} %
-            </progress>
-            {Math.round(this.state.uploadValue*100)/100} %
+      <div className='col-12'>
+        <div className="FileUpload card">
+          <p className='card-header text-center'><strong>{this.props.title}</strong></p>
+          <div className='card-body d-flex flex-column align-items-center'>
+            <label htmlFor='customFile-Foto'>
+              {this.state.loading?<Spinner animation="border" />:this.state.picture?<img src={this.state.picture} className="text-center card-img-top"/>:
+              <CloudArrowUp size={'7em'}/>}
+            </label>
+            <div className='d-flex flex-row align-items-center'>
+              <progress value={this.state.uploadValue} max='100' className="progres-bar mr-2">
+                {this.state.uploadValue} %
+              </progress>
+              {Math.round(this.state.uploadValue*100)/100} %
+            </div>
           </div>
-        </div>
-        <div className="card-footer d-flex flex-row justify-content-between align-items-center">
-          <div className='custom-file'>
-            <input id='customFile' type='file' onChange={this.handleOnChange.bind(this)} accept='image/*' className='custom-file-input'/>
-            <label className="custom-file-label" htmlFor="customFile"><Image size='2em'/> Selecciona una foto</label>
+          <div className="card-footer d-flex flex-row justify-content-between align-items-center">
+            <div className='custom-file'>
+              <input id='customFile-Foto' type='file' onChange={this.handleOnChange.bind(this)} accept='image/*' className='custom-file-input'/>
+              <label className="custom-file-label" htmlFor="customFile"><Image size='2em'/> Seleccionar foto</label>
+            </div>
           </div>
         </div>
       </div>

@@ -12,7 +12,7 @@ function UserDetailCard(props) {
 
       return(
         <div className='col-12 card'>
-          <div className='d-flex flex-column flex-md-row align-items-center justify-content-start pl-5 pt-1'>
+          <div className='d-flex flex-column flex-md-row align-items-center justify-content-between pl-5 pt-1'>
             <h3 className='text-center text-break' style={{color: '#F39119'}}>{props.data.title}</h3>
             <div className='col-12 col-md-5'>
               <CoachName uid={props.instructor.id} profileName={props.instructor.data.profileName} profilePicture={props.instructor.data.imgURL?props.instructor.data.imgURL:null}/>

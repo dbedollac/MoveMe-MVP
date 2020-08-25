@@ -87,7 +87,7 @@ function Sales(props) {
   return (
     <div>
       <Header instructor={true}/>
-        <div className='Sales-container'>
+        <div className='Sales-container pb-2'>
 
           <div className='d-flex flex-row align-items-center justify-content-start pl-2 pt-2'>
             <h3>Ventas desde</h3>
@@ -146,7 +146,7 @@ function Sales(props) {
             </div>
 
             <Collapse in={openRetos}>
-              <Table bordered hover striped className='Sales-detalle'>
+              <Table bordered hover striped className='Sales-detalle' responsive>
                   <thead>
                     <tr>
                       <th>Cliente</th>
@@ -178,7 +178,7 @@ function Sales(props) {
               </div>
 
               <Collapse in={openZoom}>
-                <Table bordered hover striped className='Sales-detalle'>
+                <Table bordered hover striped className='Sales-detalle' responsive >
                     <thead>
                       <tr>
                         <th>Clase</th>
@@ -212,7 +212,7 @@ function Sales(props) {
                 </div>
 
                 <Collapse in={openVideos}>
-                  <Table bordered hover striped className='Sales-detalle'>
+                  <Table bordered hover striped className='Sales-detalle' responsive>
                       <thead>
                         <tr>
                           <th>Clase</th>

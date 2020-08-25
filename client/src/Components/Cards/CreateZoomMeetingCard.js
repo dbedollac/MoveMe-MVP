@@ -8,24 +8,24 @@ import {Spinner} from 'react-bootstrap'
 
 function CreateZoomMeetingCard(props) {
 const { usuario } = useContext(Auth);
-const [time, setTime] = useState(null)
-const [date, setDate] = useState(null)
+const [time, setTime] = useState('08:00')
 const [timezone, setTimezone] = useState(null)
 const [loading,setLoading] = useState(false)
 const today = new Date()
 
+const getDate = (date) => {
+  var saleDate = new Date(date)
+  var days = saleDate.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+  var month = (saleDate.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+  var year = saleDate.getFullYear()
+
+    return(year+'-'+month+'-'+days)
+}
+const [date, setDate] = useState(getDate(today))
+
   useEffect(()=>{
     setTimezone(Intl.DateTimeFormat().resolvedOptions().timeZone)
   })
-
-  const getDate = (date) => {
-    var saleDate = new Date(date)
-    var days = saleDate.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
-    var month = (saleDate.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
-    var year = saleDate.getFullYear()
-
-      return(year+'-'+month+'-'+days)
-  }
 
   const handleTime = (event) =>{
     setTime(event.target.value)
@@ -87,21 +87,19 @@ const today = new Date()
      }
 
   return(
-    <div className='card'>
-      <div className='card-header d-flex flex-row align-items-center justify-content-around' style={{cursor:'pointer'}} >
+    <div className='card d-flex flex-column align-items-center'>
+      <div className='card-header col-12 d-flex flex-row align-items-center justify-content-center' style={{cursor:'pointer'}} >
         <CameraVideoFill size={'2em'}  color="#2C8BFF" />
-        <p className='card-title mt-2'><strong>Agendar Clase Zoom</strong></p>
+        <p className='card-title mt-2 ml-1'><strong>Agendar Clase Zoom</strong></p>
       </div>
-      <div className={`card-body pt-2`}>
+      <div className='card-body pt-2'>
         <div className='d-flex flex-column justify-content-around'>
-          <div className='d-flex flex-column col-10'>
-            <input type="date" onChange={handleDate} min={getDate(today)}/>
-            <input type="time" onChange={handleTime}/>
-          </div>
+          <input type="date" onChange={handleDate} min={getDate(today)} value={date}/>
+          <input type="time" onChange={handleTime} value={time} className='mt-2'/>
           <div className='d-flex align-self-center ' disabled={true}>
-          {loading?<Spinner animation="border" className='d-flex align-self-center'/>:
-            <button className='btn-lg btn-primary mt-2' onClick={setMeeting} disabled={(time!==null&&date!==null&&props.claseID!==null)?false:true}>Guardar</button>
-          }
+            {loading?<Spinner animation="border" className='d-flex align-self-center'/>:
+              <button className='btn-lg btn-primary mt-2' onClick={setMeeting} disabled={(time!==null&&date!==null&&props.claseID!==null)?false:true}>Guardar</button>
+            }
           </div>
         </div>
       </div>

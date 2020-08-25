@@ -17,9 +17,20 @@ const [instructor, setInstructor] = useState(props.instructor)
 const [open, setOpen] = useState(false);
 const [trialClass,settrialClass] = useState(null)
 
+const handleOpen = () =>{
+  setOpen(!open)
+}
+
   useEffect(()=>{
 
+    if (open) {
+      if (props.match.params.uid||props.market) {
+        setInterval(handleOpen,60000)
+      }
+    }
+
     if (usuario) {
+
       if (!props.market) {
       var docRef = db.collection("Instructors").doc(usuario.uid);
       docRef.get().then( (doc)=>{
@@ -60,7 +71,7 @@ const [trialClass,settrialClass] = useState(null)
   }else{
     settrialClass(0)
   }
-},[usuario])
+},[usuario,open])
 
       return(
         <div className='col-12 card'>
@@ -79,7 +90,7 @@ const [trialClass,settrialClass] = useState(null)
                 <p>{props.data.description}</p>
                 {props.data.videoURL?
                 <div className='card card-link py-1'>
-                  <div className='d-flex flex-column flex-md-row justify-content-around align-items-center'>
+                  <div className='d-flex flex-column flex-lg-row justify-content-around align-items-center'>
 
                   <div className='d-flex flex-row-reverse flex-md-row align-items-center justify-content-between'>
                     {open?<ChevronCompactUp onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>
@@ -104,7 +115,7 @@ const [trialClass,settrialClass] = useState(null)
                   <Collapse in={open}>
                     {open?
                     <div>
-                      <VideoPlayer Video={props.data.videoURL} videoWidth='100%' videoHeight='300px' className="text-center card-img-top" market={props.match.params.uid||props.market?true:false}/>
+                      <VideoPlayer Video={props.data.videoURL} videoWidth='100%' videoHeight='300px' className="text-center card-img-top"/>
                     </div>:
                     <p>MoveMe</p>}
                   </Collapse>
@@ -113,8 +124,8 @@ const [trialClass,settrialClass] = useState(null)
 
               <div className='col-12 col-md-6 d-flex flex-column'>
                 <div className=' d-flex flex-row alig-items-center justify-content-center'>
-                  <CameraVideoFill size={'2em'} className='mr-2 mt-1' color="#2C8BFF" />
-                  <h4>Clases por Zoom</h4>
+                  <CameraVideoFill size={'2em'} className='mr-2' color="#2C8BFF" />
+                  <h5>Clases por Zoom</h5>
                 </div>
                 <div style={{ overflowY: 'scroll', height:'250px'}}>
                   <GetZoomMeetings claseID={props.claseID} instructor={instructor} market={props.market?props.market:false} usertrialClass={trialClass}/>

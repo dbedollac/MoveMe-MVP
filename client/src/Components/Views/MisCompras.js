@@ -55,11 +55,11 @@ function MisCompras(props) {
     <div>
       <Header  user={usuario?true:false}/>
       <div className='MisCompras-container d-flex flex-column pt-2 align-items-center'>
-        <div className='MisCompras-container-paymentMethod col-6 rounded p-1'>
+        <div className='MisCompras-container-paymentMethod col-10 col-md-7 rounded p-1'>
           <CardSaved/>
         </div>
-        {purchases.length>0?purchases.sort(sortPurchases).slice(0,showMore).map(purchase => (
-          <div className='col-11 mt-2'>
+        {purchases.length>0?purchases.sort(sortPurchases).slice(0,showMore).map((purchase,index) => (
+          <div className='col-12 col-md-10 mt-2' key={purchase.user.uid+index}>
             <Purchases
               expire={new Date(purchase.expire)}
               date={new Date(purchase.date)}

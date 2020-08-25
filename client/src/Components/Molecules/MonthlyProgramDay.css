@@ -1,13 +1,15 @@
-.search-container img{
-  height: 5vw
+.search-container p{
+  font-size: 11px
 }
 
-.search-container p{
-  font-size: small
+.Search-Card img{
+  height: 150px;
 }
 
 @media (max-width: 768px) {
   .dayName p{
     font-size: 14px
   }
+
+  
 }

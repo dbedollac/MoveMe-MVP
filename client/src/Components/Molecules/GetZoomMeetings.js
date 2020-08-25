@@ -102,6 +102,7 @@ function GetZoomMeetings(props) {
 
   return(
       <div>
+        {meetings.length===0&&!props.zoomMeetings?<h5 style={{color: 'gray'}} className='ml-1'><i>No se han agendado clases por Zoom</i></h5>:null}
         {meetings.length>0?meetings.sort(sortMeetings).map((meeting,index) => (
         <div key={meeting.meetingID+index}>
           <StartZoomMeeting

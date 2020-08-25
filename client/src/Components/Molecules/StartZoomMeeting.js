@@ -132,32 +132,34 @@ function StartZoomMeeting(props) {
 
 
   return(
-    <div className={`card card-link d-flex ${props.monthlyProgram&&!props.ClasesZoom?'flex-row':'flex-column'} flex-md-row align-items-center justify-content-around py-1`}>
-      <div className={`d-flex flex-row align-items-center justify-content-around ${props.monthlyProgram?'col-md-9':null}`}>
+    <div className={`card card-link d-flex flex-column flex-lg-row align-items-center justify-content-around py-1`}>
+      <div className={`d-flex flex-row align-items-center justify-content-around ${props.monthlyProgram?'col-lg-7':null}`}>
         {usersLength!==null?
-          <div className='d-flex flex-row align-items-center mr-5'>
-              <PeopleFill />
+          <div className='d-flex flex-row align-items-center mr-2'>
+              <PeopleFill size={'20px'}/>
               <p className='pt-3 ml-1'>{usersLength}</p>
           </div>:null}
         {props.monthlyProgram?<p className='pt-3'>{props.market?'$'+price:null} {time} {claseTitle}</p>:<p className='mt-3'>{props.market?'$'+price:null} {dateTime}</p>}
       </div>
 
-      {props.market?<AddToCar claseZoom={claseData}
-        instructor={props.instructor}
-        meetingID={props.meetingID}
-        startTime={{time:dateTime,startTime:props.startTime}}
-        joinURL={props.joinURL}
-        claseID={props.claseID}
-        zoomMonthlyProgram={props.zoomMonthlyProgram}
-        trialClass={props.instructor.data.disableTrialClasses?-1:props.trialClass}
-        />
-      :<button
-        className={`rounded btn${props.startTime>now||props.startTime<now2?'-outline-secondary':'-primary'}`}
-        onClick={startMeeting}
-        disabled={(props.startTime>now||props.startTime<now2)}
-        >{props.monthlyProgram?<CameraVideoFill />:null} {props.title}</button>}
+      <div className='d-flex flex-row align-items-center justify-content-center col-12 col-lg-5'>
+        {props.market?<AddToCar claseZoom={claseData}
+          instructor={props.instructor}
+          meetingID={props.meetingID}
+          startTime={{time:dateTime,startTime:props.startTime}}
+          joinURL={props.joinURL}
+          claseID={props.claseID}
+          zoomMonthlyProgram={props.zoomMonthlyProgram}
+          trialClass={props.instructor.data.disableTrialClasses?-1:props.trialClass}
+          />
+        :<button
+          className={`rounded btn${props.startTime>now||props.startTime<now2?'-outline-secondary':'-primary'}`}
+          onClick={startMeeting}
+          disabled={(props.startTime>now||props.startTime<now2)}
+          >{props.monthlyProgram?<CameraVideoFill />:null} {props.title}</button>}
 
-        {props.monthlyProgram? props.market||props.ClasesZoom?null:<div className='col-1'><DeleteZoomMeeting meetingID={props.meetingID} meetingTitle={claseTitle} meetingTime={time} /></div>:null}
+          {props.monthlyProgram? props.market||props.ClasesZoom?null:<div className='col-1 float-right'><DeleteZoomMeeting meetingID={props.meetingID} meetingTitle={claseTitle} meetingTime={time} /></div>:null}
+        </div>
     </div>
   )
 }

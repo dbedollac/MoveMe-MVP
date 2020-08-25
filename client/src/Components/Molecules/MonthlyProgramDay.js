@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import {Button, Modal, Collapse} from 'react-bootstrap'
 import CreateZoomMeeting from '../Atoms/CreateZoomMeeting'
-import { Search, PlusCircleFill, ChevronCompactDown, ChevronCompactUp, AwardFill } from 'react-bootstrap-icons';
+import {X, Search, PlusCircleFill, ChevronCompactDown, ChevronCompactUp, AwardFill } from 'react-bootstrap-icons';
 import { Auth } from "../../Config/AuthContext";
 import {db, auth} from '../../Config/firestore'
 import ClassCard from '../Cards/ClassCard'
@@ -199,16 +199,14 @@ function MonthlyProgramDay(props) {
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>
-          <div className='col-12'>
             <CreateZoomMeeting meetingType={8} meetingTopic={claseDetail?claseDetail.data.title:null} week={props.week<5?props.week:-1} dayNumber={props.dayNumber} dayName={props.dayName} claseID={claseDetail?claseDetail.id:null}/>
-          </div>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className='d-flex flex-row flex-wrap justify-content-start search-container'>
             <div className='d-flex flex-row align-items-center ml-1 mt-3'>
               <Search className='mr-2'/>
-              <input type='search' placeholder='Buscar clase...' onChange={handleBuscador}/>
+              <input type='search' placeholder='Buscar clase...' onChange={handleBuscador} className='rounded col-6 col-md-8'/>
               <i className='ml-1'>{claseDetail?claseDetail.data.title:null}</i>
             </div>
             <form className='pt-3'>
@@ -250,7 +248,7 @@ function MonthlyProgramDay(props) {
                 </select>
             </form>
             {clases?clases.map((clase,index) => (
-              <div className='col-3' key={clase.id+index} onClick={handleDetail} style={{cursor:'pointer'}} >
+              <div className='col-4 Search-Card' key={clase.id+index} onClick={handleDetail} style={{cursor:'pointer'}} >
                 <ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.id}/>
               </div>
             )):null}

@@ -15,12 +15,22 @@ function MarketAllClasses(props) {
   const [filtersDuration, setfiltersDuration] = useState('')
   const [filterSearchClass,setfilterSearchClass] = useState('')
   const [filterSearchCoach,setfilterSearchCoach] = useState('')
-  const [filterDateTime,setfilterDateTime] = useState('')
   const [filterSort,setfilterSort] = useState('')
   const [detail, setdetail] = useState(false)
   const [claseDetail, setclaseDetail] = useState(null)
   const [aux, setaux] = useState(true)
   const [showMore, setshowMore] = useState(48)
+
+  const getDate = (date) => {
+    var saleDate = new Date(date)
+    var days = saleDate.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+    var month = (saleDate.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+    var year = saleDate.getFullYear()
+
+      return(year+'-'+month+'-'+days+'T00:00')
+  }
+  const [filterDateTime,setfilterDateTime] = useState(getDate(new Date()))
+
 
   const handleVerMas = () =>{
     setshowMore(showMore + 24)
@@ -99,7 +109,7 @@ function MarketAllClasses(props) {
 
         var clases00 = clasesAll.filter(item => item.instructor.data.profileName.toUpperCase().includes(filterSearchCoach.toUpperCase()))
         var clases01 = clases00.filter(item => item.data.title.toUpperCase().includes(Busca.toUpperCase()))
-        var clases02 = props.zoomMeetings?clases01.filter(item => item.startTime>=filterDateTime):clases01
+        var clases02 = props.zoomMeetings?clases01.filter(item => item.startTime>=new Date(filterDateTime).toISOString()):clases01
 
         var clases0 = clases02.filter(item => item.data.type.includes(filtersType));
         var clases1 = clases0.filter(item => item.data.level.includes(filtersLevel));
@@ -123,7 +133,7 @@ function MarketAllClasses(props) {
         if (!props.allInstructors) {
           var clases00 = clasesAll.filter(item => item.instructor.data.profileName.toUpperCase().includes(Busca.toUpperCase()))
           var clases01 = clases00.filter(item => item.data.title.toUpperCase().includes(filterSearchClass.toUpperCase()))
-          var clases02 = props.zoomMeetings?clases01.filter(item => item.startTime>=filterDateTime):clases01
+          var clases02 = props.zoomMeetings?clases01.filter(item => item.startTime>=new Date(filterDateTime).toISOString()):clases01
 
           var clases0 = clases02.filter(item => item.data.type.includes(filtersType));
           var clases1 = clases0.filter(item => item.data.level.includes(filtersLevel));
@@ -152,7 +162,7 @@ function MarketAllClasses(props) {
     }
           var clases00 = clasesAll.filter(item => item.instructor.data.profileName.toUpperCase().includes(filterSearchCoach.toUpperCase()))
           var clases01 = clases00.filter(item => item.data.title.toUpperCase().includes(filterSearchClass.toUpperCase()))
-          var clases02 = props.zoomMeetings?clases01.filter(item => item.startTime>=filterDateTime):clases01
+          var clases02 = props.zoomMeetings?clases01.filter(item => item.startTime>=new Date(filterDateTime).toISOString()):clases01
 
           var clases0 = clases02.filter(item => item.data.type.includes(value));
           var clases1 = clases0.filter(item => item.data.level.includes(filtersLevel));
@@ -179,7 +189,7 @@ function MarketAllClasses(props) {
     }
           var clases00 = clasesAll.filter(item => item.instructor.data.profileName.toUpperCase().includes(filterSearchCoach.toUpperCase()))
           var clases01 = clases00.filter(item => item.data.title.toUpperCase().includes(filterSearchClass.toUpperCase()))
-          var clases02 = props.zoomMeetings?clases01.filter(item => item.startTime>=filterDateTime):clases01
+          var clases02 = props.zoomMeetings?clases01.filter(item => item.startTime>=new Date(filterDateTime).toISOString()):clases01
 
           var clases0 = clases02.filter(item => item.data.type.includes(filtersType));
           var clases1 = clases0.filter(item => item.data.level.includes(value));
@@ -206,7 +216,7 @@ function MarketAllClasses(props) {
 
           var clases00 = clasesAll.filter(item => item.instructor.data.profileName.toUpperCase().includes(filterSearchCoach.toUpperCase()))
           var clases01 = clases00.filter(item => item.data.title.toUpperCase().includes(filterSearchClass.toUpperCase()))
-          var clases02 = props.zoomMeetings?clases01.filter(item => item.startTime>=filterDateTime):clases01
+          var clases02 = props.zoomMeetings?clases01.filter(item => item.startTime>=new Date(filterDateTime).toISOString()):clases01
 
           var clases0 = clases02.filter(item => item.data.type.includes(filtersType));
           var clases1 = clases0.filter(item => item.data.level.includes(filtersLevel));
@@ -269,7 +279,6 @@ function MarketAllClasses(props) {
 
 
   return(
-
     <div className='d-flex flex-column align-items-center'>
       {props.misVideos?null:<div className='col-12'>
         <button className='btn-secondary rounded mt-2 float-right' onClick={()=>{window.location.reload(false)}}><ArrowLeft /> Regresar</button>
@@ -277,9 +286,9 @@ function MarketAllClasses(props) {
       <form className='my-2'>
         <div className='d-flex flex-row justify-content-start align-items-center flex-wrap'>
 
-          <div className='d-flex flex-column flex-md-row justify-content-between align-items-start col-6'>
+          <div className='d-flex flex-column flex-lg-row justify-content-between align-items-start col-6'>
             {!props.allInstructors?
-              <div>
+              <div className='col-12 col-lg-4'>
                 <select id="type"
                   name="type"
                   onChange={handleTypeChange}
@@ -297,7 +306,7 @@ function MarketAllClasses(props) {
               </div>:null}
 
             {!props.allInstructors?
-            <div>
+            <div className='col-12 col-lg-4'>
               <select id="level"
                 name="level"
                 className='custom-select'
@@ -312,7 +321,7 @@ function MarketAllClasses(props) {
             </div>:null}
 
             {!props.allInstructors?
-            <div>
+            <div className='col-12 col-lg-4'>
               <select id="duration"
                 name="duration"
                 className='custom-select'
@@ -327,7 +336,7 @@ function MarketAllClasses(props) {
             </div>:null}
         </div>
 
-        <div className={`d-flex ${!props.allInstructors?'flex-column flex-md-row':'flex-row'} justify-content-between align-items-start ${!props.allInstructors?'col-md-2 col-6':null}`}>
+        <div className={`d-flex ${!props.allInstructors?'flex-column flex-lg-row':'flex-row'} justify-content-between align-items-start ${!props.allInstructors?'col-lg-2 col-6':null}`}>
           {!props.allInstructors?
           <input type='search' placeholder='Buscar clase...' onChange={handleBuscador} value={filterSearchClass} className='col-12 py-1'/>:null}
 

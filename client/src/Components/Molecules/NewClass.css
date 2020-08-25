@@ -1,10 +1,11 @@
 .NewClass-container img{
-  height: 15vw;
-  width: 12vw
+    height: 200px;
+    width: 150px
 }
 
-/*.video{
-  border-right-width: 2px;
-  border-right-style: solid;
-  border-right-color: gray
-}*/
+@media (max-width: 768px) {
+  .NewClass-container img{
+      height: 130px;
+      width: 100px
+  }
+}

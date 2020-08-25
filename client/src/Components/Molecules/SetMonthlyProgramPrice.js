@@ -49,15 +49,17 @@ function SetMonthlyProgramPrice(props) {
 
   if (props.instructor&&!props.instructor.data.monthlyProgram.Active) {
     return (<div className='d-flex flex-row align-items-center justify-content-around p-3'>
-              <h3 style={{color:'gray'}}><i>Este reto no está activo</i></h3>
-              <button className='btn-secondary rounded btn-lg' onClick={handleBack}><ArrowLeft /> Regresar</button>
+              <h4 style={{color:'gray'}}><i>Este reto no está activo</i></h4>
+              <button className='btn-secondary rounded' onClick={handleBack}><ArrowLeft /> Regresar</button>
             </div>)
   } else {
   return(
-      <div className='card-header d-flex flex-row rounded' style={{backgroundColor:'white'}}>
-        <div className='col-10 d-flex flex-row p-3 justify-content-center align-items-center'>
-              <InfoCircleFill size={'3em'} color='gray' style={{cursor:'pointer'}} id='price-info'/>
-              <UncontrolledPopover trigger="focus" placement="bottom" target="price-info">
+      <div className='card-header d-flex flex-column flex-md-row rounded' style={{backgroundColor:'white'}}>
+        <div className='col-12 col-md-6 d-flex flex-row p-md-3 justify-content-md-between justify-content-around align-items-center'>
+            <div className='pr-2'>
+              <InfoCircleFill size={'50px'} color='gray' style={{cursor:'pointer'}} id='price-info'/>
+            </div>
+              <UncontrolledPopover trigger="click" placement="bottom" target="price-info" >
                 <PopoverHeader>Reto Mensual</PopoverHeader>
                 {props.market?<PopoverBody>
                     El reto incluye todas las clases por Zoom agendadas en esta página más todas las clases en video del coach por un mes.
@@ -67,23 +69,28 @@ function SetMonthlyProgramPrice(props) {
                 Las clases de tu reto se agendarán de manera automática cada mes mientras se encuentre activo.
                 </PopoverBody>}
               </UncontrolledPopover>
-              <div className='d-flex flex-row align-items-center justify-content-center col-6'>
+
+              <div className='d-flex flex-row align-items-center justify-content-center col-md-6'>
                 <h4 className='mr-2'>Precio</h4>
                 {props.market?<h4>$ {price}</h4>:
-                <input type='number' min='100'step='50' placeholder='400' onChange={handlePrice} value={price}/>}
-                {props.market?null:<p className='ml-1 pt-2'>MXN</p>}
+                <input type='number' min='100'step='50' placeholder='400' onChange={handlePrice} value={price} className='col-8'/>}
+                {props.market?null:<p className='ml-1 pt-3'>MXN</p>}
               </div>
-              {props.market?<AddToCar size='lg' instructor={instructorData} monthlyProgram={true}/>:
-              <button className='btn-lg btn-primary' onClick={handleSave}>Guardar</button>}
         </div>
-        {props.market?
-          <div className='col-2 d-flex flex-row  align-items-center'>
-            <button className='btn-secondary rounded btn-lg' onClick={handleBack}><ArrowLeft /> Regresar</button>
+        <div className='d-flex flex-row align-items-center justify-content-between col-12 col-md-6 pt-2 pt-md-0'>
+          {props.market?
+          <div className='col-10'>
+            <AddToCar size='sm' instructor={instructorData} monthlyProgram={true}/>
           </div>
-          :
-        <div className='col-2 d-flex flex-row  align-items-center' >
+          :<button className='btn-lg btn-primary' onClick={handleSave}>Guardar</button>}
+          {props.market?
+            <div className='d-flex flex-row  align-items-center'>
+              <button className='btn-secondary rounded btn-sm' onClick={handleBack}><ArrowLeft /> Regresar</button>
+            </div>
+            :
             <MonthlyProgramStatus />
-        </div>}
+          }
+        </div>
       </div>
     )}
 }

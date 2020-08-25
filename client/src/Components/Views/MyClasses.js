@@ -169,8 +169,8 @@ const handleRefresh = () =>{
         <div>
         <Header instructor={true} />
           <div className='d-flex flex-row align-items-center'>
-            <h2 className='col-10 text-center text-break' style={{color: '#F39119'}}>{claseDetail.data.title}</h2>
-            <button className='col-2 float-right btn-lg btn-secondary mt-2 mr-2' onClick={handleEditClass}><ArrowLeft /> Regresar</button>
+            <h2 className='col-8 col-md-10 text-center text-break' style={{color: '#F39119'}}>{claseDetail.data.title}</h2>
+            <button className='float-right btn-secondary mt-2 mr-2 rounded' onClick={handleEditClass}><ArrowLeft /> Regresar</button>
           </div>
           <EditClass claseID={claseDetail.id} claseData={claseDetail.data} />
         </div>
@@ -181,8 +181,8 @@ const handleRefresh = () =>{
         <div>
         <Header instructor={true} />
           <div className='d-flex flex-row align-items-center'>
-            <h2 className='col-10 text-center text-break' style={{color: '#F39119'}}>Clase Nueva</h2>
-            <button className='col-2 float-right btn-lg btn-secondary mt-2 mr-2' onClick={handleNewClass}><ArrowLeft /> Regresar</button>
+            <h2 className='col-8 col-md-10 text-center text-break' style={{color: '#F39119'}}>Clase Nueva</h2>
+            <button className='float-right btn-secondary mt-2 mr-2 rounded' onClick={handleNewClass}><ArrowLeft /> Regresar</button>
           </div>
           <NewClass />
         </div>
@@ -191,65 +191,67 @@ const handleRefresh = () =>{
     return (
       <div >
         <Header instructor={usuario?user?!props.match.params.uid?true:false:true:null} user={usuario?user?true:false:null}/>
-          <div className='col-12 MyClasses-container d-flex flex-row'>
-             <div className='col-3 MyClasses-summary d-flex flex-column justify-content-start py-2'>
+          <div className='col-12 MyClasses-container d-flex flex-column flex-md-row'>
+            <div className='col-lg-3 col-12 col-md-4 MyClasses-summary py-2'>
+
              {!detail?
-              <div className='my-1'>
+              <div className='d-flex flex-column justify-content-start'>
                 <h2 className='text-center'>{clases.length} clases</h2>
                 <div className='d-flex flex-row align-items-center'>
                   <Search className='mr-2'/>
-                  <input type='search' placeholder='Buscar clase...' onChange={handleBuscador}/>
+                  <input type='search' placeholder='Buscar clase...' onChange={handleBuscador} className='rounded'/>
                   <ArrowRepeat className='ml-2' size={'2em'} onClick={handleRefresh} style={{cursor:'pointer'}}/>
                 </div>
-                <form className='pt-3'>
-                  <div className='d-flex flex-column justify-content-between'>
-                    <p className='text-center'><i>Filtros</i></p>
+                  <form className='pt-1 pt-lg-3'>
+                    <div className='d-flex flex-column justify-content-between'>
+                      <p className='text-center d-none d-lg-inline'><i>Filtros</i></p>
 
-                      <select id="type"
-                        name="type"
-                        onChange={handleTypeChange}
-                        className='mb-2'
+                        <select id="type"
+                          name="type"
+                          onChange={handleTypeChange}
+                          className='custom-select'
+                          >
+                          <option value="todos" selected>Tipo de ejercicio (Todos)</option>
+                          <option value="estiramiento">Estiramiento (ej. Yoga)</option>
+                          <option value="baile">Baile</option>
+                          <option value="funcional">Funcional</option>
+                          <option value="pelea">Técnica de pelea</option>
+                          <option value="pesas">Con pesas</option>
+                          <option value="otro">Otro</option>
+                        </select>
+
+                      <select id="level"
+                        name="level"
+                        className='custom-select'
+                        onChange={handleLevelChange}
                         >
-                        <option value="todos" selected>Tipo de ejercicio (Todos)</option>
-                        <option value="estiramiento">Estiramiento (ej. Yoga)</option>
-                        <option value="baile">Baile</option>
-                        <option value="funcional">Funcional</option>
-                        <option value="pelea">Técnica de pelea</option>
-                        <option value="pesas">Con pesas</option>
-                        <option value="otro">Otro</option>
+                        <option value="todos" selected>Dificultad de la clase (Todas)</option>
+                        <option value="principiantes">Para principiantes</option>
+                        <option value="intermedia">Intermedia</option>
+                        <option value="avanzada">Avanzada</option>
                       </select>
 
-                    <select id="level"
-                      name="level"
-                      className='mb-2'
-                      onChange={handleLevelChange}
-                      >
-                      <option value="todos" selected>Dificultad de la clase (Todas)</option>
-                      <option value="principiantes">Para principiantes</option>
-                      <option value="intermedia">Intermedia</option>
-                      <option value="avanzada">Avanzada</option>
-                    </select>
+                      <select id="duration"
+                        name="duration"
+                        className='custom-select'
+                        onChange={handleDurationChange}
+                        >
+                        <option value='todos' selected>Duración (Todas)</option>
+                        <option value={'0'}>0 - 30 min</option>
+                        <option value={'1'}>30 - 60 min</option>
+                        <option value={'2'}>Más de 60 min</option>
+                      </select>
+                    </div>
+                  </form>
 
-                    <select id="duration"
-                      name="duration"
-                      className='mb-2'
-                      onChange={handleDurationChange}
-                      >
-                      <option value='todos' selected>Duración (Todas)</option>
-                      <option value={'0'}>0 - 30 min</option>
-                      <option value={'1'}>30 - 60 min</option>
-                      <option value={'2'}>Más de 60 min</option>
-                    </select>
-                  </div>
-                </form>
                 {props.market?
                   <div className='d-flex flex-column'>
                     <button className='btn-secondary rounded btn-lg' onClick={handleRefresh}><ArrowLeft /> Regresar</button>
                   </div>
                   :
-                <div className='d-flex flex-row mt-5 align-items-center justify-content-center'>
-                  <PlusCircleFill size={'3em'} className='mr-2' onClick={handleNewClass} style={{cursor:'pointer'}}/>
-                  <h3>Nueva Clase</h3>
+                <div className='d-flex flex-row mt-1 mt-lg-5 align-items-center justify-content-center' onClick={handleNewClass} style={{cursor:'pointer'}}>
+                  <h3 className='mr-2'>Nueva Clase</h3>
+                  <PlusCircleFill size={'2em'}/>
                 </div>}
               </div>
               :claseDetail? !props.market?
@@ -264,7 +266,7 @@ const handleRefresh = () =>{
                 :null }
             </div>
 
-            <div className='p-2 d-flex flex-row flex-wrap justify-content-start clases-container'>
+            <div className='p-lg-2 pt-1 d-flex flex-row flex-wrap justify-content-center justify-content-lg-start'>
             {detail&&claseDetail?
               <div style={{position: 'relative'}}>
                 <InstructorsDetailCard data={claseDetail.data} claseID={claseDetail.id} market={props.market?props.market:false} instructor={props.instructor}/>
@@ -272,11 +274,12 @@ const handleRefresh = () =>{
               </div>:
 
             clases?clases.map(clase => (
-              <div className={`col-${clases.length>1?'3':'4'}`} key={clase.id} onClick={handleDetail} style={{cursor:'pointer'}}>
+              <div key={clase.id} onClick={handleDetail} style={{cursor:'pointer'}} className='MyClasses-card'>
                 <ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.id}/>
               </div>
-            )):null}
+            )):<h4 style={{color: 'gray'}}><i>No se ha creado ninguna clase</i></h4>}
             </div>
+
           </div>
       </div>
     )}

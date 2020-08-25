@@ -38,19 +38,14 @@ const [count, setcount] = useState(null)
 
     return (
       <div>
-      {console.log(count)}
-        <div className="col-12 NewClass-container d-flex flex-row align-items-start">
-          <div className="col-5 d-flex flex-column align-items-start justify-content-between pt-2">
-            <div className="video col-12">
+        <div className="NewClass-container d-flex flex-column flex-md-row align-items-start">
+
+            <div className="col-md-4 d-flex flex-column align-items-center justify-content-between pt-2">
               <FileUpload fileType='Pictures' title="Portada de la clase (Opcional)" name={usuario.uid? usuario.uid +'-clase'+count:null}/>
-            </div>
-            <div className="video col-12 my-2">
               <FileUploadVideo videoWidth='100%' videoHeight='100%' fileType='Videos' title="Video para rentar (Opcional)" name={usuario.uid? usuario.uid +'-clase'+count:null}/>
             </div>
-          </div>
-          <div>
+
             <NewClassForm Count={count}/>
-          </div>
         </div>
       </div>
     )

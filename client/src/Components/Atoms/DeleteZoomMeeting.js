@@ -67,7 +67,7 @@ function DeleteZoomMeeting(props) {
 
   return(
     <div>
-      <TrashFill color='black' onClick={handleShow} style={{cursor:'pointer'}}/>
+      <TrashFill color='black' onClick={handleShow} style={{cursor:'pointer'}} size={'20px'}/>
 
      <Modal
        show={show}

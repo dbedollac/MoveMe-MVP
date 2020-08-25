@@ -92,7 +92,7 @@ const Signup = ({  history, location }) => {
                     </div>
                         <div className="text-center m-2">
                           <button
-                              className="btn-light col-11"
+                              className="btn-light col-11 border"
                            >
                               Registrarse
                           </button>
@@ -101,7 +101,7 @@ const Signup = ({  history, location }) => {
 
                           <div className="align-items-center m-2 d-flex flex-column">
                             <button
-                            className="btn-light m-1 col-12"
+                            className="btn-light m-1 col-12 border"
                             onClick={() => socialLogin(googleAuthProvider)}
                             >
                             <img src={google} alt='Google' style={{width:'2em'}} className='mr-1'/>
