@@ -133,7 +133,7 @@ function StartZoomMeeting(props) {
 
   return(
     <div className={`card card-link d-flex flex-column flex-lg-row align-items-center justify-content-around py-1`}>
-      <div className={`d-flex flex-row align-items-center justify-content-around ${props.monthlyProgram?'col-lg-7':null}`}>
+      <div className={`d-flex flex-row align-items-center justify-content-around ${props.monthlyProgram?'col-lg-6':null}`}>
         {usersLength!==null?
           <div className='d-flex flex-row align-items-center mr-2'>
               <PeopleFill size={'20px'}/>
@@ -142,7 +142,7 @@ function StartZoomMeeting(props) {
         {props.monthlyProgram?<p className='pt-3'>{props.market?'$'+price:null} {time} {claseTitle}</p>:<p className='mt-3'>{props.market?'$'+price:null} {dateTime}</p>}
       </div>
 
-      <div className='d-flex flex-row align-items-center justify-content-center col-12 col-lg-5'>
+      <div className='d-flex flex-row align-items-center justify-content-center col-12 col-lg-6'>
         {props.market?<AddToCar claseZoom={claseData}
           instructor={props.instructor}
           meetingID={props.meetingID}

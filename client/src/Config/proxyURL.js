@@ -1,3 +1,3 @@
 
-export const proxyurl = 'http://localhost:9000/'
+export const proxyurl = 'https://us-central1-moveme-ad742.cloudfunctions.net/app/'
 export const corsurl = "https://cors-anywhere.herokuapp.com/"

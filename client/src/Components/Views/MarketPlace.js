@@ -5,7 +5,7 @@ import {db, auth} from '../../Config/firestore'
 import { withRouter } from "react-router";
 import DisplayCarousel from '../Molecules/DisplayCarousel'
 import MarketAllClasses from './MarketAllClasses'
-import { CameraVideoFill, CollectionPlayFill } from 'react-bootstrap-icons';
+import { CameraVideoFill, CollectionPlayFill, Calendar3Fill } from 'react-bootstrap-icons';
 import './MarketPlace.css'
 
 function MarketPlace(props) {
@@ -165,6 +165,7 @@ function MarketPlace(props) {
         <div className='MarketPlace-container'>
           <div className='d-flex flex-column flex-md-row pt-2'>
               <div className='col-md-8 d-flex flex-row alig-items-center justify-content-start'>
+                  <Calendar3Fill size={'2em'} className='mr-2' />
                   <h4>Retos Mensuales</h4>
                 </div>
                 <div className='col-md-4 d-flex flex-row alig-items-center justify-content-md-end'>

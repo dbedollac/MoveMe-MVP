@@ -133,7 +133,6 @@ var http = require("https");
       reqZoom.end();
     });
 
-module.exports = router;
 
 // Delete Zoom Meeting------------------------------------------------------------------------
 router.post('/delete', function(req, res, next) {

@@ -170,9 +170,8 @@ const formik = useFormik({
               onBlur={formik.handleBlur}
               className='col-12'
             />
-            <br/>
+            <p className='col-12 text-center mt-3'>O</p>
             <label htmlFor="noTarjeta">Tarjeta de débito</label>
-            <br/>
             <input
               id="noTarjeta"
               name="noTarjeta"
