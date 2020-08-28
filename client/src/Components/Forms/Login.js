@@ -9,11 +9,13 @@ import Header from "../Molecules/Header";
 import { PersonCircle } from 'react-bootstrap-icons';
 import { Asterisk } from 'react-bootstrap-icons';
 import googleLogo from '../Views/Images/Google.png'
+import facebookLogo from '../Views/Images/Facebook.png'
 import {Redirect} from "react-router-dom";
 
 
 const Login = ({ history, location }) => {
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+    const facebookAuthProvider = new firebase.auth.FacebookAuthProvider();
     const [signup, setsignup] = useState(false);
     const { usuario } = useContext(Auth);
     const [error, seterror] = useState('')
@@ -137,12 +139,21 @@ const Login = ({ history, location }) => {
 
                                     <div className="align-items-center m-2 d-flex flex-column">
                                       <button
-                                      className="btn-light m-1 col-12 border"
+                                      className="btn-light m-1 col-12 border text-left"
                                       onClick={() => socialLogin(googleAuthProvider)}
                                       >
                                       <img src={googleLogo} alt='Google' style={{width:'2em'}} className='mr-1'/>
                                       Ingresar con Google
                                       </button>
+
+                                      <button
+                                      className="btn-light m-1 col-12 border text-left"
+                                      onClick={() => socialLogin(facebookAuthProvider)}
+                                      >
+                                      <img src={facebookLogo} alt='Google' style={{width:'2em'}} className='mr-1'/>
+                                      Ingresar con Facebook
+                                      </button>
+
                                       <button
                                           onClick={() => setsignup(true)}
                                           className="btn-primary m-1"

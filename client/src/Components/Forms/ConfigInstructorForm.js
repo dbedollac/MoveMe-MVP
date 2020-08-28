@@ -75,7 +75,7 @@ const formik = useFormik({
     disableTrialClasses: values.disableTrialClasses,
     new: false
     },{ merge: true })
-    alert('Tus datos se guardaron con éxito');
+    alert(props.newInstructor?'¡Ahora enlaza tu cuenta de Zoom!':'Tus datos se guardaron con éxito');
     handleClick()
   },
 });

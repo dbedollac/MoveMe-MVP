@@ -11,6 +11,7 @@ function SetMonthlyProgramPrice(props) {
   const { usuario } = useContext(Auth);
   const [price,setPrice] = useState(null)
   const [instructorData, setinstructorData] = useState(null)
+  const [disableActive,setdisableActive] = useState(true)
 
   useEffect(()=>{
     if (usuario||props.match.params.uid) {
@@ -18,6 +19,9 @@ function SetMonthlyProgramPrice(props) {
       docRef.get().then((doc)=> {
           if (doc.exists) {
             setPrice(doc.data().monthlyProgram.Price)
+            if (doc.data().monthlyProgram.Price>=100) {
+              setdisableActive(false)
+            }
             setinstructorData(doc.data())
           } else {
               console.log("No such document!");
@@ -55,12 +59,13 @@ function SetMonthlyProgramPrice(props) {
   } else {
   return(
       <div className='card-header d-flex flex-column flex-md-row rounded' style={{backgroundColor:'white'}}>
+      {console.log(price)}
         <div className='col-12 col-md-6 d-flex flex-row p-md-3 justify-content-md-between justify-content-around align-items-center'>
             <div className='pr-2'>
               <InfoCircleFill size={'50px'} color='gray' style={{cursor:'pointer'}} id='price-info'/>
             </div>
               <UncontrolledPopover trigger="click" placement="bottom" target="price-info" >
-                <PopoverHeader>Reto Mensual</PopoverHeader>
+                <PopoverHeader>Reto Mensual<br/>{!props.market?'(precio mínimo: $100)':null}</PopoverHeader>
                 {props.market?<PopoverBody>
                     El reto incluye todas las clases por Zoom agendadas en esta página más todas las clases en video del coach por un mes.
                   </PopoverBody>:
@@ -82,13 +87,13 @@ function SetMonthlyProgramPrice(props) {
           <div className='col-10'>
             <AddToCar size='sm' instructor={instructorData} monthlyProgram={true}/>
           </div>
-          :<button className='btn-lg btn-primary' onClick={handleSave}>Guardar</button>}
+          :<button className='btn-lg btn-primary' onClick={handleSave} disabled={(price<100)}>Guardar</button>}
           {props.market?
             <div className='d-flex flex-row  align-items-center'>
               <button className='btn-secondary rounded btn-sm' onClick={handleBack}><ArrowLeft /> Regresar</button>
             </div>
             :
-            <MonthlyProgramStatus />
+            <MonthlyProgramStatus disabled={disableActive}/>
           }
         </div>
       </div>

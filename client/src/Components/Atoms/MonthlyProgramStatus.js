@@ -39,7 +39,7 @@ function MonthlyProgramStatus(props) {
   return(
     <div className={`p-2 rounded d-flex flex-column border border-${active?`primary`:`danger`}`} style={{backgroundColor: 'white'}}>
         <p><strong>Estatus:</strong> {active?'Activo':'Inactivo'}</p>
-        <button className={`col-12 btn-${active?`secondary`:`danger`}`} onClick={active?handleShow:handleShow}>{active?'Desactivar':'Activar'}</button>
+        <button className={`col-12 btn-${active?`secondary`:`danger`}`} onClick={active?handleShow:handleShow} disabled={props.disabled}>{active?'Desactivar':'Activar'}</button>
 
         <Modal
           show={show}

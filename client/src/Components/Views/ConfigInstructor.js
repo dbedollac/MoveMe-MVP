@@ -71,7 +71,7 @@ useEffect(()=>{
 
               <div className="col-lg-8 d-flex flex-column pt-lg-0 pt-4 mb-3">
                 <div className="d-flex align-self-center">
-                  <ConfigInstructorForm/>
+                  <ConfigInstructorForm newInstructor={newInstructor}/>
                 </div>
               </div>
             </div>

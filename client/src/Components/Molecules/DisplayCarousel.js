@@ -15,6 +15,7 @@ function DisplayCarousel(props) {
   const [videoClases, setvideoClases] = useState(null)
   const [allInstructors, setallInstructors] = useState(null)
   const [loading,setLoading] = useState(true)
+  const [detailStarttime,setdetailStarttime] = useState(null)
   setInterval(()=>{setLoading(false)},10000)
 
   const shuffleArray= (array) => {
@@ -35,6 +36,7 @@ function DisplayCarousel(props) {
 
       setclaseDetail(clase)
       setdetail(!detail)
+      setdetailStarttime(!props.ClasesZoom?event.target.id:null)
 
     }
 
@@ -117,7 +119,7 @@ function DisplayCarousel(props) {
     return(
       <div style={{position: 'relative'}} className='p-2'>
       {props.ClasesZoom?<UsersDetailCard data={claseDetail.data.data} claseID={claseDetail.data.id} instructor={claseDetail.data.instructor?claseDetail.data.instructor:props.instructor} ClasesZoom={true} joinURL={claseDetail.joinURL}/>
-      :<InstructorsDetailCard data={claseDetail.data.data} claseID={claseDetail.data.id} market={props.market?props.market:false} instructor={claseDetail.data.instructor?claseDetail.data.instructor:props.instructor}/>}
+      :<InstructorsDetailCard data={claseDetail.data.data} claseID={claseDetail.data.id} market={props.market?props.market:false} instructor={claseDetail.data.instructor?claseDetail.data.instructor:props.instructor} zoom={props.zoomMeetings?true:false} video={props.array?true:false} startTime={detailStarttime}/>}
         <X className='float-left'size={'2em'} onClick={handleDetail} style={{position: 'absolute', top:'2%', left:'2%',cursor:'pointer'}}/>
       </div>
     )

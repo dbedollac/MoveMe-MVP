@@ -75,6 +75,7 @@ const handleOpen = () =>{
 
       return(
         <div className='col-12 card'>
+        {console.log(props.startTime)}
           <div className='d-flex flex-column flex-md-row align-items-center justify-content-center pl-5 pt-1'>
             <h3 className='text-center text-break' style={{color: '#F39119'}}>{props.data.title}</h3>
             <div className=' d-flex flex-row justify-content-end ml-md-5'>
@@ -88,7 +89,7 @@ const handleOpen = () =>{
               <div className='col-12 col-md-6 mb-5 mb-md-0 d-flex flex-column'>
                 <h4>Descripción</h4>
                 <p>{props.data.description}</p>
-                {props.data.videoURL?
+                {props.data.videoURL&&!props.zoom?
                 <div className='card card-link py-1'>
                   <div className='d-flex flex-column flex-lg-row justify-content-around align-items-center'>
 
@@ -122,15 +123,15 @@ const handleOpen = () =>{
                 </div>:null}
               </div>:null}
 
-              <div className='col-12 col-md-6 d-flex flex-column'>
+              {!props.video?<div className='col-12 col-md-6 d-flex flex-column'>
                 <div className=' d-flex flex-row alig-items-center justify-content-center'>
                   <CameraVideoFill size={'2em'} className='mr-2' color="#2C8BFF" />
                   <h5>Clases por Zoom</h5>
                 </div>
                 <div style={{ overflowY: 'scroll', height:'250px'}}>
-                  <GetZoomMeetings claseID={props.claseID} instructor={instructor} market={props.market?props.market:false} usertrialClass={trialClass}/>
+                  <GetZoomMeetings claseID={props.claseID} instructor={instructor} market={props.market?props.market:false} usertrialClass={trialClass} startTime={props.startTime}/>
                 </div>
-              </div>
+              </div>:null}
 
             <div className='col-12 col-md-6 d-flex flex-column'>
                <p><strong>Tipo de ejercicio: </strong>{props.data.type}</p>

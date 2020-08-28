@@ -3,7 +3,7 @@ import ClassCard from '../Cards/ClassCard'
 import CoachCard from '../Cards/CoachCard'
 import InstructorsDetailCard from '../Cards/InstructorsDetailCard'
 import UsersDetailCard from '../Cards/UsersDetailCard'
-import { ArrowLeft, X, Search } from 'react-bootstrap-icons';
+import { X, Search } from 'react-bootstrap-icons';
 import './MarketAllClasses.css'
 
 function MarketAllClasses(props) {
@@ -20,6 +20,7 @@ function MarketAllClasses(props) {
   const [claseDetail, setclaseDetail] = useState(null)
   const [aux, setaux] = useState(true)
   const [showMore, setshowMore] = useState(48)
+  const [detailStarttime,setdetailStarttime] = useState(null)
 
   const getDate = (date) => {
     var saleDate = new Date(date)
@@ -241,6 +242,7 @@ function MarketAllClasses(props) {
 
       setclaseDetail(clase[0])
       setdetail(!detail)
+      setdetailStarttime(!props.ClasesZoom?event.target.id:null)
     }
 
   useEffect(()=>{
@@ -280,9 +282,6 @@ function MarketAllClasses(props) {
 
   return(
     <div className='d-flex flex-column align-items-center'>
-      {props.misVideos?null:<div className='col-12'>
-        <button className='btn-secondary rounded mt-2 float-right' onClick={()=>{window.location.reload(false)}}><ArrowLeft /> Regresar</button>
-      </div>}
       <form className='my-2'>
         <div className='d-flex flex-row justify-content-start align-items-center flex-wrap'>
 
@@ -336,7 +335,7 @@ function MarketAllClasses(props) {
             </div>:null}
         </div>
 
-        <div className={`d-flex ${!props.allInstructors?'flex-column flex-lg-row':'flex-row'} justify-content-between align-items-start ${!props.allInstructors?'col-lg-2 col-6':null}`}>
+        <div className={`d-flex pr-4 pr-lg-0 ${!props.allInstructors?'flex-column flex-lg-row':'flex-row'} justify-content-between align-items-start ${!props.allInstructors?'col-lg-2 col-6':null}`}>
           {!props.allInstructors?
           <input type='search' placeholder='Buscar clase...' onChange={handleBuscador} value={filterSearchClass} className='col-12 py-1'/>:null}
 
@@ -364,7 +363,7 @@ function MarketAllClasses(props) {
       {detail&&claseDetail?
         <div style={{position: 'relative'}} className='p-2 col-12'>
           {props.misVideos?<UsersDetailCard data={claseDetail.data} claseID={claseDetail.id} instructor={claseDetail.instructor?claseDetail.instructor:props.instructor} misVideos={true}/>
-          :<InstructorsDetailCard data={claseDetail.data} claseID={claseDetail.id} market={true} instructor={claseDetail.instructor?claseDetail.instructor:props.instructor}/>}
+          :<InstructorsDetailCard data={claseDetail.data} claseID={claseDetail.id} market={true} instructor={claseDetail.instructor?claseDetail.instructor:props.instructor} zoom={props.zoomMeetings?true:false} video={props.array?true:false} startTime={detailStarttime}/>}
           <X className='float-left'size={'2em'} onClick={handleDetail} style={{position: 'absolute', top:'2%', left:'2%',cursor:'pointer'}}/>
         </div>
         :

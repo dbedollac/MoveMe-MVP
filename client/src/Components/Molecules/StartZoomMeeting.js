@@ -132,7 +132,7 @@ function StartZoomMeeting(props) {
 
 
   return(
-    <div className={`card card-link d-flex flex-column flex-lg-row align-items-center justify-content-around py-1`}>
+    <div className={`card card-link d-flex flex-column flex-lg-row align-items-center justify-content-around py-1`} style={{backgroundColor: `${props.startTime===props.detailStartTime?'lightblue':'white'}`}}>
       <div className={`d-flex flex-row align-items-center justify-content-around ${props.monthlyProgram?'col-lg-6':null}`}>
         {usersLength!==null?
           <div className='d-flex flex-row align-items-center mr-2'>

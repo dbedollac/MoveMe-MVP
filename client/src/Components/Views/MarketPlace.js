@@ -5,7 +5,7 @@ import {db, auth} from '../../Config/firestore'
 import { withRouter } from "react-router";
 import DisplayCarousel from '../Molecules/DisplayCarousel'
 import MarketAllClasses from './MarketAllClasses'
-import { CameraVideoFill, CollectionPlayFill, Calendar3Fill } from 'react-bootstrap-icons';
+import { ArrowLeft, CameraVideoFill, CollectionPlayFill, Calendar3Fill } from 'react-bootstrap-icons';
 import './MarketPlace.css'
 
 function MarketPlace(props) {
@@ -17,6 +17,12 @@ function MarketPlace(props) {
   const [verClasesZoom, setverClasesZoom] = useState(false)
   const [verClasesVideo, setverClasesVideo] = useState(false)
   const [verProgramas, setverProgramas] = useState(false)
+
+  const handleBack = () =>{
+    setverClasesZoom(false)
+    setverClasesVideo(false)
+    setverProgramas(false)
+  }
 
   const handleVerClasesZoom = () =>{
     setverClasesZoom(!verClasesZoom)
@@ -130,7 +136,10 @@ function MarketPlace(props) {
       return (
         <>
           <Header  user={usuario?true:false}/>
-          <div className='MarketPlace-container'>
+          <div className='MarketPlace-container d-flex flex-column'>
+            <div className='d-flex flex-row-reverse'>
+              <button className='btn-secondary rounded m-2' onClick={handleBack}><ArrowLeft /> Regresar</button>
+            </div>
             <MarketAllClasses allInstructors={allInstructors}/>
           </div>
         </>
@@ -141,7 +150,10 @@ function MarketPlace(props) {
       return (
         <>
           <Header  user={usuario?true:false}/>
-          <div className='MarketPlace-container'>
+          <div className='MarketPlace-container d-flex flex-column'>
+            <div className='d-flex flex-row-reverse'>
+              <button className='btn-secondary rounded m-2' onClick={handleBack}><ArrowLeft /> Regresar</button>
+            </div>
             <MarketAllClasses allClases={allClases} zoomMeetings={zoomMeetings}/>
           </div>
         </>
@@ -152,7 +164,10 @@ function MarketPlace(props) {
       return (
         <>
           <Header  user={usuario?true:false}/>
-          <div className='MarketPlace-container'>
+          <div className='MarketPlace-container d-flex flex-column'>
+            <div className='d-flex flex-row-reverse'>
+              <button className='btn-secondary rounded m-2' onClick={handleBack}><ArrowLeft /> Regresar</button>
+            </div>
             <MarketAllClasses allClases={allClases} array={videoClases}/>
           </div>
         </>
@@ -174,7 +189,7 @@ function MarketPlace(props) {
           </div>
             {allInstructors.length>0?
             <DisplayCarousel allInstructors={allInstructors} market={true} home={true}/>:
-            <h4 style={{color:'gray'}} className='text-center py-5'><i>No hay retos mensuales activos</i></h4>}
+            <h4 style={{color:'gray'}} className='text-center py-5'><i>Buscando retos mensuales activos...</i></h4>}
 
           <div className='d-flex flex-column flex-md-row my-2'>
               <div className='col-md-8 d-flex flex-row alig-items-center justify-content-start'>
@@ -187,7 +202,7 @@ function MarketPlace(props) {
           </div>
             {zoomMeetings.length>0?
             <DisplayCarousel allClases={allClases} zoomMeetings={zoomMeetings} market={true} home={true}/>:
-            <h4 style={{color:'gray'}} className='text-center py-5'><i>No se ha agendado ninguna clase por Zoom</i></h4>}
+            <h4 style={{color:'gray'}} className='text-center py-5'><i>Buscando clases por Zoom...</i></h4>}
 
             <div className='d-flex flex-column flex-md-row my-2'>
                 <div className='col-md-8 d-flex flex-row alig-items-center justify-content-start'>
@@ -200,7 +215,7 @@ function MarketPlace(props) {
             </div>
             {videoClases.length>0?
             <DisplayCarousel allClases={allClases} array={videoClases} market={true} home={true}/>:
-            <h4 style={{color:'gray'}} className='text-center py-5'><i>No hay clases con video</i></h4>}
+            <h4 style={{color:'gray'}} className='text-center py-5'><i>Buscando clases en video...</i></h4>}
 
         </div>
       </div>

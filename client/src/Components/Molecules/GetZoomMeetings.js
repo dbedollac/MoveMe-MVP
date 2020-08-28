@@ -117,7 +117,8 @@ function GetZoomMeetings(props) {
           zoomMonthlyProgram={meeting.monthlyProgram}
           ClasesZoom={props.zoomMeetings?true:false}
           trialClass={props.usertrialClass}
-          sales={sales}/>
+          sales={sales}
+          detailStartTime={props.claseID?props.startTime:false}/>
         </div>
       )):props.zoomMeetings?props.zoomMeetings.sort(sortMeetings).map((meeting,index) => (
       <div key={meeting.meetingID+index}>

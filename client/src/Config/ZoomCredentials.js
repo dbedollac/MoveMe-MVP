@@ -1,8 +1,8 @@
 
 var ZoomConfig = {
-  ClientID: '00JAMB1oTUCD6dKHm4RFSA',
-  ClientSecret: '3QYHXYuCDSJnF9gBW2v4I0aGDvYqwmAn',
-  RedirectURL: 'https://moveme-ad742.firebaseapp.com/'
+  ClientID: 'BAI2U_LMR0qde_D7g8SV_g',
+  ClientSecret: 'vkU91bWzoulRS0hDnHxslr2a4JauqSol',
+  RedirectURL: 'https://moveme.fitness/'
 }
 
 export const zoomID = ZoomConfig.ClientID
