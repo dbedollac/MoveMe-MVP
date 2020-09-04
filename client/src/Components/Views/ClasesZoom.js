@@ -5,6 +5,7 @@ import { Auth } from "../../Config/AuthContext"
 import {db, auth} from '../../Config/firestore'
 import { withRouter } from "react-router";
 import MonthlyProgram from '../Views/MonthlyProgram'
+import { useTranslation } from 'react-i18next';
 import './ClasesZoom.css'
 
 function ClasesZoom(props) {
@@ -15,6 +16,7 @@ function ClasesZoom(props) {
   const [zoomMeetings,setZoomMeetings] = useState([])
   const [allClases,setclasesAll] = useState([])
   const [allMeetings,setmeetingsAll] = useState([])
+  const { t } = useTranslation();
 
   const now=new Date(Date.now()-3600000).toISOString()
 
@@ -116,11 +118,11 @@ function ClasesZoom(props) {
       <Header  user={usuario?true:false}/>
       <div className='ClasesZoom-container'>
         <div className='pt-2 pl-2'>
-          <h3>Próximas Clases</h3>
+          <h3>{t('zoomClases.1','Próximas Clases')}</h3>
           <DisplayCarousel allClases={retoClases.concat(zoomClases)} zoomMeetings={retoMeetings.concat(zoomMeetings)} ClasesZoom={true} />
         </div>
         <div className='pt-2 pl-2'>
-          <h3>Clases del Mes</h3>
+          <h3>{t('zoomClases.2','Clases del Mes')}</h3>
           <MonthlyProgram ClasesZoom={true} zoomMeetings={retoMeetings.concat(zoomMeetings)}/>
         </div>
       </div>

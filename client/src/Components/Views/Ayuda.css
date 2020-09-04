@@ -1,0 +1,22 @@
+.Ayuda-container{
+  background-color: lightgray;
+  min-height: 100vh
+}
+
+.Ayuda-container p{
+  font-size: 20px
+}
+
+.Ayuda-container img{
+  width: 10em
+}
+
+@media (max-width: 768px) {
+  .Ayuda-container p{
+    font-size: 15px
+  }
+
+  .Ayuda-container img{
+    width: 5em
+  }
+}

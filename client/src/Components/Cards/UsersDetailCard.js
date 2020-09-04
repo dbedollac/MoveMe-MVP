@@ -5,10 +5,12 @@ import { Auth } from "../../Config/AuthContext";
 import CoachName from '../Atoms/CoachName'
 import { CameraVideoFill} from 'react-bootstrap-icons';
 import { withRouter } from "react-router";
+import { useTranslation } from 'react-i18next';
 
 function UserDetailCard(props) {
   const { usuario } = useContext(Auth);
   const now = new Date().toISOString()
+  const { t } = useTranslation();
 
       return(
         <div className='col-12 card'>
@@ -28,7 +30,7 @@ function UserDetailCard(props) {
               :
                 <div className='col-12 d-flex flex-row justify-content-center mb-4'>
                   <button className={`rounded btn${props.startTime>now?'-outline-secondary':'-primary'} btn-lg`} onClick={()=>{window.location.href = props.joinURL}}>
-                    <CameraVideoFill size={'30px'}/> Unirme a la clase por Zoom
+                    <CameraVideoFill size={'30px'}/> {t('uCard.1','Unirme a la clase por Zoom')}
                   </button>
                 </div>
                 }
@@ -36,16 +38,16 @@ function UserDetailCard(props) {
               {props.data.description.length>0?
                 <div className='col-12 col-md-6 d-flex flex-column'>
                   <div className='d-flex flex-column'>
-                    <h3>Descripción</h3>
+                    <h3>{t('iCard.1','Descripción')}</h3>
                     <p>{props.data.description}</p>
                   </div>
               </div>:null}
 
             <div className='col-12 col-md-6 d-flex flex-column'>
-               <p><strong>Tipo de ejercicio: </strong>{props.data.type}</p>
-               <p><strong>Dificultad: </strong>{props.data.level}</p>
-               <p><strong>Equipo necesario: </strong>{props.data.equipment.length>0? props.data.equipment:'Ninguno'}</p>
-               <p><strong>Duración: </strong>{props.data.duration} minutos</p>
+               <p><strong>{t('iCard.5','Tipo de ejercicio')}: </strong>{props.data.type}</p>
+               <p><strong>{t('iCard.6','Dificultad')}: </strong>{props.data.level}</p>
+               <p><strong>{t('iCard.7','Equipo necesario')}: </strong>{props.data.equipment.length>0? props.data.equipment:'Ninguno'}</p>
+               <p><strong>{t('iCard.8','Duración')}: </strong>{props.data.duration} {t('iCard.9','minutos')}</p>
             </div>
 
 

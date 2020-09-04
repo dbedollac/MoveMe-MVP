@@ -11,6 +11,7 @@ import ClassCard from '../Cards/ClassCard'
 import InstructorsDetailCard from '../Cards/InstructorsDetailCard'
 import EditClass from '../Molecules/EditClass'
 import CreateZoomMeetingCard from '../Cards/CreateZoomMeetingCard'
+import { useTranslation } from 'react-i18next';
 
 function MyClasses(props) {
 const { usuario } = useContext(Auth);
@@ -26,7 +27,7 @@ const [claseDetail, setclaseDetail] = useState(null)
 const [editClass, seteditClass] = useState(false)
 const [aux, setaux] = useState(true)
 const [user, setUser] = useState(false);
-
+const { t } = useTranslation();
 
   useEffect(()=>{
 
@@ -170,7 +171,7 @@ const handleRefresh = () =>{
         <Header instructor={true} />
           <div className='d-flex flex-row align-items-center'>
             <h2 className='col-8 col-md-10 text-center text-break' style={{color: '#F39119'}}>{claseDetail.data.title}</h2>
-            <button className='float-right btn-secondary mt-2 mr-2 rounded' onClick={handleEditClass}><ArrowLeft /> Regresar</button>
+            <button className='float-right btn-secondary mt-2 mr-2 rounded' onClick={handleEditClass}><ArrowLeft />{t('myClasses.1',' Regresar')}</button>
           </div>
           <EditClass claseID={claseDetail.id} claseData={claseDetail.data} />
         </div>
@@ -182,7 +183,7 @@ const handleRefresh = () =>{
         <Header instructor={true} />
           <div className='d-flex flex-row align-items-center'>
             <h2 className='col-8 col-md-10 text-center text-break' style={{color: '#F39119'}}>Clase Nueva</h2>
-            <button className='float-right btn-secondary mt-2 mr-2 rounded' onClick={handleNewClass}><ArrowLeft /> Regresar</button>
+            <button className='float-right btn-secondary mt-2 mr-2 rounded' onClick={handleNewClass}><ArrowLeft />{t('myClasses.1',' Regresar')}</button>
           </div>
           <NewClass />
         </div>
@@ -204,20 +205,20 @@ const handleRefresh = () =>{
                 </div>
                   <form className='pt-1 pt-lg-3'>
                     <div className='d-flex flex-column justify-content-between'>
-                      <p className='text-center d-none d-lg-inline'><i>Filtros</i></p>
+                      <p className='text-center d-none d-lg-inline'><i>{t('myClasses.2','Filtros')}</i></p>
 
                         <select id="type"
                           name="type"
                           onChange={handleTypeChange}
                           className='custom-select'
                           >
-                          <option value="todos" selected>Tipo de ejercicio (Todos)</option>
-                          <option value="estiramiento">Estiramiento (ej. Yoga)</option>
-                          <option value="baile">Baile</option>
-                          <option value="funcional">Funcional</option>
-                          <option value="pelea">Técnica de pelea</option>
-                          <option value="pesas">Con pesas</option>
-                          <option value="otro">Otro</option>
+                          <option value="todos" >{t('allClases.1','Tipo de ejercicio (Todos)')}</option>
+                          <option value="estiramiento">{t('allClases.2','Estiramiento (ej. Yoga)')}</option>
+                          <option value="baile">{t('allClases.3','Baile')}</option>
+                          <option value="funcional">{t('allClases.4','Funcional')}</option>
+                          <option value="pelea">{t('allClases.5','Técnica de pelea')}</option>
+                          <option value="pesas">{t('allClases.6','Con pesas')}</option>
+                          <option value="otro">{t('allClases.7','Otro')}</option>
                         </select>
 
                       <select id="level"
@@ -225,10 +226,10 @@ const handleRefresh = () =>{
                         className='custom-select'
                         onChange={handleLevelChange}
                         >
-                        <option value="todos" selected>Dificultad de la clase (Todas)</option>
-                        <option value="principiantes">Para principiantes</option>
-                        <option value="intermedia">Intermedia</option>
-                        <option value="avanzada">Avanzada</option>
+                        <option value="todos" >{t('allClases.8','Dificultad de la clase (Todas)')}</option>
+                        <option value="principiantes">{t('allClases.9','Para principiantes')}</option>
+                        <option value="intermedia">{t('allClases.10','Intermedia')}</option>
+                        <option value="avanzada">{t('allClases.11','Avanzada')}</option>
                       </select>
 
                       <select id="duration"
@@ -236,32 +237,32 @@ const handleRefresh = () =>{
                         className='custom-select'
                         onChange={handleDurationChange}
                         >
-                        <option value='todos' selected>Duración (Todas)</option>
-                        <option value={'0'}>0 - 30 min</option>
-                        <option value={'1'}>30 - 60 min</option>
-                        <option value={'2'}>Más de 60 min</option>
+                        <option value='todos'>{t('allClases.12','Duración (Todas)')}</option>
+                        <option value={'0'}>{t('allClases.13','0 - 30 min')}</option>
+                        <option value={'1'}>{t('allClases.14','30 - 60 min')}</option>
+                        <option value={'2'}>{t('allClases.15','Más de 60 min')}</option>
                       </select>
                     </div>
                   </form>
 
                 {props.market?
                   <div className='d-flex flex-column'>
-                    <button className='btn-secondary rounded btn-lg' onClick={handleRefresh}><ArrowLeft /> Regresar</button>
+                    <button className='btn-secondary rounded btn-lg mt-2' onClick={handleRefresh}><ArrowLeft />{t('myClasses.1',' Regresar')}</button>
                   </div>
                   :
                 <div className='d-flex flex-row mt-1 mt-lg-5 align-items-center justify-content-center' onClick={handleNewClass} style={{cursor:'pointer'}}>
-                  <h3 className='mr-2'>Nueva Clase</h3>
+                  <h3 className='mr-2'>{t('myClasses.3','Nueva Clase')}</h3>
                   <PlusCircleFill size={'2em'}/>
                 </div>}
               </div>
               :claseDetail? !props.market?
               <div className='d-flex flex-column'>
                 <CreateZoomMeetingCard meetingTopic={claseDetail.data.title} meetingType={2} claseID={claseDetail.id}/>
-                <button className='btn-lg btn-secondary my-3' onClick={handleEditClass}>Editar clase <PencilSquare /></button>
+                <button className='btn-lg btn-secondary my-3' onClick={handleEditClass}>{t('myClasses.4','Editar clase ')}<PencilSquare /></button>
               </div>:
               <div>
-                <h4>Clase por Zoom: ${claseDetail.data.zoomPrice}</h4>
-                <h4>Renta de Video: ${claseDetail.data.offlinePrice}</h4>
+                <h4>{t('myClasses.5','Clase por Zoom')}: ${claseDetail.data.zoomPrice}</h4>
+                <h4>{t('myClasses.6','Renta de Video')}: ${claseDetail.data.offlinePrice}</h4>
               </div>
                 :null }
             </div>
@@ -277,7 +278,7 @@ const handleRefresh = () =>{
               <div key={clase.id} onClick={handleDetail} style={{cursor:'pointer'}} className='MyClasses-card'>
                 <ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.id}/>
               </div>
-            )):<h4 style={{color: 'gray'}}><i>No se ha creado ninguna clase</i></h4>}
+            )):<h4 style={{color: 'gray'}}><i>{t('myClasses.7','No se ha creado ninguna clase')}</i></h4>}
             </div>
 
           </div>

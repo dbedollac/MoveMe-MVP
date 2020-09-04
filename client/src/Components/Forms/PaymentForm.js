@@ -8,6 +8,7 @@ import {db} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
 import CreditCardDetails from '../Cards/CreditCardDetails'
 import TrialZoomClass from '../Atoms/TrialZoomClass'
+import { useTranslation } from 'react-i18next';
 import './PaymentForm.css'
 
 const PaymentForm = (props) => {
@@ -24,6 +25,7 @@ const PaymentForm = (props) => {
   const [paymentMethod,setpaymentMethod] = useState(null)
   const [otherCard,setotherCard] = useState(false)
   const [trialClass,settrialClass] = useState(props.trialClass)
+  const { t } = useTranslation();
 
 
   const deletePaymentMethod = () =>{
@@ -281,7 +283,7 @@ const PaymentForm = (props) => {
         return(
           <div className='d-flex flex-column align-items-end'>
             <TrialZoomClass product={props.products[0]}/>
-            <button className={`btn-info btn-${props.size} rounded col-5 mt-3`} onClick={()=>{settrialClass(-1)}}><CheckSquare/> Comprar ahora</button>
+            <button className={`btn-info btn-${props.size} rounded col-5 mt-3`} onClick={()=>{settrialClass(-1)}}><CheckSquare/> {t('cart.7','Comprar ahora')}</button>
           </div>
         )
       }
@@ -298,10 +300,10 @@ const PaymentForm = (props) => {
             {loading?<Spinner animation="border" />
             :success?<CheckCircleFill color='green' size={'2em'}/>:
             <button type="submit" className='btn-success col-10 rounded' disabled={!stripe||(props.total<=10)}>
-              Pagar
+              {t('cart.14','Pagar')}
             </button>}
           </div>
-          {<i className='mt-5' style={{cursor:'pointer'}} onClick={()=>{setotherCard(true)}}>Usar otra tarjeta</i>}
+          {<i className='mt-5' style={{cursor:'pointer'}} onClick={()=>{setotherCard(true)}}>{t('cart.15','Usar otra tarjeta')}</i>}
       </form>
     )
   }
@@ -315,10 +317,10 @@ const PaymentForm = (props) => {
           {loading?<Spinner animation="border" />
           :success?<CheckCircleFill color='green' size={'2em'}/>:
           <button type="submit" className='btn-success col-10 rounded' disabled={!stripe||(props.total<=10)}>
-            Pagar
+            {t('cart.14','Pagar')}
           </button>}
         </div>
-        {success&&otherCard?<button className='btn-info' onClick={handlePaymentMethod}>Guardar tarjeta</button>:null}
+        {success&&otherCard?<button className='btn-info' onClick={handlePaymentMethod}>{t('cart.16','Guardar tarjeta')}</button>:null}
     </form>
   )
 }

@@ -9,7 +9,7 @@ import MarketPlace from './MarketPlace'
 import queryString from 'query-string'
 import {zoomID, zoomSecret, zoomRedirectURL} from '../../Config/ZoomCredentials'
 import {db} from '../../Config/firestore'
-import {corsurl} from '../../Config/proxyURL'
+import {proxyurl} from '../../Config/proxyURL'
 import RefreshToken from '../Atoms/RefreshToken'
 
 function Dashboard(props) {
@@ -20,7 +20,6 @@ const [user, setUser] = useState(false);
 
 
 useEffect(()=>{
-  console.log(usuario)
   let user = usuario;
   user?user.displayName? setNombre(user.displayName):setNombre(user.email):setNombre(null)
 
@@ -34,20 +33,44 @@ useEffect(()=>{
   const parsed = queryString.parse(props.location.search);
   if (parsed.code) {
 
-    let url='https://zoom.us/oauth/token?grant_type=authorization_code&code='+parsed.code+'&redirect_uri='+zoomRedirectURL
-    let header = "Basic "+ btoa(zoomID+':'+zoomSecret)
-    fetch(corsurl+url,
+    let url='zoomAPI/get-token'
+
+    fetch(proxyurl+url,
     {method: 'POST',
-    headers:{
-      "Authorization": header
-    }
+      body: JSON.stringify({
+           zoomRedirectURL: zoomRedirectURL,
+           parsedcode: parsed.code,
+           zoomID: zoomID,
+           zoomSecret: zoomSecret
+       }),
+       headers: {
+         "content-type": "application/json"
+       }
     }).then((response)=>{
         Promise.resolve(response.json()).then( (resp) =>{
           if(resp.access_token){
-            db.collection("Instructors").doc(usuario.uid).set({
-              zoomToken: resp.access_token,
-              zoomRefreshToken: resp.refresh_token
-            },{ merge: true })
+
+            fetch(proxyurl+'zoomAPI/get-user',
+            {method: 'POST',
+              body: JSON.stringify({
+                   token: resp.access_token
+               }),
+               headers: {
+                 "content-type": "application/json"
+               }
+            }).then((response)=>{
+                Promise.resolve(response.json()).then( (resp2) =>{
+                  db.collection("Instructors").doc(usuario.uid).set({
+                    zoomToken: resp.access_token,
+                    zoomRefreshToken: resp.refresh_token,
+                    zoomUserID: resp2.id,
+                    zoomAccountID: resp2.account_id
+                  },{ merge: true })
+                })
+              }).catch((error)=>{
+                console.log(error);
+              })
+
           }
         }
         )

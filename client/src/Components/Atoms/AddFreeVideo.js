@@ -5,6 +5,7 @@ import { PlusCircleFill, CheckCircleFill} from 'react-bootstrap-icons';
 import { Spinner, Modal, Button} from 'react-bootstrap'
 import Login from '../Forms/Login'
 import {withRouter} from 'react-router'
+import { useTranslation } from 'react-i18next';
 
 function AddFreeVideo(props) {
   const { usuario } = useContext(Auth);
@@ -13,6 +14,7 @@ function AddFreeVideo(props) {
   const [loading,setLoading] = useState(false)
   const [success,setSuccess] =  useState(false)
   const [show, setShow] = useState(false);
+  const { t } = useTranslation();
 
   const handleClose = () =>{
       setShow(false)
@@ -54,7 +56,7 @@ function AddFreeVideo(props) {
     <div>
       {loading&&!success?<Spinner animation="border" />
         :success?<CheckCircleFill color='green' size={'2em'}/>
-        :<button className={`btn-info rounded`} onClick={searchUsuario}><PlusCircleFill/> Agregar a Mis Videos</button>}
+        :<button className={`btn-info rounded`} onClick={searchUsuario}><PlusCircleFill/> {t('iCard.12','Agregar a Mis Videos')}</button>}
 
         <Modal
           show={show}
@@ -63,15 +65,15 @@ function AddFreeVideo(props) {
           keyboard={false}
         >
           <Modal.Body >
-            {usuario? <p>Debes de cambiar tu tipo de cuenta a "Usuario" para poder realizar compras. Puedes regresar al tipo "Instructor" cuando quieras, tu información no se perderá.</p>
+            {usuario? <p>{t('iCard.13','Debes de cambiar tu tipo de cuenta a "Usuario" para poder realizar compras. Puedes regresar al tipo "Instructor" cuando quieras, tu información no se perderá.')}</p>
             :<Login />}
           </Modal.Body>
           {usuario?<Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
-              Cancelar
+              {t('iCard.14','Cancelar')}
             </Button>
             <Button variant="primary" onClick={()=>{props.history.push('/account-type')}}>
-              Cambiar tipo de cuenta
+              {t('iCard.15','Cambiar tipo de cuenta')}
             </Button>
           </Modal.Footer>:null}
         </Modal>

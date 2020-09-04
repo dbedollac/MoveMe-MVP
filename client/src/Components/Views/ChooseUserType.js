@@ -7,6 +7,10 @@ import {Redirect} from "react-router-dom";
 import {db, auth} from '../../Config/firestore'
 import logo from './Images/logo.jpg'
 import {proxyurl} from '../../Config/proxyURL'
+import {Button, Modal} from 'react-bootstrap'
+import AvisoPrivacidad0 from '../Atoms/AvisoPrivacidad0'
+import TerminosCondiciones0 from '../Atoms/TerminosCondiciones0'
+import { useTranslation } from 'react-i18next';
 
 function ChooseUserType(props) {
 const { usuario } = useContext(Auth);
@@ -15,6 +19,15 @@ const [instructor, setInstructor] = useState(true);
 const [newUser, setNewUser] = useState(true);
 const [newInstructor, setNewInstructor] = useState(true);
 const [aceptar, setAceptar] = useState(false);
+const [next, setNext] = useState(false);
+const [show, setShow] = useState(false);
+const { t } = useTranslation();
+
+const handleShow = () => setShow(!show);
+
+const handleAceptar = (event) =>{
+  setAceptar(!aceptar)
+}
 
 const createSrtipeCustomer = () =>{
   fetch(proxyurl+'stripeAPI/create-customer', {
@@ -64,8 +77,8 @@ const searchUser = () =>{
   }
   }
 
-const handleAceptar = () =>{
-  setAceptar(true)
+const handleNext = () =>{
+  setNext(true)
     if (instructor) {
       if (newInstructor) {
         db.collection("Instructors").doc(usuario.uid).set({
@@ -86,7 +99,8 @@ const handleAceptar = () =>{
         monthlyProgram: {
           Active: false,
           Price: null
-        }
+        },
+        aceptoTerminosYCondiciones: aceptar
         });
       }
         } else {
@@ -94,7 +108,8 @@ const handleAceptar = () =>{
               db.collection("Users").doc(usuario.uid).set({
               email: usuario.email,
               uid: usuario.uid,
-              trialClass: 0
+              trialClass: 0,
+              aceptoTerminosYCondiciones: aceptar
             },{merge:true})
               createSrtipeCustomer()
             }
@@ -114,7 +129,7 @@ const handleAceptar = () =>{
   },[usuario])
 
 
-    if (aceptar) {
+    if (next) {
       if (instructor) {
         if (newInstructor) {
           return <Redirect to="/como-iniciar"/>
@@ -131,31 +146,62 @@ const handleAceptar = () =>{
           <Header empty={true}/>
               <div className="col-12 chooseUserType-container">
 
-                <h3 className='text-center pt-2'>Hola {nombre} :)</h3>
-                <div className="chooseUserType-pregunta text-center pt-2"><p>¿Cómo quieres utilizar MoveMe?</p></div>
+                <h3 className='text-center pt-2'>{t('type.1','Hola')} {nombre} :)</h3>
+                <div className="chooseUserType-pregunta text-center pt-2"><p>{t('type.2','¿Cómo quieres utilizar MoveMe?')}</p></div>
 
                     <div className="d-flex flex-column flex-md-row col-12 justify-content-around align-items-center">
                       <div className="d-flex flex-column align-items-center col-10 col-md-5 chooseUserType-options text-center"
                         onClick={handleInstructorClick}
                         style={{backgroundColor: instructor ? '#F39119' : 'white'}}>
-                        <h4>Instructor</h4>
+                        <h4>{t('type.12','Instructor')}</h4>
                         <img src='./Instructor.png' alt='Instructor'/>
-                        <p> ¡Quiero ofrecer ofrecer mis servicios fitness! </p>
+                        <p> {t('type.3','¡Quiero ofrecer ofrecer mis servicios fitness!')} </p>
                       </div>
 
                       <div className="d-flex flex-column align-items-center col-10 col-md-5 chooseUserType-options text-center"
                         onClick={handleUserClick}
                         style={{backgroundColor: instructor? 'white' : '#F39119'}}>
-                        <h4>Usuario</h4>
+                        <h4>{t('type.13','Usuario')}</h4>
                         <img src='./User.png' alt='Instructor'/>
-                        <p> ¡Quiero hacer ejercicio! </p>
+                        <p> {t('type.4','¡Quiero hacer ejercicio!')} </p>
                       </div>
                     </div>
 
                 <div className='col-12 text-center'>
-                  <button className="btn-primary btn-lg col-5 mt-4" onClick={handleAceptar}>Aceptar</button>
+                  <button className="btn-primary btn-lg col-5 mt-4" onClick={newInstructor||newUser?handleShow: handleNext}>{t('type.5','Aceptar')}</button>
                 </div>
             </div>
+
+            <Modal
+              show={show}
+              onHide={handleShow}
+              backdrop="static"
+              keyboard={false}
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>{t('type.6','Términos y Condiciones')} <br/>& {t('type.7','Aviso de Privacidad')}</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div style={{ overflowY: 'scroll', height:'250px'}}>
+                  <TerminosCondiciones0 instructor={instructor}/>
+                  <AvisoPrivacidad0 instructor={instructor}/>
+                </div>
+              </Modal.Body>
+              <Modal.Footer>
+                <div className='d-flex flex-column align-items-start'>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1" value={aceptar} onChange={handleAceptar}/>
+                    <label class="custom-control-label" for="customCheck1">{t('type.8','Acepto los')} <strong>{t('type.6','Términos y condiciones')}</strong> {t('type.9','y he leído el')} <strong>{t('type.7','Aviso de Privacidad')}</strong></label>
+                  </div>
+                  <div className='d-flex flex-row justify-content-around col-12 mt-2'>
+                    <Button variant="secondary" onClick={handleShow}>
+                      {t('type.10','Cancelar')}
+                    </Button>
+                    <Button variant="success" onClick={handleNext} disabled={!aceptar}>{t('type.11','Continuar')}</Button>
+                  </div>
+                </div>
+              </Modal.Footer>
+            </Modal>
       </div>
     )
 

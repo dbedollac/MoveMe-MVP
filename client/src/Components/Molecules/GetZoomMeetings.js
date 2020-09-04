@@ -3,11 +3,13 @@ import {db} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
 import StartZoomMeeting from '../Molecules/StartZoomMeeting'
 import { withRouter } from "react-router";
+import { useTranslation } from 'react-i18next';
 
 function GetZoomMeetings(props) {
   var { usuario } = useContext(Auth);
   const [meetings, setMeetings] = useState([])
   const [sales,setSales] = useState([])
+  const { t } = useTranslation();
 
   const sortMeetings = (a,b) => {
     const meetingA = a.startTime;
@@ -107,7 +109,7 @@ function GetZoomMeetings(props) {
         <div key={meeting.meetingID+index}>
           <StartZoomMeeting
           startTime={meeting.startTime}
-          title={props.zoomMeetings?'Unirme':'Iniciar'}
+          title={props.zoomMeetings?t('startZoom.1','Unirme'):t('startZoom.1','Iniciar')}
           meetingID={meeting.meetingID}
           monthlyProgram={props.week?true:false}
           claseID={meeting.claseID}
@@ -124,7 +126,7 @@ function GetZoomMeetings(props) {
       <div key={meeting.meetingID+index}>
         <StartZoomMeeting
         startTime={meeting.startTime}
-        title={props.zoomMeetings?'Unirme':'Iniciar'}
+        title={props.zoomMeetings?t('startZoom.1','Unirme'):t('startZoom.1','Iniciar')}
         meetingID={meeting.meetingID}
         monthlyProgram={props.week?true:false}
         claseID={meeting.claseID}

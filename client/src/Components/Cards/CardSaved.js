@@ -8,6 +8,7 @@ import {TrashFill, PencilSquare, CheckCircleFill, ChevronCompactDown, ChevronCom
 import { Spinner, Modal, Button} from 'react-bootstrap'
 import Errores from '../Atoms/Errores'
 import * as firebase from "firebase/app";
+import { useTranslation } from 'react-i18next';
 
 const CardSaved = (props) => {
   const { usuario } = useContext(Auth);
@@ -23,6 +24,7 @@ const CardSaved = (props) => {
   const [paymentMethod,setpaymentMethod] = useState(null)
   const [showDelete,setShowDelete] = useState(false)
   const [open, setOpen] = useState(false);
+  const { t } = useTranslation();
 
   const handleClose = () => setShow(false);
   const handleCloseDelete = () => setShowDelete(false);
@@ -161,9 +163,9 @@ const CardSaved = (props) => {
 
   return(
     <div>
-      <h5>Método de pago predeterminado</h5>
+      <h5>{t('misCompras.2','Método de pago predeterminado')}</h5>
       <div className='d-flex flex-column flex-lg-row align-items-center justify-content-around'>
-        {details?<CreditCardDetails details={details} />:<h5 style={{color:'gray'}} className='text-center py-5'><i>No hay ningún método guardado</i></h5>}
+        {details?<CreditCardDetails details={details} />:<h5 style={{color:'gray'}} className='text-center py-5'><i>{t('misCompras.3','No hay ningún método guardado')}</i></h5>}
         <div className='d-flex flex-row align-items-center justify-content-between col-12 col-lg-2'>
           <PencilSquare size={'30px'} style={{cursor:'pointer'}} onClick={()=>{setShow(true)}}/>
           <TrashFill size={'30px'} style={{cursor:'pointer'}} onClick={()=>{setShowDelete(true)}}/>
@@ -178,21 +180,21 @@ const CardSaved = (props) => {
       >
         <Modal.Body>
           <form onSubmit={handlePaymentMethod}>
-              <input type='text' placeholder='Nombre en la tarjeta' onChange={handleName} className='col-12 rounded' required/>
+              <input type='text' placeholder={t('misCompras.4','Nombre en la tarjeta')} onChange={handleName} className='col-12 rounded' required/>
               <CardElement />
               <Errores mensaje={error} />
               <div className='d-flex flex-column align-items-center'>
                 {loading?<Spinner animation="border" />
                 :success?<CheckCircleFill color='green' size={'2em'}/>:
                 <button type="submit" className='btn-info col-10 rounded'>
-                  Guardar tarjeta
+                  {t('misCompras.5','Guardar tarjeta')}
                 </button>}
               </div>
           </form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Cancelar
+            {t('misCompras.6','Cancelar')}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -204,14 +206,14 @@ const CardSaved = (props) => {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Eliminar método de pago predeterminado</Modal.Title>
+          <Modal.Title>{t('misCompras.7','Eliminar método de pago predeterminado')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          ¿Deseas borrar tu método de pago predeterminado? Tendrás que volver a ingresar los datos de una tarjeta en tu próxima compra.
+          {t('misCompras.8','¿Deseas borrar tu método de pago predeterminado? Tendrás que volver a ingresar los datos de una tarjeta en tu próxima compra.')}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseDelete}>
-            Cancelar
+            {t('misCompras.6','Cancelar')}
           </Button>
           <Button variant="danger" onClick={deleteCard}>{loading?<Spinner animation="border" />:'Borrar'}</Button>
         </Modal.Footer>

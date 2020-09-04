@@ -15,6 +15,9 @@ import MisVideos from './Components/Views/MisVideos'
 import Carrito from './Components/Views/Carrito'
 import MisCompras from './Components/Views/MisCompras'
 import FirstSteps from './Components/Views/FirstSteps'
+import Ayuda from './Components/Views/Ayuda'
+import TerminosCondiciones from './Components/Views/TerminosCondiciones'
+import AvisoPrivacidad from './Components/Views/AvisoPrivacidad'
 import { AuthContext } from "./Config/AuthContext";
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
@@ -40,6 +43,9 @@ const App = () => (
           <Route path="/carrito" component={Carrito} exact />
           <Route path="/misCompras" component={MisCompras} exact />
           <Route path="/como-iniciar" component={FirstSteps} exact />
+          <Route path="/ayuda" component={Ayuda} exact />
+          <Route path="/terminos-y-condiciones" component={TerminosCondiciones} exact />
+          <Route path="/aviso-de-privacidad" component={AvisoPrivacidad} exact />
           <Route path="/:name/:uid" component={Coach} exact />
           <Route path="*" component={Error} />
         </Switch>

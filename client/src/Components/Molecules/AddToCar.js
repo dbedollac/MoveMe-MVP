@@ -6,12 +6,14 @@ import {db} from "../../Config/firestore";
 import { withRouter } from "react-router";
 import Login from '../Forms/Login'
 import PayButton from '../Atoms/PayButton'
+import { useTranslation } from 'react-i18next';
 
 function AddToCar(props) {
   const { usuario } = useContext(Auth);
   const [show, setShow] = useState(false);
   const curr = new Date()
   const expire = new Date(curr.getFullYear(),curr.getMonth()+1,curr.getDate())
+  const { t } = useTranslation();
 
   const handleClose = () =>{
       setShow(false)
@@ -72,7 +74,7 @@ function AddToCar(props) {
   return(
     <>
       <div className='d-flex flex-row align-items-center'>
-        <button className={`btn-primary btn-${props.size} mr-1 rounded`} onClick={handleCart}><CartPlus /> Agregar al Carrito</button>
+        <button className={`btn-primary btn-${props.size} mr-1 rounded`} onClick={handleCart}><CartPlus /> {t('addToCar.1','Agregar al Carrito')}</button>
         <PayButton size={props.size}
           subtotal={props.claseZoom?props.claseZoom.zoomPrice:props.claseVideo?props.claseVideo.offlinePrice:props.monthlyProgram?props.instructor?Number(props.instructor.monthlyProgram.Price):null:null}
           type={props.claseZoom?'Zoom':props.claseVideo?'Video':'Reto'}
@@ -98,15 +100,15 @@ function AddToCar(props) {
         keyboard={false}
       >
         <Modal.Body >
-          {usuario? <p>Debes de cambiar tu tipo de cuenta a "Usuario" para poder realizar compras. Puedes regresar al tipo "Instructor" cuando quieras, tu información no se perderá.</p>
+          {usuario? <p>{t('addToCar.2','Debes de cambiar tu tipo de cuenta a "Usuario" para poder realizar compras. Puedes regresar al tipo "Instructor" cuando quieras, tu información no se perderá.')}</p>
           :<Login />}
         </Modal.Body>
         {usuario?<Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Cancelar
+            {t('addToCar.3','Cancelar')}
           </Button>
           <Button variant="primary" onClick={()=>{props.history.push('/account-type')}}>
-            Cambiar tipo de cuenta
+            {t('addToCar.4','Cambiar tipo de cuenta')}
           </Button>
         </Modal.Footer>:null}
       </Modal>

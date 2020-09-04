@@ -6,6 +6,7 @@ import { withRouter } from "react-router";
 import DisplayCarousel from '../Molecules/DisplayCarousel'
 import MarketAllClasses from './MarketAllClasses'
 import { ArrowLeft, CameraVideoFill, CollectionPlayFill, Calendar3Fill } from 'react-bootstrap-icons';
+import { useTranslation } from 'react-i18next';
 import './MarketPlace.css'
 
 function MarketPlace(props) {
@@ -17,6 +18,7 @@ function MarketPlace(props) {
   const [verClasesZoom, setverClasesZoom] = useState(false)
   const [verClasesVideo, setverClasesVideo] = useState(false)
   const [verProgramas, setverProgramas] = useState(false)
+  const { t } = useTranslation();
 
   const handleBack = () =>{
     setverClasesZoom(false)
@@ -138,7 +140,7 @@ function MarketPlace(props) {
           <Header  user={usuario?true:false}/>
           <div className='MarketPlace-container d-flex flex-column'>
             <div className='d-flex flex-row-reverse'>
-              <button className='btn-secondary rounded m-2' onClick={handleBack}><ArrowLeft /> Regresar</button>
+              <button className='btn-secondary rounded m-2' onClick={handleBack}><ArrowLeft />{t('mPlace.1',' Regresar')}</button>
             </div>
             <MarketAllClasses allInstructors={allInstructors}/>
           </div>
@@ -152,7 +154,7 @@ function MarketPlace(props) {
           <Header  user={usuario?true:false}/>
           <div className='MarketPlace-container d-flex flex-column'>
             <div className='d-flex flex-row-reverse'>
-              <button className='btn-secondary rounded m-2' onClick={handleBack}><ArrowLeft /> Regresar</button>
+              <button className='btn-secondary rounded m-2' onClick={handleBack}><ArrowLeft />{t('mPlace.1',' Regresar')}</button>
             </div>
             <MarketAllClasses allClases={allClases} zoomMeetings={zoomMeetings}/>
           </div>
@@ -166,7 +168,7 @@ function MarketPlace(props) {
           <Header  user={usuario?true:false}/>
           <div className='MarketPlace-container d-flex flex-column'>
             <div className='d-flex flex-row-reverse'>
-              <button className='btn-secondary rounded m-2' onClick={handleBack}><ArrowLeft /> Regresar</button>
+              <button className='btn-secondary rounded m-2' onClick={handleBack}><ArrowLeft />{t('mPlace.1',' Regresar')}</button>
             </div>
             <MarketAllClasses allClases={allClases} array={videoClases}/>
           </div>
@@ -181,41 +183,41 @@ function MarketPlace(props) {
           <div className='d-flex flex-column flex-md-row pt-2'>
               <div className='col-md-8 d-flex flex-row alig-items-center justify-content-start'>
                   <Calendar3Fill size={'2em'} className='mr-2' />
-                  <h4>Retos Mensuales</h4>
+                  <h4>{t('mPlace.2','Retos Mensuales')}</h4>
                 </div>
                 <div className='col-md-4 d-flex flex-row alig-items-center justify-content-md-end'>
-                <i onClick={handleVerProgramas} style={{cursor:'pointer',fontSize:'large'}}>Ver todos los retos</i>
+                <i onClick={handleVerProgramas} style={{cursor:'pointer',fontSize:'large'}}>{t('mPlace.3','Ver todos los retos')}</i>
               </div>
           </div>
             {allInstructors.length>0?
             <DisplayCarousel allInstructors={allInstructors} market={true} home={true}/>:
-            <h4 style={{color:'gray'}} className='text-center py-5'><i>Buscando retos mensuales activos...</i></h4>}
+            <h4 style={{color:'gray'}} className='text-center py-5'><i>{t('mPlace.4','Buscando retos mensuales activos...')}</i></h4>}
 
           <div className='d-flex flex-column flex-md-row my-2'>
               <div className='col-md-8 d-flex flex-row alig-items-center justify-content-start'>
                   <CameraVideoFill size={'2em'} className='mr-2' color="#2C8BFF" />
-                  <h4>Próximas Clases por Zoom</h4>
+                  <h4>{t('mPlace.5','Próximas Clases por Zoom')}</h4>
                 </div>
                 <div className='col-md-4 d-flex flex-row alig-items-center justify-content-md-end'>
-                <i onClick={handleVerClasesZoom} style={{cursor:'pointer',fontSize:'large'}}>Ver todas las clases por Zoom</i>
+                <i onClick={handleVerClasesZoom} style={{cursor:'pointer',fontSize:'large'}}>{t('mPlace.6','Ver todas las clases por Zoom')}</i>
               </div>
           </div>
             {zoomMeetings.length>0?
             <DisplayCarousel allClases={allClases} zoomMeetings={zoomMeetings} market={true} home={true}/>:
-            <h4 style={{color:'gray'}} className='text-center py-5'><i>Buscando clases por Zoom...</i></h4>}
+            <h4 style={{color:'gray'}} className='text-center py-5'><i>{t('mPlace.7','Buscando clases por Zoom...')}</i></h4>}
 
             <div className='d-flex flex-column flex-md-row my-2'>
                 <div className='col-md-8 d-flex flex-row alig-items-center justify-content-start'>
                     <CollectionPlayFill size={'2em'} className='mr-2'/>
-                    <h4>Clases en Video</h4>
+                    <h4>{t('mPlace.8','Clases en Video')}</h4>
                   </div>
                   <div className='col-md-4 d-flex flex-row alig-items-center justify-content-md-end'>
-                  <i onClick={handleVerClasesVideo} style={{cursor:'pointer',fontSize:'large'}}>Ver todas las clases en video</i>
+                  <i onClick={handleVerClasesVideo} style={{cursor:'pointer',fontSize:'large'}}>{t('mPlace.9','Ver todas las clases en video')}</i>
                 </div>
             </div>
             {videoClases.length>0?
             <DisplayCarousel allClases={allClases} array={videoClases} market={true} home={true}/>:
-            <h4 style={{color:'gray'}} className='text-center py-5'><i>Buscando clases en video...</i></h4>}
+            <h4 style={{color:'gray'}} className='text-center py-5'><i>{t('mPlace.10','Buscando clases en video...')}</i></h4>}
 
         </div>
       </div>

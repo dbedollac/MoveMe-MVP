@@ -5,6 +5,7 @@ import { Auth } from "../../Config/AuthContext";
 import { withRouter } from "react-router";
 import { Spinner} from 'react-bootstrap'
 import { useMediaQuery } from 'react-responsive'
+import { useTranslation } from 'react-i18next';
 
 const NewClassForm = (props) => {
 const { usuario } = useContext(Auth);
@@ -15,7 +16,7 @@ const [loading,setLoading] = useState(false)
 const isMD = useMediaQuery({
   query: '(min-device-width: 768px)'
 })
-
+const { t } = useTranslation();
 
 useEffect(()=>{
   if (props.Count) {
@@ -64,7 +65,7 @@ const saveMedia = async (values) =>{
    await  db.collection("Instructors").doc(usuario.uid).set({
                 countClasses: count
               },{ merge: true });
-  return alert('Tu clase se creo con éxito')
+  return alert(t('myClasses.8','Tu clase se creo con éxito'))
 }
 
 const validate = values => {
@@ -82,7 +83,7 @@ const formik = useFormik({
     type: 'estiramiento',
     level: 'principiantes',
     equipment: '',
-    duration: '',
+    duration: 40,
     zoomPrice: 0,
     offlinePrice: 0,
     freeVideo:false
@@ -99,73 +100,73 @@ const formik = useFormik({
   <form onSubmit={formik.handleSubmit} className='d-flex flex-column align-items-center' >
     <div className="d-flex flex-column flex-md-row flex-md-wrap mt-2">
         <div className='d-flex flex-column col-md-6 mb-2'>
-            <label htmlFor="title">Título de la clase</label>
+            <label htmlFor="title">{t('myClasses.10','Título de la clase')}</label>
             <input
               id="title"
               name="title"
               type="text"
-              placeholder='¿Cómo das a conocer esta clase con tus clientes?'
+              placeholder={t('myClasses.11','¿Cómo das a conocer esta clase con tus clientes?')}
               onChange={formik.handleChange}
               value={formik.values.title}
               required
             />
         </div>
         <div className='d-flex flex-column col-md-6 mb-2'>
-            <label htmlFor="type">Tipo de ejercicio</label>
+            <label htmlFor="type">{t('myClasses.12','Tipo de ejercicio')}</label>
             <select id="type"
               name="type"
               onChange={formik.handleChange}
               value={formik.values.type}
               required>
-              <option value="estiramiento">Estiramiento (ej. Yoga)</option>
-              <option value="baile">Baile</option>
-              <option value="funcional">Funcional</option>
-              <option value="pelea">Técnica de pelea</option>
-              <option value="pesas">Con pesas</option>
-              <option value="otro">Otro</option>
+              <option value="estiramiento">{t('allClases.2','Estiramiento (ej. Yoga)')}</option>
+              <option value="baile">{t('allClases.3','Baile')}</option>
+              <option value="funcional">{t('allClases.4','Funcional')}</option>
+              <option value="pelea">{t('allClases.5','Técnica de pelea')}</option>
+              <option value="pesas">{t('allClases.6','Con pesas')}</option>
+              <option value="otro">{t('allClases.7','Otro')}</option>
             </select>
         </div>
         <div className='d-flex flex-column col-md-6 mb-2'>
-            <label htmlFor="description">Descripción</label>
+            <label htmlFor="description">{t('myClasses.13','Descripción')}</label>
             <textarea
               id="description"
               name="description"
               type="text"
               rows='4'
               cols={isMD?"50":null}
-              placeholder='Describe de manera breve en qué consiste la clase'
+              placeholder={t('myClasses.14','Describe de manera breve en qué consiste la clase')}
               onChange={formik.handleChange}
               value={formik.values.description}
               required
             />
         </div>
         <div className='d-flex flex-column col-md-6 mb-2'>
-            <label htmlFor="level">Dificultad de la clase</label>
+            <label htmlFor="level">{t('myClasses.15','Dificultad de la clase')}</label>
             <select id="level"
               name="level"
               onChange={formik.handleChange}
               value={formik.values.level}
               required>
-              <option value="principiantes">Para principiantes</option>
-              <option value="intermedia">Intermedia</option>
-              <option value="avanzada">Avanzada</option>
+              <option value="principiantes">{t('allClases.9','Para principiantes')}</option>
+              <option value="intermedia">{t('allClases.10','Intermedia')}</option>
+              <option value="avanzada">{t('allClases.11','Avanzada')}</option>
             </select>
         </div>
         <div className='d-flex flex-column col-md-6 mb-2'>
-            <label htmlFor="equipment">Equipo necesario</label>
+            <label htmlFor="equipment">{t('myClasses.16','Equipo necesario')}</label>
             <textarea
               id="equipment"
               name="equipment"
               type="text"
               rows='4'
               cols={isMD?"50":null}
-              placeholder='Agrega el equipo necesario para la clase'
+              placeholder={t('myClasses.17','Agrega el equipo necesario para la clase')}
               onChange={formik.handleChange}
               value={formik.values.equipment}
             />
         </div>
         <div className='d-flex flex-column col-md-6 mb-2'>
-            <label htmlFor="duration">Duración aproximada</label>
+            <label htmlFor="duration">{t('myClasses.18','Duración aproximada')}</label>
             <div>
               <input
                 id="duration"
@@ -177,11 +178,11 @@ const formik = useFormik({
                 value={formik.values.duration}
                 required
               />
-              minutos
+              {t('myClasses.19','minutos')}
               </div>
         </div>
         <div className='d-flex flex-column col-md-6 mb-2'>
-              <label htmlFor="zoomPrice">Precio por clase en Zoom</label>
+              <label htmlFor="zoomPrice">{t('myClasses.20','Precio por clase en Zoom')}</label>
               <div>
                 <input
                   id="zoomPrice"
@@ -197,7 +198,7 @@ const formik = useFormik({
                 </div>
         </div>
         <div className='d-flex flex-column col-md-6 mb-2'>
-              <label htmlFor="offlinePrice">Precio por renta del video (1 mes)</label>
+              <label htmlFor="offlinePrice">{t('myClasses.21','Precio por renta del video (1 mes)')}</label>
               <div>
                 <input
                   id="offlinePrice"
@@ -213,7 +214,7 @@ const formik = useFormik({
                 MXN
                 </div>
               <div className='d-flex flex-row align-items-center'>
-                <label htmlFor="freeVideo" className='mr-2 mt-1'><i>Video gratis</i></label>
+                <label htmlFor="freeVideo" className='mr-2 mt-1'><i>{t('myClasses.22','Video gratis')}</i></label>
                 <input
                   id="freeVideo"
                   name="freeVideo"
@@ -226,7 +227,7 @@ const formik = useFormik({
               </div>
         </div>
     </div>
-    {loading?<Spinner animation="border" />:<button type="submit" className="mt-2 mb-5 mt-md-5 mb-md-0 btn-secondary btn-lg col-6">Guardar</button>}
+    {loading?<Spinner animation="border" />:<button type="submit" className="mt-2 mb-5 mt-md-5 mb-md-0 btn-secondary btn-lg col-6">{t('myClasses.23','Guardar')}</button>}
   </form>
 )
 

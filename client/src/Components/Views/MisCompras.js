@@ -5,6 +5,7 @@ import CardSaved from '../Cards/CardSaved'
 import Purchases from '../Cards/Purchases'
 import {db,auth} from '../../Config/firestore'
 import { withRouter } from "react-router";
+import { useTranslation } from 'react-i18next';
 import './MisCompras.css'
 
 function MisCompras(props) {
@@ -12,6 +13,7 @@ function MisCompras(props) {
   const [purchases,setPurchases] = useState([])
   const [showMore, setshowMore] = useState(10)
   const [refundsNum,setrefundsNum] = useState(0)
+  const { t } = useTranslation();
 
   const handleVerMas = () =>{
     setshowMore(showMore + 10)
@@ -77,7 +79,7 @@ function MisCompras(props) {
               id={purchase.id}
             />
           </div>
-        )):<h4 style={{color:'gray'}} className='text-center py-5'><i>No hay compras registradas en los últimos 6 meses</i></h4>}
+        )):<h4 style={{color:'gray'}} className='text-center py-5'><i>{t('misCompras.1','No hay compras registradas en los últimos 6 meses')}</i></h4>}
         {purchases.length>showMore?<button className='btn-secondary rounded col-4 my-2' onClick={handleVerMas}>Ver más</button>:null}
       </div>
     </div>

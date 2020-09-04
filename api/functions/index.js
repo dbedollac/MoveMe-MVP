@@ -1,20 +1,35 @@
+const admin = require('firebase-admin');
 const functions = require('firebase-functions');
-
 var express = require('express');
 var app = express();
 const cors = require('cors')({origin: true});
-app.use(cors);
 var http = require("https");
 const stripe = require('stripe')('sk_test_51HCrlMASQcuvqq5qRoBALRqEj9NTsWPE8N9OPWvOJIcIe6klruWXlkh9l1Ly7K7CDKuHO80S7XVKF1A7Ex9qloQD00ZwSykRm0');
+const zoomID = 'BAI2U_LMR0qde_D7g8SV_g'
+const zoomSecret = 'vkU91bWzoulRS0hDnHxslr2a4JauqSol'
+const zoomVerification = '8blv9hJ7SnatkgmG21B2Qw'
+var btoa = require('btoa')
+let FieldValue = require('firebase-admin').firestore.FieldValue;
+
+var serviceAccount = require("./serviceAccountKey.json");
+
+admin.initializeApp({
+     credential: admin.credential.cert(serviceAccount),
+     databaseURL: "https://moveme-ad742.firebaseio.com"
+     });
+
+app.use(cors);
+let db = admin.firestore();
+
 
 //Stripe API -------------------------------------------------------------------------------------------
-app.post('/stripeAPI/delete-card',async (req,res) =>{
+app.post('/app/stripeAPI/delete-card',async (req,res) =>{
     stripe.paymentMethods.detach(
     req.body.paymentMethod,
   )
 })
 
-app.post('/stripeAPI/charge-card', async (req,res) =>{
+app.post('/app/stripeAPI/charge-card', async (req,res) =>{
   const paymentIntent = await stripe.paymentIntents.create({
     amount: req.body.amount,
     currency: "mxn",
@@ -31,7 +46,7 @@ app.post('/stripeAPI/charge-card', async (req,res) =>{
   }
 })
 
-app.post('/stripeAPI/refund', async (req,res) =>{
+app.post('/app/stripeAPI/refund', async (req,res) =>{
 
   const refund = await stripe.refunds.create({
     payment_intent: req.body.paymentID,
@@ -46,7 +61,7 @@ app.post('/stripeAPI/refund', async (req,res) =>{
 
 })
 
-app.post('/stripeAPI/card-details',async (req,res) => {
+app.post('/app/stripeAPI/card-details',async (req,res) => {
 
   await stripe.paymentMethods.retrieve(
     req.body.paymentMethodId,
@@ -59,7 +74,7 @@ app.post('/stripeAPI/card-details',async (req,res) => {
   )
 })
 
-app.post('/stripeAPI/secret', async (req, res) => {
+app.post('/app/stripeAPI/secret', async (req, res) => {
   const intent = await stripe.paymentIntents.create({ // ... Fetch or create the PaymentIntent
       amount: req.body.amount,
       currency: 'mxn',
@@ -69,7 +84,7 @@ app.post('/stripeAPI/secret', async (req, res) => {
   res.json({client_secret: intent.client_secret});
 });
 
-app.post('/stripeAPI/create-customer', async (req, res) => {
+app.post('/app/stripeAPI/create-customer', async (req, res) => {
   // Create a new customer object
   const customer = await stripe.customers.create({
     email: req.body.email,
@@ -81,7 +96,7 @@ app.post('/stripeAPI/create-customer', async (req, res) => {
   res.send({ customer });
 });
 
-app.post('/stripeAPI/newPaymentMethod', async (req, res) => {
+app.post('/app/stripeAPI/newPaymentMethod', async (req, res) => {
   // Attach the payment method to the customer
   try {
     await stripe.paymentMethods.attach(req.body.paymentMethodId, {
@@ -96,24 +111,133 @@ app.post('/stripeAPI/newPaymentMethod', async (req, res) => {
 });
 //Zoom API ---------------------------------------------------------------------------------------------
 
-//Check Token ------------------------------------------------------------------------.
-app.post('/zoomAPI/check-token', (req, res, next) => {
-  var http = require("https");
+//Deauthorization --------------------------------------------------------------------------------------
+app.post('/app/zoomAPI/deauthorization', (req, res, next) => {
+  if (req.headers.authorization===zoomVerification) {
+
+    if (req.body.payload.user_data_retention==='false') {
+      let docRef=db.collection("Instructors").where("zoomUserID", "==", req.body.payload.user_id).where('zoomAccountID','==',req.body.payload.account_id)
+      let deleteZoom = docRef.get()
+          .then((snapshot) => {
+
+            if (snapshot.empty) {
+              console.log('No matching documents.');
+              return;
+            }else {
+
+            snapshot.forEach((doc) => {
+              console.log(doc.id, '=>', doc.data());
+              doc.ref.update({
+                zoomAccountID: FieldValue.delete(),
+                zoomRefreshToken: FieldValue.delete(),
+                zoomToken: FieldValue.delete(),
+                zoomUserID: FieldValue.delete()
+              })
+            })
+          }
+          return 'ok'
+          })
+          .catch(error => {
+              console.log("Error getting documents: ", error);
+          });
+    }
+
+
+  var options = {
+  "method": "POST",
+  "hostname": "api.zoom.us",
+  "port": null,
+  "path": '/oauth/data/compliance',
+  "headers": {
+    "content-type": "application/json",
+    "authorization": "Basic "+ btoa(zoomID+":"+zoomSecret)
+  }
+  };
+
+  var reqZoom = http.request(options, (resZoom) => {
+    var chunks = [];
+
+    resZoom.on("data", (chunk) => {
+      chunks.push(chunk);
+    });
+
+    resZoom.on("end", () => {
+      var body = Buffer.concat(chunks);
+      console.log(body.toString());
+      res.send(body.toString())
+    });
+  });
+
+    reqZoom.write(JSON.stringify({
+    client_id: zoomID,
+    user_id: req.body.payload.user_id,
+    account_id: req.body.payload.account_id,
+    deauthorization_event_received: {
+      user_data_retention: req.body.payload.user_data_retention,
+      account_id: req.body.payload.account_id,
+      user_id: req.body.payload.user_id,
+      signature: req.body.payload.signature,
+      deauthorization_time: req.body.payload.deauthorization_time,
+      client_id: zoomID
+    },
+    compliance_completed: true
+  }));
+
+  reqZoom.end();
+}else {
+  console.log('Wrong verification token')
+}
+  });
+
+//Get User -----------------------------------------------------------------------
+app.post('/app/zoomAPI/get-user', (req, res, next) => {
+  console.log(req.body)
+
+var options = {
+"method": "GET",
+"hostname": "api.zoom.us",
+"port": null,
+"path": "/v2/users/me",
+"headers": {
+  "authorization": "Bearer "+req.body.token
+}
+};
+
+var reqZoom = http.request(options, (resZoom) => {
+  var chunks = [];
+
+  resZoom.on("data", (chunk) => {
+    chunks.push(chunk);
+  });
+
+  resZoom.on("end", () => {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+    res.send(body.toString())
+  });
+});
+
+reqZoom.end();
+
+});
+
+//Get Token -----------------------------------------------------------------------
+  app.post('/app/zoomAPI/get-token', (req, res, next) => {
 
     var options = {
-      "method": "GET",
-      "hostname": "api.zoom.us",
-      "port": null,
-      "path": "/v2/users/me",
-      "headers": {
-        "authorization": "Bearer "+req.body.token
-      }
+    "method": "POST",
+    "hostname": "zoom.us",
+    "port": null,
+    "path": '/oauth/token?grant_type=authorization_code&code='+req.body.parsedcode+'&redirect_uri='+req.body.zoomRedirectURL,
+    "headers": {
+      "Authorization": "Basic "+ btoa(req.body.zoomID+':'+req.body.zoomSecret)
+    }
     };
 
     var reqZoom = http.request(options, (resZoom) => {
       var chunks = [];
 
-      resZoom.on("data",  (chunk) => {
+      resZoom.on("data", (chunk) => {
         chunks.push(chunk);
       });
 
@@ -125,24 +249,23 @@ app.post('/zoomAPI/check-token', (req, res, next) => {
     });
 
     reqZoom.end();
-})
+
+    });
 
 //Refresh Token -----------------------------------------------------------------------
-  app.post('/zoomAPI/refresh-token', (req, res, next) => {
-    console.log(req.body)
+  app.post('/app/zoomAPI/refresh-token', (req, res, next) => {
 
     var options = {
     "method": "POST",
-    "hostname": "zoom.us/oauth",
+    "hostname": "zoom.us",
     "port": null,
-    "path": "/token?grant_type=refresh_token&refresh_token="+req.body.token,
+    "path": "/oauth/token?grant_type=refresh_token&refresh_token="+req.body.token,
     "headers": {
       "Authorization": "Basic "+ btoa(req.body.zoomID+':'+req.body.zoomSecret)
     }
     };
 
     var reqZoom = http.request(options, (resZoom) => {
-      console.log(resZoom);
       var chunks = [];
 
       resZoom.on("data", (chunk) => {
@@ -161,7 +284,7 @@ app.post('/zoomAPI/check-token', (req, res, next) => {
     });
 
 //CreateZoomMeeting -----------------------------------------------------------------------
-app.post('/zoomAPI', (req, res, next) => {
+app.post('/app/zoomAPI', (req, res, next) => {
 
 var options = {
 "method": "POST",
@@ -197,7 +320,7 @@ reqZoom.end();
 });
 
 // GetZoomMeeting Details------------------------------------------------------------------------
-app.post('/zoomAPI/getdata', (req, res, next) => {
+app.post('/app/zoomAPI/getdata', (req, res, next) => {
 var http = require("https");
 
   var options = {
@@ -229,7 +352,7 @@ var http = require("https");
 
 
 // Delete Zoom Meeting------------------------------------------------------------------------
-app.post('/zoomAPI/delete', (req, res, next) => {
+app.post('/app/zoomAPI/delete', (req, res, next) => {
 var http = require("https");
 
 var options = {

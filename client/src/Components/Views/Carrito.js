@@ -7,6 +7,7 @@ import CarritoProduct from '../Cards/CarritoProduct'
 import PayButton from '../Atoms/PayButton'
 import StripeFee from '../Atoms/StripeFee'
 import {iva} from '../../Config/Fees'
+import { useTranslation } from 'react-i18next';
 import './Carrito.css'
 
 function Carrito(props) {
@@ -15,6 +16,7 @@ function Carrito(props) {
   const [subtotal,setSubtotal] = useState(0)
   const curr = new Date()
   const expire = new Date(curr.getFullYear(),curr.getMonth()+1,curr.getDate())
+  const { t } = useTranslation();
 
   useEffect(()=>{
     auth.onAuthStateChanged((usuario) => {
@@ -61,17 +63,17 @@ function Carrito(props) {
           <div className='d-flex flex-column'>
             <h4><strong>Total: ${(subtotal*(1+iva)+StripeFee(subtotal*(1+iva))).toFixed(2)}</strong></h4>
             <h6>Subtotal: ${subtotal.toFixed(2)}</h6>
-            <h6>IVA: ${(subtotal*iva).toFixed(2)}</h6>
-            <h6>Tarifa por transacción: ${StripeFee(subtotal*(1+iva)).toFixed(2)}</h6>
+            <h6>{t('cart.1','IVA')}: ${(subtotal*iva).toFixed(2)}</h6>
+            <h6>{t('cart.2','Tarifa por transacción')}: ${StripeFee(subtotal*(1+iva)).toFixed(2)}</h6>
           </div>
           <div className='d-flex flex-column justify-content-around'>
             <PayButton subtotal={subtotal} cart={true} products={products}/>
-            <p style={{cursor:'pointer'}} onClick={vaciarCarrito} className='mt-2'><i>Vaciar Carrito</i></p>
+            <p style={{cursor:'pointer'}} onClick={vaciarCarrito} className='mt-2'><i>{t('cart.3','Vaciar Carrito')}</i></p>
           </div>
         </div>
 
         <div className='col-11'>
-          {products.length===0? <h4 style={{color:'gray'}} className='text-center py-5'><i>Tu carrito está vacío</i></h4>
+          {products.length===0? <h4 style={{color:'gray'}} className='text-center py-5'><i>{t('cart.4','Tu carrito está vacío')}</i></h4>
             :products.map(product =>(
             <div className='pt-2' key={product.id}>
               <CarritoProduct claseData={product.data.claseData?product.data.claseData:null}

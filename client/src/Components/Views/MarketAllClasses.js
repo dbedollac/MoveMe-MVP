@@ -4,6 +4,7 @@ import CoachCard from '../Cards/CoachCard'
 import InstructorsDetailCard from '../Cards/InstructorsDetailCard'
 import UsersDetailCard from '../Cards/UsersDetailCard'
 import { X, Search } from 'react-bootstrap-icons';
+import { useTranslation } from 'react-i18next';
 import './MarketAllClasses.css'
 
 function MarketAllClasses(props) {
@@ -21,6 +22,7 @@ function MarketAllClasses(props) {
   const [aux, setaux] = useState(true)
   const [showMore, setshowMore] = useState(48)
   const [detailStarttime,setdetailStarttime] = useState(null)
+  const { t } = useTranslation();
 
   const getDate = (date) => {
     var saleDate = new Date(date)
@@ -294,13 +296,13 @@ function MarketAllClasses(props) {
                   className='custom-select'
                   value={filtersType}
                   >
-                  <option value="todos" >Tipo de ejercicio (Todos)</option>
-                  <option value="estiramiento">Estiramiento (ej. Yoga)</option>
-                  <option value="baile">Baile</option>
-                  <option value="funcional">Funcional</option>
-                  <option value="pelea">Técnica de pelea</option>
-                  <option value="pesas">Con pesas</option>
-                  <option value="otro">Otro</option>
+                  <option value="todos" >{t('allClases.1','Tipo de ejercicio (Todos)')}</option>
+                  <option value="estiramiento">{t('allClases.2','Estiramiento (ej. Yoga)')}</option>
+                  <option value="baile">{t('allClases.3','Baile')}</option>
+                  <option value="funcional">{t('allClases.4','Funcional')}</option>
+                  <option value="pelea">{t('allClases.5','Técnica de pelea')}</option>
+                  <option value="pesas">{t('allClases.6','Con pesas')}</option>
+                  <option value="otro">{t('allClases.7','Otro')}</option>
                 </select>
               </div>:null}
 
@@ -312,10 +314,10 @@ function MarketAllClasses(props) {
                 onChange={handleLevelChange}
                 value={filtersLevel}
                 >
-                <option value="todos" >Dificultad de la clase (Todas)</option>
-                <option value="principiantes">Para principiantes</option>
-                <option value="intermedia">Intermedia</option>
-                <option value="avanzada">Avanzada</option>
+                <option value="todos" >{t('allClases.8','Dificultad de la clase (Todas)')}</option>
+                <option value="principiantes">{t('allClases.9','Para principiantes')}</option>
+                <option value="intermedia">{t('allClases.10','Intermedia')}</option>
+                <option value="avanzada">{t('allClases.11','Avanzada')}</option>
               </select>
             </div>:null}
 
@@ -327,19 +329,19 @@ function MarketAllClasses(props) {
                 onChange={handleDurationChange}
                 value={filtersDuration}
                 >
-                <option value='todos'>Duración (Todas)</option>
-                <option value={'0'}>0 - 30 min</option>
-                <option value={'1'}>30 - 60 min</option>
-                <option value={'2'}>Más de 60 min</option>
+                <option value='todos'>{t('allClases.12','Duración (Todas)')}</option>
+                <option value={'0'}>{t('allClases.13','0 - 30 min')}</option>
+                <option value={'1'}>{t('allClases.14','30 - 60 min')}</option>
+                <option value={'2'}>{t('allClases.15','Más de 60 min')}</option>
               </select>
             </div>:null}
         </div>
 
         <div className={`d-flex pr-4 pr-lg-0 ${!props.allInstructors?'flex-column flex-lg-row':'flex-row'} justify-content-between align-items-start ${!props.allInstructors?'col-lg-2 col-6':null}`}>
           {!props.allInstructors?
-          <input type='search' placeholder='Buscar clase...' onChange={handleBuscador} value={filterSearchClass} className='col-12 py-1'/>:null}
+          <input type='search' placeholder={t('allClases.16','Buscar clase...')} onChange={handleBuscador} value={filterSearchClass} className='col-12 py-1 rounded'/>:null}
 
-          <input type='search' placeholder='Buscar coach...' onChange={handleBuscadorCoach} value={filterSearchCoach} className={`rounded ${!props.allInstructors?'col-12':'col-6'} py-1`}/>
+          <input type='search' placeholder={t('allClases.17','Buscar coach...')} onChange={handleBuscadorCoach} value={filterSearchCoach} className={`rounded ${!props.allInstructors?'col-12':'col-6'} py-1`}/>
 
           {props.zoomMeetings?<input type="datetime-local" onChange={handleDateTime} value={filterDateTime} className='col-12 py-1'/>
           :props.misVideos?null
@@ -350,13 +352,13 @@ function MarketAllClasses(props) {
               value={filterSort}
               >
                 <option value=''>Ordenar</option>
-                <option value={'low'}>Precio: de más bajo a más alto</option>
-                <option value={'high'}>Precio: de más alto a más bajo</option>
+                <option value={'low'}>{t('allClases.18','Precio: de más bajo a más alto')}</option>
+                <option value={'high'}>{t('allClases.19','Precio: de más alto a más bajo')}</option>
           </select>}
         </div>
 
         </div>
-        {!props.allInstructors?<i className='pl-2' style={{fontSize:'small',cursor:'pointer'}} onClick={resetFilters}>Quitar filtros</i>:null}
+        {!props.allInstructors?<i className='pl-2' style={{fontSize:'small',cursor:'pointer'}} onClick={resetFilters}>{t('allClases.20','Quitar filtros')}</i>:null}
       </form>
 
       <div className='d-flex flex-row flex-wrap justify-content-center'>

@@ -8,12 +8,14 @@ import ConfigInstructorForm from '../Forms/ConfigInstructorForm'
 import GetZoomToken from '../Atoms/GetZoomToken'
 import { CameraVideoFill } from 'react-bootstrap-icons';
 import {db, auth} from '../../Config/firestore'
+import { useTranslation } from 'react-i18next';
 
 function ConfigInstructor(props) {
 const { usuario } = useContext(Auth);
 const [uid, setUid] = useState(null);
 const [zoomButton, setZoomButton] = useState(true)
 const [newInstructor, setNewInstructor] = useState(true);
+const { t } = useTranslation();
 
 const searchInstructor = () =>{
     if(usuario){
@@ -60,7 +62,7 @@ useEffect(()=>{
 
                 <div className='d-flex flex-row justify-content-center align-items-center zoom-button mb-2 pb-3'>
                   <div className='d-flex flex-column align-items-center'>
-                    {zoomButton ? <p style={{color: 'gray'}}>Guarda primero tus datos de perfil</p> : null}
+                    {zoomButton ? <p style={{color: 'gray'}}>{t('config.1','Guarda primero tus datos de perfil')}</p> : null}
                     <GetZoomToken disable={zoomButton}/>
                   </div>
                     <CameraVideoFill size={'50px'} className='ml-5' color="#2C8BFF" />

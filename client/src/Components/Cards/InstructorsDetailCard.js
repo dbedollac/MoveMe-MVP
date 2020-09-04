@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { CameraVideoFill, ChevronCompactUp, EyeFill} from 'react-bootstrap-icons';
+import { CameraVideoFill, ChevronCompactUp, PlayFill} from 'react-bootstrap-icons';
 import VideoPlayer from '../Atoms/VideoPlayer'
 import {db} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
@@ -10,12 +10,14 @@ import CoachName from '../Atoms/CoachName'
 import AddFreeVideo from '../Atoms/AddFreeVideo'
 import {Collapse} from 'react-bootstrap'
 import { withRouter } from "react-router";
+import { useTranslation } from 'react-i18next';
 
 function InstructorsDetailCard(props) {
 const { usuario } = useContext(Auth);
 const [instructor, setInstructor] = useState(props.instructor)
 const [open, setOpen] = useState(false);
 const [trialClass,settrialClass] = useState(null)
+const { t } = useTranslation();
 
 const handleOpen = () =>{
   setOpen(!open)
@@ -87,7 +89,7 @@ const handleOpen = () =>{
 
               {props.data.description.length > 0?
               <div className='col-12 col-md-6 mb-5 mb-md-0 d-flex flex-column'>
-                <h4>Descripción</h4>
+                <h4>{t('iCard.1','Descripción')}</h4>
                 <p>{props.data.description}</p>
                 {props.data.videoURL&&!props.zoom?
                 <div className='card card-link py-1'>
@@ -95,9 +97,9 @@ const handleOpen = () =>{
 
                   <div className='d-flex flex-row-reverse flex-md-row align-items-center justify-content-between'>
                     {open?<ChevronCompactUp onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>
-                    :<EyeFill onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>}
+                    :<PlayFill onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>}
                     <p className='text-center mx-2'>
-                    <strong>Video para rentar</strong> <br/>(1 mes) {props.match.params.uid||props.market?!props.data.freeVideo? '$'+props.data.offlinePrice:null:null}</p>
+                    <strong>{t('iCard.2','Video para rentar')}</strong> <br/>{t('iCard.3','(1 mes)')} {props.match.params.uid||props.market?!props.data.freeVideo? '$'+props.data.offlinePrice:null:null}</p>
                   </div>
 
                     {props.market?!props.data.freeVideo?<AddToCar instructor={instructor} claseVideo={props.data}/>
@@ -126,7 +128,7 @@ const handleOpen = () =>{
               {!props.video?<div className='col-12 col-md-6 d-flex flex-column'>
                 <div className=' d-flex flex-row alig-items-center justify-content-center'>
                   <CameraVideoFill size={'2em'} className='mr-2' color="#2C8BFF" />
-                  <h5>Clases por Zoom</h5>
+                  <h5>{t('iCard.4','Clases por Zoom')}</h5>
                 </div>
                 <div style={{ overflowY: 'scroll', height:'250px'}}>
                   <GetZoomMeetings claseID={props.claseID} instructor={instructor} market={props.market?props.market:false} usertrialClass={trialClass} startTime={props.startTime}/>
@@ -134,12 +136,12 @@ const handleOpen = () =>{
               </div>:null}
 
             <div className='col-12 col-md-6 d-flex flex-column'>
-               <p><strong>Tipo de ejercicio: </strong>{props.data.type}</p>
-               <p><strong>Dificultad: </strong>{props.data.level}</p>
-               <p><strong>Equipo necesario: </strong>{props.data.equipment.length>0? props.data.equipment:'Ninguno'}</p>
-               <p><strong>Duración: </strong>{props.data.duration} minutos</p>
-               <p><strong>Precio por clase en Zoom: </strong>${props.data.zoomPrice} MXN</p>
-               <p><strong>Precio por renta mensual del video: </strong>{props.data.freeVideo?'gratis':'$'+props.data.offlinePrice+' MXN'}</p>
+               <p><strong>{t('iCard.5','Tipo de ejercicio')}: </strong>{props.data.type}</p>
+               <p><strong>{t('iCard.6','Dificultad')}: </strong>{props.data.level}</p>
+               <p><strong>{t('iCard.7','Equipo necesario')}: </strong>{props.data.equipment.length>0? props.data.equipment:'Ninguno'}</p>
+               <p><strong>{t('iCard.8','Duración')}: </strong>{props.data.duration} {t('iCard.9','minutos')}</p>
+               <p><strong>{t('iCard.10','Precio por clase en Zoom')}: </strong>${props.data.zoomPrice} MXN</p>
+               <p><strong>{t('iCard.11','Precio por renta mensual del video')}: </strong>{props.data.freeVideo?'gratis':'$'+props.data.offlinePrice+' MXN'}</p>
             </div>
 
 

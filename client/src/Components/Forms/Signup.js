@@ -9,7 +9,7 @@ import { Asterisk } from 'react-bootstrap-icons';
 import Login from './Login'
 import google from '../Views/Images/Google.png'
 import facebookLogo from '../Views/Images/Facebook.png'
-
+import { useTranslation } from 'react-i18next';
 
 const Signup = ({  history, location }) => {
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
@@ -18,6 +18,7 @@ const Signup = ({  history, location }) => {
     const [error, seterror] = useState("");
     const [password,setPassword] = useState("");
     const [password2,setPassword2] = useState("")
+    const { t } = useTranslation()
 
     const handleSignUp = async e => {
       if (password===password2) {
@@ -35,7 +36,7 @@ const Signup = ({  history, location }) => {
             });
       }else {
         e.preventDefault()
-        seterror('Las contraseñas no coinciden')
+        seterror(t('header.28','Las contraseñas no coinciden'))
       }
     };
 
@@ -65,13 +66,13 @@ const Signup = ({  history, location }) => {
               <form className="form-group d-flex flex-column align-items-center " onSubmit={handleSignUp}>
               <div className="d-flex flex-column login-form">
                   <div className="d-flex flex-column align-self-center m-2">
-                    <h2 className="text-center ">Registro</h2>
+                    <h2 className="text-center ">{t('header.29','Registro')}</h2>
                     {error? <Errores mensaje={error}/>:null}
                     <div className="text-center">
                       <PersonCircle/>
                       <input
                           name="usuario"
-                          placeholder="Usuario"
+                          placeholder={t('header.22',"email")}
                           className=" ml-2"/>
                     </div>
                     <div className="text-center">
@@ -79,7 +80,7 @@ const Signup = ({  history, location }) => {
                       <input
                           name="clave"
                           type="password"
-                          placeholder="Contraseña"
+                          placeholder={t('header.23',"Clave")}
                           className=" ml-2"
                           onChange={handlePassword}/>
                     </div>
@@ -88,7 +89,7 @@ const Signup = ({  history, location }) => {
                       <input
                           name="clave2"
                           type="password"
-                          placeholder="Confirmar contraseña"
+                          placeholder={t('header.30',"Confirmar contraseña")}
                           className=" ml-2"
                           onChange={handlePassword2}/>
                     </div>
@@ -97,7 +98,7 @@ const Signup = ({  history, location }) => {
                           <button
                               className="btn-light col-11 border"
                            >
-                              Registrarse
+                              {t('header.27',"Registrarse")}
                           </button>
                         </div>
                           <div className="text-center">O{" "}</div>
@@ -108,22 +109,22 @@ const Signup = ({  history, location }) => {
                             onClick={() => socialLogin(googleAuthProvider)}
                             >
                             <img src={google} alt='Google' style={{width:'2em'}} className='mr-1'/>
-                            Ingresar con Google
+                            {t('header.25',"Ingresar con Google")}
                             </button>
 
                             <button
                             className="btn-light m-1 col-12 border text-left"
                             onClick={() => socialLogin(facebookAuthProvider)}
                             >
-                            <img src={facebookLogo} alt='Google' style={{width:'2em'}} className='mr-1'/>
-                            Ingresar con Facebook
+                            <img src={facebookLogo} alt='Facebook' style={{width:'2em'}} className='mr-1'/>
+                            {t('header.26',"Ingresar con Facebook")}
                             </button>
 
                             <button
                                 onClick={() => setsignup(false)}
                                 className="btn-primary m-1 "
                             >
-                                Ya tengo cuenta
+                                {t('header.31',"Ya tengo cuenta")}
                             </button>
                           </div>
                   </div>

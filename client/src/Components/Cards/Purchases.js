@@ -6,6 +6,7 @@ import {Modal, Button, Spinner} from 'react-bootstrap'
 import {CheckCircleFill} from 'react-bootstrap-icons'
 import Errores from '../Atoms/Errores'
 import {proxyurl} from '../../Config/proxyURL'
+import { useTranslation } from 'react-i18next';
 
 function CarritoProduct(props) {
   const { usuario } = useContext(Auth);
@@ -17,6 +18,7 @@ function CarritoProduct(props) {
   const [refundCause,setrefundCause] = useState(null)
   const [error,setError] = useState(null)
   const [refundSuccess, setrefundSuccess] = useState(false)
+  const { t } = useTranslation();
 
   const handleClose = () => {
     setShow(false)
@@ -54,7 +56,7 @@ function CarritoProduct(props) {
         Promise.resolve(result.json()).then((resp) =>{
           if (resp.error) {
             console.log(resp.error)
-            setError('Ocurrió un error, mándanos un mail a ayuda@moveme.fitness')
+            setError(t('misCompras.10','Ocurrió un error, mándanos un mail a ayuda@moveme.fitness'))
           } else {
             db.collection('Sales').doc(props.id).set({
               refund:true,
@@ -95,9 +97,9 @@ function CarritoProduct(props) {
         <h5 className='col-12 col-md-5'>{props.type} {props.startTime?'('+props.startTime.time+')':null}{props.type.includes('Video')||props.type.includes('Reto')?'(Vigente hasta '+expireDate+')':null}</h5>
         <h6 className="card-subtitle mb-2 text-muted col-12 col-md-4">{props.claseData?props.claseData.title:null}</h6>
         <div className='d-flex flex-column align-items-center'>
-          <p><strong>Comprado el {purchaseDate}</strong></p>
+          <p><strong>{t('misCompras.11','Comprado el ')}{purchaseDate}</strong></p>
           {!props.type.includes('Video')?
-            !props.refund?<i style={{cursor:'pointer'}} onClick={handleShow}>Solicitar reembolso</i>:<i>Reembolsado</i>:null}
+            !props.refund?<i style={{cursor:'pointer'}} onClick={handleShow}>{t('misCompras.12','Solicitar reembolso')}</i>:<i>{t('misCompras.13','Reembolsado')}</i>:null}
         </div>
       </div>
       <div className='card-footer d-flex flex-row justify-content-between align-items-center'>
@@ -112,10 +114,10 @@ function CarritoProduct(props) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Reembolsable hasta el {refund?getDate(refund):null}</Modal.Title>
+          <Modal.Title>{t('misCompras.14','Reembolsable hasta el ')}{refund?getDate(refund):null}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Lamentamos el inconveniente que se te haya presentado usando MoveMe, estamos trabajando para mejorar nuestros servicios.
+          {t('misCompras.15','Lamentamos el inconveniente que se te haya presentado usando MoveMe, estamos trabajando para mejorar nuestros servicios.')}
           <br/>
           {props.refundsNum<5?
           <textarea
@@ -127,16 +129,16 @@ function CarritoProduct(props) {
             onChange={handlerefundCause}
             required
           />:
-          <p>Mándanos un mail a <i>ayuda@moveme.fitness</i> para atender tu caso.</p>}
+          <p>{t('misCompras.16','Mándanos un mail a ')}<i>ayuda@moveme.fitness</i>{t('misCompras.17',' para atender tu caso.')}</p>}
           {refundSuccess?<Errores mensaje='Los rembolsos tardan de 5 a 10 días.' />:<Errores mensaje={error} />}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Cancelar
+            {t('misCompras.6','Cancelar')}
           </Button>
           {refundSuccess?<CheckCircleFill color='green' size={'2em'}/>
             :props.refundsNum<5?
-            <Button onClick={handleRefund} variant="danger" disabled={refundCause?(new Date()>refund):true}>{loading?<Spinner animation="border" />:'Reembolsar'}</Button>
+            <Button onClick={handleRefund} variant="danger" disabled={refundCause?(new Date()>refund):true}>{loading?<Spinner animation="border" />:t('misCompras.18','Solicitar reembolso')}</Button>
             :null}
         </Modal.Footer>
       </Modal>

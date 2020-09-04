@@ -7,6 +7,7 @@ import { CameraVideoFill, CollectionPlayFill } from 'react-bootstrap-icons';
 import DisplayCarousel from '../Molecules/DisplayCarousel'
 import MonthlyProgram from './MonthlyProgram'
 import MyClasses from './MyClasses'
+import { useTranslation } from 'react-i18next';
 import './InstructorProfile.css'
 
 
@@ -26,6 +27,7 @@ function Coach(props) {
   const [myClasses,setmyClasses] = useState(false)
   const [aux,setAux] = useState([])
   const [user,setUser] = useState(false)
+  const { t } = useTranslation();
 
   const today = new Date()
   const firstMonthDay = new Date(today.getFullYear(),today.getMonth(),1)
@@ -134,20 +136,20 @@ function Coach(props) {
                     <p className='text-left'>{selfDescription}</p>
                     <div className='InstructorProfile-container-programa p-2'>
                       <div className='d-flex flex-row align-items-center justify-content-around'>
-                        <h3>Reto Mensual</h3>
+                        <h3>{t('iProfile.1','Reto Mensual')}</h3>
                         <div className='rounded col-4' style={{backgroundColor: 'lightgray', fontSize: '20px'}}> {monthlyProgramPrice?'$ '+monthlyProgramPrice:null} </div>
                       </div>
                       <div className='d-flex flex-row'>
                         <div className='col-6 monthlyProgram-clasesZoom d-flex flex-column'>
                           <p style={{ fontSize: '40px'}}>{zoomMeetingsProgram.length}</p>
-                          <p>Clases por Zoom</p>
+                          <p>{t('iProfile.2','Clases por Zoom')}</p>
                         </div>
                         <div className='col-6 d-flex flex-column'>
                           <p style={{ fontSize: '40px'}}>{videoClases.length}</p>
-                          <p>Clases en Video</p>
+                          <p>{t('iProfile.3','Clases en Video')}</p>
                         </div>
                       </div>
-                      <button className='btn-light m-3 rounded btn-lg' onClick={handleVerMonthlyProgram}>Ver</button>
+                      <button className='btn-light m-3 rounded btn-lg' onClick={handleVerMonthlyProgram}>{t('iProfile.4','Ver')}</button>
                     </div>
                   </div>
               </div>
@@ -156,30 +158,30 @@ function Coach(props) {
                 <div className='d-flex flex-column flex-md-row my-2'>
                   <div className='col-md-8 d-flex flex-row alig-items-center justify-content-start'>
                     <CameraVideoFill size={'2em'} className='mr-2' color="#2C8BFF" />
-                    <h4>Próximas Clases por Zoom</h4>
+                    <h4>{t('iProfile.5','Próximas Clases por Zoom')}</h4>
                   </div>
                   <div className='col-md-4 d-flex flex-row alig-items-center justify-content-md-end'>
-                  <i onClick={handleVerClases} style={{cursor:'pointer',fontSize:'large'}}>Ver todas las clases</i>
+                  <i onClick={handleVerClases} style={{cursor:'pointer',fontSize:'large'}}>{t('iProfile.6','Ver todas las clases')}</i>
                   </div>
                 </div>
 
                 {zoomMeetings.length>0?
                 <DisplayCarousel allClases={allClases} zoomMeetings={zoomMeetings} market={true} instructor={{data:instructor,id:uid}}/>:
-                <h4 style={{color:'gray'}} className='text-center py-5'><i>No se ha agendado ninguna clase por Zoom</i></h4>}
+                <h4 style={{color:'gray'}} className='text-center py-5'><i>{t('iProfile.7','No se ha agendado ninguna clase por Zoom')}</i></h4>}
 
                 <div className='d-flex flex-column flex-md-row my-2'>
                   <div className='col-md-8 d-flex flex-row alig-items-center justify-content-start'>
                     <CollectionPlayFill size={'2em'} className='mr-2' />
-                    <h4>Clases en Video</h4>
+                    <h4>{t('iProfile.3','Clases en Video')}</h4>
                   </div>
                   <div className='col-md-4 d-flex flex-row alig-items-center justify-content-md-end'>
-                  <i onClick={handleVerClases} style={{cursor:'pointer',fontSize:'large'}}>Ver todas las clases</i>
+                  <i onClick={handleVerClases} style={{cursor:'pointer',fontSize:'large'}}>{t('iProfile.6','Ver todas las clases')}</i>
                   </div>
                 </div>
 
                 {videoClases.length>0?
                 <DisplayCarousel allClases={allClases} array={videoClases} market={true}  instructor={{data:instructor,id:uid}} />:
-                <h4 style={{color:'gray'}} className='text-center py-5'><i>No hay clases con video</i></h4>}
+                <h4 style={{color:'gray'}} className='text-center py-5'><i>{t('iProfile.8','No hay clases con video')}</i></h4>}
             </div>
       </div>
     </>

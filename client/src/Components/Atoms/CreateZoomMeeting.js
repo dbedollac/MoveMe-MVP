@@ -4,6 +4,7 @@ import {db} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
 import {proxyurl} from '../../Config/proxyURL'
 import {Spinner} from 'react-bootstrap'
+import { useTranslation } from 'react-i18next';
 
 function CreateZoomMeeting(props) {
 const { usuario } = useContext(Auth);
@@ -12,7 +13,7 @@ const [date, setDate] = useState(null)
 const [timezone, setTimezone] = useState(null)
 const zoomDate = new Date()
 const [loading,setLoading] = useState(false)
-
+const { t } = useTranslation();
 
   useEffect(()=>{
     setTimezone(Intl.DateTimeFormat().resolvedOptions().timeZone)
@@ -95,7 +96,7 @@ const [loading,setLoading] = useState(false)
   return(
       <div className='d-flex flex-row'>
         {loading?<Spinner animation="border" className='mr-2'/> :
-        <button className='btn-primary mr-2' onClick={setMeeting} disabled={(time!==null&&props.claseID!==null)?false:true}>Agregar</button>
+        <button className='btn-primary mr-2' onClick={setMeeting} disabled={(time!==null&&props.claseID!==null)?false:true}>{t('mProgram.4','Agregar')}</button>
         }
         <input type="time" onChange={handleTime} className='col-md-8 col-6' value={time}/>
       </div>

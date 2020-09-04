@@ -7,6 +7,7 @@ import Login from '../Forms/Login'
 import { Auth } from "../../Config/AuthContext";
 import {db} from "../../Config/firestore";
 import { withRouter } from "react-router";
+import { useTranslation } from 'react-i18next';
 import {iva} from '../../Config/Fees'
 
 function PayButton(props) {
@@ -16,6 +17,7 @@ function PayButton(props) {
   const curr = new Date()
   const expire = new Date(curr.getFullYear(),curr.getMonth()+1,curr.getDate())
   const [trialClass,settrialClass] = useState(null)
+  const { t } = useTranslation();
 
   var days = expire.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
   var month = (expire.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
@@ -53,7 +55,7 @@ function PayButton(props) {
 
   return(
     <>
-      <button className={`btn-info btn-${props.size} rounded`} onClick={searchUsuario}><CheckSquare/> {props.cart?'Proceder al pago':props.trialClass===0?'Clase prueba':'Comprar ahora'}</button>
+      <button className={`btn-info btn-${props.size} rounded`} onClick={searchUsuario}><CheckSquare/> {props.cart?t('cart.5','Proceder al pago'):props.trialClass===0?t('cart.6','Clase prueba'):t('cart.7','Comprar ahora')}</button>
 
       <Modal
         show={show}
@@ -62,11 +64,11 @@ function PayButton(props) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Total a pagar: ${(props.subtotal*(1+iva)+StripeFee(props.subtotal*(1+iva))).toFixed(2)}<br/>
+          <Modal.Title>{t('cart.8','Total a pagar')}: ${(props.subtotal*(1+iva)+StripeFee(props.subtotal*(1+iva))).toFixed(2)}<br/>
             {!props.cart?<div clasaName='d-flex flex-row'>
-              <p style={{color:'gray',fontSize:'small'}}>Subtotal: ${props.subtotal} / IVA: ${(props.subtotal*iva).toFixed(2)} / Tarifa por transacción: ${StripeFee(props.subtotal*(1+iva)).toFixed(2)}</p>
+              <p style={{color:'gray',fontSize:'small'}}>Subtotal: ${props.subtotal} / {t('cart.1','IVA')}: ${(props.subtotal*iva).toFixed(2)} / {t('cart.2','Tarifa por transacción')}: ${StripeFee(props.subtotal*(1+iva)).toFixed(2)}</p>
             </div>:null}
-          {(props.subtotal*(1+iva)+StripeFee(props.subtotal*(1+iva))).toFixed(2)<=10?<p style={{color:'red',fontSize:'small'}}>Tu total a pagar debe ser mayor a $10</p>:null}
+          {(props.subtotal*(1+iva)+StripeFee(props.subtotal*(1+iva))).toFixed(2)<=10?<p style={{color:'red',fontSize:'small'}}>{t('cart.9','Tu total a pagar debe ser mayor a $10')}</p>:null}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -74,7 +76,7 @@ function PayButton(props) {
         </Modal.Body>
         {!props.cart?props.type!=='Zoom'?
         <Modal.Footer>
-          <h5>Vigente hasta {expireDate}</h5>
+          <h5>{t('cart.10','Vigente hasta')} {expireDate}</h5>
         </Modal.Footer>:null:null}
       </Modal>
 
@@ -85,15 +87,15 @@ function PayButton(props) {
         keyboard={false}
       >
         <Modal.Body >
-          {usuario? <p>Debes de cambiar tu tipo de cuenta a "Usuario" para poder realizar compras. Puedes regresar al tipo "Instructor" cuando quieras, tu información no se perderá.</p>
+          {usuario? <p>{t('cart.11','Debes de cambiar tu tipo de cuenta a "Usuario" para poder realizar compras. Puedes regresar al tipo "Instructor" cuando quieras, tu información no se perderá.')}</p>
           :<Login />}
         </Modal.Body>
         {usuario?<Modal.Footer>
           <Button variant="secondary" onClick={handleCloseLogin}>
-            Cancelar
+            {t('cart.12','Cancelar')}
           </Button>
           <Button variant="primary" onClick={()=>{props.history.push('/account-type')}}>
-            Cambiar tipo de cuenta
+            {t('cart.13','Cambiar tipo de cuenta')}
           </Button>
         </Modal.Footer>:null}
       </Modal>

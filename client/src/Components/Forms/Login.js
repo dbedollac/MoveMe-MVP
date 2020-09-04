@@ -11,7 +11,7 @@ import { Asterisk } from 'react-bootstrap-icons';
 import googleLogo from '../Views/Images/Google.png'
 import facebookLogo from '../Views/Images/Facebook.png'
 import {Redirect} from "react-router-dom";
-
+import { useTranslation } from 'react-i18next';
 
 const Login = ({ history, location }) => {
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
@@ -21,6 +21,7 @@ const Login = ({ history, location }) => {
     const [error, seterror] = useState('')
     const [forgottenpassword,setForgottenpassword] = useState(false)
     const [email, setEmail] = useState(null)
+    const { t } = useTranslation()
 
     useEffect(() => {
         if (usuario) {
@@ -80,7 +81,7 @@ const Login = ({ history, location }) => {
                 <form className="form-group d-flex flex-column align-items-center " onSubmit={resetPassword}>
                 <div className="d-flex flex-column login-form">
                     <div className="d-flex flex-column align-self-center m-2">
-                      <h3 className="text-center ">Enviar mail para restablecer contraseña</h3>
+                      <h3 className="text-center ">{t('header.19','Enviar mail para restablecer contraseña')}</h3>
                       <div className="text-center">
                         <PersonCircle/>
                         <input
@@ -88,13 +89,13 @@ const Login = ({ history, location }) => {
                             className="ml-2"
                             placeholder='email'/>
                       </div>
-                      <p className='text-right' onClick={forgottenPassword} style={{cursor:'pointer'}}><i>Regresar</i></p>
+                      <p className='text-right' onClick={forgottenPassword} style={{cursor:'pointer'}}><i>{t('header.20','Regresar')}</i></p>
                       </div>
                           <div className="text-center m-2">
                             <button
                                 className="btn-light "
                              >
-                                Enviar
+                                {t('header.21','Enviar')}
                             </button>
                           </div>
                     </div>
@@ -115,7 +116,7 @@ const Login = ({ history, location }) => {
                                 <PersonCircle/>
                                 <input
                                     name="usuario"
-                                    placeholder="email"
+                                    placeholder={t('header.22',"email")}
                                     className=" ml-2"/>
                               </div>
                               <div className="text-center">
@@ -123,16 +124,16 @@ const Login = ({ history, location }) => {
                                 <input
                                     name="clave"
                                     type="password"
-                                    placeholder="Clave"
+                                    placeholder={t('header.23',"Clave")}
                                     className=" ml-2"/>
                               </div>
-                              <p className='text-right' onClick={forgottenPassword} style={{cursor:'pointer',fontSize:'small'}}><i>Olvidé mi contraseña</i></p>
+                              <p className='text-right' onClick={forgottenPassword} style={{cursor:'pointer',fontSize:'small'}}><i>{t('header.32',"Olvidé mi contraseña")}</i></p>
                               </div>
                                   <div className="text-center">
                                     <button
                                         className="btn-light col-11 border"
                                      >
-                                        Ingresar
+                                        {t('header.24',"Ingresar")}
                                     </button>
                                   </div>
                                     <div className="text-center">O{" "}</div>
@@ -143,22 +144,22 @@ const Login = ({ history, location }) => {
                                       onClick={() => socialLogin(googleAuthProvider)}
                                       >
                                       <img src={googleLogo} alt='Google' style={{width:'2em'}} className='mr-1'/>
-                                      Ingresar con Google
+                                      {t('header.25',"Ingresar con Google")}
                                       </button>
 
                                       <button
                                       className="btn-light m-1 col-12 border text-left"
                                       onClick={() => socialLogin(facebookAuthProvider)}
                                       >
-                                      <img src={facebookLogo} alt='Google' style={{width:'2em'}} className='mr-1'/>
-                                      Ingresar con Facebook
+                                      <img src={facebookLogo} alt='Facebook' style={{width:'2em'}} className='mr-1'/>
+                                      {t('header.26',"Ingresar con Facebook")}
                                       </button>
 
                                       <button
                                           onClick={() => setsignup(true)}
                                           className="btn-primary m-1"
                                       >
-                                          Registrarse
+                                          {t('header.27',"Registrarse")}
                                       </button>
                                     </div>
                             </div>

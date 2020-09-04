@@ -1,58 +1,42 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from "react";
 import * as firebase from 'firebase'
 import {storage} from "../../Config/firestore.js"
 import { Image, CloudArrowUp } from 'react-bootstrap-icons';
 import { Spinner} from 'react-bootstrap'
+import { useTranslation } from 'react-i18next';
 
-class FileUpload extends React.Component {
+function FileUpload (props){
+  const [uploadValue,setuploadValue] = useState(0)
+  const [picture,setPicture] = useState(props.pictureURL)
+  const [loading,setLoading] = useState(false)
+  const { t } = useTranslation();
 
-  constructor (props) {
-    super(props)
-    this.state = {
-      uploadValue: 0,
-      picture: null,
-      loading: false
-    }
-    this.handleOnChange = this.handleOnChange.bind(this);
-  }
-
-  componentDidMount(){
-    if (this.props.pictureURL) {
-      this.setState({
-        picture: this.props.pictureURL
-      })
-    }
-  }
-
-  componentDidUpdate(){
-    if (this.props.name) {
+  useEffect(()=>{
+    if (props.name) {
       storage.ref("Pictures")
-               .child(this.props.name)
+               .child(props.name)
                .getDownloadURL()
                .then(url => {
-                this.setState({picture: url}) ;
+                 setPicture(url)
               }).catch(function (error) {
                 console.error("Error", error);
               })
     }
+  },[])
 
-  }
 
-  handleOnChange (e) {
-    this.setState({
-      loading:true
-    })
-    var type = this.props.fileType
-    var fileName = this.props.name
+  const handleOnChange = (e) => {
+    setLoading(true)
+
+    var type = props.fileType
+    var fileName = props.name
     const file = e.target.files[0]
     const storageRef = firebase.storage().ref(`${type}/${fileName}`)
     const task = storageRef.put(file)
 
     task.on('state_changed', (snapshot) => {
       let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-      this.setState({
-        uploadValue: percentage
-      })
+      setuploadValue(percentage)
     }, (error) => {
       console.error(error.message)
     }, () => {
@@ -61,42 +45,39 @@ class FileUpload extends React.Component {
                .child(fileName)
                .getDownloadURL()
                .then(url => {
-                this.setState({picture: url,
-                              loading: false}) ;
+                 setPicture(url)
+                 setLoading(false)
               }).catch(function (error) {
                 console.error("No se ha subido ninguna foto de perfil ", error);
               })
     })
   }
 
-  render () {
-
     return (
       <div className='col-12'>
         <div className="FileUpload card">
-          <p className='card-header text-center'><strong>{this.props.title}</strong></p>
+          <p className='card-header text-center'><strong>{props.title}</strong></p>
           <div className='card-body d-flex flex-column align-items-center'>
             <label htmlFor='customFile-Foto'>
-              {this.state.loading?<Spinner animation="border" />:this.state.picture?<img src={this.state.picture} className="text-center card-img-top"/>:
+              {loading?<Spinner animation="border" />:picture?<img src={picture} className="text-center card-img-top"/>:
               <CloudArrowUp size={'7em'}/>}
             </label>
             <div className='d-flex flex-row align-items-center'>
-              <progress value={this.state.uploadValue} max='100' className="progres-bar mr-2">
-                {this.state.uploadValue} %
+              <progress value={uploadValue} max='100' className="progres-bar mr-2">
+                {uploadValue} %
               </progress>
-              {Math.round(this.state.uploadValue*100)/100} %
+              {Math.round(uploadValue*100)/100} %
             </div>
           </div>
           <div className="card-footer d-flex flex-row justify-content-between align-items-center">
             <div className='custom-file'>
-              <input id='customFile-Foto' type='file' onChange={this.handleOnChange.bind(this)} accept='image/*' className='custom-file-input'/>
-              <label className="custom-file-label" htmlFor="customFile"><Image size='2em'/> Seleccionar foto</label>
+              <input id='customFile-Foto' type='file' onChange={handleOnChange} accept='image/*' className='custom-file-input'/>
+              <label className="custom-file-label" htmlFor="customFile"><Image size='2em'/> {t('myClasses.24','Seleccionar foto')}</label>
             </div>
           </div>
         </div>
       </div>
     )
-  }
 }
 
 export default FileUpload

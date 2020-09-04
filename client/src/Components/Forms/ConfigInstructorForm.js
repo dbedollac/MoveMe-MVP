@@ -5,10 +5,12 @@ import { Auth } from "../../Config/AuthContext";
 import './ConfigInstructorForm.css'
 import { withRouter } from "react-router";
 import { Redirect } from 'react-router-dom'
+import { useTranslation } from 'react-i18next';
 
 const ConfigInstructorForm = (props) => {
 const { usuario } = useContext(Auth);
 const [data,setdata] = useState({})
+const { t } = useTranslation();
 
 useEffect(() => {
   if (usuario) {
@@ -45,7 +47,7 @@ const validate = values => {
 const errors = {};
 
 if(!values.CLABE && !values.noTarjeta){
-  errors.bill = 'Se debe proporcionar la CLABE o el número de tarjeta';
+  errors.bill = t('config.2','Se debe proporcionar la CLABE o el número de tarjeta');
 }
 return errors;
 };
@@ -75,7 +77,7 @@ const formik = useFormik({
     disableTrialClasses: values.disableTrialClasses,
     new: false
     },{ merge: true })
-    alert(props.newInstructor?'¡Ahora enlaza tu cuenta de Zoom!':'Tus datos se guardaron con éxito');
+    alert(props.newInstructor?t('config.3','¡Ahora enlaza tu cuenta de Zoom!'):t('config.4','Tus datos se guardaron con éxito'));
     handleClick()
   },
 });
@@ -84,34 +86,34 @@ const formik = useFormik({
   <form onSubmit={formik.handleSubmit} >
       <div className="d-flex flex-row flex-wrap">
           <div className="col-md-7">
-          <p><strong>Datos para crear tu perfil</strong></p>
-            <label htmlFor="profileName">Nombre del perfil</label>
+          <p><strong>{t('config.5','Datos para crear tu perfil')}</strong></p>
+            <label htmlFor="profileName">{t('config.6','Nombre del perfil')}</label>
             <br/>
             <input
               id="profileName"
               name="profileName"
               type="text"
-              placeholder={'¿Cómo te conocen tus clientes?'}
+              placeholder={t('config.18','¿Cómo te conocen tus clientes?')}
               onChange={formik.handleChange}
               value={formik.values.profileName}
               required
               className='col-md-10'
             />
-            <label htmlFor="selfDescription">Cuéntale al mundo de ti</label>
+            <label htmlFor="selfDescription">{t('config.7','Cuéntale al mundo de ti')}</label>
             <br/>
             <textarea
               id="selfDescription"
               name="selfDescription"
               type="text"
               rows='4'
-              placeholder={'Describe tu experiencia fitness (promociona aquí tu reto mensual)'}
+              placeholder={t('config.19','Describe tu experiencia fitness (promociona aquí tu reto mensual)')}
               onChange={formik.handleChange}
               value={formik.values.selfDescription}
               className='col-md-10'
             />
             <br/>
             <div>
-              <label htmlFor="disableTrialClasses" className='mr-md-2'>Deshabilitar clases prueba</label>
+              <label htmlFor="disableTrialClasses" className='mr-md-2'>{t('config.8','Deshabilitar clases prueba')}</label>
               <input
                 id="disableTrialClasses"
                 name="disableTrialClasses"
@@ -122,32 +124,32 @@ const formik = useFormik({
                 defaultChecked={data.disableTrialClasses}
               />
               <div className="clasesPrueba col-md-7">
-                <p>Tus nuevos clientes tienen derecho a tomar su <strong>primer clase (prueba) gratis</strong>, al deshabilitar esta opción tendrán que pagar desde la primer clase.</p>
+                <p>{t('config.9','Tus nuevos clientes tienen derecho a tomar su ')}<strong>{t('config.10','primer clase (prueba) gratis')}</strong>, {t('config.11','al deshabilitar esta opción tendrán que pagar desde la primer clase.')}</p>
               </div>
             </div>
           </div>
           <div>
-            <p><strong>Datos para depositarte tus ganancias</strong></p>
-            <label htmlFor="firstName">Nombre</label>
+            <p><strong>{t('config.12','Datos para depositarte tus ganancias')}</strong></p>
+            <label htmlFor="firstName">{t('config.13','Nombre')}</label>
             <br/>
             <input
               id="firtsName"
               name="firstName"
               type="text"
-              placeholder={'Nombre como en tarjeta'}
+              placeholder={t('config.20','Nombre(s)')}
               onChange={formik.handleChange}
               value={formik.values.firstName}
               className='col-12'
               required
             />
             <br/>
-            <label htmlFor="lastName">Apellido(s)</label>
+            <label htmlFor="lastName">{t('config.14','Apellido(s)')}</label>
             <br/>
             <input
               id="lastName"
               name="lastName"
               type="text"
-              placeholder={'Apellido(s) como en tarjeta'}
+              placeholder={t('config.21','Apellido(s)')}
               onChange={formik.handleChange}
               value={formik.values.lastName}
               className='col-12'
@@ -155,7 +157,7 @@ const formik = useFormik({
             />
             <br/>
             {(formik.touched.CLABE&&formik.touched.noTarjeta)&&formik.errors.bill ? <div style={{color: 'red'}}>{formik.errors.bill}</div> : null}
-            <label htmlFor="CLABE">CLABE</label>
+            <label htmlFor="CLABE">{t('config.15','CLABE')}</label>
             <br/>
             <input
               id="CLABE"
@@ -171,7 +173,7 @@ const formik = useFormik({
               className='col-12'
             />
             <p className='col-12 text-center mt-3'>O</p>
-            <label htmlFor="noTarjeta">Tarjeta de débito</label>
+            <label htmlFor="noTarjeta">{t('config.16','Tarjeta de débito')}</label>
             <input
               id="noTarjeta"
               name="noTarjeta"
@@ -191,7 +193,7 @@ const formik = useFormik({
         </div>
 
         <div className='text-center'>
-          <button type="submit" className="mt-3 btn-secondary btn-lg col-10">Guardar</button>
+          <button type="submit" className="mt-3 btn-secondary btn-lg col-10">{t('config.17','Guardar')}</button>
         </div>
   </form>
 )

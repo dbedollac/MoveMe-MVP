@@ -1,6 +1,6 @@
 import {zoomID, zoomSecret,zoomRedirectURL} from '../../Config/ZoomCredentials'
 import {db} from '../../Config/firestore'
-import {corsurl} from '../../Config/proxyURL'
+import {proxyurl} from '../../Config/proxyURL'
 
 function RefreshToken(uid, token) {
 
@@ -10,14 +10,18 @@ function RefreshToken(uid, token) {
 
   var newTokens = null
 
-  let url='https://zoom.us/oauth/token?grant_type=refresh_token&refresh_token='+token
-  let header = "Basic "+ btoa(zoomID+':'+zoomSecret)
+  let url='zoomAPI/refresh-token'
 
-  fetch(corsurl+url,
+  fetch(proxyurl+url,
   {method: 'POST',
-  headers:{
-    "Authorization": header
-  }
+    body: JSON.stringify({
+         token: token,
+         zoomID: zoomID,
+         zoomSecret: zoomSecret
+     }),
+     headers: {
+       "content-type": "application/json"
+     }
   }).then((response)=>{
       Promise.resolve(response.json()).then( (resp) =>{
         if (resp.access_token) {

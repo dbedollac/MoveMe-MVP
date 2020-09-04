@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useCallback} from "react";
-import { QuestionCircle, PlayFill,CameraVideoFill,Cart3, Receipt, AwardFill, CollectionPlayFill, Calendar3Fill, Wallet2, PersonSquare, ExclamationCircleFill, GearFill, ArrowLeftRight, HouseDoorFill} from 'react-bootstrap-icons';
+import { Globe, FileEarmarkMedicalFill,ShieldFillCheck,QuestionCircle, PlayFill,CameraVideoFill,Cart3, Receipt, AwardFill, CollectionPlayFill, Calendar3Fill, Wallet2, PersonSquare, ExclamationCircleFill, GearFill, ArrowLeftRight, HouseDoorFill} from 'react-bootstrap-icons';
 import {DropdownButton, Dropdown} from 'react-bootstrap'
 import {db, auth} from "../../Config/firestore";
 import { Auth } from "../../Config/AuthContext";
@@ -8,12 +8,15 @@ import { NavLink } from "react-router-dom";
 import {Modal, Button} from 'react-bootstrap'
 import Login from '../Forms/Login'
 import Signup from '../Forms/Signup'
+import ChangeLanguage from '../Atoms/ChangeLanguage'
 import { useMediaQuery } from 'react-responsive'
+import { useTranslation } from 'react-i18next';
 import './NavBarInstructors.css'
 
 
 function NavBar(props) {
   const { usuario } = useContext(Auth);
+  const { t , i18n } = useTranslation()
   const [show, setShow] = useState(false);
   const [login,setLogin] = useState(false);
   const [profileName,setprofileName] = useState("")
@@ -21,6 +24,14 @@ function NavBar(props) {
   const isMD = useMediaQuery({
     query: '(min-device-width: 768px)'
   })
+
+  const changeLanguage = () => {
+    if (i18n.language==='es') {
+      i18n.changeLanguage('en')
+    }else {
+      i18n.changeLanguage('es')
+    }
+  }
 
   const handleClose = () =>{
       setShow(false)
@@ -67,7 +78,7 @@ function NavBar(props) {
           <NavLink to='/instructor-profile' className='text-center' activeClassName="navbar-selected">
             <div className='col-12 '>
               <PersonSquare size={isMD?'2em':'25px'}/>
-              <p className='d-none d-md-block'>Perfil</p>
+              <p className='d-none d-md-block'>{t('header.1','Perfil')}</p>
             </div>
           </ NavLink>
         </div>
@@ -75,7 +86,7 @@ function NavBar(props) {
           <NavLink to='/misclases' className='text-center' activeClassName="navbar-selected">
             <div className='col-12 '>
               <CollectionPlayFill size={isMD?'2em':'25px'}/>
-              <p className='d-none d-md-block'>Mis Clases</p>
+              <p className='d-none d-md-block'>{t('header.2','Mis Clases')}</p>
             </div>
           </ NavLink>
         </div>
@@ -83,7 +94,7 @@ function NavBar(props) {
           <NavLink to='/monthly-program' className='text-center' activeClassName="navbar-selected">
             <div className='col-12 '>
               <Calendar3Fill size={isMD?'2em':'25px'}/>
-              <p className='d-none d-md-block'>Mi Reto</p>
+              <p className='d-none d-md-block'>{t('header.3','Mi Reto')}</p>
             </div>
           </ NavLink>
         </div>
@@ -91,19 +102,23 @@ function NavBar(props) {
           <NavLink to='/sales' className='text-center' activeClassName="navbar-selected">
             <div className='col-12 '>
               <Wallet2 size={isMD?'2em':'25px'} />
-              <p className='d-none d-md-block'>Ventas</p>
+              <p className='d-none d-md-block'>{t('header.4','Ventas')}</p>
             </div>
           </ NavLink>
         </div>
         <div className="col-1 d-flex flex-column align-items-center  justify-content-center">
           <DropdownButton  title='' variant='dark' onClick={searchProfileName} >
-            <Dropdown.Item href={`coach-${profileName.replace(/ /g,'-')}/${usuario?usuario.uid:null}`}><AwardFill className='mr-2'/>Ver mi página comercial</Dropdown.Item>
-            <Dropdown.Item href="/configuration-instructor"><GearFill className='mr-2'/>Configuración</Dropdown.Item>
-            <Dropdown.Item href="/como-iniciar"><PlayFill className='mr-2'/>¿Cómo inicio?</Dropdown.Item>
-            <Dropdown.Item href="mailto:ayuda@moveme.fitness"><QuestionCircle className='mr-2'/>Ayuda</Dropdown.Item>
-            <Dropdown.Item href="/account-type"><ArrowLeftRight className='mr-2'/>Cambiar tipo de cuenta</Dropdown.Item>
+            <Dropdown.Item href={`coach-${profileName.replace(/ /g,'-')}/${usuario?usuario.uid:null}`}><AwardFill className='mr-2'/>{t('header.5','Ver mi página comercial')}</Dropdown.Item>
+            <Dropdown.Item href="/configuration-instructor"><GearFill className='mr-2'/>{t('header.6','Configuración')}</Dropdown.Item>
+            <Dropdown.Item href="/como-iniciar"><PlayFill className='mr-2'/>{t('header.7','¿Cómo inicio?')}</Dropdown.Item>
+            <Dropdown.Item href="mailto:ayuda@moveme.fitness"><QuestionCircle className='mr-2'/>{t('header.8','Ayuda')}</Dropdown.Item>
+            <Dropdown.Item onClick={changeLanguage} className='d-flex flex-row align-items-center'><Globe className='mr-2'/><ChangeLanguage color='black'/></Dropdown.Item>
+            <Dropdown.Item href="/account-type"><ArrowLeftRight className='mr-2'/>{t('header.9','Cambiar tipo de cuenta')}</Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item onClick={()=> {auth.signOut()}}><ExclamationCircleFill className='mr-2'/>Cerrar sesión</Dropdown.Item>
+            <Dropdown.Item href="/terminos-y-condiciones"><FileEarmarkMedicalFill className='mr-2'/>{t('header.10','Términos y Condiciones')}</Dropdown.Item>
+            <Dropdown.Item href="/aviso-de-privacidad"><ShieldFillCheck className='mr-2'/>{t('header.11','Aviso de Privacidad')}</Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item onClick={()=> {auth.signOut()}}><ExclamationCircleFill className='mr-2'/>{t('header.12','Cerrar sesión')}</Dropdown.Item>
           </DropdownButton>
         </div>
       </div>
@@ -115,7 +130,7 @@ function NavBar(props) {
             <NavLink to='/market' className='text-center' activeClassName="navbar-selected">
               <div className='col-12 '>
                 <HouseDoorFill size={isMD?'2em':'25px'} />
-                <p className='d-none d-md-block'>Inicio</p>
+                <p className='d-none d-md-block'>{t('header.13','Inicio')}</p>
               </div>
             </ NavLink>
           </div>
@@ -123,7 +138,7 @@ function NavBar(props) {
             <NavLink to='/clasesZoom' className='text-center' activeClassName="navbar-selected">
               <div className='col-12 '>
                 <CameraVideoFill size={isMD?'2em':'25px'} />
-                <p className='d-none d-md-block'>Clases Zoom</p>
+                <p className='d-none d-md-block'>{t('header.14','Clases Zoom')}</p>
               </div>
             </ NavLink>
           </div>
@@ -131,7 +146,7 @@ function NavBar(props) {
             <NavLink to='/misVideos' className='text-center' activeClassName="navbar-selected">
               <div className='col-12 '>
                 <CollectionPlayFill size={isMD?'2em':'25px'} />
-                <p className='d-none d-md-block'>Mis Videos</p>
+                <p className='d-none d-md-block'>{t('header.15','Mis Videos')}</p>
               </div>
             </ NavLink>
           </div>
@@ -141,17 +156,21 @@ function NavBar(props) {
                 {cartSize?<div className='navbar-cart rounded col-4 d-flex flex-row justify-content-center align-items-center'>
                   {cartSize}</div>:null}
                 <Cart3 size={isMD?'2em':'25px'} />
-                <p className='d-none d-md-block'>Carrito</p>
+                <p className='d-none d-md-block'>{t('header.16','Carrito')}</p>
               </div>
             </ NavLink>
           </div>
           <div className="col-1 d-flex flex-column align-items-center  justify-content-center">
                   <DropdownButton  title='' variant='dark'>
-                    <Dropdown.Item href="/misCompras"><Receipt className='mr-2'/>Mis Compras</Dropdown.Item>
-                    <Dropdown.Item href="mailto:ayuda@moveme.fitness"><QuestionCircle className='mr-2'/>Ayuda</Dropdown.Item>
-                    <Dropdown.Item href="/account-type"><ArrowLeftRight className='mr-2'/>Cambiar tipo de cuenta</Dropdown.Item>
+                    <Dropdown.Item href="/misCompras"><Receipt className='mr-2'/>{t('header.17','Mis Compras')}</Dropdown.Item>
+                    <Dropdown.Item href="/account-type"><ArrowLeftRight className='mr-2'/>{t('header.18','Cambiar tipo de cuenta')}</Dropdown.Item>
+                    <Dropdown.Item href="mailto:ayuda@moveme.fitness"><QuestionCircle className='mr-2'/>{t('header.8','Ayuda')}</Dropdown.Item>
+                    <Dropdown.Item onClick={changeLanguage} className='d-flex flex-row align-items-center'><Globe className='mr-2'/><ChangeLanguage color='black'/></Dropdown.Item>
                     <Dropdown.Divider />
-                    <Dropdown.Item onClick={()=> {auth.signOut()}}><ExclamationCircleFill className='mr-2'/>Cerrar sesión</Dropdown.Item>
+                    <Dropdown.Item href="/terminos-y-condiciones"><FileEarmarkMedicalFill className='mr-2'/>{t('header.10','Términos y Condiciones')}</Dropdown.Item>
+                    <Dropdown.Item href="/aviso-de-privacidad"><ShieldFillCheck className='mr-2'/>{t('header.11','Aviso de Privacidad')}</Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item onClick={()=> {auth.signOut()}}><ExclamationCircleFill className='mr-2'/>{t('header.12','Cerrar sesión')}</Dropdown.Item>
                   </DropdownButton>
           </div>
         </div>
@@ -160,11 +179,12 @@ function NavBar(props) {
       return(
         <div >
           {usuario?null:
-          <div className='d-flex flex-row-reverse justify-content-end'>
-            <HouseDoorFill size={'30px'} style={{cursor:'pointer'}} onClick={()=>{props.history.push('/')}} />
-            <button className='btn-light btn-sm rounded mx-2' onClick={handleShowLogIn}>Ingresar</button>
-            <button className='btn-primary btn-sm rounded' onClick={handleShowSignIn}>Registrarse</button>
-          </div>
+            <div className='d-flex flex-row-reverse justify-content-end align-items-center'>
+              <div onClick={changeLanguage}><ChangeLanguage color='white' fontSize='small'/></div>
+              <HouseDoorFill size={'30px'} style={{cursor:'pointer'}} onClick={()=>{props.history.push('/')}} className='mr-2'/>
+              <button className='btn-light btn-sm rounded mx-2' onClick={handleShowLogIn}>Ingresar</button>
+              <button className='btn-primary btn-sm rounded' onClick={handleShowSignIn}>Registrarse</button>
+            </div>
             }
           <Modal
             show={show}

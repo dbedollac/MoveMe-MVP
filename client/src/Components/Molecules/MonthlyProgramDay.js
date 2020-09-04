@@ -7,6 +7,7 @@ import {db, auth} from '../../Config/firestore'
 import ClassCard from '../Cards/ClassCard'
 import GetZoomMeetings from './GetZoomMeetings'
 import { withRouter } from "react-router";
+import { useTranslation } from 'react-i18next';
 import './MonthlyProgramDay.css'
 
 function MonthlyProgramDay(props) {
@@ -28,7 +29,7 @@ function MonthlyProgramDay(props) {
   const [dateAux, setdateAux] =useState(false)
   const [clasesNumber, setclasesNumber] = useState(0)
   const [meetings, setMeetings] = useState([])
-
+  const { t } = useTranslation();
 
     useEffect(()=>{
       if(usuario&&aux){
@@ -189,7 +190,7 @@ function MonthlyProgramDay(props) {
           <div className ='col-12 d-flex flex-column align-items-center mb-2'>
           {props.match.params.uid||props.zoomMeetings?null:
             <Button variant="outline-primary" onClick={handleShow} className='col-8'>
-              Agregar clase <PlusCircleFill/>
+              {t('mProgram.2','Agregar clase')} <PlusCircleFill/>
             </Button>}
           </div>
            <GetZoomMeetings usertrialClass={props.trialClass} week={props.week<5||props.zoomMeetings?props.week:-1} dayNumber={props.dayNumber} instructor={props.instructor} zoomMeetings={props.zoomMeetings?meetings:false}/>
@@ -206,8 +207,8 @@ function MonthlyProgramDay(props) {
           <div className='d-flex flex-row flex-wrap justify-content-start search-container'>
             <div className='d-flex flex-row align-items-center ml-1 mt-3'>
               <Search className='mr-2'/>
-              <input type='search' placeholder='Buscar clase...' onChange={handleBuscador} className='rounded col-6 col-md-8'/>
-              <i className='ml-1'>{claseDetail?claseDetail.data.title:null}</i>
+              <input type='search' placeholder={t('mProgram.3','Buscar clase...')} onChange={handleBuscador} className='rounded col-6'/>
+              <i className='ml-1 col-6'>{claseDetail?claseDetail.data.title:null}</i>
             </div>
             <form className='pt-3'>
 
@@ -216,13 +217,13 @@ function MonthlyProgramDay(props) {
                     onChange={handleTypeChange}
                     className='m-1'
                     >
-                    <option value="todos" selected>Tipo de ejercicio (Todos)</option>
-                    <option value="estiramiento">Estiramiento (ej. Yoga)</option>
-                    <option value="baile">Baile</option>
-                    <option value="funcional">Funcional</option>
-                    <option value="pelea">Técnica de pelea</option>
-                    <option value="pesas">Con pesas</option>
-                    <option value="otro">Otro</option>
+                    <option value="todos" >{t('allClases.1','Tipo de ejercicio (Todos)')}</option>
+                    <option value="estiramiento">{t('allClases.2','Estiramiento (ej. Yoga)')}</option>
+                    <option value="baile">{t('allClases.3','Baile')}</option>
+                    <option value="funcional">{t('allClases.4','Funcional')}</option>
+                    <option value="pelea">{t('allClases.5','Técnica de pelea')}</option>
+                    <option value="pesas">{t('allClases.6','Con pesas')}</option>
+                    <option value="otro">{t('allClases.7','Otro')}</option>
                   </select>
 
                 <select id="level"
@@ -230,10 +231,10 @@ function MonthlyProgramDay(props) {
                   className='m-1'
                   onChange={handleLevelChange}
                   >
-                  <option value="todos" selected>Dificultad de la clase (Todas)</option>
-                  <option value="principiantes">Para principiantes</option>
-                  <option value="intermedia">Intermedia</option>
-                  <option value="avanzada">Avanzada</option>
+                  <option value="todos" >{t('allClases.8','Dificultad de la clase (Todas)')}</option>
+                  <option value="principiantes">{t('allClases.9','Para principiantes')}</option>
+                  <option value="intermedia">{t('allClases.10','Intermedia')}</option>
+                  <option value="avanzada">{t('allClases.11','Avanzada')}</option>
                 </select>
 
                 <select id="duration"
@@ -241,10 +242,10 @@ function MonthlyProgramDay(props) {
                   className='m-1'
                   onChange={handleDurationChange}
                   >
-                  <option value='todos' selected>Duración (Todas)</option>
-                  <option value={'0'}>0 - 30 min</option>
-                  <option value={'1'}>30 - 60 min</option>
-                  <option value={'2'}>Más de 60 min</option>
+                  <option value='todos'>{t('allClases.12','Duración (Todas)')}</option>
+                  <option value={'0'}>{t('allClases.13','0 - 30 min')}</option>
+                  <option value={'1'}>{t('allClases.14','30 - 60 min')}</option>
+                  <option value={'2'}>{t('allClases.15','Más de 60 min')}</option>
                 </select>
             </form>
             {clases?clases.map((clase,index) => (
