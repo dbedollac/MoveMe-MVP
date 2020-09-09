@@ -351,7 +351,7 @@ function MarketAllClasses(props) {
               onChange={handleOrdenar}
               value={filterSort}
               >
-                <option value=''>Ordenar</option>
+                <option value=''>{t('allClases.21','Ordenar')}</option>
                 <option value={'low'}>{t('allClases.18','Precio: de más bajo a más alto')}</option>
                 <option value={'high'}>{t('allClases.19','Precio: de más alto a más bajo')}</option>
           </select>}

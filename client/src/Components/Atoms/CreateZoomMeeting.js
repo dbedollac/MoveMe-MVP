@@ -98,7 +98,7 @@ const { t } = useTranslation();
         {loading?<Spinner animation="border" className='mr-2'/> :
         <button className='btn-primary mr-2' onClick={setMeeting} disabled={(time!==null&&props.claseID!==null)?false:true}>{t('mProgram.4','Agregar')}</button>
         }
-        <input type="time" onChange={handleTime} className='col-md-8 col-6' value={time}/>
+        <input type="time" onChange={handleTime} className='col-8' value={time}/>
       </div>
     )
 

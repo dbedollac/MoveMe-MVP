@@ -24,7 +24,7 @@ const Header = {
     20:'Regresar',
     21:'Enviar',
     22:"email",
-    23:"Clave",
+    23:"Contraseña",
     24:'Ingresar',
     25:'Ingresar con Google',
     26:'Ingresar con Facebook',

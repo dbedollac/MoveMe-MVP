@@ -6,12 +6,13 @@ import FileUploadVideo from '../Cards/FileUploadVideo'
 import FileUpload from '../Cards/FileUpload'
 import {db, auth} from '../../Config/firestore'
 import NewClassForm from '../Forms/NewClassForm'
+import { useTranslation } from 'react-i18next';
 import './NewClass.css'
 
 function NewClass(props) {
 const { usuario } = useContext(Auth);
 const [count, setcount] = useState(null)
-
+const { t , i18n } = useTranslation()
 
   useEffect(()=>{
     if (usuario) {
@@ -41,8 +42,8 @@ const [count, setcount] = useState(null)
         <div className="NewClass-container d-flex flex-column flex-md-row align-items-start">
 
             <div className="col-md-4 d-flex flex-column align-items-center justify-content-between pt-2">
-              <FileUpload fileType='Pictures' title="Portada de la clase (Opcional)" name={usuario.uid? usuario.uid +'-clase'+count:null}/>
-              <FileUploadVideo videoWidth='100%' videoHeight='100%' fileType='Videos' title="Video para rentar (Opcional)" name={usuario.uid? usuario.uid +'-clase'+count:null}/>
+              <FileUpload fileType='Pictures' title={t('myClasses.26',"Portada de la clase (Opcional)")} name={usuario.uid? usuario.uid +'-clase'+count:null}/>
+              <FileUploadVideo videoWidth='100%' videoHeight='100%' fileType='Videos' title={t('myClasses.27',"Video para rentar (Opcional)")} name={usuario.uid? usuario.uid +'-clase'+count:null}/>
             </div>
 
             <NewClassForm Count={count}/>

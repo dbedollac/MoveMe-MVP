@@ -2,9 +2,8 @@ import React,{useState,useEffect,useContext} from 'react'
 import { withRouter } from "react-router";
 import { Auth } from "../../Config/AuthContext";
 import Header from '../Molecules/Header'
-import facebookLogo from '../Views/Images/Facebook.png'
-import instagramLogo from '../Views/Images/Instagram.png'
 import { useTranslation } from 'react-i18next';
+import Documentation from './Documentation'
 import './Ayuda.css'
 
 function Ayuda(props) {
@@ -21,10 +20,7 @@ function Ayuda(props) {
           <br/>
           <br/>{t('help.5','Te pido de favor nos escribas desde el correo electrónico que registraste en la plataforma.')}
         </p>
-        <div className='d-flex flex-row align-items-center justify-content-around pt-2'>
-          <a href='https://www.facebook.com/MoveMe-Fitness-107603050964291'><img src={facebookLogo} alt='Facebook'/></a>
-          <a href='https://www.instagram.com/movemefitnessapp/'><img src={instagramLogo} alt='Instagram' /></a>
-        </div>
+        <Documentation empty={true}/>
       </div>
     </>
   )

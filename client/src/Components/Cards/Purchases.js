@@ -94,7 +94,7 @@ function CarritoProduct(props) {
   return(
     <div className='card'>
       <div className='card-body d-flex flex-column flex-md-row align-items-center justify-content-start'>
-        <h5 className='col-12 col-md-5'>{props.type} {props.startTime?'('+props.startTime.time+')':null}{props.type.includes('Video')||props.type.includes('Reto')?'(Vigente hasta '+expireDate+')':null}</h5>
+        <h5 className='col-12 col-md-5'>{props.type.includes('Video')?t('misCompras.21','Clase en Video'):props.type.includes('Zoom')?t('misCompras.22','Clase por Zoom'):t('misCompras.23','Reto Mensual')} {props.startTime?'('+props.startTime.time+')':null}{props.type.includes('Video')||props.type.includes('Reto')?t('misCompras.20','(Vigente hasta ')+expireDate+')':null}</h5>
         <h6 className="card-subtitle mb-2 text-muted col-12 col-md-4">{props.claseData?props.claseData.title:null}</h6>
         <div className='d-flex flex-column align-items-center'>
           <p><strong>{t('misCompras.11','Comprado el ')}{purchaseDate}</strong></p>

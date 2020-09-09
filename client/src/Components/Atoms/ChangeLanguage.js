@@ -7,7 +7,7 @@ function ChangeLanguage(props) {
 
   return(
     <div>
-      <i style={{color:props.color,cursor:'pointer',fontSize: props.fontSize}}>{i18n.language==='es'?'English':'Español'}</i>
+      <i style={{color:props.color,cursor:'pointer',fontSize: props.fontSize}}>{i18n.language.includes('es')?'English':'Español'}</i>
     </div>
   )
 }

@@ -109,7 +109,7 @@ const Login = ({ history, location }) => {
                       <div className=" login-container">
                         <form className="form-group d-flex flex-column align-items-center " onSubmit={correoClave}>
                         <div className="d-flex flex-column login-form">
-                          <h2 className='text-center'>Ingresar</h2>
+                          <h2 className='text-center'>{t('header.24','Ingresar')}</h2>
                             <div className="d-flex flex-column align-self-center m-2">
                               {error? <Errores mensaje={error}/>:null}
                               <div className="text-center">
@@ -124,7 +124,7 @@ const Login = ({ history, location }) => {
                                 <input
                                     name="clave"
                                     type="password"
-                                    placeholder={t('header.23',"Clave")}
+                                    placeholder={t('header.23',"Contraseña")}
                                     className=" ml-2"/>
                               </div>
                               <p className='text-right' onClick={forgottenPassword} style={{cursor:'pointer',fontSize:'small'}}><i>{t('header.32',"Olvidé mi contraseña")}</i></p>

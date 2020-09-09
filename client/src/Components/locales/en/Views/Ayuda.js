@@ -2,11 +2,11 @@ import React from 'react'
 
 const Ayuda = {
   help: {
-    1:"Hello",
-    2:"write us to  ",
-    3:' and we will contact you the sooner we can.',
-    4:'Tell us about your problem or doubt.',
-    5:'Please write us from the email you registered on the platform.'
+    1:"Hi!",
+    2:"write us to ",
+    3:' and we will contact you within the next 48 hours.',
+    4:'Describe your problem or doubt.',
+    5:'Please contact us with the email you used to signed in.'
   }
 }
 

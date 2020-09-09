@@ -77,7 +77,6 @@ const handleOpen = () =>{
 
       return(
         <div className='col-12 card'>
-        {console.log(props.startTime)}
           <div className='d-flex flex-column flex-md-row align-items-center justify-content-center pl-5 pt-1'>
             <h3 className='text-center text-break' style={{color: '#F39119'}}>{props.data.title}</h3>
             <div className=' d-flex flex-row justify-content-end ml-md-5'>
@@ -136,12 +135,12 @@ const handleOpen = () =>{
               </div>:null}
 
             <div className='col-12 col-md-6 d-flex flex-column'>
-               <p><strong>{t('iCard.5','Tipo de ejercicio')}: </strong>{props.data.type}</p>
-               <p><strong>{t('iCard.6','Dificultad')}: </strong>{props.data.level}</p>
-               <p><strong>{t('iCard.7','Equipo necesario')}: </strong>{props.data.equipment.length>0? props.data.equipment:'Ninguno'}</p>
+               <p><strong>{t('iCard.5','Tipo de ejercicio')}: </strong>{t('allClases.'+props.data.type,props.data.type)}</p>
+               <p><strong>{t('iCard.6','Dificultad')}: </strong>{t('allClases.'+props.data.level,props.data.level)}</p>
+               <p><strong>{t('iCard.7','Equipo necesario')}: </strong>{props.data.equipment.length>0? props.data.equipment:t('allClases.22','Ninguno')}</p>
                <p><strong>{t('iCard.8','Duración')}: </strong>{props.data.duration} {t('iCard.9','minutos')}</p>
                <p><strong>{t('iCard.10','Precio por clase en Zoom')}: </strong>${props.data.zoomPrice} MXN</p>
-               <p><strong>{t('iCard.11','Precio por renta mensual del video')}: </strong>{props.data.freeVideo?'gratis':'$'+props.data.offlinePrice+' MXN'}</p>
+               <p><strong>{t('iCard.11','Precio por renta mensual del video')}: </strong>{props.data.freeVideo?t('allClases.23','gratis'):'$'+props.data.offlinePrice+' MXN'}</p>
             </div>
 
 

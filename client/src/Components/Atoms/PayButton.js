@@ -3,7 +3,7 @@ import {Modal, Button} from 'react-bootstrap'
 import { CheckSquare } from 'react-bootstrap-icons';
 import StripeFee from '../Atoms/StripeFee'
 import PaymentForm from '../Forms/PaymentForm'
-import Login from '../Forms/Login'
+import Signup from '../Forms/Signup'
 import { Auth } from "../../Config/AuthContext";
 import {db} from "../../Config/firestore";
 import { withRouter } from "react-router";
@@ -88,7 +88,7 @@ function PayButton(props) {
       >
         <Modal.Body >
           {usuario? <p>{t('cart.11','Debes de cambiar tu tipo de cuenta a "Usuario" para poder realizar compras. Puedes regresar al tipo "Instructor" cuando quieras, tu información no se perderá.')}</p>
-          :<Login />}
+          :<Signup />}
         </Modal.Body>
         {usuario?<Modal.Footer>
           <Button variant="secondary" onClick={handleCloseLogin}>

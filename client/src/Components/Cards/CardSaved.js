@@ -215,7 +215,7 @@ const CardSaved = (props) => {
           <Button variant="secondary" onClick={handleCloseDelete}>
             {t('misCompras.6','Cancelar')}
           </Button>
-          <Button variant="danger" onClick={deleteCard}>{loading?<Spinner animation="border" />:'Borrar'}</Button>
+          <Button variant="danger" onClick={deleteCard}>{loading?<Spinner animation="border" />:t('misCompras.19','Borrar')}</Button>
         </Modal.Footer>
       </Modal>
     </div>

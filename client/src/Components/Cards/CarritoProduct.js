@@ -3,10 +3,12 @@ import CoachName from '../Atoms/CoachName'
 import {db} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
 import { TrashFill } from 'react-bootstrap-icons';
+import { useTranslation } from 'react-i18next';
 
 function CarritoProduct(props) {
   const { usuario } = useContext(Auth);
   const[expireDate,setexpireDate] = useState(null)
+  const { t } = useTranslation();
 
   const deleteProduct = async () =>{
     var docRef = db.collection('Users').doc(usuario.uid).collection('ShoppingCart').doc(props.id)
@@ -34,7 +36,7 @@ function CarritoProduct(props) {
   return(
     <div className='card'>
       <div className='card-body d-flex flex-column flex-md-row align-items-end justify-content-start'>
-        <h5 className='col-12 col-md-6'>{props.type} {props.startTime?'('+props.startTime.time+')':null}{props.type.includes('Video')||props.type.includes('Reto')?'(Vigente hasta '+expireDate+')':null}</h5>
+        <h5 className='col-12 col-md-6'>{props.type.includes('Video')?t('misCompras.21','Clase en Video'):props.type.includes('Zoom')?t('misCompras.22','Clase por Zoom'):t('misCompras.23','Reto Mensual')} {props.startTime?'('+props.startTime.time+')':null}{props.type.includes('Video')||props.type.includes('Reto')?'(Vigente hasta '+expireDate+')':null}</h5>
         <h6 className="card-subtitle mb-2 text-muted col-12 col-md-5">{props.claseData?props.claseData.title:null}</h6>
         <TrashFill size={'2em'} onClick={deleteProduct} style={{cursor:'pointer'}}/>
       </div>

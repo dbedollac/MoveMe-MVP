@@ -43,15 +43,6 @@ useEffect(() => {
 
   }
 
-const validate = values => {
-const errors = {};
-
-if(!values.CLABE && !values.noTarjeta){
-  errors.bill = t('config.2','Se debe proporcionar la CLABE o el número de tarjeta');
-}
-return errors;
-};
-
 // Pass the useFormik() hook initial form values and a submit function that will
 // be called when the form is submitted
 const formik = useFormik({
@@ -61,18 +52,13 @@ const formik = useFormik({
     selfDescription: data.selfDescription,
     disableTrialClasses: false,
     firstName: data.firstName,
-    lastName: data.lastName,
-    CLABE: data.CLABE,
-    noTarjeta: data.noTarjeta
+    lastName: data.lastName
   },
-  validate,
   onSubmit: values => {
     db.collection("Instructors").doc(usuario.uid).set({
     profileName: values.profileName,
     firstName: values.firstName,
     lastName: values.lastName,
-    CLABE: values.CLABE,
-    noTarjeta: values.noTarjeta,
     selfDescription: values.selfDescription,
     disableTrialClasses: values.disableTrialClasses,
     new: false
@@ -155,40 +141,6 @@ const formik = useFormik({
               className='col-12'
               required
             />
-            <br/>
-            {(formik.touched.CLABE&&formik.touched.noTarjeta)&&formik.errors.bill ? <div style={{color: 'red'}}>{formik.errors.bill}</div> : null}
-            <label htmlFor="CLABE">{t('config.15','CLABE')}</label>
-            <br/>
-            <input
-              id="CLABE"
-              name="CLABE"
-              type="tel"
-              inputMode="numeric"
-              pattern="[0-9\s]{13,19}"
-              maxLength="19"
-              placeholder={data.CLABE}
-              onChange={formik.handleChange}
-              value={formik.values.CLABE}
-              onBlur={formik.handleBlur}
-              className='col-12'
-            />
-            <p className='col-12 text-center mt-3'>O</p>
-            <label htmlFor="noTarjeta">{t('config.16','Tarjeta de débito')}</label>
-            <input
-              id="noTarjeta"
-              name="noTarjeta"
-              type="tel"
-              inputMode="numeric"
-              pattern="[0-9\s]{13,19}"
-              autoComplete="cc-number"
-              maxLength="19"
-              placeholder={data.noTarjeta}
-              onChange={formik.handleChange}
-              value={formik.values.noTarjeta}
-              onBlur={formik.handleBlur}
-              className='col-12'
-            />
-            <br/>
           </div>
         </div>
 

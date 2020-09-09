@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
 import './ClassCard.css'
-
+import { useTranslation } from 'react-i18next';
 
 function ClassCard(props) {
   const [time,setTime] = useState(null)
+  const { t } = useTranslation();
 
   useEffect(()=>{
     if (props.startTime) {
@@ -36,7 +37,7 @@ function ClassCard(props) {
           <div className=' ClassCard-titulo d-flex flex-column justify-content-around' >
             <p className='text-center px-1' >{props.price?props.price>-1&&!props.misVideos?props.freeVideo?'$0':'$'+props.price:null:null} {props.title}</p>
             {props.startTime?<p className='text-center px-1' >{time}</p>:null}
-            {props.expire?<p className='text-center px-1' >Expira: {time}</p>:null}
+            {props.expire?<p className='text-center px-1' >{t('classCard.1','Expira')}: {time}</p>:null}
           </div>
         </div>
       )

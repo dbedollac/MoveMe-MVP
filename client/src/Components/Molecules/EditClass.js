@@ -41,8 +41,8 @@ const { t } = useTranslation();
       <div>
         <div className="NewClass-container d-flex flex-column flex-md-row align-items-start">
           <div className="col-md-4 d-flex flex-column align-items-center justify-content-between pt-2">
-            <FileUpload fileType='Pictures' title="Portada de la clase (Opcional)" name={usuario? usuario.uid+'-'+props.claseID:null} pictureURL={props.claseData.imgURL}/>
-            <FileUploadVideo videoWidth='100%' videoHeight='100%' fileType='Videos' title="Video para rentar (Opcional)" name={usuario? usuario.uid+'-'+props.claseID:null} videoURL={props.claseData.videoURL} edit={true}/>
+            <FileUpload fileType='Pictures' title={t('myClasses.26',"Portada de la clase (Opcional)")} name={usuario? usuario.uid+'-'+props.claseID:null} pictureURL={props.claseData.imgURL}/>
+            <FileUploadVideo videoWidth='100%' videoHeight='100%' fileType='Videos' title={t('myClasses.27',"Video para rentar (Opcional)")} name={usuario? usuario.uid+'-'+props.claseID:null} videoURL={props.claseData.videoURL} edit={true}/>
           </div>
 
             <EditClassForm claseData={props.claseData} claseID={props.claseID}/>

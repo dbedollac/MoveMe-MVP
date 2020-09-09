@@ -1,12 +1,13 @@
 import React,{useEffect, useState} from 'react'
 import { withRouter } from "react-router";
 import {db} from '../../Config/firestore'
+import { useTranslation } from 'react-i18next';
 import './ClassCard.css'
 
 function CoachCard(props) {
   const [videosNumber, setvideosNumber] = useState(null)
   const [zoomMeetingsNumber, setZoomMeetingsNumber] = useState(null)
-
+  const { t } = useTranslation();
   const today = new Date()
   const firstMonthDay = new Date(today.getFullYear(),today.getMonth(),1)
   const firstMonthSunday = firstMonthDay.getDay()===0?0:7-firstMonthDay.getDay()+1
@@ -42,8 +43,8 @@ function CoachCard(props) {
       {props.data.imgURL?<img src={props.data.imgURL} className='card-img-top rounded-circle'/>:
       <img src='/logo.jpg' className='card-img-top'/>}
       <div className='card-img-overlay-bottom ClassCard-titulo d-flex flex-column justify-content-around'>
-        <p className='text-center px-1' >{zoomMeetingsNumber} Clases por Zoom</p>
-        <p className='text-center px-1' >{videosNumber} Clases en Video</p>
+        <p className='text-center px-1' >{zoomMeetingsNumber} {t('classCard.2','Clases por Zoom')}</p>
+        <p className='text-center px-1' >{videosNumber} {t('classCard.3','Clases en Video')}</p>
       </div>
     </div>
   )

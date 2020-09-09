@@ -21,7 +21,10 @@ const MarketAllClasses = {
     17:'Buscar coach...',
     18:'Precio: de más bajo a más alto',
     19:'Precio: de más alto a más bajo',
-    20:'Quitar filtros'
+    20:'Quitar filtros',
+    21:'Ordenar',
+    22:'Ninguno',
+    23:'gratis'
   }
 }
 

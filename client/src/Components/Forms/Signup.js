@@ -80,7 +80,7 @@ const Signup = ({  history, location }) => {
                       <input
                           name="clave"
                           type="password"
-                          placeholder={t('header.23',"Clave")}
+                          placeholder={t('header.23',"Contraseña")}
                           className=" ml-2"
                           onChange={handlePassword}/>
                     </div>

@@ -17,6 +17,10 @@ import {addToCar} from './Molecules/AddToCar'
 import {header} from './Molecules/Header'
 import {iCard} from './Cards/InstructorDetailCard'
 import {uCard} from './Cards/UserDetailCard'
+import {classCard} from './Cards/ClassCard'
+import {tCondiciones} from './Views/TerminosCondiciones'
+import {aPrivacidad} from './Views/AvisoPrivacidad'
+import {docu} from './Views/Documentation'
 
 const esTranslation =
 {
@@ -39,7 +43,11 @@ const esTranslation =
     "addToCar":addToCar,
     "header":header,
     "iCard":iCard,
-    "uCard":uCard
+    "uCard":uCard,
+    "classCard":classCard,
+    "tCondiciones":tCondiciones,
+    "aPrivacidad":aPrivacidad,
+    "docu":docu
   }
 }
 

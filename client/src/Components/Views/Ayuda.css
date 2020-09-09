@@ -8,7 +8,7 @@
 }
 
 .Ayuda-container img{
-  width: 10em
+  width: 100px
 }
 
 @media (max-width: 768px) {
@@ -17,6 +17,6 @@
   }
 
   .Ayuda-container img{
-    width: 5em
+    width: 80px
   }
 }

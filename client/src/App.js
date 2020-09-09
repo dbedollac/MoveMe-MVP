@@ -18,6 +18,7 @@ import FirstSteps from './Components/Views/FirstSteps'
 import Ayuda from './Components/Views/Ayuda'
 import TerminosCondiciones from './Components/Views/TerminosCondiciones'
 import AvisoPrivacidad from './Components/Views/AvisoPrivacidad'
+import Documentation from './Components/Views/Documentation'
 import { AuthContext } from "./Config/AuthContext";
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
@@ -46,6 +47,7 @@ const App = () => (
           <Route path="/ayuda" component={Ayuda} exact />
           <Route path="/terminos-y-condiciones" component={TerminosCondiciones} exact />
           <Route path="/aviso-de-privacidad" component={AvisoPrivacidad} exact />
+          <Route path="/documentation" component={Documentation} exact />
           <Route path="/:name/:uid" component={Coach} exact />
           <Route path="*" component={Error} />
         </Switch>

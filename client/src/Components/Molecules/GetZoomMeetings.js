@@ -109,7 +109,7 @@ function GetZoomMeetings(props) {
         <div key={meeting.meetingID+index}>
           <StartZoomMeeting
           startTime={meeting.startTime}
-          title={props.zoomMeetings?t('startZoom.1','Unirme'):t('startZoom.1','Iniciar')}
+          title={props.zoomMeetings?t('startZoom.1','Unirme'):t('startZoom.2','Iniciar')}
           meetingID={meeting.meetingID}
           monthlyProgram={props.week?true:false}
           claseID={meeting.claseID}
@@ -126,7 +126,7 @@ function GetZoomMeetings(props) {
       <div key={meeting.meetingID+index}>
         <StartZoomMeeting
         startTime={meeting.startTime}
-        title={props.zoomMeetings?t('startZoom.1','Unirme'):t('startZoom.1','Iniciar')}
+        title={props.zoomMeetings?t('startZoom.1','Unirme'):t('startZoom.2','Iniciar')}
         meetingID={meeting.meetingID}
         monthlyProgram={props.week?true:false}
         claseID={meeting.claseID}

@@ -22,7 +22,7 @@ function FileUpload (props){
                 console.error("Error", error);
               })
     }
-  },[])
+  },[props.name])
 
 
   const handleOnChange = (e) => {

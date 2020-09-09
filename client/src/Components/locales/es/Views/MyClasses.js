@@ -26,7 +26,9 @@ const MyClasses = {
     22:'Video gratis',
     23:'Guardar',
     24:'Seleccionar foto',
-    25:'Seleccionar video'
+    25:'Seleccionar video',
+    26:"Portada de la clase (Opcional)",
+    27:"Video para rentar (Opcional)"
   }
 }
 

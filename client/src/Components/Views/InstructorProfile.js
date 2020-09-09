@@ -184,7 +184,7 @@ const deleteMeeting = (meetingID) =>{
                 }
 
          }
-       },[profileName,usuario])
+       },[profileName,usuario,videoClases])
 
 
     return (

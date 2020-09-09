@@ -19,7 +19,12 @@ const MisCompras = {
     15:'Lamentamos el inconveniente que se te haya presentado usando MoveMe, estamos trabajando para mejorar nuestros servicios.',
     16:'Mándanos un mail a ',
     17:' para atender tu caso.',
-    18:'Solicitar reembolso'
+    18:'Solicitar reembolso',
+    19:'Borrar',
+    20:'(Vigente hasta ',
+    21:'Clase en Video',
+    22:'Clase por Zoom',
+    23:'Reto Mensual'
   }
 }
 

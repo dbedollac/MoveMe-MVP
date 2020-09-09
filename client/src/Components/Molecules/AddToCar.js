@@ -4,7 +4,7 @@ import {Modal, Button} from 'react-bootstrap'
 import { Auth } from "../../Config/AuthContext";
 import {db} from "../../Config/firestore";
 import { withRouter } from "react-router";
-import Login from '../Forms/Login'
+import Signup from '../Forms/Signup'
 import PayButton from '../Atoms/PayButton'
 import { useTranslation } from 'react-i18next';
 
@@ -101,7 +101,7 @@ function AddToCar(props) {
       >
         <Modal.Body >
           {usuario? <p>{t('addToCar.2','Debes de cambiar tu tipo de cuenta a "Usuario" para poder realizar compras. Puedes regresar al tipo "Instructor" cuando quieras, tu información no se perderá.')}</p>
-          :<Login />}
+          :<Signup />}
         </Modal.Body>
         {usuario?<Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

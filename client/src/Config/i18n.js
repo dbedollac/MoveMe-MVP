@@ -10,8 +10,8 @@ i18n
   .init({
     debug: true,
 
-    lng: 'es',
-    fallbackLng: 'es',
+    lng: window.navigator.language.includes('es')?'es':'en',
+    fallbackLng: window.navigator.language.includes('es')?'es':'en',
     whitelist: ['es', 'en'],
 
     resources:{

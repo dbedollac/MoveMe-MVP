@@ -1,0 +1,52 @@
+import React from 'react'
+
+const Documentation = {
+  docu: {
+    1:'Documentación para instructores',
+    2:'1) ¿Cómo instalar MoveMe y enlazar mi cuenta de Zoom?',
+    3:'Regístrate con una cuenta tipo "Instructor".',
+    4:'En configuración',
+    5:'ingresa los datos para generar tu perfil y después selecciona el botón "Enlazar mi cuenta Zoom".',
+    6:'MoveMe te redirigirá a una página de Zoom para que selecciones la cuenta que quieres enlazar.',
+    7:'Una vez enlazada tu cuenta regresarás a la página de tu perfil en MoveMe y habrás concluido la instalación.',
+    8:'2) ¿Cómo utilizar MoveMe?',
+    9:'Mis Clases',
+    10:'En esta sección podrás ver todas las clases que has creado, crear nuevas clases, editar las existentes y agendar clases por Zoom de una ocurrencia:',
+    11:'Ver clases:',
+    12:'En esta página aparecerán las miniaturas de todas las clases que hayas creado, selecciónalas para ver los detalles.',
+    13:'Crear nueva clase:',
+    14:'Selecciona "Nueva Clase" y aparecerá una venta donde poner el nombre de la clase, sus caracterísitcas, podrás subir la portada de su miniatura y el video de la clase para rentar. En esta ventana fijarás los precios de la renta del video y asistencias a clases por Zoom.',
+    15:"Editar clase:",
+    16:'Al seleccionar una clase te aparecerá la opción "Editar Clase", al elegirla se desplegará una ventana igual a la de cuando creaste la clase, pero con los datos actuales de la clase. Modifícalos y guarda para editar la clase.',
+    17:'Agendar clase por Zoom:',
+    18:'Al seleccionar una clase aparecerá un calendario para seleccionar fecha y hora de una sesión por Zoom para dar esa clase. Al guardar la fecha y hora, se agendará la clase de una sola ocurrencia.',
+    19:'Mi Reto',
+    20:'En esta página es donde crearás tu reto mensual. Selecciona una semana del mes y un día de la semana, luego haz click en "Agregar clase" y elige una de tus clases para agendar una sesión de Zoom a la hora que decidas, ese día. Esta clase se reagendará todos los meses la misma semana y el mismo día de la semana. Repite este proceso hasta crear un reto.',
+    21:'Después de que agendes todas las clases por Zoom, fija el precio de tu reto. Los usuarios que adquieran tu reto tendrán acceso a todas las clases por Zoom del mes, así como a todos los videos que hayas subido a MoveMe. Finalmente, activa tu reto para que tus clientes puedan pagar por él y este se ofrezca en el mercado de MoveMe.',
+    22:'Ventas',
+    23:'En esta página podrás ver el resumén de tus ventas. Selecciona desde cuando quieres ver el registro de ventas y observa cuánto has vendido de retos, clases por Zoom y videos rentados. Revisa cuántas ganancias te faltan por recibir y los emails de los clientes que hayan pagado por tu reto para que te mantengas en contacto.',
+    24:'Perfil',
+    25:'En tu perfil puedes ver los datos que ingresaste en configuración, así como un resumen de tus servicios fitness. Aparecen tus próximas clases por Zoom y desde aquí puedes iniciar las sesiones al hacer click en ellas.',
+    26:'Más opciones',
+    27:'Ver mi página comercial:',
+    28:'Observa cómo ven tus clientes tu perfil y cómo pueden comprar tus servicios fitness.',
+    29:'Configuración:',
+    30:'Modifica los datos de tu perfil o enlázate a otra cuenta de Zoom.',
+    31:'¿Cómo inicio?:',
+    32:'Te compartimos los primeros 5 pasos para que inicies tu negocio fitness digital.',
+    33:'Ayuda:',
+    34:'Documentación y correo de ayuda.',
+    35:'English:',
+    36:'Cambia el idioma de MoveMe a inglés.',
+    37:'Cambiar tipo de cuenta:',
+    38:'Cambia tu tipo de cuenta a usuario para que puedas adquirir los servicios fitness de otros instructores.',
+    39:'3) ¿Cómo desenlazar mi cuenta de Zoom?',
+    40:'Inicia sesión en tu cuenta de Zoom y dirígete a Zoom App Market Place.',
+    41:'Haz Click en "Manage">"Installed App".',
+    42:'Identifica la aplicación "MoveMe".',
+    43:'Haz click en desinstalar.',
+    44:'Una vez desinstalada MoveMe, borraremos todos tus datos relacionados a tu cuenta de Zoom. La próxima vez que accedas a MoveMe se te solicitará enlazar una cuenta de nuevo.'
+  }
+}
+
+export const docu = Documentation.docu

@@ -13,7 +13,7 @@ const FirstSteps = {
     9:'más opciones',
     10:'selecciona',
     11:'Ver mi página comercial',
-    12:'y comparte la direción URL de tu página en tus redes sociales para ofrecer tus servicios fitnes.',
+    12:'y comparte la dirección URL de tu página en tus redes sociales para ofrecer tus servicios fitnes.',
     13:'¡Comienza a generar nuevos ingresos!',
     14:'¡Iniciar!'
   }

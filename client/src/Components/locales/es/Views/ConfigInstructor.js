@@ -22,7 +22,8 @@ const ConfigInstructor = {
     18:'¿Cómo te conocen tus clientes?',
     19:'Describe tu experiencia fitness (promociona aquí tu reto mensual)',
     20:'Nombre(s)',
-    21:'Apellido(s)'
+    21:'Apellido(s)',
+    22:'Enlazar mi cuenta Zoom'
   }
 }
 

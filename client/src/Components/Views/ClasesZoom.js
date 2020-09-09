@@ -118,11 +118,11 @@ function ClasesZoom(props) {
       <Header  user={usuario?true:false}/>
       <div className='ClasesZoom-container'>
         <div className='pt-2 pl-2'>
-          <h3>{t('zoomClases.1','Próximas Clases')}</h3>
+          <h3>{t('clasesZoom.1','Próximas Clases')}</h3>
           <DisplayCarousel allClases={retoClases.concat(zoomClases)} zoomMeetings={retoMeetings.concat(zoomMeetings)} ClasesZoom={true} />
         </div>
         <div className='pt-2 pl-2'>
-          <h3>{t('zoomClases.2','Clases del Mes')}</h3>
+          <h3>{t('clasesZoom.2','Clases del Mes')}</h3>
           <MonthlyProgram ClasesZoom={true} zoomMeetings={retoMeetings.concat(zoomMeetings)}/>
         </div>
       </div>

@@ -111,7 +111,7 @@ function NavBar(props) {
             <Dropdown.Item href={`coach-${profileName.replace(/ /g,'-')}/${usuario?usuario.uid:null}`}><AwardFill className='mr-2'/>{t('header.5','Ver mi página comercial')}</Dropdown.Item>
             <Dropdown.Item href="/configuration-instructor"><GearFill className='mr-2'/>{t('header.6','Configuración')}</Dropdown.Item>
             <Dropdown.Item href="/como-iniciar"><PlayFill className='mr-2'/>{t('header.7','¿Cómo inicio?')}</Dropdown.Item>
-            <Dropdown.Item href="mailto:ayuda@moveme.fitness"><QuestionCircle className='mr-2'/>{t('header.8','Ayuda')}</Dropdown.Item>
+            <Dropdown.Item href="/ayuda"><QuestionCircle className='mr-2'/>{t('header.8','Ayuda')}</Dropdown.Item>
             <Dropdown.Item onClick={changeLanguage} className='d-flex flex-row align-items-center'><Globe className='mr-2'/><ChangeLanguage color='black'/></Dropdown.Item>
             <Dropdown.Item href="/account-type"><ArrowLeftRight className='mr-2'/>{t('header.9','Cambiar tipo de cuenta')}</Dropdown.Item>
             <Dropdown.Divider />
@@ -163,9 +163,9 @@ function NavBar(props) {
           <div className="col-1 d-flex flex-column align-items-center  justify-content-center">
                   <DropdownButton  title='' variant='dark'>
                     <Dropdown.Item href="/misCompras"><Receipt className='mr-2'/>{t('header.17','Mis Compras')}</Dropdown.Item>
-                    <Dropdown.Item href="/account-type"><ArrowLeftRight className='mr-2'/>{t('header.18','Cambiar tipo de cuenta')}</Dropdown.Item>
-                    <Dropdown.Item href="mailto:ayuda@moveme.fitness"><QuestionCircle className='mr-2'/>{t('header.8','Ayuda')}</Dropdown.Item>
+                    <Dropdown.Item href="/ayuda"><QuestionCircle className='mr-2'/>{t('header.8','Ayuda')}</Dropdown.Item>
                     <Dropdown.Item onClick={changeLanguage} className='d-flex flex-row align-items-center'><Globe className='mr-2'/><ChangeLanguage color='black'/></Dropdown.Item>
+                    <Dropdown.Item href="/account-type"><ArrowLeftRight className='mr-2'/>{t('header.18','Cambiar tipo de cuenta')}</Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item href="/terminos-y-condiciones"><FileEarmarkMedicalFill className='mr-2'/>{t('header.10','Términos y Condiciones')}</Dropdown.Item>
                     <Dropdown.Item href="/aviso-de-privacidad"><ShieldFillCheck className='mr-2'/>{t('header.11','Aviso de Privacidad')}</Dropdown.Item>
@@ -178,12 +178,16 @@ function NavBar(props) {
     }else {
       return(
         <div >
-          {usuario?null:
+          {usuario?
+            <div className='d-flex flex-row-reverse justify-content-end align-items-center'>
+              <div onClick={changeLanguage}><ChangeLanguage color='white' fontSize='small'/></div>
+            </div>
+          :
             <div className='d-flex flex-row-reverse justify-content-end align-items-center'>
               <div onClick={changeLanguage}><ChangeLanguage color='white' fontSize='small'/></div>
               <HouseDoorFill size={'30px'} style={{cursor:'pointer'}} onClick={()=>{props.history.push('/')}} className='mr-2'/>
-              <button className='btn-light btn-sm rounded mx-2' onClick={handleShowLogIn}>Ingresar</button>
-              <button className='btn-primary btn-sm rounded' onClick={handleShowSignIn}>Registrarse</button>
+              <button className='btn-light btn-sm rounded mx-2' onClick={handleShowLogIn}>{t('header.24','Ingresar')}</button>
+              <button className='btn-primary btn-sm rounded' onClick={handleShowSignIn}>{t('header.27','Registrarse')}</button>
             </div>
             }
           <Modal
