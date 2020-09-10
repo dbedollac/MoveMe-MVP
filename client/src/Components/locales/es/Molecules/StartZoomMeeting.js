@@ -6,7 +6,7 @@ const StartZoomMeeting = {
     2:'Iniciar',
     3:'Eliminar',
     4:'a las',
-    5:'¿Deseas borrar esta clase de tu programa mensual? La clase se dejará de agendar de manera recurrente cada mes.',
+    5:'¿Deseas borrar esta clase? Se reembolsará el dinero a tus clientes que hayan pagado por asistencia. Si la clase pertenece a tu reto mensual, se le notificará a tus clientes el cambio.',
     6:'Cancelar'
   }
 }

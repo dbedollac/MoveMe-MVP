@@ -3,7 +3,6 @@ import Header from '../Molecules/Header'
 import { Auth } from "../../Config/AuthContext";
 import {db, auth} from '../../Config/firestore'
 import { withRouter } from "react-router";
-import {Redirect} from "react-router-dom";
 import './MyClasses.css'
 import NewClass from '../Molecules/NewClass'
 import { PlusCircleFill, Search, X, PencilSquare, ArrowLeft, ArrowRepeat } from 'react-bootstrap-icons';
@@ -182,7 +181,7 @@ const handleRefresh = () =>{
         <div>
         <Header instructor={true} />
           <div className='d-flex flex-row align-items-center'>
-            <h2 className='col-8 col-md-10 text-center text-break' style={{color: '#F39119'}}>Clase Nueva</h2>
+            <h2 className='col-8 col-md-10 text-center text-break' style={{color: '#F39119'}}>{t('myClasses.3','Clase Nueva')}</h2>
             <button className='float-right btn-secondary mt-2 mr-2 rounded' onClick={handleNewClass}><ArrowLeft />{t('myClasses.1',' Regresar')}</button>
           </div>
           <NewClass />
@@ -197,7 +196,7 @@ const handleRefresh = () =>{
 
              {!detail?
               <div className='d-flex flex-column justify-content-start'>
-                <h2 className='text-center'>{clases.length} clases</h2>
+                <h2 className='text-center'>{clases.length} {t('myClasses.28','clases')}</h2>
                 <div className='d-flex flex-row align-items-center'>
                   <Search className='mr-2'/>
                   <input type='search' placeholder='Buscar clase...' onChange={handleBuscador} className='rounded'/>

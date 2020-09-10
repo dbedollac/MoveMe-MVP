@@ -14,7 +14,7 @@ function Ayuda(props) {
     <>
     <Header empty={usuario?true:false}/>
       <div className='Ayuda-container p-4'>
-        <p>{t('help.1','Hola')}, <strong>{t('help.2','escríbenos a ')}<a href='mailto:ayuda@moveme.fitness'>ayuda@moveme.fitness</a></strong>{t('help.3',' y en cuanto nuestro próximo agente se encuentre disponible te responderá de inmediato.')}
+        <p className='Ayuda-container-contact'>{t('help.1','Hola')}, <strong>{t('help.2','escríbenos a ')}<a href='mailto:ayuda@moveme.fitness'>ayuda@moveme.fitness</a></strong>{t('help.3',' y en cuanto nuestro próximo agente se encuentre disponible te responderá de inmediato.')}
           <br/>
           <br/>{t('help.4','Danos una descripción del problema o duda que presentas.')}
           <br/>

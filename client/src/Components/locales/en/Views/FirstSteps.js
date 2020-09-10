@@ -9,7 +9,7 @@ const FirstSteps = {
     5:'My Classes',
     6:' generate your classes, upload videos to rent and schedule classes in Zoom to charge for attendance.',
     7:'Monthly Challenge',
-    8:' Develop and activate your challenge! Schedule classes in Zoom in the weeks of the month. These classes will be scheduled automatically each month.',
+    8:' Develop and activate your challenge! Schedule classes in Zoom in the weeks of the month. After activate your challenge, it will be offered at the price you decided and it will include all the scheduled classes plus acces to your videos for a month.',
     9:'more options',
     10:'select',
     11:'See my business web page',

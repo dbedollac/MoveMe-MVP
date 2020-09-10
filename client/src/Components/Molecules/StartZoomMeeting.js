@@ -158,7 +158,7 @@ function StartZoomMeeting(props) {
           disabled={(props.startTime>now||props.startTime<now2)}
           >{props.monthlyProgram?<CameraVideoFill />:null} {props.title}</button>}
 
-          {props.monthlyProgram? props.market||props.ClasesZoom?null:<div className='col-1 float-right'><DeleteZoomMeeting meetingID={props.meetingID} meetingTitle={claseTitle} meetingTime={time} /></div>:null}
+          {props.market||props.ClasesZoom?null:<div className='col-1 float-right'><DeleteZoomMeeting meetingID={props.meetingID} meetingTitle={claseTitle} meetingTime={time} /></div>}
         </div>
     </div>
   )

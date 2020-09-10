@@ -28,7 +28,8 @@ const MyClasses = {
     24:'Select photo',
     25:'Select video',
     26:"Class cover (Optional)",
-    27:"Video for rent (Optional)"
+    27:"Video for rent (Optional)",
+    28:"Classes"
   }
 }
 

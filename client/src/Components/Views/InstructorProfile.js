@@ -29,100 +29,6 @@ const firstMonthSunday = firstMonthDay.getDay()===0?0:7-firstMonthDay.getDay()+1
 const fiveWeeks = (new Date(today.getFullYear(),today.getMonth(),firstMonthSunday+28).getMonth() === today.getMonth())
 const fiveWeeks0= fiveWeeks?-2:0
 
-
-const deleteMeeting = (meetingID) =>{
-  var docRef = db.collection("Instructors").doc(usuario.uid);
-  docRef.get().then((doc)=>{
-
-  if (doc.exists) {
-        let url=proxyurl+"zoomAPI/delete"
-
-        let init = {
-          method: 'POST',
-          body: JSON.stringify({
-               token: doc.data().zoomToken,
-               meetingID:meetingID
-           }),
-           headers: {
-             "content-type": "application/json"
-           }
-        }
-
-        fetch(url,init).then((response)=>{
-
-              var docRef = db.collection("Instructors").doc(usuario.uid);
-              docRef.collection('ZoomMeetingsID').where("meetingID", "==", meetingID).get()
-                  .then(function(querySnapshot) {
-                    querySnapshot.forEach(function(doc) {
-                      console.log(doc)
-                      doc.ref.delete()
-                      .catch(function(error) {
-                          console.log("Error getting documents: ", error)
-                        })
-                    })
-                  })
-                  .catch(function(error) {
-                      console.log("Error getting documents: ", error);
-                  });
-
-        }, function(error) {
-            console.log(error.message)
-            window.location.reload(false)
-        })
-
-      } else {
-       console.log("No such document!");
-   }
-   }).catch(function(error) {
-       console.log("Error getting document:", error);
-   });
-   }
-
-
-  const updateMeeting = (meetingID) =>{
-     var docRef = db.collection("Instructors").doc(usuario.uid);
-     docRef.get().then((doc)=>{
-
-     if (doc.exists) {
-           let url=proxyurl+"zoomAPI/getdata"
-
-           let init = {
-             method: 'POST',
-             body: JSON.stringify({
-                  token: doc.data().zoomToken,
-                  meetingID:meetingID,
-              }),
-              headers: {
-                "content-type": "application/json"
-              }
-           }
-
-           fetch(url,init).then((response)=>{
-               Promise.resolve(response.json()).then((resp) =>{
-              if (resp.occurrences){
-                if(resp.occurrences.length > 0){
-                docRef.collection('ZoomMeetingsID').doc(meetingID.toString()).set({
-                  startTime: resp.occurrences[0].start_time
-                },{ merge: true })
-              }else {
-                  deleteMeeting(meetingID)
-                }
-              }
-               }
-               )
-           }, function(error) {
-               console.log(error.message)
-               window.location.reload(false)
-           })
-
-         } else {
-          console.log("No such document!");
-      }
-      }).catch(function(error) {
-          console.log("Error getting document:", error);
-      });
-   }
-
   useEffect(()=>{
     auth.onAuthStateChanged((usuario) => {
       if (usuario===null) {
@@ -167,14 +73,8 @@ const deleteMeeting = (meetingID) =>{
                             aux.push(doc.id)
                             zoomMeetings.push({startTime:doc.data().startTime,meetingID:doc.data().meetingID,claseID:doc.data().claseID, monthlyProgram:doc.data().monthlyProgram})
                           }
-                      } else {
-                        if(!doc.data().monthlyProgram){
-                          deleteMeeting(doc.data().meetingID)
-                        }else{
-                          updateMeeting(doc.data().meetingID)
-                          }
-                        }
                       }
+                    }
 
                     )
                   })

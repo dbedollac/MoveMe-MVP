@@ -23,7 +23,8 @@ const ConfigInstructor = {
     19:'Describe tu experiencia fitness (promociona aquí tu reto mensual)',
     20:'Nombre(s)',
     21:'Apellido(s)',
-    22:'Enlazar mi cuenta Zoom'
+    22:'Enlazar mi cuenta Zoom',
+    23:'Enlazada con Zoom'
   }
 }
 

@@ -101,7 +101,7 @@ const handleOpen = () =>{
                     <strong>{t('iCard.2','Video para rentar')}</strong> <br/>{t('iCard.3','(1 mes)')} {props.match.params.uid||props.market?!props.data.freeVideo? '$'+props.data.offlinePrice:null:null}</p>
                   </div>
 
-                    {props.market?!props.data.freeVideo?<AddToCar instructor={instructor} claseVideo={props.data}/>
+                    {props.market?!props.data.freeVideo&&props.data.offlinePrice!==0?<AddToCar instructor={instructor} claseVideo={props.data}/>
                     :<AddFreeVideo product={{
                       data:{instructor: instructor.data,
                         claseData: props.data,

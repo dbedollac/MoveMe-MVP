@@ -31,8 +31,8 @@ function Documentation(props) {
           <li><strong>{t('docu.15','Editar clase:')}</strong> {t('docu.16','Al seleccionar una clase te aparecerá la opción "Editar Clase", al elegirla se desplegará una ventana igual a la de cuando creaste la clase, pero con los datos actuales de la clase. Modifícalos y guarda para editar la clase.')}</li>
           <li><strong>{t('docu.17','Agendar clase por Zoom:')}</strong> {t('docu.18','Al seleccionar una clase aparecerá un calendario para seleccionar fecha y hora de una sesión por Zoom para dar esa clase. Al guardar la fecha y hora, se agendará la clase de una sola ocurrencia.')}</li>
         </ul>
-        <h5 className='mt-3'><CollectionPlayFill/> {t('docu.19','Mi Reto')}</h5>
-        <p>{t('docu.20','En esta página es donde crearás tu reto mensual. Selecciona una semana del mes y un día de la semana, luego haz click en "Agregar clase" y elige una de tus clases para agendar una sesión de Zoom a la hora que decidas, ese día. Esta clase se reagendará todos los meses la misma semana y día de la semana. Repite este proceso hasta crear un reto.')}</p>
+        <h5 className='mt-3'><Calendar3Fill/> {t('docu.19','Mi Reto')}</h5>
+        <p>{t('docu.20','En esta página es donde crearás tu reto mensual. Selecciona una semana del mes y un día de la semana, luego haz click en "Agregar clase" y elige una de tus clases para agendar una sesión de Zoom a la hora que decidas, ese día. Repite este proceso hasta crear un reto.')}</p>
         <p>{t('docu.21','Después de que agendes todas las clases por Zoom, fija el precio de tu reto. Los usuarios que adquieran tu reto, tendrán acceso a todas las clases por Zoom del mes, así como a todos los videos que hayas subido a MoveMe.')}</p>
         <h5 className='mt-3'><Wallet2/> {t('docu.22','Ventas')}</h5>
         <p>{t('docu.23','En esta página podrás ver el resumén de tus ventas. Selecciona desde cuando quieres ver el registro de ventas y observa cuánto has vendido de retos, clases por Zoom y videos rentados. Revisa cuántas ganancias te faltan por recibir y los emails de los clientes que hayan pagado por tu reto para que te mantengas en contacto.')}</p>

@@ -15,6 +15,7 @@ const { usuario } = useContext(Auth);
 const [uid, setUid] = useState(null);
 const [zoomButton, setZoomButton] = useState(true)
 const [newInstructor, setNewInstructor] = useState(true);
+const [zoomConnected, setzoomConnected] = useState(false)
 const { t } = useTranslation();
 
 const searchInstructor = () =>{
@@ -39,6 +40,9 @@ useEffect(()=>{
       if(data.firstName.length>0){
         setZoomButton(false)
           }
+      if (data.zoomToken.length>0) {
+        setzoomConnected(true)
+      }
       }}
       )
     }
@@ -63,12 +67,12 @@ useEffect(()=>{
                 <div className='d-flex flex-row justify-content-center align-items-center zoom-button mb-2 pb-3'>
                   <div className='d-flex flex-column align-items-center'>
                     {zoomButton ? <p style={{color: 'gray'}}>{t('config.1','Guarda primero tus datos de perfil')}</p> : null}
-                    <GetZoomToken disable={zoomButton}/>
+                    <GetZoomToken disable={zoomButton} connected={zoomConnected}/>
                   </div>
                     <CameraVideoFill size={'50px'} className='ml-5' color="#2C8BFF" />
                 </div>
 
-                <FileUpload fileType='Pictures' name={uid + '-profile'} title="Foto de perfil" overlay='profile'/>
+                <FileUpload fileType='Pictures' name={uid + '-profile'} title="Foto de perfil" profile={true}/>
               </div>
 
               <div className="col-lg-8 d-flex flex-column pt-lg-0 pt-4 mb-3">

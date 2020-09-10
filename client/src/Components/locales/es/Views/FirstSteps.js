@@ -9,7 +9,7 @@ const FirstSteps = {
     5:'Mis Clases',
     6:' genera tus clases, sube videos para rentar y agenda clases en Zoom para cobrar por asistencia.',
     7:'Reto Mensual',
-    8:' ¡ desarrolla y activa tu reto ! Agenda clases por Zoom en las semanas del mes. Estas clases se agendarán automáticamente cada mes.',
+    8:' ¡ desarrolla y activa tu reto ! Agenda clases por Zoom en las semanas del mes. Luego de activar tu reto, este se ofrecerá al precio que hayas decidido e incluirá todas las clases agendadas más acceso a tus videos por un mes.',
     9:'más opciones',
     10:'selecciona',
     11:'Ver mi página comercial',

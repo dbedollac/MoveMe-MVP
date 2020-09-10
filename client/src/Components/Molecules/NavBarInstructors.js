@@ -83,7 +83,7 @@ function NavBar(props) {
           </ NavLink>
         </div>
         <div className="col-2 col-md-3 d-flex flex-column align-items-center pt-md-2 pt-4 navbar-option" >
-          <NavLink to='/misclases' className='text-center' activeClassName="navbar-selected">
+          <NavLink to='/myClasses' className='text-center' activeClassName="navbar-selected">
             <div className='col-12 '>
               <CollectionPlayFill size={isMD?'2em':'25px'}/>
               <p className='d-none d-md-block'>{t('header.2','Mis Clases')}</p>
@@ -110,13 +110,13 @@ function NavBar(props) {
           <DropdownButton  title='' variant='dark' onClick={searchProfileName} >
             <Dropdown.Item href={`coach-${profileName.replace(/ /g,'-')}/${usuario?usuario.uid:null}`}><AwardFill className='mr-2'/>{t('header.5','Ver mi página comercial')}</Dropdown.Item>
             <Dropdown.Item href="/configuration-instructor"><GearFill className='mr-2'/>{t('header.6','Configuración')}</Dropdown.Item>
-            <Dropdown.Item href="/como-iniciar"><PlayFill className='mr-2'/>{t('header.7','¿Cómo inicio?')}</Dropdown.Item>
-            <Dropdown.Item href="/ayuda"><QuestionCircle className='mr-2'/>{t('header.8','Ayuda')}</Dropdown.Item>
+            <Dropdown.Item href="/start"><PlayFill className='mr-2'/>{t('header.7','¿Cómo inicio?')}</Dropdown.Item>
+            <Dropdown.Item href="/help"><QuestionCircle className='mr-2'/>{t('header.8','Ayuda')}</Dropdown.Item>
             <Dropdown.Item onClick={changeLanguage} className='d-flex flex-row align-items-center'><Globe className='mr-2'/><ChangeLanguage color='black'/></Dropdown.Item>
             <Dropdown.Item href="/account-type"><ArrowLeftRight className='mr-2'/>{t('header.9','Cambiar tipo de cuenta')}</Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item href="/terminos-y-condiciones"><FileEarmarkMedicalFill className='mr-2'/>{t('header.10','Términos y Condiciones')}</Dropdown.Item>
-            <Dropdown.Item href="/aviso-de-privacidad"><ShieldFillCheck className='mr-2'/>{t('header.11','Aviso de Privacidad')}</Dropdown.Item>
+            <Dropdown.Item href="/terms-and-conditions"><FileEarmarkMedicalFill className='mr-2'/>{t('header.10','Términos y Condiciones')}</Dropdown.Item>
+            <Dropdown.Item href="/privacy-notice"><ShieldFillCheck className='mr-2'/>{t('header.11','Aviso de Privacidad')}</Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item onClick={()=> {auth.signOut()}}><ExclamationCircleFill className='mr-2'/>{t('header.12','Cerrar sesión')}</Dropdown.Item>
           </DropdownButton>
@@ -135,7 +135,7 @@ function NavBar(props) {
             </ NavLink>
           </div>
           <div className="col-2 col-md-3  d-flex flex-column align-items-center pt-md-2 pt-4 navbar-option" >
-            <NavLink to='/clasesZoom' className='text-center' activeClassName="navbar-selected">
+            <NavLink to='/ZoomClasses' className='text-center' activeClassName="navbar-selected">
               <div className='col-12 '>
                 <CameraVideoFill size={isMD?'2em':'25px'} />
                 <p className='d-none d-md-block'>{t('header.14','Clases Zoom')}</p>
@@ -143,7 +143,7 @@ function NavBar(props) {
             </ NavLink>
           </div>
           <div className="col-2 col-md-3  d-flex flex-column align-items-center pt-md-2 pt-4 navbar-option" >
-            <NavLink to='/misVideos' className='text-center' activeClassName="navbar-selected">
+            <NavLink to='/myVideos' className='text-center' activeClassName="navbar-selected">
               <div className='col-12 '>
                 <CollectionPlayFill size={isMD?'2em':'25px'} />
                 <p className='d-none d-md-block'>{t('header.15','Mis Videos')}</p>
@@ -151,7 +151,7 @@ function NavBar(props) {
             </ NavLink>
           </div>
           <div className="col-2  d-flex flex-column align-items-center pt-md-2 pt-4 navbar-option" >
-            <NavLink to='/carrito' className='text-center' activeClassName="navbar-selected">
+            <NavLink to='/cart' className='text-center' activeClassName="navbar-selected">
               <div className='col-12 ' style={{position:'relative'}}>
                 {cartSize?<div className='navbar-cart rounded col-4 d-flex flex-row justify-content-center align-items-center'>
                   {cartSize}</div>:null}
@@ -162,13 +162,13 @@ function NavBar(props) {
           </div>
           <div className="col-1 d-flex flex-column align-items-center  justify-content-center">
                   <DropdownButton  title='' variant='dark'>
-                    <Dropdown.Item href="/misCompras"><Receipt className='mr-2'/>{t('header.17','Mis Compras')}</Dropdown.Item>
-                    <Dropdown.Item href="/ayuda"><QuestionCircle className='mr-2'/>{t('header.8','Ayuda')}</Dropdown.Item>
+                    <Dropdown.Item href="/purchases"><Receipt className='mr-2'/>{t('header.17','Mis Compras')}</Dropdown.Item>
+                    <Dropdown.Item href="/help"><QuestionCircle className='mr-2'/>{t('header.8','Ayuda')}</Dropdown.Item>
                     <Dropdown.Item onClick={changeLanguage} className='d-flex flex-row align-items-center'><Globe className='mr-2'/><ChangeLanguage color='black'/></Dropdown.Item>
                     <Dropdown.Item href="/account-type"><ArrowLeftRight className='mr-2'/>{t('header.18','Cambiar tipo de cuenta')}</Dropdown.Item>
                     <Dropdown.Divider />
-                    <Dropdown.Item href="/terminos-y-condiciones"><FileEarmarkMedicalFill className='mr-2'/>{t('header.10','Términos y Condiciones')}</Dropdown.Item>
-                    <Dropdown.Item href="/aviso-de-privacidad"><ShieldFillCheck className='mr-2'/>{t('header.11','Aviso de Privacidad')}</Dropdown.Item>
+                    <Dropdown.Item href="/terms-and-conditions"><FileEarmarkMedicalFill className='mr-2'/>{t('header.10','Términos y Condiciones')}</Dropdown.Item>
+                    <Dropdown.Item href="/privacy-notice"><ShieldFillCheck className='mr-2'/>{t('header.11','Aviso de Privacidad')}</Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item onClick={()=> {auth.signOut()}}><ExclamationCircleFill className='mr-2'/>{t('header.12','Cerrar sesión')}</Dropdown.Item>
                   </DropdownButton>

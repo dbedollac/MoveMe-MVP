@@ -11,7 +11,7 @@ const { usuario } = useContext(Auth);
 const [time, setTime] = useState('08:00')
 const [date, setDate] = useState(null)
 const [timezone, setTimezone] = useState(null)
-const zoomDate = new Date()
+const zoomDate = props.dayDate
 const [loading,setLoading] = useState(false)
 const { t } = useTranslation();
 
@@ -44,13 +44,6 @@ const { t } = useTranslation();
                       type: props.meetingType,
                       start_time: date+'T'+time+':00',
                       timezone: timezone,
-                      recurrence: {
-                        type: 3,
-                        repeat_interval: 1,
-                        monthly_week: props.week,
-                        monthly_week_day: props.dayNumber,
-                        end_times: 50
-                      },
                       settings: {
                         host_video: true,
                         join_before_host: false,
@@ -68,8 +61,8 @@ const { t } = useTranslation();
                 db.collection("Instructors").doc(usuario.uid).collection("ZoomMeetingsID").doc(resp.id.toString()).set({
                   claseID: props.claseID,
                   meetingID: resp.id,
-                  startTime: resp.occurrences[0].start_time,
-                  monthlyProgram: props.meetingType===2?false:true,
+                  startTime: resp.start_time,
+                  monthlyProgram: true,
                   week:props.week,
                   dayNumber: props.dayNumber,
                   dayName: props.dayName,
@@ -98,7 +91,7 @@ const { t } = useTranslation();
         {loading?<Spinner animation="border" className='mr-2'/> :
         <button className='btn-primary mr-2' onClick={setMeeting} disabled={(time!==null&&props.claseID!==null)?false:true}>{t('mProgram.4','Agregar')}</button>
         }
-        <input type="time" onChange={handleTime} className='col-8' value={time}/>
+        <input type="time" onChange={handleTime} value={time}/>
       </div>
     )
 

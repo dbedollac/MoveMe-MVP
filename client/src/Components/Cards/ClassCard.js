@@ -35,7 +35,7 @@ function ClassCard(props) {
           {props.picture?<img src={props.picture} className='card-img-top' name={props.name} alt={props.id} id={props.joinURL?props.joinURL:props.startTime}/>:
           <img src='/logo.jpg' className='card-img-top' name={props.name} alt={props.id} id={props.joinURL?props.joinURL:props.startTime}/>}
           <div className=' ClassCard-titulo d-flex flex-column justify-content-around' >
-            <p className='text-center px-1' >{props.price?props.price>-1&&!props.misVideos?props.freeVideo?'$0':'$'+props.price:null:null} {props.title}</p>
+            <p className='text-center px-1' >{props.price>-1?!props.misVideos?props.freeVideo?'$0':'$'+props.price:null:null} {props.title}</p>
             {props.startTime?<p className='text-center px-1' >{time}</p>:null}
             {props.expire?<p className='text-center px-1' >{t('classCard.1','Expira')}: {time}</p>:null}
           </div>

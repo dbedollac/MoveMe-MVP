@@ -3,11 +3,12 @@ import * as firebase from 'firebase'
 import {storage} from "../../Config/firestore.js"
 import { Image, CloudArrowUp } from 'react-bootstrap-icons';
 import { Spinner} from 'react-bootstrap'
+import DeleteStorage from '../Atoms/DeleteStorage'
 import { useTranslation } from 'react-i18next';
 
 function FileUpload (props){
   const [uploadValue,setuploadValue] = useState(0)
-  const [picture,setPicture] = useState(props.pictureURL)
+  const [picture,setPicture] = useState(null)
   const [loading,setLoading] = useState(false)
   const { t } = useTranslation();
 
@@ -56,7 +57,12 @@ function FileUpload (props){
     return (
       <div className='col-12'>
         <div className="FileUpload card">
-          <p className='card-header text-center'><strong>{props.title}</strong></p>
+          <div className='card-header d-flex flex-row justify-content-around'>
+            <p className='text-center'><strong>{props.title}</strong></p>
+            {picture?
+              <div onClick={()=>{setPicture(null)}}><DeleteStorage type='Pictures' name={props.name} profile={props.profile?true:false} claseID={props.claseID}/></div>
+              :null}
+          </div>
           <div className='card-body d-flex flex-column align-items-center'>
             <label htmlFor='customFile-Foto'>
               {loading?<Spinner animation="border" />:picture?<img src={picture} className="text-center card-img-top"/>:

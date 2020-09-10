@@ -7,7 +7,7 @@ const SetMonthlyProgramPrice = {
     3:'Monthly Challenge',
     4:'(minimum price: $ 100)',
     5:"The challenge includes all the Zoom classes scheduled on this page plus all the coach's video classes for one month.",
-    6:'The users who acquire your challenge will have access for one month to all the Zoom classes that you schedule on this page plus all the videos you have uploaded. Your challenge classes will be scheduled automatically each month while it is active.',
+    6:'The users who acquire your challenge will have access for one month to all the Zoom classes that you schedule on this page plus all the videos you have uploaded.',
     7:'Price',
     8:'Save',
     9:'Status',

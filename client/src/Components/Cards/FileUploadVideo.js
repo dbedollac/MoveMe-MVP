@@ -5,10 +5,11 @@ import VideoPlayer from '../Atoms/VideoPlayer'
 import { CameraVideoFill, CloudArrowUp } from 'react-bootstrap-icons';
 import { Spinner} from 'react-bootstrap'
 import { useTranslation } from 'react-i18next';
+import DeleteStorage from '../Atoms/DeleteStorage'
 
 function FileUploadVideo (props) {
   const [uploadValue,setuploadValue] = useState(0)
-  const [video,setVideo] = useState(props.videoURL)
+  const [video,setVideo] = useState(null)
   const [loading,setLoading] = useState(false)
   const { t } = useTranslation();
 
@@ -57,9 +58,14 @@ function FileUploadVideo (props) {
     return (
       <div className='col-12'>
         <div className="FileUpload card">
-          <p className='card-header text-center'><strong>{props.title}</strong></p>
+          <div className='card-header d-flex flex-row justify-content-around'>
+            <p className='text-center'><strong>{props.title}</strong></p>
+            {video?
+              <div onClick={()=>{setVideo(null)}}> <DeleteStorage type='Videos' name={props.name} profile={false} claseID={props.claseID}/></div>
+            :null}
+          </div>
           <div className='card-body d-flex flex-column align-items-center justify-content-start'>
-          {loading?<Spinner animation="border" />:video?<VideoPlayer videoWidth={props.videoWidth} videoHeight={props.videoHeight} Video={video} className="text-center card-img-top"/>
+          {loading?<Spinner animation="border" />:video?<VideoPlayer videoWidth={props.videoWidth} videoHeight={props.videoHeight} Video={video} className="text-center card-img-top" edit={props.edit?true:false}/>
           :  <label for='customFile-Video'>
               <CloudArrowUp size={'7em'}/>
             </label>}

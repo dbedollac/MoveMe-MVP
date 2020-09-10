@@ -28,7 +28,8 @@ const MyClasses = {
     24:'Seleccionar foto',
     25:'Seleccionar video',
     26:"Portada de la clase (Opcional)",
-    27:"Video para rentar (Opcional)"
+    27:"Video para rentar (Opcional)",
+    28:'Clases'
   }
 }
 

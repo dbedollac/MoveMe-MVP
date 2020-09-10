@@ -36,20 +36,20 @@ const App = () => (
           <Route path="/configuration-instructor" component={ConfigInstructor} exact />
           <Route path="/account-type" component={ChooseUserType} exact />
           <Route path="/instructor-profile" component={InstructorProfile} exact />
-          <Route path="/misclases" component={MyClasses} exact />
+          <Route path="/myClasses" component={MyClasses} exact />
           <Route path="/monthly-program" component={MonthlyProgram} exact />
           <Route path="/sales" component={Sales} exact />
-          <Route path="/clasesZoom" component={ClasesZoom} exact />
-          <Route path="/misVideos" component={MisVideos} exact />
-          <Route path="/carrito" component={Carrito} exact />
-          <Route path="/misCompras" component={MisCompras} exact />
-          <Route path="/como-iniciar" component={FirstSteps} exact />
-          <Route path="/ayuda" component={Ayuda} exact />
-          <Route path="/terminos-y-condiciones" component={TerminosCondiciones} exact />
-          <Route path="/aviso-de-privacidad" component={AvisoPrivacidad} exact />
+          <Route path="/ZoomClasses" component={ClasesZoom} exact />
+          <Route path="/myVideos" component={MisVideos} exact />
+          <Route path="/cart" component={Carrito} exact />
+          <Route path="/purchases" component={MisCompras} exact />
+          <Route path="/start" component={FirstSteps} exact />
+          <Route path="/help" component={Ayuda} exact />
+          <Route path="/terms-and-conditions" component={TerminosCondiciones} exact />
+          <Route path="/privacy-notice" component={AvisoPrivacidad} exact />
           <Route path="/documentation" component={Documentation} exact />
           <Route path="/:name/:uid" component={Coach} exact />
-          <Route path="*" component={Error} />
+          <Route path="*" component={Dashboard} />
         </Switch>
       </BrowserRouter>
     </AuthContext>

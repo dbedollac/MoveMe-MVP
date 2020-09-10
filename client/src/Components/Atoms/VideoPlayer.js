@@ -9,7 +9,7 @@ function VideoPlayer(props) {
         <ReactPlayer
         // Disable right click
         onContextMenu={e => e.preventDefault()}
-        playing
+        playing = {props.edit?false:true}
         url={props.Video}
         controls = {true}
         light={props.Image}

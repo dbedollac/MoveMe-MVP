@@ -78,7 +78,7 @@ function DeleteZoomMeeting(props) {
          <Modal.Title>{t('startZoom.3','Eliminar')} {props.meetingTitle} {t('startZoom.4','a las')} {props.meetingTime}</Modal.Title>
        </Modal.Header>
        <Modal.Body>
-         {t('startZoom.5','¿Deseas borrar esta clase de tu programa mensual? La clase se dejará de agendar de manera recurrente cada mes.')}
+         {t('startZoom.5','¿Deseas borrar esta clase? Se le reembolsará el dinero a tus clientes que hayan pagado por asistencia. Si la clase pertenece a tu reto mensual, se le notificará a tus clientes el cambio.')}
        </Modal.Body>
        <Modal.Footer>
          <Button variant="secondary" onClick={handleClose}>

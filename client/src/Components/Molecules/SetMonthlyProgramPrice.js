@@ -71,7 +71,7 @@ function SetMonthlyProgramPrice(props) {
                     {t('mPrice.5','El reto incluye todas las clases por Zoom agendadas en esta página más todas las clases en video del coach por un mes.')}
                   </PopoverBody>:
                 <PopoverBody><strong>{t('mPrice.19','¡Activa tu Reto!')}</strong>
-                <br/>{t('mPrice.6','Los usuarios que adquieran tu reto tendrán acceso por un mes a todas las clases por Zoom que agendes en esta página más todos los videos que hayas subido. Las clases de tu reto se agendarán de manera automática cada mes mientras se encuentre activo.')}
+                <br/>{t('mPrice.6','Los usuarios que adquieran tu reto tendrán acceso por un mes a todas las clases por Zoom que agendes en esta página más todos los videos que hayas subido.')}
                 </PopoverBody>}
               </UncontrolledPopover>
 

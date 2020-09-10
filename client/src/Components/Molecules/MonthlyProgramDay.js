@@ -30,6 +30,7 @@ function MonthlyProgramDay(props) {
   const [clasesNumber, setclasesNumber] = useState(0)
   const [meetings, setMeetings] = useState([])
   const { t } = useTranslation();
+  const today = new Date(new Date().setHours(0,0,0,0))
 
     useEffect(()=>{
       if(usuario&&aux){
@@ -189,7 +190,7 @@ function MonthlyProgramDay(props) {
         <div id="example-collapse-text ">
           <div className ='col-12 d-flex flex-column align-items-center mb-2'>
           {props.match.params.uid||props.zoomMeetings?null:
-            <Button variant="outline-primary" onClick={handleShow} className='col-8'>
+            <Button variant="outline-primary" onClick={handleShow} className='col-8' disabled={(props.dayDate<today)}>
               {t('mProgram.2','Agregar clase')} <PlusCircleFill/>
             </Button>}
           </div>
@@ -200,7 +201,7 @@ function MonthlyProgramDay(props) {
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>
-            <CreateZoomMeeting meetingType={8} meetingTopic={claseDetail?claseDetail.data.title:null} week={props.week<5?props.week:-1} dayNumber={props.dayNumber} dayName={props.dayName} claseID={claseDetail?claseDetail.id:null}/>
+            <CreateZoomMeeting meetingType={2} meetingTopic={claseDetail?claseDetail.data.title:null} week={props.week<5?props.week:-1} dayNumber={props.dayNumber} dayName={props.dayName} dayDate={props.dayDate} claseID={claseDetail?claseDetail.id:null}/>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

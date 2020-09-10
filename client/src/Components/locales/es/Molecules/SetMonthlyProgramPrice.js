@@ -7,7 +7,7 @@ const SetMonthlyProgramPrice = {
     3:'Reto Mensual',
     4:'(precio mínimo: $100)',
     5:'El reto incluye todas las clases por Zoom agendadas en esta página más todas las clases en video del coach por un mes.',
-    6:'Los usuarios que adquieran tu reto tendrán acceso por un mes a todas las clases por Zoom que agendes en esta página más todos los videos que hayas subido. Las clases de tu reto se agendarán de manera automática cada mes mientras se encuentre activo.',
+    6:'Los usuarios que adquieran tu reto tendrán acceso por un mes a todas las clases por Zoom que agendes en esta página más todos los videos que hayas subido.',
     7:'Precio',
     8:'Guardar',
     9:'Estatus',

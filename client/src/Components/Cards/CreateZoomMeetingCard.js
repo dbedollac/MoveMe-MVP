@@ -5,6 +5,7 @@ import { Auth } from "../../Config/AuthContext";
 import { ChevronCompactDown, CameraVideoFill } from 'react-bootstrap-icons';
 import {proxyurl} from '../../Config/proxyURL'
 import {Spinner} from 'react-bootstrap'
+import { useTranslation } from 'react-i18next';
 
 function CreateZoomMeetingCard(props) {
 const { usuario } = useContext(Auth);
@@ -12,6 +13,7 @@ const [time, setTime] = useState('08:00')
 const [timezone, setTimezone] = useState(null)
 const [loading,setLoading] = useState(false)
 const today = new Date()
+const { t } = useTranslation();
 
 const getDate = (date) => {
   var saleDate = new Date(date)
@@ -68,12 +70,14 @@ const [date, setDate] = useState(getDate(today))
                   claseID: props.claseID,
                   meetingID: resp.id,
                   startTime: resp.start_time,
-                  monthlyProgram: props.meetingType===2?false:true,
+                  monthlyProgram: false,
                   joinURL: resp.join_url
+                }).then(alert(t('startZoom.9','La clase se agendó con éxito'))).then(window.location.reload(false))
+                .catch(function(error) {
+                    console.log("Error setting documents: ", error);
                 })
-                alert('La clase se agendó con éxito')
               }
-            ).then(window.location.reload(false))
+            )
           }, function(error) {
               console.log(error.message)
               })
@@ -90,7 +94,7 @@ const [date, setDate] = useState(getDate(today))
     <div className='card d-flex flex-column align-items-center'>
       <div className='card-header col-12 d-flex flex-row align-items-center justify-content-center' style={{cursor:'pointer'}} >
         <CameraVideoFill size={'2em'}  color="#2C8BFF" />
-        <p className='card-title mt-2 ml-1'><strong>Agendar Clase Zoom</strong></p>
+        <p className='card-title mt-2 ml-1'><strong>{t('startZoom.7','Agendar Clase Zoom')}</strong></p>
       </div>
       <div className='card-body pt-2'>
         <div className='d-flex flex-column justify-content-around'>
@@ -98,7 +102,7 @@ const [date, setDate] = useState(getDate(today))
           <input type="time" onChange={handleTime} value={time} className='mt-2'/>
           <div className='d-flex align-self-center ' disabled={true}>
             {loading?<Spinner animation="border" className='d-flex align-self-center'/>:
-              <button className='btn-lg btn-primary mt-2' onClick={setMeeting} disabled={(time!==null&&date!==null&&props.claseID!==null)?false:true}>Guardar</button>
+              <button className='btn-lg btn-primary mt-2' onClick={setMeeting} disabled={(time!==null&&date!==null&&props.claseID!==null)?false:true}>{t('startZoom.8','Guardar')}</button>
             }
           </div>
         </div>

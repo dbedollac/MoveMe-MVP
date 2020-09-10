@@ -11,7 +11,7 @@ const GetZoomToken = (props) =>{
 
     return(
       <div>
-        <button disabled={props.disable} className="btn-outline-primary btn-lg" onClick={requestUserAuthorization}>{t('config.22','Enlazar mi cuenta Zoom')}</button>
+        <button disabled={props.disable||props.connected} className="btn-outline-primary btn-lg" onClick={requestUserAuthorization}>{props.connected?t('config.23','Cuenta conectada'):t('config.22','Enlazar mi cuenta Zoom')}</button>
       </div>
     )
   }

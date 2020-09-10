@@ -132,7 +132,7 @@ const handleNext = () =>{
     if (next) {
       if (instructor) {
         if (newInstructor) {
-          return <Redirect to="/como-iniciar"/>
+          return <Redirect to="/start"/>
         } else {
           return <Redirect to="/"/>
         }

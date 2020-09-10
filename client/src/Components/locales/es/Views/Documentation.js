@@ -21,7 +21,7 @@ const Documentation = {
     17:'Agendar clase por Zoom:',
     18:'Al seleccionar una clase aparecerá un calendario para seleccionar fecha y hora de una sesión por Zoom para dar esa clase. Al guardar la fecha y hora, se agendará la clase de una sola ocurrencia.',
     19:'Mi Reto',
-    20:'En esta página es donde crearás tu reto mensual. Selecciona una semana del mes y un día de la semana, luego haz click en "Agregar clase" y elige una de tus clases para agendar una sesión de Zoom a la hora que decidas, ese día. Esta clase se reagendará todos los meses la misma semana y el mismo día de la semana. Repite este proceso hasta crear un reto.',
+    20:'En esta página es donde crearás tu reto mensual. Selecciona una semana del mes y un día de la semana, luego haz click en "Agregar clase" y elige una de tus clases para agendar una sesión de Zoom a la hora que decidas. Repite este proceso hasta crear un reto.',
     21:'Después de que agendes todas las clases por Zoom, fija el precio de tu reto. Los usuarios que adquieran tu reto tendrán acceso a todas las clases por Zoom del mes, así como a todos los videos que hayas subido a MoveMe. Finalmente, activa tu reto para que tus clientes puedan pagar por él y este se ofrezca en el mercado de MoveMe.',
     22:'Ventas',
     23:'En esta página podrás ver el resumén de tus ventas. Selecciona desde cuando quieres ver el registro de ventas y observa cuánto has vendido de retos, clases por Zoom y videos rentados. Revisa cuántas ganancias te faltan por recibir y los emails de los clientes que hayan pagado por tu reto para que te mantengas en contacto.',
