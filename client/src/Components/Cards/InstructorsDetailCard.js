@@ -11,6 +11,8 @@ import AddFreeVideo from '../Atoms/AddFreeVideo'
 import {Collapse} from 'react-bootstrap'
 import { withRouter } from "react-router";
 import { useTranslation } from 'react-i18next';
+import {iva} from '../../Config/Fees'
+import StripeFee from '../Atoms/StripeFee'
 
 function InstructorsDetailCard(props) {
 const { usuario } = useContext(Auth);
@@ -98,7 +100,7 @@ const handleOpen = () =>{
                     {open?<ChevronCompactUp onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>
                     :<PlayFill onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>}
                     <p className='text-center mx-2'>
-                    <strong>{t('iCard.2','Video para rentar')}</strong> <br/>{t('iCard.3','(1 mes)')} {props.match.params.uid||props.market?!props.data.freeVideo? '$'+props.data.offlinePrice:null:null}</p>
+                    <strong>{t('iCard.2','Video para rentar')}</strong> <br/>{t('iCard.3','(1 mes)')} {props.match.params.uid||props.market?!props.data.freeVideo? '$'+(props.data.offlinePrice*(1+iva)+StripeFee(props.data.offlinePrice*(1+iva))).toFixed(2):null:null}</p>
                   </div>
 
                     {props.market?!props.data.freeVideo&&props.data.offlinePrice!==0?<AddToCar instructor={instructor} claseVideo={props.data}/>

@@ -7,7 +7,8 @@ import DeleteZoomMeeting from '../Atoms/DeleteZoomMeeting'
 import AddToCar from '../Molecules/AddToCar'
 import {UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap'
 import { withRouter } from "react-router";
-
+import {iva} from '../../Config/Fees'
+import StripeFee from '../Atoms/StripeFee'
 
 function StartZoomMeeting(props) {
   const { usuario } = useContext(Auth);
@@ -76,7 +77,7 @@ function StartZoomMeeting(props) {
       docRef.collection('Classes').doc(props.claseID)
           .get()
           .then( doc =>{
-              setPrice(doc.data().zoomPrice)
+              setPrice((doc.data().zoomPrice*(1+iva)+StripeFee(doc.data().zoomPrice*(1+iva))).toFixed(2))
               setclaseData(doc.data())
             }
           )

@@ -7,6 +7,8 @@ import {db} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
 import { withRouter } from "react-router";
 import { useTranslation } from 'react-i18next';
+import {iva} from '../../Config/Fees'
+import StripeFee from '../Atoms/StripeFee'
 
 function SetMonthlyProgramPrice(props) {
   const { usuario } = useContext(Auth);
@@ -62,7 +64,7 @@ function SetMonthlyProgramPrice(props) {
   return(
       <div className='card-header d-flex flex-column flex-md-row rounded' style={{backgroundColor:'white'}}>
         <div className='col-12 col-md-6 d-flex flex-row p-md-3 justify-content-md-between justify-content-around align-items-center'>
-            <div className='pr-2'>
+            <div className='pr-3'>
               <InfoCircleFill size={'50px'} color='gray' style={{cursor:'pointer'}} id='price-info'/>
             </div>
               <UncontrolledPopover trigger="click" placement="bottom" target="price-info" >
@@ -75,11 +77,14 @@ function SetMonthlyProgramPrice(props) {
                 </PopoverBody>}
               </UncontrolledPopover>
 
-              <div className='d-flex flex-row align-items-center justify-content-center col-md-6'>
-                <h4 className='mr-2'>{t('mPrice.7','Precio')}</h4>
-                {props.market?<h4>$ {price}</h4>:
-                <input type='number' min='100'step='50' placeholder='400' onChange={handlePrice} value={price} className='col-8'/>}
-                {props.market?null:<p className='ml-1 pt-3'>MXN</p>}
+              <div className='d-flex flex-column col-md-6'>
+                <div className='d-flex flex-row align-items-center justify-content-center'>
+                  <h4 className='mr-2'>{t('mPrice.7','Precio')}</h4>
+                  {props.market?<h4>$ {(price*(1+iva)+StripeFee(price*(1+iva))).toFixed(2)}</h4>:
+                  <input type='number' min='100'step='50' placeholder='400' onChange={handlePrice} value={price} className='col-8'/>}
+                  {props.market?null:<p className='ml-1 pt-3'>MXN</p>}
+                </div>
+                <i style={{color:'gray',fontSize:'small'}}>{t('mPrice.20','Se agregará IVA más tarifa por transacción')}</i>
               </div>
         </div>
         <div className='d-flex flex-row align-items-center justify-content-between col-12 col-md-6 pt-2 pt-md-0'>

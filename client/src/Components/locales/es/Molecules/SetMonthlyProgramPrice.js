@@ -20,7 +20,8 @@ const SetMonthlyProgramPrice = {
     16:'¿Deseas desactivar tu reto? Se cancelará el cobro a tus clientes suscritos y no podrán acceder a tu contenido.',
     17:'Al activar tu reto, este se ofrecerá automáticamente a todos los usuarios de MoveMe y las clases que agendaste se ofrecerán individualmente para compras por asistencia.',
     18:'Cancelar',
-    19:'¡Activa tu Reto!'
+    19:'¡Activa tu Reto!',
+    20:'Se agregará IVA más tarifa por transacción'
   }
 }
 

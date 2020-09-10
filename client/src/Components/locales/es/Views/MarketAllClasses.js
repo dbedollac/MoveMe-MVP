@@ -24,7 +24,10 @@ const MarketAllClasses = {
     20:'Quitar filtros',
     21:'Ordenar',
     22:'Ninguno',
-    23:'gratis'
+    23:'gratis',
+    24:'No se ha agendado ninguna clase por Zoom',
+    25:'No hay retos disponibles',
+    26:'No hay clases disponibles'
   }
 }
 

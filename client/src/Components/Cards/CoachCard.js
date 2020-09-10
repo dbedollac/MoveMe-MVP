@@ -3,6 +3,8 @@ import { withRouter } from "react-router";
 import {db} from '../../Config/firestore'
 import { useTranslation } from 'react-i18next';
 import './ClassCard.css'
+import {iva} from '../../Config/Fees'
+import StripeFee from '../Atoms/StripeFee'
 
 function CoachCard(props) {
   const [videosNumber, setvideosNumber] = useState(null)
@@ -39,7 +41,7 @@ function CoachCard(props) {
 
   return(
     <div className='card d-flex flex-column ClassCard-container' onClick={handleClick}>
-      <p className='card-title text-center'><strong>${props.data.monthlyProgram.Price} {props.data.profileName}</strong></p>
+      <p className='card-title text-center'><strong>${(props.data.monthlyProgram.Price*(1+iva)+StripeFee(props.data.monthlyProgram.Price*(1+iva))).toFixed(2)} {props.data.profileName}</strong></p>
       {props.data.imgURL?<img src={props.data.imgURL} className='card-img-top rounded-circle'/>:
       <img src='/logo.jpg' className='card-img-top'/>}
       <div className='card-img-overlay-bottom ClassCard-titulo d-flex flex-column justify-content-around'>

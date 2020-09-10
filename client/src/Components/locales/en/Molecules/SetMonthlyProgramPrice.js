@@ -20,7 +20,8 @@ const SetMonthlyProgramPrice = {
     16:'Do you want to deactivate your challenge? The charge to your subscribed customers will be canceled and they will not be able to access your content.',
     17:'When you activate your challenge, it will be automatically offered to all MoveMe users and the classes you scheduled will be offered individually for attendance purchases.',
     18:'Cancel',
-    19:'Activate your Challenge!'
+    19:'Activate your Challenge!',
+    20:'Tax plus a transaction fee will be added'
   }
 }
 

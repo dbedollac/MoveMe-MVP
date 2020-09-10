@@ -7,6 +7,7 @@ import { X } from 'react-bootstrap-icons';
 import UsersDetailCard from '../Cards/UsersDetailCard'
 import { Spinner} from 'react-bootstrap'
 import "react-multi-carousel/lib/styles.css";
+import { useTranslation } from 'react-i18next';
 
 function DisplayCarousel(props) {
   const [meetings, setMeetings] = useState([])
@@ -17,6 +18,7 @@ function DisplayCarousel(props) {
   const [loading,setLoading] = useState(true)
   const [detailStarttime,setdetailStarttime] = useState(null)
   setInterval(()=>{setLoading(false)},10000)
+  const { t } = useTranslation();
 
   const shuffleArray= (array) => {
         for (let i = array.length - 1; i > 0; i--) {
@@ -128,7 +130,7 @@ function DisplayCarousel(props) {
     if (loading) {
       return <div className='text-center'><Spinner animation="border" /></div>
     } else {
-      return <h4 style={{color:'gray'}} className='text-center px-2'><i>No se ha agendado ninguna clase por Zoom</i></h4>
+      return <h4 style={{color:'gray'}} className='text-center px-2'><i>{t('allClases.24','No se ha agendado ninguna clase por Zoom')}</i></h4>
     }
   } else {
   return(
