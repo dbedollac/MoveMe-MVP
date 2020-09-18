@@ -5,7 +5,7 @@ import Header from '../Molecules/Header'
 import { CaretDownSquareFill, GearFill, CollectionPlayFill, Calendar3Fill} from 'react-bootstrap-icons';
 import {db,auth} from '../../Config/firestore'
 import { useTranslation } from 'react-i18next';
-import ReactPlayer from 'react-player'
+import VideoPlayer from '../Atoms/VideoPlayer'
 import { useMediaQuery } from 'react-responsive'
 import './FirstSteps.css'
 
@@ -45,7 +45,7 @@ function FirstSteps(props) {
         <h2 className='pt-2'>{t('fSteps.1','¿Cómo iniciar?')}</h2>
         <div className='d-flex flex-column flex-lg-row pt-1 align-items-center justify-content-around'>
 
-          <ReactPlayer url='https://youtu.be/B_yo1ZqVRAk' width={isMD?'500px':'250px'} height={isMD?'300px':'150px'} controls={true}/>
+          <VideoPlayer Video='https://youtu.be/B_yo1ZqVRAk' videoWidth={isMD?'500px':'280px'} videoHeight={isMD?'300px':'170px'} />
           <div className='d-flex flex-column align-items-start justify-content-around col-12 col-lg-7 mt-3 mt-md-0'>
             <div className='d-flex flex-row align-items-center justify-content-start'><h3 className='mr-3'>1</h3><p className='text-justify'>{t('fSteps.2','En ')}<strong>{t('fSteps.3','Configuración')}</strong> <GearFill />{t('fSteps.4',' agrega tus datos personales, foto de perfil y enlaza tu cuenta de Zoom.')}</p></div>
             <div className='d-flex flex-row align-items-center justify-content-start mt-2'><h3 className='mr-3'>2</h3><p className='text-justify'>{t('fSteps.2','En ')}<strong>{t('fSteps.5','Mis Clases')}</strong> <CollectionPlayFill />{t('fSteps.6',' genera tus clases, sube videos para rentar y agenda clases en Zoom para cobrar por asistencia.')}</p></div>
@@ -56,7 +56,7 @@ function FirstSteps(props) {
 
         </div>
 
-        {usuario?true?<button className='btn-lg btn-primary' onClick={()=>{props.history.push('/configuration-instructor')}}>{t('fSteps.14','¡¡Iniciar!')}</button>:null:null}
+        {usuario?newInstructor?<button className='btn-lg btn-primary' onClick={()=>{props.history.push('/configuration-instructor')}}>{t('fSteps.14','¡¡Iniciar!')}</button>:null:null}
       </div>
     </div>
   )
