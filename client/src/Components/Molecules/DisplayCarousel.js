@@ -130,7 +130,7 @@ function DisplayCarousel(props) {
     if (loading) {
       return <div className='text-center'><Spinner animation="border" /></div>
     } else {
-      return <h4 style={{color:'gray'}} className='text-center px-2'><i>{t('allClases.24','No se ha agendado ninguna clase por Zoom')}</i></h4>
+      return <h5 style={{color:'gray'}} className='text-center px-2'><i>{t('allClases.24','No se ha agendado ninguna clase por Zoom')}</i></h5>
     }
   } else {
   return(

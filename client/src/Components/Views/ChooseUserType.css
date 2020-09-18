@@ -1,10 +1,10 @@
 .chooseUserType-container{
-  background-color: lightgray;
+  background-color: #F2F2F2;
   min-height: 100vh;
 }
 
 .chooseUserType-pregunta{
-  background: lightgray;
+  background: #F2F2F2;
   font-size: 30px;
   border-radius: 10px;
   color: black

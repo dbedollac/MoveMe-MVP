@@ -125,8 +125,8 @@ function Coach(props) {
     <>
       <Header instructor={usuario?user?false:true:null} user={usuario?user?true:false:null}/>
           <div className='InstructorProfile-container'>
-              <div className='text-center InstructorProfile-container-header d-flex flex-column flex-md-row'>
-                  <div className='col-12 col-md-6 profilePicture' style={{
+              <div className='text-center InstructorProfile-container-header d-flex flex-column flex-md-row shadow-sm'>
+                  <div className='col-12 col-md-6 profilePicture rounded' style={{
                     backgroundImage: `url(${profilePicture})`,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover'}}>
@@ -138,10 +138,10 @@ function Coach(props) {
                     <div className='InstructorProfile-container-programa p-2'>
                       <div className='d-flex flex-row align-items-center justify-content-around'>
                         <h3>{t('iProfile.1','Reto Mensual')}</h3>
-                        <div className='rounded col-4' style={{backgroundColor: 'lightgray', fontSize: '20px'}}> {monthlyProgramPrice?'$ '+(monthlyProgramPrice*(1+iva)+StripeFee(monthlyProgramPrice*(1+iva))).toFixed(2):null} </div>
+                        <div className='rounded col-4 InstructorProfile-container-programa-price'> {monthlyProgramPrice?'$ '+(monthlyProgramPrice*(1+iva)+StripeFee(monthlyProgramPrice*(1+iva))).toFixed(2):null} </div>
                       </div>
                       <div className='d-flex flex-row'>
-                        <div className='col-6 d-flex flex-column'>
+                        <div className='col-6 monthlyProgram-clasesZoom d-flex flex-column'>
                           <p style={{ fontSize: '40px'}}>{zoomMeetingsProgram.length}</p>
                           <p>{t('iProfile.2','Clases por Zoom')}</p>
                         </div>
@@ -168,7 +168,7 @@ function Coach(props) {
 
                 {zoomMeetings.length>0?
                 <DisplayCarousel allClases={allClases} zoomMeetings={zoomMeetings} market={true} instructor={{data:instructor,id:uid}}/>:
-                <h4 style={{color:'gray'}} className='text-center py-5'><i>{t('iProfile.7','No se ha agendado ninguna clase por Zoom')}</i></h4>}
+                <h5 style={{color:'gray'}} className='text-center py-5'><i>{t('iProfile.7','No se ha agendado ninguna clase por Zoom')}</i></h5>}
 
                 <div className='d-flex flex-column flex-md-row py-2'>
                   <div className='col-md-8 d-flex flex-row alig-items-center justify-content-start'>
@@ -182,7 +182,7 @@ function Coach(props) {
 
                 {videoClases.length>0?
                 <DisplayCarousel allClases={allClases} array={videoClases} market={true}  instructor={{data:instructor,id:uid}} />:
-                <h4 style={{color:'gray'}} className='text-center py-5'><i>{t('iProfile.8','No hay clases con video')}</i></h4>}
+                <h5 style={{color:'gray'}} className='text-center py-5'><i>{t('iProfile.8','No hay clases con video')}</i></h5>}
             </div>
       </div>
     </>

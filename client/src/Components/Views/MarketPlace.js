@@ -191,7 +191,7 @@ function MarketPlace(props) {
           </div>
             {allInstructors.length>0?
             <DisplayCarousel allInstructors={allInstructors} market={true} home={true}/>:
-            <h4 style={{color:'gray'}} className='text-center py-5'><i>{t('mPlace.4','Buscando retos mensuales activos...')}</i></h4>}
+            <h5 style={{color:'gray'}} className='text-center py-5'><i>{t('mPlace.4','Buscando retos mensuales activos...')}</i></h5>}
 
           <div className='d-flex flex-column flex-md-row my-2'>
               <div className='col-md-8 d-flex flex-row alig-items-center justify-content-start'>
@@ -204,7 +204,7 @@ function MarketPlace(props) {
           </div>
             {zoomMeetings.length>0?
             <DisplayCarousel allClases={allClases} zoomMeetings={zoomMeetings} market={true} home={true}/>:
-            <h4 style={{color:'gray'}} className='text-center py-5'><i>{t('mPlace.7','Buscando clases por Zoom...')}</i></h4>}
+            <h5 style={{color:'gray'}} className='text-center py-5'><i>{t('mPlace.7','Buscando clases por Zoom...')}</i></h5>}
 
             <div className='d-flex flex-column flex-md-row my-2'>
                 <div className='col-md-8 d-flex flex-row alig-items-center justify-content-start'>
@@ -217,7 +217,7 @@ function MarketPlace(props) {
             </div>
             {videoClases.length>0?
             <DisplayCarousel allClases={allClases} array={videoClases} market={true} home={true}/>:
-            <h4 style={{color:'gray'}} className='text-center py-5'><i>{t('mPlace.10','Buscando clases en video...')}</i></h4>}
+            <h5 style={{color:'gray'}} className='text-center py-5'><i>{t('mPlace.10','Buscando clases en video...')}</i></h5>}
 
         </div>
       </div>

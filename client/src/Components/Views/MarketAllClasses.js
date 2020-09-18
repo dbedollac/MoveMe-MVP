@@ -375,7 +375,7 @@ function MarketAllClasses(props) {
           :props.zoomMeetings?<ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.instructor?clase.instructor.id:clase.id} id={clase.id} startTime={clase.startTime} price={clase.data.zoomPrice}/>
           :<ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.instructor?clase.instructor.id:clase.id} id={clase.id} price={clase.data.offlinePrice} freeVideo={clase.data.freeVideo} misVideos={props.misVideos?true:false} expire={props.misVideos?clase.expire:null}/>}
         </div>
-      )):<h4 style={{color:'gray'}} className='text-center py-5'><i>{props.allInstructors?t('allClases.25','No hay retos disponibles'):t('allClases.26','No hay clases disponibles')}</i></h4>}
+      )):<h5 style={{color:'gray'}} className='text-center py-5'><i>{props.allInstructors?t('allClases.25','No hay retos disponibles'):t('allClases.26','No hay clases disponibles')}</i></h5>}
       </div>
       {detail&&claseDetail?null:clases.length>showMore?<button className='btn-secondary rounded col-4' onClick={handleVerMas}>Ver más</button>:null}
     </div>

@@ -57,12 +57,12 @@ function SetMonthlyProgramPrice(props) {
 
   if (props.instructor&&!props.instructor.data.monthlyProgram.Active) {
     return (<div className='d-flex flex-row align-items-center justify-content-around p-3'>
-              <h4 style={{color:'gray'}}><i>{t('mPrice.1','Este reto no está activo')}</i></h4>
+              <h5 style={{color:'gray'}}><i>{t('mPrice.1','Este reto no está activo')}</i></h5>
               <button className='btn-secondary rounded' onClick={handleBack}><ArrowLeft /> {t('mPrice.2','Regresar')}</button>
             </div>)
   } else {
   return(
-      <div className='card-header d-flex flex-column flex-md-row rounded' style={{backgroundColor:'white'}}>
+      <div className='card-header d-flex flex-column flex-md-row rounded' style={{backgroundColor:'lightgray'}}>
         <div className='col-12 col-md-6 d-flex flex-row p-md-3 justify-content-md-between justify-content-around align-items-center'>
             <div className='pr-3'>
               <InfoCircleFill size={'50px'} color='gray' style={{cursor:'pointer'}} id='price-info'/>

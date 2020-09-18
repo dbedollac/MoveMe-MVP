@@ -65,7 +65,7 @@ function MonthlyProgramWeek(props) {
 
   return(
     <div className='card'>
-      <div className='card-header d-flex flex-column'>
+      <div className='card-header d-flex flex-column' style={{backgroundColor:'white'}}>
         <h5 className='text-center' style={{color:active?'#F39119':'black'}}>{week?getDayDate(week.sunday)+' - '+getDayDate(week.saturday):null}</h5>
       </div>
       <div className='list-group'>
