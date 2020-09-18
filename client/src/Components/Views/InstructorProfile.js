@@ -7,6 +7,8 @@ import { CameraVideoFill, CollectionPlayFill } from 'react-bootstrap-icons';
 import DisplayCarousel from '../Molecules/DisplayCarousel'
 import {proxyurl} from '../../Config/proxyURL'
 import { useTranslation } from 'react-i18next';
+import {iva} from '../../Config/Fees'
+import StripeFee from '../Atoms/StripeFee'
 import './InstructorProfile.css'
 
 function InstructorProfile(props) {
@@ -104,10 +106,10 @@ const fiveWeeks0= fiveWeeks?-2:0
                     <div className='InstructorProfile-container-programa p-2'>
                       <div className='d-flex flex-row align-items-center justify-content-around'>
                         <h3>{t('iProfile.1','Reto Mensual')}</h3>
-                        <div className='rounded col-4' style={{backgroundColor: 'lightgray', fontSize: '20px'}}> {monthlyProgramPrice?'$ '+monthlyProgramPrice:null} </div>
+                        <div className='rounded col-4' style={{backgroundColor: 'lightgray', fontSize: '20px'}}> {monthlyProgramPrice?'$ '+(monthlyProgramPrice*(1+iva)+StripeFee(monthlyProgramPrice*(1+iva))).toFixed(2):null} </div>
                       </div>
                       <div className='d-flex flex-row'>
-                        <div className='col-6 monthlyProgram-clasesZoom d-flex flex-column'>
+                        <div className='col-6 d-flex flex-column'>
                           <p style={{ fontSize: '40px'}}>{zoomMeetingsProgram.length}</p>
                           <p>{t('iProfile.2','Clases por Zoom')}</p>
                         </div>
@@ -121,7 +123,7 @@ const fiveWeeks0= fiveWeeks?-2:0
               </div>
               <div>
 
-                <div className='d-flex flex-row my-2'>
+                <div className='d-flex flex-row py-2'>
                   <div className='d-flex flex-row alig-items-center justify-content-start'>
                     <CameraVideoFill size={'2em'} className='mr-2' color="#2C8BFF" />
                     <h4>{t('iProfile.5','Próximas Clases por Zoom')}</h4>
@@ -132,7 +134,7 @@ const fiveWeeks0= fiveWeeks?-2:0
                 <DisplayCarousel allClases={allClases} zoomMeetings={zoomMeetings} instructor={usuario?{data:instructor,id:usuario.uid}:null}/>:
                 <h4 style={{color:'gray'}} className='text-center py-5'><i>{t('iProfile.7','No se ha agendado ninguna clase por Zoom')}</i></h4>}
 
-                <div className='d-flex flex-row my-2'>
+                <div className='d-flex flex-row py-2'>
                   <div className='d-flex flex-row alig-items-center justify-content-start'>
                     <CollectionPlayFill size={'2em'} className='mr-2'/>
                     <h4>{t('iProfile.3','Clases en Video')}</h4>

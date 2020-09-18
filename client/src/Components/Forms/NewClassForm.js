@@ -84,8 +84,8 @@ const formik = useFormik({
     level: 'principiantes',
     equipment: '',
     duration: 40,
-    zoomPrice: 0,
-    offlinePrice: 0,
+    zoomPrice: 60,
+    offlinePrice: 10,
     freeVideo:false
   },
   validate,

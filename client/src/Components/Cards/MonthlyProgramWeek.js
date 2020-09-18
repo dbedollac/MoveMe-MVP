@@ -11,6 +11,14 @@ function MonthlyProgramWeek(props) {
       getWeekDates()
     },[])
 
+    const getDayDate = (date) =>{
+      var days = date.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+      var month = (date.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+      var year = date.getFullYear()
+
+      return(days+'/'+month+'/'+year)
+    }
+
     const getWeekDates = () =>{
       var month = props.thisSunday.getMonth()
       var year = props.thisSunday.getFullYear()
@@ -58,7 +66,7 @@ function MonthlyProgramWeek(props) {
   return(
     <div className='card'>
       <div className='card-header d-flex flex-column'>
-        <h3 className='text-center' style={{color:active?'#F39119':'black'}}>{t('mProgram.1','Semana')} {props.week}</h3>
+        <h5 className='text-center' style={{color:active?'#F39119':'black'}}>{week?getDayDate(week.sunday)+' - '+getDayDate(week.saturday):null}</h5>
       </div>
       <div className='list-group'>
         <MonthlyProgramDay trialClass={props.trialClass} dayDate={week?week.sunday:null} dayName={t('mProgram.5','Domingo')} dayNumber={1} week={props.week===5?-1:props.week} className='list-group-item' instructor={props.instructor} zoomMeetings={props.zoomMeetings?props.zoomMeetings:false}/>

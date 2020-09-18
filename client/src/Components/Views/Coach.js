@@ -8,8 +8,9 @@ import DisplayCarousel from '../Molecules/DisplayCarousel'
 import MonthlyProgram from './MonthlyProgram'
 import MyClasses from './MyClasses'
 import { useTranslation } from 'react-i18next';
+import {iva} from '../../Config/Fees'
+import StripeFee from '../Atoms/StripeFee'
 import './InstructorProfile.css'
-
 
 function Coach(props) {
   const uid = props.match.params.uid
@@ -137,10 +138,10 @@ function Coach(props) {
                     <div className='InstructorProfile-container-programa p-2'>
                       <div className='d-flex flex-row align-items-center justify-content-around'>
                         <h3>{t('iProfile.1','Reto Mensual')}</h3>
-                        <div className='rounded col-4' style={{backgroundColor: 'lightgray', fontSize: '20px'}}> {monthlyProgramPrice?'$ '+monthlyProgramPrice:null} </div>
+                        <div className='rounded col-4' style={{backgroundColor: 'lightgray', fontSize: '20px'}}> {monthlyProgramPrice?'$ '+(monthlyProgramPrice*(1+iva)+StripeFee(monthlyProgramPrice*(1+iva))).toFixed(2):null} </div>
                       </div>
                       <div className='d-flex flex-row'>
-                        <div className='col-6 monthlyProgram-clasesZoom d-flex flex-column'>
+                        <div className='col-6 d-flex flex-column'>
                           <p style={{ fontSize: '40px'}}>{zoomMeetingsProgram.length}</p>
                           <p>{t('iProfile.2','Clases por Zoom')}</p>
                         </div>
@@ -155,7 +156,7 @@ function Coach(props) {
               </div>
               <div>
 
-                <div className='d-flex flex-column flex-md-row my-2'>
+                <div className='d-flex flex-column flex-md-row py-2'>
                   <div className='col-md-8 d-flex flex-row alig-items-center justify-content-start'>
                     <CameraVideoFill size={'2em'} className='mr-2' color="#2C8BFF" />
                     <h4>{t('iProfile.5','Próximas Clases por Zoom')}</h4>
@@ -169,7 +170,7 @@ function Coach(props) {
                 <DisplayCarousel allClases={allClases} zoomMeetings={zoomMeetings} market={true} instructor={{data:instructor,id:uid}}/>:
                 <h4 style={{color:'gray'}} className='text-center py-5'><i>{t('iProfile.7','No se ha agendado ninguna clase por Zoom')}</i></h4>}
 
-                <div className='d-flex flex-column flex-md-row my-2'>
+                <div className='d-flex flex-column flex-md-row py-2'>
                   <div className='col-md-8 d-flex flex-row alig-items-center justify-content-start'>
                     <CollectionPlayFill size={'2em'} className='mr-2' />
                     <h4>{t('iProfile.3','Clases en Video')}</h4>

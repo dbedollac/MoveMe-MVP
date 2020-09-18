@@ -84,7 +84,7 @@ function SetMonthlyProgramPrice(props) {
                   <input type='number' min='100'step='50' placeholder='400' onChange={handlePrice} value={price} className='col-8'/>}
                   {props.market?null:<p className='ml-1 pt-3'>MXN</p>}
                 </div>
-                <i style={{color:'gray',fontSize:'small'}}>{t('mPrice.20','Se agregará IVA más tarifa por transacción')}</i>
+                {props.market?null:<i style={{color:'gray',fontSize:'small'}}>{t('mPrice.20','Se agregará IVA más tarifa por transacción')}</i>}
               </div>
         </div>
         <div className='d-flex flex-row align-items-center justify-content-between col-12 col-md-6 pt-2 pt-md-0'>
