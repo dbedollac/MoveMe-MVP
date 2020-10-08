@@ -26,7 +26,7 @@ const MarketAllClasses = {
     22:'Ninguno',
     23:'gratis',
     24:'No se ha agendado ninguna clase por Zoom',
-    25:'No hay retos disponibles',
+    25:'No hay Fitness Kits',
     26:'No hay clases disponibles'
   }
 }

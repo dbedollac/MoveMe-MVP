@@ -8,12 +8,12 @@
 }
 
 .navbar-option a{
-  color: black;
+  color: #595959;
   text-decoration: none;
 }
 
 .navbar-option:hover{
-  background-color: white
+  background-color: #F2F2F2
 }
 
 

@@ -140,10 +140,11 @@ function StartZoomMeeting(props) {
               <PeopleFill size={'20px'}/>
               <p className='pt-3 ml-1'>{usersLength}</p>
           </div>:null}
-        {props.monthlyProgram?<p className='pt-3'>{props.market?'$'+price:null} {time} {claseTitle}</p>:<p className='mt-3'>{props.market?'$'+price:null} {dateTime}</p>}
+        {props.monthlyProgram?<p className='pt-3'>{!props.fitnessKit& props.market?'$'+price:null} {time} {claseTitle}</p>:<p className='mt-3'>{props.market?'$'+price:null} {dateTime}</p>}
       </div>
 
-      <div className='d-flex flex-row align-items-center justify-content-center col-12 col-lg-6'>
+      {props.fitnessKit&&props.market?null:
+        <div className='d-flex flex-row align-items-center justify-content-center col-12 col-lg-6'>
         {props.market?<AddToCar claseZoom={claseData}
           instructor={props.instructor}
           meetingID={props.meetingID}
@@ -160,7 +161,7 @@ function StartZoomMeeting(props) {
           >{props.monthlyProgram?<CameraVideoFill />:null} {props.title}</button>}
 
           {props.market||props.ClasesZoom?null:<div className='col-1 float-right'><DeleteZoomMeeting meetingID={props.meetingID} meetingTitle={claseTitle} meetingTime={time} /></div>}
-        </div>
+        </div>}
     </div>
   )
 }

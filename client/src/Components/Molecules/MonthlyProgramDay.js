@@ -68,10 +68,19 @@ function MonthlyProgramDay(props) {
     }
 
     if (!props.zoomMeetings) {
+      var now = new Date(Date.now()-3600000).toISOString()
+      var count = 0
       var docRef = db.collection("Instructors").doc(props.match.params.uid?props.match.params.uid:usuario.uid);
       docRef.collection('ZoomMeetingsID').where("week", "==", props.week).where("dayNumber", "==", props.dayNumber)
           .get()
-          .then(snap => setclasesNumber(snap.size))
+          .then((querySnapshot)=>{
+            querySnapshot.forEach((doc) => {
+                if (doc.data().startTime>now) {
+                  count = count + 1
+                }
+            });
+            setclasesNumber(count)
+          })
           .catch(function(error) {
               console.log("Error getting documents: ", error);
           });
@@ -180,6 +189,7 @@ function MonthlyProgramDay(props) {
 
   return(
     <div className='card-link'>
+    {open?console.log(props.dayDate):null}
       <div className='d-flex flex-row justify-content-around align-items-center dayName'>
         <p className='pt-2 col-8' style={{color:active?'#F39119':'black'}}>{clasesNumber>0?'('+clasesNumber+')':null} <strong>{props.dayName}</strong> {date}</p>
         {open?<ChevronCompactUp onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>

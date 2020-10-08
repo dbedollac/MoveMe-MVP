@@ -37,6 +37,8 @@ function AvisoPrivacidad0(props) {
       <p>{t('aPrivacidad.25')}</p>
       <h6>{t('aPrivacidad.26')}</h6>
       <p>{t('aPrivacidad.27')}</p>
+      <h6>{t('aPrivacidad.28')}</h6>
+      <p>{t('aPrivacidad.29')}</p>
     </div>
   )
 }

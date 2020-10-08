@@ -3,7 +3,7 @@ import Header from '../Molecules/Header'
 import { Auth } from "../../Config/AuthContext";
 import {db, auth} from '../../Config/firestore'
 import { withRouter } from "react-router";
-import { CameraVideoFill, CollectionPlayFill } from 'react-bootstrap-icons';
+import { CameraVideoFill, CollectionPlayFill, Plus } from 'react-bootstrap-icons';
 import DisplayCarousel from '../Molecules/DisplayCarousel'
 import {proxyurl} from '../../Config/proxyURL'
 import { useTranslation } from 'react-i18next';
@@ -68,7 +68,9 @@ const fiveWeeks0= fiveWeeks?-2:0
                     var now = new Date(Date.now()-3600000).toISOString()
                       querySnapshot.forEach(function(doc) {
                         if (doc.data().monthlyProgram===true&&doc.data().week>fiveWeeks0&&!zoomMeetingsProgram.includes(doc.id)) {
-                          zoomMeetingsProgram.push(doc.id)
+                          if (doc.data().startTime>now) {
+                            zoomMeetingsProgram.push(doc.id)
+                          }
                         }
                         if(doc.data().startTime>now){
                           if (!aux.includes(doc.id)) {
@@ -93,31 +95,34 @@ const fiveWeeks0= fiveWeeks?-2:0
       <div>
       <Header instructor={true} />
           <div className='InstructorProfile-container'>
-              <div className='text-center InstructorProfile-container-header d-flex flex-column flex-md-row shadow-sm'>
+              <div className='text-center InstructorProfile-container-header d-flex flex-column flex-md-row'>
                   <div className='col-12 col-md-6 profilePicture' style={{
                     backgroundImage: `url(${profilePicture})`,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover'}}>
-                    {profilePicture?null:<img src='/logo.jpg' className='p-2 rounded-circle'/>}
+                    {profilePicture?null:<img src='/logo.jpg' className='p-2'/>}
                   </div>
                   <div className='col-12 col-md-6 d-flex flex-column'>
+                  <div className='InstructorProfile-container-nameDescription'>
                     <h2>{profileName}</h2>
                     <p className='text-left'>{selfDescription}</p>
+                  </div>
                     <div className='InstructorProfile-container-programa p-2'>
                       <div className='d-flex flex-row align-items-center justify-content-around'>
                         <h3>{t('iProfile.1','Reto Mensual')}</h3>
-                        <div className='rounded col-4 InstructorProfile-container-programa-price'> {monthlyProgramPrice?'$ '+(monthlyProgramPrice*(1+iva)+StripeFee(monthlyProgramPrice*(1+iva))).toFixed(2):null} </div>
                       </div>
-                      <div className='d-flex flex-row'>
-                        <div className='col-6 monthlyProgram-clasesZoom d-flex flex-column'>
+                      <div className='d-flex flex-row justify-content-around align-items-center'>
+                        <div className='monthlyProgram-clasesZoom d-flex flex-column'>
                           <p style={{ fontSize: '40px'}}>{zoomMeetingsProgram.length}</p>
                           <p>{t('iProfile.2','Clases por Zoom')}</p>
                         </div>
-                        <div className='col-6 d-flex flex-column'>
+                        <Plus size={'2em'}/>
+                        <div className='d-flex flex-column'>
                           <p style={{ fontSize: '40px'}}>{videoClases.length}</p>
                           <p>{t('iProfile.3','Clases en Video')}</p>
                         </div>
                       </div>
+                      <div className='InstructorProfile-container-programa-price'> {monthlyProgramPrice?'$ '+(monthlyProgramPrice*(1+iva)+StripeFee(monthlyProgramPrice*(1+iva))).toFixed(2):null} </div>
                     </div>
                   </div>
               </div>
@@ -136,7 +141,7 @@ const fiveWeeks0= fiveWeeks?-2:0
 
                 <div className='d-flex flex-row py-2'>
                   <div className='d-flex flex-row alig-items-center justify-content-start'>
-                    <CollectionPlayFill size={'2em'} className='mr-2'/>
+                    <CollectionPlayFill size={'2em'} className='mr-2' color='darkcyan'/>
                     <h4>{t('iProfile.3','Clases en Video')}</h4>
                   </div>
                 </div>

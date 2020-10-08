@@ -6,7 +6,7 @@ const AvisoPrivacidad = {
     2:'MOVEME FITNESS',
     3:'En cumplimiento a lo dispuesto por la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (en adelante, la “Ley de Datos”), su Reglamento y demás disposiciones aplicables, hace de su conocimiento el presente Aviso de Privacidad (en adelante, el “Aviso”).',
     4:'1.	Responsable de los datos personales recabados y datos de contacto.',
-    5:'MOVEME FITNESS, S.A.P.I. DE C.V. (en adelante, indistintamente “MoveMe” o el “Responsable”) es el responsable de los datos personales que voluntariamente nos proporciona a través de la dirección electrónica https://moveme.fitness/ (en adelante, nuestro “Sitio”).',
+    5:'NOVUSTEKS, S.A.P.I. DE C.V. (en adelante, indistintamente “MoveMe” o el “Responsable”) es el responsable de los datos personales que voluntariamente nos proporciona a través de la dirección electrónica https://moveme.fitness/ (en adelante, nuestro “Sitio”).',
     6:'Para cualquier información relacionada con sus datos personales, podrá enviar un correo electrónico a la dirección: ayuda@moveme.fitness.',
     7:'2.	Datos Personales Recabados.',
     8:'Con el propósito de que Usted pueda ser un Usuario del Sitio, tal y como dicho término se define en los Términos y Condiciones Generales del mismo, Usted deberá proporcionar la siguiente información personal (en adelante, los “Datos Personales Recabados”):',
@@ -28,7 +28,9 @@ const AvisoPrivacidad = {
     24:'6.	Transferencia de los Datos Personales Recabados a y de terceros.',
     25:'Los Datos Personales Recabados no serán transmitidos a terceros, salvo que dicha transferencia sea necesaria por virtud de los Servicios con base en los Términos y Condiciones Generales del Sitio, en cuyo caso, dicha transferencia estaría exenta de consentimiento en términos del artículo 37, fracción IV de la Ley de Datos.',
     26:'7.	Uso de cookies.',
-    27:'Nuestro Sitio utiliza cookies para recopilar datos estadísticos sobre el uso de nuestro Sitio y su funcionamiento, así como facilitar la navegación del usuario, lo que incluye recordarlo para visitas futuras al Sitio.'
+    27:'Nuestro Sitio utiliza cookies para recopilar datos estadísticos sobre el uso de nuestro Sitio y su funcionamiento, así como facilitar la navegación del usuario, lo que incluye recordarlo para visitas futuras al Sitio.',
+    28:'8.  Retención de datos de Zoom',
+    29:'El tiempo que conservaremos sus Datos personales de Zoom depende del tipo de datos y del propósito para el que procesamos los datos. Retendremos su Información personal durante el período necesario para cumplir con los propósitos descritos en este Aviso de privacidad, a menos que la ley exija o permita un período de retención más largo.'
   }
 }
 

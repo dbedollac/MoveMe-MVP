@@ -58,14 +58,14 @@ function SetMonthlyProgramPrice(props) {
   if (props.instructor&&!props.instructor.data.monthlyProgram.Active) {
     return (<div className='d-flex flex-row align-items-center justify-content-around p-3'>
               <h5 style={{color:'gray'}}><i>{t('mPrice.1','Este reto no está activo')}</i></h5>
-              <button className='btn-secondary rounded' onClick={handleBack}><ArrowLeft /> {t('mPrice.2','Regresar')}</button>
+              <button className='btn-light rounded' onClick={handleBack}><ArrowLeft /> {t('mPrice.2','Regresar')}</button>
             </div>)
   } else {
   return(
-      <div className='card-header d-flex flex-column flex-md-row rounded' style={{backgroundColor:'lightgray'}}>
+      <div className='d-flex flex-column flex-md-row '>
         <div className='col-12 col-md-6 d-flex flex-row p-md-3 justify-content-md-between justify-content-around align-items-center'>
             <div className='pr-3'>
-              <InfoCircleFill size={'50px'} color='gray' style={{cursor:'pointer'}} id='price-info'/>
+              <InfoCircleFill size={'50px'} color='#d68930' style={{cursor:'pointer'}} id='price-info'/>
             </div>
               <UncontrolledPopover trigger="click" placement="bottom" target="price-info" >
                 <PopoverHeader>{t('mPrice.3','Reto Mensual')}<br/>{!props.market?t('mPrice.4','(precio mínimo: $100)'):null}</PopoverHeader>
@@ -80,7 +80,7 @@ function SetMonthlyProgramPrice(props) {
               <div className='d-flex flex-column col-md-6'>
                 <div className='d-flex flex-row align-items-center justify-content-center'>
                   <h4 className='mr-2'>{t('mPrice.7','Precio')}</h4>
-                  {props.market?<h4>$ {(price*(1+iva)+StripeFee(price*(1+iva))).toFixed(2)}</h4>:
+                  {props.market?<p style={{fontSize:'large'}} className='mt-1'>$ {(price*(1+iva)+StripeFee(price*(1+iva))).toFixed(2)}</p>:
                   <input type='number' min='100'step='50' placeholder='400' onChange={handlePrice} value={price} className='col-8'/>}
                   {props.market?null:<p className='ml-1 pt-3'>MXN</p>}
                 </div>
@@ -95,7 +95,7 @@ function SetMonthlyProgramPrice(props) {
           :<button className='btn-lg btn-primary' onClick={handleSave} disabled={(price<100)}>{t('mPrice.8','Guardar')}</button>}
           {props.market?
             <div className='d-flex flex-row  align-items-center'>
-              <button className='btn-secondary rounded btn-sm' onClick={handleBack}><ArrowLeft /> {t('mPrice.2','Regresar')}</button>
+              <button className='btn-light rounded btn-sm' onClick={handleBack}><ArrowLeft /> {t('mPrice.2','Regresar')}</button>
             </div>
             :
             <MonthlyProgramStatus disabled={disableActive}/>

@@ -21,9 +21,7 @@ const { t } = useTranslation();
 const searchInstructor = () =>{
     if(usuario){
     db.collection("Instructors").doc(usuario.uid).get().then( (doc) => {
-      if (doc.data().zoomToken.length>0) {
         setNewInstructor(doc.data().new)
-      }
       });
   }
   }
@@ -40,8 +38,10 @@ useEffect(()=>{
       if(data.firstName.length>0){
         setZoomButton(false)
           }
-      if (data.zoomToken.length>0) {
-        setzoomConnected(true)
+      if (data.zoomToken) {
+        if (data.zoomToken.length>0) {
+          setzoomConnected(true)
+        }
       }
       }}
       )

@@ -104,7 +104,7 @@ function GetZoomMeetings(props) {
 
   return(
       <div>
-        {meetings.length===0&&!props.zoomMeetings?<h5 style={{color: 'gray'}} className='ml-1'><i>{t('startZoom.10','No se han agendado clases por Zoom')}</i></h5>:null}
+        {meetings.length===0&&!props.zoomMeetings?<h6 style={{color: 'gray'}} className='ml-1'><i>{t('startZoom.10','No se han agendado clases por Zoom')}</i></h6>:null}
         {meetings.length>0?meetings.sort(sortMeetings).map((meeting,index) => (
         <div key={meeting.meetingID+index}>
           <StartZoomMeeting
@@ -120,7 +120,9 @@ function GetZoomMeetings(props) {
           ClasesZoom={props.zoomMeetings?true:false}
           trialClass={props.usertrialClass}
           sales={sales}
-          detailStartTime={props.claseID?props.startTime:false}/>
+          detailStartTime={props.claseID?props.startTime:false}
+          fitnessKit={props.week?true:false}
+          />
         </div>
       )):props.zoomMeetings?props.zoomMeetings.sort(sortMeetings).map((meeting,index) => (
       <div key={meeting.meetingID+index}>

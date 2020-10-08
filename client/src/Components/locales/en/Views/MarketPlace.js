@@ -3,9 +3,9 @@ import React from 'react'
 const MarketPlace = {
   mPlace: {
     1:' Go Back',
-    2:'Monthly Challenges',
-    3:'See all challenges',
-    4:'Looking for active monthly challenges ...',
+    2:'Fitness Kits',
+    3:'See all Fitness Kits',
+    4:'Looking for active Fitness Kits ...',
     5:'Next Zoom Classes',
     6:'See all Zoom Classes' ,
     7:'Looking for Zoom Classes...',

@@ -6,10 +6,13 @@ import './ConfigInstructorForm.css'
 import { withRouter } from "react-router";
 import { Redirect } from 'react-router-dom'
 import { useTranslation } from 'react-i18next';
+import FileUploadPDF from '../Atoms/FileUploadPDF'
+import {proxyurl} from '../../Config/proxyURL'
 
 const ConfigInstructorForm = (props) => {
 const { usuario } = useContext(Auth);
 const [data,setdata] = useState({})
+const [certSAT,setcertSAT] = useState(null)
 const { t } = useTranslation();
 
 useEffect(() => {
@@ -27,7 +30,8 @@ useEffect(() => {
         console.log("Error getting document:", error);
     });
   }
-  })
+
+},[usuario])
 
   const handleClick = () =>{
       storage.ref('Pictures')
@@ -41,6 +45,15 @@ useEffect(() => {
                 console.error("No se ha subido ninguna foto de perfil ", error)
               });
 
+              fetch(proxyurl+'visionAPI', {
+                method: 'post',
+                headers: {
+                  'Content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                  uid: usuario.uid
+                }),
+              })
   }
 
 // Pass the useFormik() hook initial form values and a submit function that will
@@ -63,6 +76,7 @@ const formik = useFormik({
     disableTrialClasses: values.disableTrialClasses,
     new: false
     },{ merge: true })
+
     alert(props.newInstructor?t('config.3','¡Ahora enlaza tu cuenta de Zoom!'):t('config.4','Tus datos se guardaron con éxito'));
     handleClick()
   },
@@ -85,17 +99,18 @@ const formik = useFormik({
               required
               className='col-md-10'
             />
-            <label htmlFor="selfDescription">{t('config.7','Cuéntale al mundo de ti')}</label>
+            <label htmlFor="selfDescription">{t('config.7','Cuéntale al mundo de ti en 280 caractéres')}</label>
             <br/>
             <textarea
               id="selfDescription"
               name="selfDescription"
               type="text"
               rows='4'
-              placeholder={t('config.19','Describe tu experiencia fitness (promociona aquí tu reto mensual)')}
+              placeholder={t('config.19','Describe tu experiencia fitness')}
               onChange={formik.handleChange}
               value={formik.values.selfDescription}
               className='col-md-10'
+              maxlength='280'
             />
             <br/>
             <div>
@@ -114,7 +129,7 @@ const formik = useFormik({
               </div>
             </div>
           </div>
-          <div>
+          <div className='col-md-5'>
             <p><strong>{t('config.12','Datos para depositarte tus ganancias')}</strong></p>
             <label htmlFor="firstName">{t('config.13','Nombre')}</label>
             <br/>
@@ -141,6 +156,15 @@ const formik = useFormik({
               className='col-12'
               required
             />
+            <div className='mt-3 mb-2'>
+              <FileUploadPDF name={usuario?usuario.uid:null}/>
+            </div>
+            <div className="clasesPrueba col-md-12">
+              <p><strong>{t('config.24','La puedes subir después.')}</strong> {t('config.25','Este documento es un PDF expedido por el SAT y lo necesitamos para cumplir con las disposiciones fiscales exigidas por el gobierno de México. Lo puedes obtener en este link:')}
+              <a href='https://www.sat.gob.mx/aplicacion/53027/genera-tu-constancia-de-situacion-fiscal.' target="_blank"> https://www.sat.gob.mx/aplicacion/53027/genera-tu-constancia-de-situacion-fiscal. </a>
+              {t('config.26','Una vez inicies sesión en la página del SAT, solo haz click en "Generar Constancia".')}
+              </p>
+            </div>
           </div>
         </div>
 

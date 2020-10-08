@@ -4,7 +4,7 @@ const Header = {
   header: {
     1:'Profile',
     2:'My Classes',
-    3:'My Challenge',
+    3:'Fitness Kit',
     4:'Sales',
     5:'See my business web page',
     6:'Settings',

@@ -24,7 +24,7 @@ const MisCompras = {
     20:'(Valid until ',
     21:'Video Class',
     22:'Zoom Class',
-    23:'Monthly Challenge'
+    23:'Fitness Kit'
   }
 }
 

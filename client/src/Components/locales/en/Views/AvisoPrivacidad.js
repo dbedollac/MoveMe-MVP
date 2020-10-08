@@ -6,7 +6,7 @@ const AvisoPrivacidad = {
     2:'MOVEME FITNESS',
     3:'In compliance with the provisions of the Federal Law for the Protection of Personal Data in Possession of Individuals (Ley  Federal de Protección de Datos Personales en Posesión de los Particulares) (hereinafter, the “Data Protection Law”) and its Regulation and other applicable legal provisions, we hereby provide this Privacy Notice (the “Notice”).',
     4:'1.	Controller.',
-    5:'MOVEME FITNESS, S.A.P.I. DE C.V. (Hereinafter, “we”, “MoveMe” or  “Controller”) is responsible  for protecting the personal data that you share voluntarily with us through  our website  https://moveme.fitness/  (our “Website”).',
+    5:'NOVUSTEKS, S.A.P.I. DE C.V. (Hereinafter, “we”, “MoveMe” or  “Controller”) is responsible  for protecting the personal data that you share voluntarily with us through  our website  https://moveme.fitness/  (our “Website”).',
     6:'For any information regarding your personal information, please contact us at: ayuda@moveme.fitness.',
     7:'2.	Personal Data.',
     8:'For you to be accepted as a Customer of the Website, as such term is defined in the General Terms and Conditions of the Website, we will need to collect the following personal data (“Personal Data”):',
@@ -28,7 +28,9 @@ const AvisoPrivacidad = {
     24:'6.	Personal Data Transfers.',
     25:'Your Personal Data will not be transferred to third parties, unless such transfer is necessary due to the provision of the Services, pursuant to the General Terms and Conditions of the Website, in such regard, the transfer will not require any consent, pursuant to article 37 section IV of the Data Protection Law.',
     26:'7.	Use of cookies.',
-    27:'We use cookies through our Website to compile statistical data on the use of our Website and its functioning, to facilitate users’ ability to navigate through our Website, including remembering previous visitors.'
+    27:'We use cookies through our Website to compile statistical data on the use of our Website and its functioning, to facilitate users’ ability to navigate through our Website, including remembering previous visitors.',
+    28:'8.	Zoom Data Retention.',
+    29:'How long we retain your Zoom Personal Data depends on the type of data and the purpose for which we process the data. We will retain your Personal Information for the period necessary to fulfill the purposes outlined in this Privacy Notice unless a longer retention period is required or permitted by law.'
   }
 }
 

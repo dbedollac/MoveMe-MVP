@@ -26,7 +26,7 @@ const MarketAllClasses = {
     22:'None',
     23:'free',
     24:'No Zoom classes have been scheduled',
-    25:'No challenges available',
+    25:'No Fitness Kits available',
     26:'No classes available',
     "estiramiento":'stretching',
     "baile":'dance',

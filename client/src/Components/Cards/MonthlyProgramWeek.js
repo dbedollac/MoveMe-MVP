@@ -51,7 +51,7 @@ function MonthlyProgramWeek(props) {
         if (sunday.getMonth()===mm) {
           setweek({
             sunday: sunday,
-            monday: new Date(sunday.getTime()+(24 * 60 * 60 * 1000)),
+            monday: new Date(sunday.getTime()+(24*1 * 60 * 60 * 1000)),
             tuesday: new Date(sunday.getTime()+(24*2 * 60 * 60 * 1000)),
             wednesday: new Date(sunday.getTime()+(24*3 * 60 * 60 * 1000)),
             thursday: new Date(sunday.getTime()+(24*4 * 60 * 60 * 1000)),

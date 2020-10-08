@@ -1,8 +1,9 @@
 header{
-  background-image: linear-gradient(to right, white , gray);
+  background-color: white;
   font-family: "Corbel";
   font-style: italic;
-  height: 70px
+  height: 70px;
+  box-shadow: 1px 1px 2px gray
 }
 
 header img{

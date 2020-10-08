@@ -9,6 +9,11 @@ const zoomID = 'BAI2U_LMR0qde_D7g8SV_g'
 const zoomSecret = 'vkU91bWzoulRS0hDnHxslr2a4JauqSol'
 const zoomVerification = '8blv9hJ7SnatkgmG21B2Qw'
 var btoa = require('btoa')
+
+const vision = require('@google-cloud/vision').v1
+const {Storage} = require('@google-cloud/storage');
+const storage = new Storage();
+
 let FieldValue = require('firebase-admin').firestore.FieldValue;
 
 var serviceAccount = require("./serviceAccountKey.json");
@@ -21,7 +26,90 @@ admin.initializeApp({
 app.use(cors);
 let db = admin.firestore();
 
+// Google Vision API -----------------------------------------------------------------------------------
+app.post('/app/visionAPI', async (req,res) =>{
 
+  // Creates a client
+  const client = new vision.ImageAnnotatorClient();
+
+  const bucketName = "moveme-ad742.appspot.com"
+  const fileName = 'SAT/'+req.body.uid
+  // The folder to store the results
+  const outputPrefix = 'SAT-JSON'
+
+  const gcsSourceUri = `gs://${bucketName}/${fileName}`;
+  const gcsDestinationUri = `gs://${bucketName}/${outputPrefix}/${req.body.uid}-`;
+
+  const inputConfig = {
+    // Supported mime_types are: 'application/pdf' and 'image/tiff'
+    mimeType: 'application/pdf',
+    gcsSource: {
+      uri: gcsSourceUri,
+    },
+  };
+  const outputConfig = {
+    gcsDestination: {
+      uri: gcsDestinationUri,
+    },
+  };
+  const features = [{type: 'DOCUMENT_TEXT_DETECTION'}];
+  const request = {
+    requests: [
+      {
+        inputConfig: inputConfig,
+        features: features,
+        outputConfig: outputConfig,
+      },
+    ],
+  };
+
+  const [operation] = await client.asyncBatchAnnotateFiles(request);
+  const [filesResponse] = await operation.promise();
+  const destinationUri =
+    filesResponse.responses[0].outputConfig.gcsDestination.uri;
+  console.log('Json saved to: ' + destinationUri);
+
+  //Save RFC, CURP and regimen
+  const bucket = storage.bucket("moveme-ad742.appspot.com");
+  const remoteFile = bucket.file('SAT-JSON/'+req.body.uid+'-output-1-to-2.json');
+
+  let buffer = '';
+
+  let auxRFC = '';
+  let RFC = '';
+
+  let auxCURP = '';
+  let CURP = '';
+
+  let auxReg = '';
+  let Reg = '';
+
+  remoteFile.createReadStream()
+    .on('error', function(err) {console.log(err)})
+    .on('data', function(response) {
+      buffer += response
+    })
+    .on('end', function() {
+      auxRFC += buffer.substring(buffer.lastIndexOf('RFC')+6,buffer.lastIndexOf('RFC')+100)
+      RFC += auxRFC.substring(0,auxRFC.indexOf("\\n"))
+      console.log(RFC);
+
+      auxCURP += buffer.substring(buffer.lastIndexOf('CURP')+7,buffer.lastIndexOf('CURP')+100)
+      CURP += auxCURP.substring(0,auxCURP.indexOf("\\n"))
+      console.log(CURP);
+
+      auxReg += buffer.substring(buffer.indexOf('Régimen')+9,buffer.indexOf('Régimen')+100)
+      Reg += auxReg.substring(0,auxReg.indexOf("\\n"))
+      console.log(Reg);
+
+      db.collection("Instructors").doc(req.body.uid).set({
+      RFC: RFC,
+      CURP: CURP,
+      regimen: Reg
+      },{ merge: true })
+
+  })
+})
 //Stripe API -------------------------------------------------------------------------------------------
 app.post('/app/stripeAPI/delete-card',async (req,res) =>{
     stripe.paymentMethods.detach(

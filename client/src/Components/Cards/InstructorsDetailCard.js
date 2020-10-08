@@ -100,10 +100,10 @@ const handleOpen = () =>{
                     {open?<ChevronCompactUp onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>
                     :<PlayFill onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>}
                     <p className='text-center mx-2'>
-                    <strong>{t('iCard.2','Video para rentar')}</strong> <br/>{t('iCard.3','(1 mes)')} {props.match.params.uid||props.market?!props.data.freeVideo? '$'+(props.data.offlinePrice*(1+iva)+StripeFee(props.data.offlinePrice*(1+iva))).toFixed(2):null:null}</p>
+                    <strong>{t('iCard.2','Video para rentar')}</strong> <br/>{t('iCard.3','(1 mes)')} {!props.fitnessKit?props.match.params.uid||props.market?!props.data.freeVideo? '$'+(props.data.offlinePrice*(1+iva)+StripeFee(props.data.offlinePrice*(1+iva))).toFixed(2):null:null:null}</p>
                   </div>
 
-                    {props.market?!props.data.freeVideo&&props.data.offlinePrice!==0?<AddToCar instructor={instructor} claseVideo={props.data}/>
+                    {!props.fitnessKit&&props.market?!props.data.freeVideo&&props.data.offlinePrice!==0?<AddToCar instructor={instructor} claseVideo={props.data}/>
                     :<AddFreeVideo product={{
                       data:{instructor: instructor.data,
                         claseData: props.data,
@@ -141,8 +141,6 @@ const handleOpen = () =>{
                <p><strong>{t('iCard.6','Dificultad')}: </strong>{t('allClases.'+props.data.level,props.data.level)}</p>
                <p><strong>{t('iCard.7','Equipo necesario')}: </strong>{props.data.equipment.length>0? props.data.equipment:t('allClases.22','Ninguno')}</p>
                <p><strong>{t('iCard.8','Duración')}: </strong>{props.data.duration} {t('iCard.9','minutos')}</p>
-               <p><strong>{t('iCard.10','Precio por clase en Zoom')}: </strong>${(props.data.zoomPrice*(1+iva)+StripeFee(props.data.zoomPrice*(1+iva))).toFixed(2)} MXN</p>
-               <p><strong>{t('iCard.11','Precio por renta mensual del video')}: </strong>{props.data.freeVideo?t('allClases.23','gratis'):'$'+(props.data.offlinePrice*(1+iva)+StripeFee(props.data.offlinePrice*(1+iva))).toFixed(2)+' MXN'}</p>
             </div>
 
 

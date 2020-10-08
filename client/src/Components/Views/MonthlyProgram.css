@@ -2,3 +2,11 @@
   background-color: #F2F2F2;
   min-height: 100vh
 }
+
+.MonthlyProgram-price{
+  background-color: white;
+  border-radius: 10px;
+  border-width: 1px;
+  border-color: lightgray;
+  border-style: solid;
+}

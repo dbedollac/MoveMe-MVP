@@ -121,7 +121,7 @@ function DisplayCarousel(props) {
     return(
       <div style={{position: 'relative'}} className='p-2'>
       {props.ClasesZoom?<UsersDetailCard data={claseDetail.data.data} claseID={claseDetail.data.id} instructor={claseDetail.data.instructor?claseDetail.data.instructor:props.instructor} ClasesZoom={true} joinURL={claseDetail.joinURL}/>
-      :<InstructorsDetailCard data={claseDetail.data.data} claseID={claseDetail.data.id} market={props.market?props.market:false} instructor={claseDetail.data.instructor?claseDetail.data.instructor:props.instructor} zoom={props.zoomMeetings?true:false} video={props.array?true:false} startTime={detailStarttime}/>}
+      :<InstructorsDetailCard fitnessKit={props.fitnessKit?true:false} data={claseDetail.data.data} claseID={claseDetail.data.id} market={props.market?props.market:false} instructor={claseDetail.data.instructor?claseDetail.data.instructor:props.instructor} zoom={props.zoomMeetings?true:false} video={props.array?true:false} startTime={detailStarttime}/>}
         <X className='float-left'size={'2em'} onClick={handleDetail} style={{position: 'absolute', top:'2%', left:'2%',cursor:'pointer'}}/>
       </div>
     )
@@ -142,7 +142,7 @@ function DisplayCarousel(props) {
             ))
             :videoClases? videoClases.slice(0,50).map((item,index) => (
             <div key={item.id+index} onClick={handleDetail} style={{cursor:'pointer'}}>
-              <ClassCard title={item.data.title} picture={item.data.imgURL} name={item.instructor?item.instructor.id:item.id} id={item.id} price={item.data.offlinePrice} freeVideo={item.data.freeVideo?true:false}/>
+              <ClassCard title={item.data.title} picture={item.data.imgURL} name={item.instructor?item.instructor.id:item.id} id={item.id} price={props.fitnessKit?null:item.data.offlinePrice} freeVideo={item.data.freeVideo?true:false}/>
             </div>
           )): meetings.sort(sortMeetings).slice(0,50).map((item,index) => (
             <div key={item.id+index} onClick={handleDetail} style={{cursor:'pointer'}}>

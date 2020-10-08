@@ -3,10 +3,11 @@ import Header from '../Molecules/Header'
 import { Auth } from "../../Config/AuthContext";
 import {db, auth} from '../../Config/firestore'
 import { withRouter } from "react-router";
-import { CameraVideoFill, CollectionPlayFill } from 'react-bootstrap-icons';
+import { CameraVideoFill, CollectionPlayFill, Plus } from 'react-bootstrap-icons';
 import DisplayCarousel from '../Molecules/DisplayCarousel'
 import MonthlyProgram from './MonthlyProgram'
 import MyClasses from './MyClasses'
+import SetMonthlyProgramPrice from '../Molecules/SetMonthlyProgramPrice'
 import { useTranslation } from 'react-i18next';
 import {iva} from '../../Config/Fees'
 import StripeFee from '../Atoms/StripeFee'
@@ -95,7 +96,10 @@ function Coach(props) {
                     var now = new Date(Date.now()-3600000).toISOString()
                       querySnapshot.forEach(function(doc) {
                         if (doc.data().monthlyProgram===true&&doc.data().week>fiveWeeks0&&!zoomMeetingsProgram.includes(doc.id)) {
-                          zoomMeetingsProgram.push(doc.id)
+                          if (doc.data().startTime>now) {
+
+                            zoomMeetingsProgram.push(doc.id)
+                          }
                         }
                         if(doc.data().startTime>now){
                           if (!aux.includes(doc.id)) {
@@ -114,7 +118,28 @@ function Coach(props) {
        },[profileName])
 
   if (monthlyProgram) {
-    return <MonthlyProgram market={props.match.params.uid?true:false} instructor={{data:instructor,id:uid}}/>
+    return (
+      <div className='InstructorProfile-monthlyProgram d-flex flex-column'>
+
+        <div className='col-12 col-lg-8 InstructorProfile-monthlyProgram-price align-self-center mt-1'>
+          <SetMonthlyProgramPrice market={props.match.params.uid?true:false} instructor={{data:instructor,id:uid}}/>
+        </div>
+
+        <div className='col-md-8 d-flex flex-row alig-items-center justify-content-start mt-2'>
+          <CollectionPlayFill size={'2em'} className='mr-2' color='darkcyan'/>
+          <h4>{videoClases.length} {t('iProfile.3','Clases en Video')}</h4>
+        </div>
+        {videoClases.length>0?
+          <DisplayCarousel allClases={allClases} array={videoClases} market={true}  instructor={{data:instructor,id:uid}} fitnessKit={true}/>:
+        <h5 style={{color:'gray'}} className='text-center py-5'><i>{t('iProfile.8','No hay clases con video')}</i></h5>}
+
+        <div className='col-md-8 d-flex flex-row alig-items-center justify-content-star mt-2'>
+          <CameraVideoFill size={'2em'} className='mr-2' color="#2C8BFF" />
+          <h4>{zoomMeetingsProgram.length} {t('iProfile.2','Clases por Zoom')}</h4>
+        </div>
+        <MonthlyProgram market={props.match.params.uid?true:false} instructor={{data:instructor,id:uid}}/>
+      </div>
+    )
   }else {
     if (myClasses) {
       return <MyClasses market={props.match.params.uid?true:false} instructor={{data:instructor,id:uid}}/>
@@ -125,32 +150,35 @@ function Coach(props) {
     <>
       <Header instructor={usuario?user?false:true:null} user={usuario?user?true:false:null}/>
           <div className='InstructorProfile-container'>
-              <div className='text-center InstructorProfile-container-header d-flex flex-column flex-md-row shadow-sm'>
-                  <div className='col-12 col-md-6 profilePicture rounded' style={{
+              <div className='text-center InstructorProfile-container-header d-flex flex-column flex-md-row'>
+                  <div className='col-12 col-md-6 profilePicture' style={{
                     backgroundImage: `url(${profilePicture})`,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover'}}>
-                    {profilePicture?null:<img src='/logo.jpg' className='p-2 rounded-circle'/>}
+                    {profilePicture?null:<img src='/logo.jpg' className='p-2 '/>}
                   </div>
                   <div className='col-12 col-md-6 d-flex flex-column'>
-                    <h2>{profileName}</h2>
-                    <p className='text-left'>{selfDescription}</p>
+                    <div className='InstructorProfile-container-nameDescription'>
+                      <h2>{profileName}</h2>
+                      <p className='text-left'>{selfDescription}</p>
+                    </div>
                     <div className='InstructorProfile-container-programa p-2'>
                       <div className='d-flex flex-row align-items-center justify-content-around'>
                         <h3>{t('iProfile.1','Reto Mensual')}</h3>
-                        <div className='rounded col-4 InstructorProfile-container-programa-price'> {monthlyProgramPrice?'$ '+(monthlyProgramPrice*(1+iva)+StripeFee(monthlyProgramPrice*(1+iva))).toFixed(2):null} </div>
+                        <button className='btn-outline-dark rounded' onClick={handleVerMonthlyProgram}>{t('iProfile.4','Ver')}</button>
                       </div>
-                      <div className='d-flex flex-row'>
-                        <div className='col-6 monthlyProgram-clasesZoom d-flex flex-column'>
+                      <div className='d-flex flex-row justify-content-around align-items-center'>
+                        <div className='monthlyProgram-clasesZoom d-flex flex-column'>
                           <p style={{ fontSize: '40px'}}>{zoomMeetingsProgram.length}</p>
                           <p>{t('iProfile.2','Clases por Zoom')}</p>
                         </div>
-                        <div className='col-6 d-flex flex-column'>
+                        <Plus size={'2em'}/>
+                        <div className='d-flex flex-column'>
                           <p style={{ fontSize: '40px'}}>{videoClases.length}</p>
                           <p>{t('iProfile.3','Clases en Video')}</p>
                         </div>
                       </div>
-                      <button className='btn-light m-3 rounded btn-lg' onClick={handleVerMonthlyProgram}>{t('iProfile.4','Ver')}</button>
+                      <div className='InstructorProfile-container-programa-price'> {monthlyProgramPrice?'$ '+(monthlyProgramPrice*(1+iva)+StripeFee(monthlyProgramPrice*(1+iva))).toFixed(2):null} </div>
                     </div>
                   </div>
               </div>
@@ -172,7 +200,7 @@ function Coach(props) {
 
                 <div className='d-flex flex-column flex-md-row py-2'>
                   <div className='col-md-8 d-flex flex-row alig-items-center justify-content-start'>
-                    <CollectionPlayFill size={'2em'} className='mr-2' />
+                    <CollectionPlayFill size={'2em'} className='mr-2' color='darkcyan'/>
                     <h4>{t('iProfile.3','Clases en Video')}</h4>
                   </div>
                   <div className='col-md-4 d-flex flex-row alig-items-center justify-content-md-end'>

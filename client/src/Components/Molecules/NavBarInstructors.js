@@ -107,7 +107,7 @@ function NavBar(props) {
           </ NavLink>
         </div>
         <div className="col-1 d-flex flex-column align-items-center  justify-content-center">
-          <DropdownButton  title='' variant='dark' onClick={searchProfileName} >
+          <DropdownButton  title='' variant='secondary' onClick={searchProfileName} >
             <Dropdown.Item href={`coach-${profileName.replace(/ /g,'-')}/${usuario?usuario.uid:null}`}><AwardFill className='mr-2'/>{t('header.5','Ver mi página comercial')}</Dropdown.Item>
             <Dropdown.Item href="/configuration-instructor"><GearFill className='mr-2'/>{t('header.6','Configuración')}</Dropdown.Item>
             <Dropdown.Item href="/start"><PlayFill className='mr-2'/>{t('header.7','¿Cómo inicio?')}</Dropdown.Item>
@@ -161,7 +161,7 @@ function NavBar(props) {
             </ NavLink>
           </div>
           <div className="col-1 d-flex flex-column align-items-center  justify-content-center">
-                  <DropdownButton  title='' variant='dark'>
+                  <DropdownButton  title='' variant='secondary'>
                     <Dropdown.Item href="/purchases"><Receipt className='mr-2'/>{t('header.17','Mis Compras')}</Dropdown.Item>
                     <Dropdown.Item href="/help"><QuestionCircle className='mr-2'/>{t('header.8','Ayuda')}</Dropdown.Item>
                     <Dropdown.Item onClick={changeLanguage} className='d-flex flex-row align-items-center'><Globe className='mr-2'/><ChangeLanguage color='black'/></Dropdown.Item>
@@ -180,14 +180,14 @@ function NavBar(props) {
         <div >
           {usuario?
             <div className='d-flex flex-row-reverse justify-content-end align-items-center'>
-              <div onClick={changeLanguage}><ChangeLanguage color='white' fontSize='small'/></div>
+              <div onClick={changeLanguage}><ChangeLanguage color='#595959' fontSize='small'/></div>
             </div>
           :
             <div className='d-flex flex-row-reverse justify-content-end align-items-center'>
-              <div onClick={changeLanguage}><ChangeLanguage color='white' fontSize='small'/></div>
-              <HouseDoorFill size={'30px'} style={{cursor:'pointer'}} onClick={()=>{props.history.push('/')}} className='mr-2'/>
-              <button className='btn-light btn-sm rounded mx-2' onClick={handleShowLogIn}>{t('header.24','Ingresar')}</button>
-              <button className='btn-primary btn-sm rounded' onClick={handleShowSignIn}>{t('header.27','Registrarse')}</button>
+              <div onClick={changeLanguage}><ChangeLanguage color='#595959' fontSize='small'/></div>
+              <HouseDoorFill color='#595959' size={'30px'} style={{cursor:'pointer'}} onClick={()=>{props.history.push('/')}} className='mr-2'/>
+              <button className='btn-outline-secondary btn-sm mx-2' onClick={handleShowLogIn}>{t('header.24','Ingresar')}</button>
+              <button className='btn-outline-primary btn-sm' onClick={handleShowSignIn}>{t('header.27','Registrarse')}</button>
             </div>
             }
           <Modal

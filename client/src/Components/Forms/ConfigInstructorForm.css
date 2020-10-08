@@ -1,10 +1,15 @@
 .clasesPrueba{
-  background-color: gray;
+  background-color: #A6A6A6;
   border-radius: 10px
 }
 
 .clasesPrueba p{
   color: white;
+  font-size: 12px
+}
+
+.clasesPrueba a{
+  color: lightblue;
   font-size: 12px
 }
 

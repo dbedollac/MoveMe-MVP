@@ -24,9 +24,18 @@ function CoachCard(props) {
     var docRef = db.collection("Instructors").doc(props.uid)
 
 
-    docRef.collection('ZoomMeetingsID').where('week','>',fiveWeeks0)
-        .get()
-        .then(snap => setZoomMeetingsNumber(snap.size))
+    docRef.collection('ZoomMeetingsID').get()
+          .then(function(querySnapshot) {
+            var now = new Date(Date.now()-3600000).toISOString()
+            var Meetings = []
+              querySnapshot.forEach(function(doc) {
+                  if (doc.data().startTime>now) {
+                    Meetings.push(doc.id)
+                  }
+              }
+            )
+            setZoomMeetingsNumber(Meetings.length)
+          })
         .catch(function(error) {
             console.log("Error getting documents: ", error);
         })

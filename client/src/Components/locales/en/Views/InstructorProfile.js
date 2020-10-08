@@ -2,7 +2,7 @@ import React from 'react'
 
 const InstructorProfile = {
   iProfile: {
-    1:'Monthly Challenge',
+    1:'Fitness Kit',
     2:'Zoom Classes',
     3:'Classes in Video',
     4:'See',

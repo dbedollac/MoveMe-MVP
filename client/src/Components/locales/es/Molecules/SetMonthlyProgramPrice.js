@@ -2,12 +2,12 @@ import React from 'react'
 
 const SetMonthlyProgramPrice = {
   mPrice: {
-    1:'Este reto no está activo',
+    1:'Este Fitness Kit no está activo',
     2:'Regresar',
-    3:'Reto Mensual',
+    3:'Fitness Kit',
     4:'(precio mínimo: $100)',
-    5:'El reto incluye todas las clases por Zoom agendadas en esta página más todas las clases en video del coach por un mes.',
-    6:'Los usuarios que adquieran tu reto tendrán acceso por un mes a todas las clases por Zoom que agendes en esta página más todos los videos que hayas subido.',
+    5:'El Fitness Kit incluye todas las clases por Zoom agendadas en esta página más todas las clases en video del coach por un mes.',
+    6:'Los usuarios que adquieran tu Fitness Kit tendrán acceso por un mes a todas las clases por Zoom que agendes en esta página más todos los videos que hayas subido.',
     7:'Precio',
     8:'Guardar',
     9:'Estatus',
@@ -15,12 +15,12 @@ const SetMonthlyProgramPrice = {
     11:'Inactivo',
     12:'Desactivar',
     13:'Activar',
-    14:'Desactivar reto mensual',
-    15:'Activar reto mensual',
-    16:'¿Deseas desactivar tu reto? Se cancelará el cobro a tus clientes suscritos y no podrán acceder a tu contenido.',
-    17:'Al activar tu reto, este se ofrecerá automáticamente a todos los usuarios de MoveMe y las clases que agendaste se ofrecerán individualmente para compras por asistencia.',
+    14:'Desactivar Fitness Kit',
+    15:'Activar Fitness Kit',
+    16:'¿Deseas desactivar tu Fitness Kit? Se cancelará el cobro a tus clientes suscritos y no podrán acceder a tu contenido.',
+    17:'Al activar tu Fitness Kit, este se ofrecerá automáticamente a todos los usuarios de MoveMe y las clases que agendaste se ofrecerán individualmente para compras por asistencia.',
     18:'Cancelar',
-    19:'¡Activa tu Reto!',
+    19:'¡Activa tu Fitness Kit!',
     20:'Se agregará IVA más tarifa por transacción'
   }
 }

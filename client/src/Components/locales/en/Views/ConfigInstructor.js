@@ -20,11 +20,16 @@ const ConfigInstructor = {
     16:'',
     17:'Save',
     18:'How do your clients know you?',
-    19:'Describe your fitness experience (advertise your monthly challenge here)',
+    19:'Describe your fitness experience',
     20:'First Name',
     21:'Surname',
     22:'Link my Zoom account',
-    23:'Connected with Zoom'
+    23:'Connected with Zoom',
+    24:'You can upload it later.',
+    25:'This document is a PDF issued by the SAT and we need it to comply with the tax provisions required by the government of Mexico. You can get it at this link:',
+    26:'Once you log in to the SAT page, just click on "Generar Constancia".',
+    27:'See my Certificate',
+    28:'Fiscal Status Certificate'
   }
 }
 

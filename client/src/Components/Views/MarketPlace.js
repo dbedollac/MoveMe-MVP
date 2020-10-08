@@ -140,7 +140,7 @@ function MarketPlace(props) {
           <Header  user={usuario?true:false}/>
           <div className='MarketPlace-container d-flex flex-column'>
             <div className='d-flex flex-row-reverse'>
-              <button className='btn-secondary rounded m-2' onClick={handleBack}><ArrowLeft />{t('mPlace.1',' Regresar')}</button>
+              <button className='btn-light rounded m-2' onClick={handleBack}><ArrowLeft />{t('mPlace.1',' Regresar')}</button>
             </div>
             <MarketAllClasses allInstructors={allInstructors}/>
           </div>
@@ -154,7 +154,7 @@ function MarketPlace(props) {
           <Header  user={usuario?true:false}/>
           <div className='MarketPlace-container d-flex flex-column'>
             <div className='d-flex flex-row-reverse'>
-              <button className='btn-secondary rounded m-2' onClick={handleBack}><ArrowLeft />{t('mPlace.1',' Regresar')}</button>
+              <button className='btn-light rounded m-2' onClick={handleBack}><ArrowLeft />{t('mPlace.1',' Regresar')}</button>
             </div>
             <MarketAllClasses allClases={allClases} zoomMeetings={zoomMeetings}/>
           </div>
@@ -168,7 +168,7 @@ function MarketPlace(props) {
           <Header  user={usuario?true:false}/>
           <div className='MarketPlace-container d-flex flex-column'>
             <div className='d-flex flex-row-reverse'>
-              <button className='btn-secondary rounded m-2' onClick={handleBack}><ArrowLeft />{t('mPlace.1',' Regresar')}</button>
+              <button className='btn-light rounded m-2' onClick={handleBack}><ArrowLeft />{t('mPlace.1',' Regresar')}</button>
             </div>
             <MarketAllClasses allClases={allClases} array={videoClases}/>
           </div>
@@ -182,7 +182,7 @@ function MarketPlace(props) {
         <div className='MarketPlace-container'>
           <div className='d-flex flex-column flex-md-row pt-2'>
               <div className='col-md-8 d-flex flex-row alig-items-center justify-content-start'>
-                  <Calendar3Fill size={'2em'} className='mr-2' />
+                  <Calendar3Fill size={'2em'} className='mr-2' color='coral'/>
                   <h4>{t('mPlace.2','Retos Mensuales')}</h4>
                 </div>
                 <div className='col-md-4 d-flex flex-row alig-items-center justify-content-md-end'>
@@ -208,7 +208,7 @@ function MarketPlace(props) {
 
             <div className='d-flex flex-column flex-md-row my-2'>
                 <div className='col-md-8 d-flex flex-row alig-items-center justify-content-start'>
-                    <CollectionPlayFill size={'2em'} className='mr-2'/>
+                    <CollectionPlayFill size={'2em'} className='mr-2' color='darkcyan'/>
                     <h4>{t('mPlace.8','Clases en Video')}</h4>
                   </div>
                   <div className='col-md-4 d-flex flex-row alig-items-center justify-content-md-end'>

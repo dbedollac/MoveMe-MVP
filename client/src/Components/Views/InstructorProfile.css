@@ -1,17 +1,25 @@
-@keyframes animationHeader {
-  from {background-color: gray;}
-  to {background-color: lightgray;}
-}
-
 .InstructorProfile-container{
   background-color: #F2F2F2;
   min-height: 100vh
 }
 
+.InstructorProfile-monthlyProgram{
+  background-color: #F2F2F2;
+}
+
+.InstructorProfile-monthlyProgram-price{
+  background-color: white;
+  border-radius: 10px;
+  border-width: 1px;
+  border-color: lightgray;
+  border-style: solid;
+}
+
 .InstructorProfile-container h2{
-  color: #F39119;
+  color: black;
   font-family: "Corbel", Arial, sans-serif;
   font-style: italic;
+  text-transform: uppercase;
 }
 
 .InstructorProfile-container h3{
@@ -21,49 +29,51 @@
 
 
 .InstructorProfile-container-header{
-  background-color: lightgray;
-  min-height: 30vw;
-  animation-name: animationHeader;
-  animation-duration: 2s;
+  background-color: #FBE5D6;
+  height: 400px;
 }
 
-.InstructorProfile-container-header p{
-  color: black;
+.InstructorProfile-container-nameDescription{
+  height:200px;
+  overflow-y:hidden;
 }
 
 .profilePicture{
-  min-height: 200px
+  height: 400px;
+  transform: skew(10deg);
 }
 
 .profilePicture img{
-  max-height: 350px
+  max-height: 400px
 }
 
-.InstructorProfile-container-programa{
-  border-top: solid;
-  border-top-color: gray;
-  border-top-width: 1px
+.InstructorProfile-container-programa h3{
+  color: white
 }
 
-.InstructorProfile-container-programa p{
-  color: black
-}
-
-
-.monthlyProgram-clasesZoom{
-  border-right: solid;
-  border-right-color: gray;
-  border-right-width: 1px
+.InstructorProfile-container-programa > div:first-of-type{
+  transform: skew(-20deg);
+  background-color: #d68930;
+  border-radius: 10px
 }
 
 .InstructorProfile-container-programa-price{
-  background-color: gray;
   font-size: 20px;
-  color: white
+  font-style: italic;
 }
 
 @media (max-width: 768px) {
   .profilePicture img{
     max-height: 200px
   }
+
+  .InstructorProfile-container-header{
+    height: auto;
+  }
+
+  .profilePicture{
+    min-height: 300px;
+    transform: skew(0deg);
+  }
+
 }

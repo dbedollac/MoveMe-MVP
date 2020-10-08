@@ -74,8 +74,11 @@ function MonthlyProgram(props) {
   return (
     <div>
     {props.ClasesZoom?null:<Header instructor={usuario?user?!props.match.params.uid?true:false:true:null} user={usuario?user?true:false:null}/>}
-        <div className='MonthlyProgram-container'>
-          {props.ClasesZoom?null:<SetMonthlyProgramPrice market={props.match.params.uid?true:false} instructor={props.instructor}/>}
+        <div className='MonthlyProgram-container d-flex flex-column align-items-center'>
+          {props.market?null:
+          <div className='MonthlyProgram-price col-12 col-lg-8'>
+            {props.ClasesZoom?null:<SetMonthlyProgramPrice market={props.match.params.uid?true:false} instructor={props.instructor}/>}
+          </div>}
           <div className='d-flex flex-row flex-wrap justify-content-center'>
             {weeks.map(week => (
               <div className='col-11 col-md-5 mt-2' key={week}>
