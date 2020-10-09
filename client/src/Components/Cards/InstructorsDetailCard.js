@@ -8,6 +8,7 @@ import GetZoomMeetings from '../Molecules/GetZoomMeetings'
 import AddToCar from '../Molecules/AddToCar'
 import CoachName from '../Atoms/CoachName'
 import AddFreeVideo from '../Atoms/AddFreeVideo'
+import EditClass from '../Molecules/EditClass'
 import {Collapse} from 'react-bootstrap'
 import { withRouter } from "react-router";
 import { useTranslation } from 'react-i18next';
@@ -77,6 +78,14 @@ const handleOpen = () =>{
   }
 },[usuario,open])
 
+      if (props.fitnessKit&&!props.market) {
+        return (
+          <div className='p-4' style={{backgroundColor:'white',borderRadius: '10px',borderWidth: '1px',borderColor: 'lightgray',borderStyle: 'solid'}}>
+            <EditClass claseID={props.claseID} claseData={props.data} />
+          </div>
+        )
+      }
+
       return(
         <div className='col-12 card'>
           <div className='d-flex flex-column flex-md-row align-items-center justify-content-center pl-5 pt-1'>
@@ -100,7 +109,7 @@ const handleOpen = () =>{
                     {open?<ChevronCompactUp onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>
                     :<PlayFill onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>}
                     <p className='text-center mx-2'>
-                    <strong>{t('iCard.2','Video para rentar')}</strong> <br/>{t('iCard.3','(1 mes)')} {!props.fitnessKit?props.match.params.uid||props.market?!props.data.freeVideo? '$'+(props.data.offlinePrice*(1+iva)+StripeFee(props.data.offlinePrice*(1+iva))).toFixed(2):null:null:null}</p>
+                    <strong>{t('iCard.2','Video para rentar')}</strong> <br/>{t('iCard.3','(1 mes)')} {!props.fitnessKit?props.match.params.uid||props.market?!props.data.freeVideo? '$'+Math.ceil(props.data.offlinePrice*(1+iva)+StripeFee(props.data.offlinePrice*(1+iva))):null:null:null}</p>
                   </div>
 
                     {!props.fitnessKit&&props.market?!props.data.freeVideo&&props.data.offlinePrice!==0?<AddToCar instructor={instructor} claseVideo={props.data}/>
@@ -131,7 +140,7 @@ const handleOpen = () =>{
                   <CameraVideoFill size={'2em'} className='mr-2' color="#2C8BFF" />
                   <h5>{t('iCard.4','Clases por Zoom')}</h5>
                 </div>
-                <div style={{ overflowY: 'scroll', height:'250px'}}>
+                <div>
                   <GetZoomMeetings claseID={props.claseID} instructor={instructor} market={props.market?props.market:false} usertrialClass={trialClass} startTime={props.startTime}/>
                 </div>
               </div>:null}

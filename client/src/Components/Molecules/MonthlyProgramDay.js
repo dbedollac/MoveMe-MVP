@@ -71,22 +71,15 @@ function MonthlyProgramDay(props) {
       var now = new Date(Date.now()-3600000).toISOString()
       var count = 0
       var docRef = db.collection("Instructors").doc(props.match.params.uid?props.match.params.uid:usuario.uid);
-      docRef.collection('ZoomMeetingsID').where("week", "==", props.week).where("dayNumber", "==", props.dayNumber)
+      docRef.collection('ZoomMeetingsID').where("monthNumber", "==", (props.dayDate.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})).where("dayNumber", "==", props.dayDate.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}))
           .get()
-          .then((querySnapshot)=>{
-            querySnapshot.forEach((doc) => {
-                if (doc.data().startTime>now) {
-                  count = count + 1
-                }
-            });
-            setclasesNumber(count)
-          })
+          .then(snap => setclasesNumber(snap.size))
           .catch(function(error) {
               console.log("Error getting documents: ", error);
           });
         }else {
-          var meetings0 = props.zoomMeetings.filter(item => item.week === props.week)
-          var meetings1 = meetings0.filter(item => item.dayNumber === props.dayNumber)
+          var meetings0 = props.zoomMeetings.filter(item => item.monthNumber === (props.dayDate.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}))
+          var meetings1 = meetings0.filter(item => item.dayNumber === props.dayDate.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}))
           setclasesNumber(meetings1.length)
 
           var zoomMeetings = []
@@ -189,7 +182,6 @@ function MonthlyProgramDay(props) {
 
   return(
     <div className='card-link'>
-    {open?console.log(props.dayDate):null}
       <div className='d-flex flex-row justify-content-around align-items-center dayName'>
         <p className='pt-2 col-8' style={{color:active?'#F39119':'black'}}>{clasesNumber>0?'('+clasesNumber+')':null} <strong>{props.dayName}</strong> {date}</p>
         {open?<ChevronCompactUp onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>
@@ -204,14 +196,14 @@ function MonthlyProgramDay(props) {
               {t('mProgram.2','Agregar clase')} <PlusCircleFill/>
             </Button>}
           </div>
-           <GetZoomMeetings usertrialClass={props.trialClass} week={props.week<5||props.zoomMeetings?props.week:-1} dayNumber={props.dayNumber} instructor={props.instructor} zoomMeetings={props.zoomMeetings?meetings:false}/>
+           <GetZoomMeetings usertrialClass={props.trialClass} dayDate={props.dayDate} instructor={props.instructor} zoomMeetings={props.zoomMeetings?meetings:false}/>
         </div>
       </Collapse>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>
-            <CreateZoomMeeting meetingType={2} meetingTopic={claseDetail?claseDetail.data.title:null} week={props.week<5?props.week:-1} dayNumber={props.dayNumber} dayName={props.dayName} dayDate={props.dayDate} claseID={claseDetail?claseDetail.id:null}/>
+            <CreateZoomMeeting meetingType={2} meetingTopic={claseDetail?claseDetail.data.title:null} dayDate={props.dayDate} claseID={claseDetail?claseDetail.id:null}/>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

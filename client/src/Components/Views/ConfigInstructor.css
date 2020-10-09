@@ -8,16 +8,21 @@
   width: 300px
 }
 
-.zoom-button{
-  border-bottom-width: 2px;
-  border-bottom-style: solid;
-  border-bottom-color: gray
-}
 
 .foto-perfil{
-  border-right-width: 2px;
-  border-right-style: solid;
-  border-right-color: gray
+  background-color: white;
+  border-radius: 10px;
+  border-width: 1px;
+  border-color: lightgray;
+  border-style: solid;
+}
+
+.configInstructor-form{
+  background-color: white;
+  border-radius: 10px;
+  border-width: 1px;
+  border-color: lightgray;
+  border-style: solid;
 }
 
 @media (max-width: 992px) {

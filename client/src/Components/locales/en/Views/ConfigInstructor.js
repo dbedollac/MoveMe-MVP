@@ -29,7 +29,11 @@ const ConfigInstructor = {
     25:'This document is a PDF issued by the SAT and we need it to comply with the tax provisions required by the government of Mexico. You can get it at this link:',
     26:'Once you log in to the SAT page, just click on "Generar Constancia".',
     27:'See my Certificate',
-    28:'Fiscal Status Certificate'
+    28:'Fiscal Status Certificate',
+    29:'Share your Instagram account',
+    30:'Instagram Link',
+    31:'Share your Facebook account',
+    32:'Facebook Link'
   }
 }
 

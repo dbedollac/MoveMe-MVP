@@ -47,16 +47,13 @@ function GetZoomMeetings(props) {
       if (props.claseID) {
         var zoomMeetings = []
         var docRef = db.collection("Instructors").doc(props.match.params.uid?props.match.params.uid:props.instructor?props.instructor.id:usuario.uid);
-        if (props.instructor&&!props.instructor.data.monthlyProgram.Active) {
-          var ref = docRef.collection('ZoomMeetingsID').where("claseID", "==", props.claseID).where('monthlyProgram','==',false)
-        } else {
-          var ref = docRef.collection('ZoomMeetingsID').where("claseID", "==", props.claseID)
-        }
+        var ref = docRef.collection('ZoomMeetingsID').where("claseID", "==", props.claseID)
+
         ref.get()
             .then(function(querySnapshot) {
-              var now = new Date(Date.now()-3600000).toISOString()
+              var now = props.startTime?props.startTime:new Date(Date.now()-3600000).toISOString()
                 querySnapshot.forEach(function(doc) {
-                  if(doc.data().startTime>now){
+                  if(doc.data().startTime>=now){
                   zoomMeetings.push({startTime:doc.data().startTime,
                     meetingID:doc.data().meetingID,
                     claseID:doc.data().claseID,
@@ -71,19 +68,16 @@ function GetZoomMeetings(props) {
             });
       }
 
-      if (props.week&&!props.zoomMeetings) {
+      if (props.dayDate&&!props.zoomMeetings) {
         var zoomMeetings = []
         var docRef = db.collection("Instructors").doc(props.match.params.uid?props.match.params.uid:props.instructor?props.instructor.id:usuario.uid);
-        if (props.instructor&&!props.instructor.data.monthlyProgram.Active) {
-          var ref = docRef.collection('ZoomMeetingsID').where("week", "==", props.week).where("dayNumber", "==", props.dayNumber).where('monthlyProgram','==',false)
-        } else {
-          var ref = docRef.collection('ZoomMeetingsID').where("week", "==", props.week).where("dayNumber", "==", props.dayNumber)
-        }
+        var ref = docRef.collection('ZoomMeetingsID').where("monthNumber", "==", (props.dayDate.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})).where("dayNumber", "==", props.dayDate.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}))
+
         ref.get()
             .then(function(querySnapshot) {
-              var now = new Date(Date.now()-3600000).toISOString()
+              var now = props.startTime?props.startTime:new Date(Date.now()-3600000).toISOString()
                 querySnapshot.forEach(function(doc) {
-                  if(doc.data().startTime>now){
+                  if(doc.data().startTime>=now){
                   zoomMeetings.push({startTime:doc.data().startTime,
                     meetingID:doc.data().meetingID,
                     claseID:doc.data().claseID,
@@ -100,7 +94,7 @@ function GetZoomMeetings(props) {
     }
 
           }
-        },[props.zoomMeetings,usuario])
+        },[props.zoomMeetings,usuario,props.dayDate])
 
   return(
       <div>
@@ -111,7 +105,7 @@ function GetZoomMeetings(props) {
           startTime={meeting.startTime}
           title={props.zoomMeetings?t('startZoom.1','Unirme'):t('startZoom.2','Iniciar')}
           meetingID={meeting.meetingID}
-          monthlyProgram={props.week?true:false}
+          monthlyProgram={props.dayDate?true:false}
           claseID={meeting.claseID}
           market={props.match.params.uid||props.market?true:false}
           instructor={props.zoomMeetings?meeting.instructor:props.instructor}
@@ -121,7 +115,7 @@ function GetZoomMeetings(props) {
           trialClass={props.usertrialClass}
           sales={sales}
           detailStartTime={props.claseID?props.startTime:false}
-          fitnessKit={props.week?true:false}
+          fitnessKit={props.dayDate?true:false}
           />
         </div>
       )):props.zoomMeetings?props.zoomMeetings.sort(sortMeetings).map((meeting,index) => (
@@ -130,7 +124,7 @@ function GetZoomMeetings(props) {
         startTime={meeting.startTime}
         title={props.zoomMeetings?t('startZoom.1','Unirme'):t('startZoom.2','Iniciar')}
         meetingID={meeting.meetingID}
-        monthlyProgram={props.week?true:false}
+        monthlyProgram={props.dayDate?true:false}
         claseID={meeting.claseID}
         market={props.match.params.uid||props.market?true:false}
         instructor={props.zoomMeetings?meeting.instructor:props.instructor}

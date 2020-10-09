@@ -62,11 +62,9 @@ const { t } = useTranslation();
                   claseID: props.claseID,
                   meetingID: resp.id,
                   startTime: resp.start_time,
-                  monthlyProgram: true,
-                  week:props.week,
-                  dayNumber: props.dayNumber,
-                  dayName: props.dayName,
-                  joinURL: resp.join_url
+                  joinURL: resp.join_url,
+                  dayNumber: props.dayDate.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}),
+                  monthNumber: (props.dayDate.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
                 }).then(window.location.reload(false))
                 .catch(function(error) {
                     console.log("Error setting documents: ", error);

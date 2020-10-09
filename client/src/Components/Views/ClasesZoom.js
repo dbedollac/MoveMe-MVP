@@ -38,11 +38,9 @@ function ClasesZoom(props) {
                                                 console.log("Error getting documents: ", error);
                                             })
 
-        await db.collection("Instructors").doc(purchase.instructor.uid).get().then( async (doc) =>{
-          if (doc.data().monthlyProgram.Active) {
 
           await db.collection("Instructors").doc(purchase.instructor.uid)
-                                            .collection('ZoomMeetingsID').where('monthlyProgram','==',true)
+                                            .collection('ZoomMeetingsID')
                                               .get()
                                               .then((querySnapshot) => {
                                                   querySnapshot.forEach((doc) => {
@@ -51,10 +49,9 @@ function ClasesZoom(props) {
                                                       startTime:doc.data().startTime,
                                                       meetingID:doc.data().meetingID,
                                                       claseID:doc.data().claseID,
-                                                      monthlyProgram:doc.data().monthlyProgram,
                                                       instructor:{id:purchase.instructor.uid,data:purchase.data.instructor},
                                                       joinURL:doc.data().joinURL,
-                                                      week: doc.data().week,
+                                                      monthNumber: doc.data().monthNumber,
                                                       dayNumber: doc.data().dayNumber
                                                       })
                                                     }
@@ -63,8 +60,7 @@ function ClasesZoom(props) {
                                               .catch(function(error) {
                                                   console.log("Error getting documents: ", error);
                                               })
-                                            }
-                                        })
+
       }
     }
     setclasesAll(retoClases.concat(zoomClases))
@@ -96,10 +92,9 @@ function ClasesZoom(props) {
               startTime:doc.data().data.startTime.startTime,
               meetingID:doc.data().data.meetingID,
               claseID:doc.data().data.claseID,
-              monthlyProgram:doc.data().data.monthlyProgram,
               instructor:{id:doc.data().instructor.uid,data:doc.data().data.instructor},
               joinURL:doc.data().data.joinURL,
-              week: week,
+              monthNumber: doc.data().monthNumber,
               dayNumber: date.getDay()+1
               })
             }

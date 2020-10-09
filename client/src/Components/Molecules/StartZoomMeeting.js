@@ -77,7 +77,7 @@ function StartZoomMeeting(props) {
       docRef.collection('Classes').doc(props.claseID)
           .get()
           .then( doc =>{
-              setPrice((doc.data().zoomPrice*(1+iva)+StripeFee(doc.data().zoomPrice*(1+iva))).toFixed(2))
+              setPrice(Math.ceil(doc.data().zoomPrice*(1+iva)+StripeFee(doc.data().zoomPrice*(1+iva))))
               setclaseData(doc.data())
             }
           )

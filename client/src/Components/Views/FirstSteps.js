@@ -49,14 +49,15 @@ function FirstSteps(props) {
           <div className='d-flex flex-column align-items-start justify-content-around col-12 col-lg-7 mt-3 mt-md-0'>
             <div className='d-flex flex-row align-items-center justify-content-start'><h3 className='mr-3'>1</h3><p className='text-justify'>{t('fSteps.2','En ')}<strong>{t('fSteps.3','Configuración')}</strong> <GearFill />{t('fSteps.4',' agrega tus datos personales, foto de perfil y enlaza tu cuenta de Zoom.')}</p></div>
             <div className='d-flex flex-row align-items-center justify-content-start mt-2'><h3 className='mr-3'>2</h3><p className='text-justify'>{t('fSteps.2','En ')}<strong>{t('fSteps.5','Mis Clases')}</strong> <CollectionPlayFill />{t('fSteps.6',' genera tus clases, sube videos para rentar y agenda clases en Zoom para cobrar por asistencia.')}</p></div>
-            <div className='d-flex flex-row align-items-center justify-content-start mt-2'><h3 className='mr-3'>3</h3><p className='text-justify'>{t('fSteps.2','En ')}<strong>{t('fSteps.7','Reto Mensual')}</strong> <Calendar3Fill />{t('fSteps.8',' ¡ desarrolla y activa tu reto ! Agenda clases por Zoom en las semanas del mes. Luego de activar tu reto, este se ofrecerá al precio que hayas decidido e incluirá todas las clases agendadas más acceso a tus videos por un mes.')}</p></div>
+            <div className='d-flex flex-row align-items-center justify-content-start mt-2'><h3 className='mr-3'>3</h3><p className='text-justify'>{t('fSteps.2','En ')}<strong>{t('fSteps.7','Reto Mensual')}</strong> <Calendar3Fill /> {t('fSteps.8',' ¡ desarrolla y activa tu reto ! Agenda clases por Zoom en las semanas del mes. Luego de activar tu reto, este se ofrecerá al precio que hayas decidido e incluirá todas las clases agendadas más acceso a tus videos por un mes.')}</p></div>
             <div className='d-flex flex-row align-items-center justify-content-start mt-2'><h3 className='mr-3'>4</h3><p className='text-justify'>{t('fSteps.2','En ')}<strong>{t('fSteps.9','más opciones')}</strong> <CaretDownSquareFill /> {t('fSteps.10','selecciona')} <i>{t('fSteps.11','Ver mi página comercial')}</i> {t('fSteps.12','y comparte la direción URL de tu página en tus redes sociales para ofrecer tus servicios fitnes.')}</p></div>
-            <div className='d-flex flex-row align-items-center justify-content-start mt-2'><h3 className='mr-3'>5</h3><p className='text-justify'><strong>{t('fSteps.13','¡Comienza a generar nuevos ingresos!')}</strong></p></div>
+            <div className='d-flex flex-row align-items-center justify-content-start mt-2'><h3 className='mr-3'>5</h3><p className='text-justify'><strong>{t('fSteps.13','¡Comienza a generar nuevos ingresos!')}</strong> {t('fSteps.14')}</p></div>
+            <div className='d-flex flex-row align-items-center justify-content-start mt-2'><p className='text-justify'>* {t('fSteps.2','En ')}<strong>{t('fSteps.9','más opciones')}</strong> <CaretDownSquareFill /> {t('fSteps.15')}</p></div>
           </div>
 
         </div>
 
-        {usuario?newInstructor?<button className='btn-lg btn-primary' onClick={()=>{props.history.push('/configuration-instructor')}}>{t('fSteps.14','¡¡Iniciar!')}</button>:null:null}
+        {usuario?newInstructor?<button className='btn-lg btn-primary' onClick={()=>{props.history.push('/configuration-instructor')}}>{t('fSteps.16','¡¡Iniciar!')}</button>:null:null}
       </div>
     </div>
   )

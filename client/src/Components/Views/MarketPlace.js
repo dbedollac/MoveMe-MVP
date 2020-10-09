@@ -56,7 +56,7 @@ function MarketPlace(props) {
     var docRef = db.collection("Instructors")
 
     if (allInstructors.length===0) {
-      docRef.where('monthlyProgram.Active','==',true).get().then((querySnapshot) => {
+      docRef.where("monthlyProgram.Price",">",0).get().then((querySnapshot) => {
         querySnapshot.forEach((instructor) => {
           allInstructors.push({uid:instructor.id, data:instructor.data()})
       })

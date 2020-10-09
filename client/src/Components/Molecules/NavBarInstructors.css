@@ -4,7 +4,8 @@
 }
 
 .navbar-option p{
-  font-size: 15px
+  font-size: 15px;
+  font-style: normal;
 }
 
 .navbar-option a{

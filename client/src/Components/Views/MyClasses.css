@@ -6,9 +6,11 @@
 
 
 .MyClasses-summary{
-  border-right-width: 2px;
-  border-right-style: solid;
-  border-right-color: gray
+  background-color: white;
+  border-radius: 10px;
+  border-width: 1px;
+  border-color: lightgray;
+  border-style: solid;
 }
 
 .MyClasses-card{
@@ -18,11 +20,5 @@
 @media (max-width: 768px) {
   .MyClasses-card{
     width: 100px
-    }
-
-    .MyClasses-summary{
-      border-width: 0 0 2px 0;
-      border-style: solid;
-      border-color: gray
     }
 }

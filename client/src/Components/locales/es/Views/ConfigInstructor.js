@@ -24,7 +24,16 @@ const ConfigInstructor = {
     20:'Nombre(s)',
     21:'Apellido(s)',
     22:'Enlazar mi cuenta Zoom',
-    23:'Enlazada con Zoom'
+    23:'Enlazada con Zoom',
+    24:'La puedes subir después.',
+    25:'Este documento es un PDF expedido por el SAT y lo necesitamos para cumplir con las disposiciones fiscales exigidas por el gobierno de México. Lo puedes obtener en este link:',
+    26:'Una vez inicies sesión en la página del SAT, solo haz click en "Generar Constancia".',
+    27:'Ver mi Constancia',
+    28:'Constancia de situacion Fiscal',
+    29:'Comparte tu cuenta de Instagram',
+    30:'Link de Instagram',
+    31:'Comparte tu cuenta de Facebook',
+    32:'Link de Facebook'
   }
 }
 

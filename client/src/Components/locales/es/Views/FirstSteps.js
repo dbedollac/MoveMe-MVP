@@ -9,13 +9,15 @@ const FirstSteps = {
     5:'Mis Clases',
     6:' genera tus clases, sube videos para rentar y agenda clases en Zoom para cobrar por asistencia.',
     7:'Fitness Kit',
-    8:' ¡ desarrolla y activa tu Fitness Kit ! Agenda clases por Zoom en las semanas del mes. Luego de activar tu Fitness Kit, este se ofrecerá al precio que hayas decidido e incluirá todas las clases agendadas más acceso a tus videos por un mes.',
+    8:'Fija un precio para tu paquete de servicios, el cual inlcuirá por un mes el acceso a todos tus videos y clases por Zoom.',
     9:'más opciones',
     10:'selecciona',
     11:'Ver mi página comercial',
     12:'y comparte la dirección URL de tu página en tus redes sociales para ofrecer tus servicios fitnes.',
     13:'¡Comienza a generar nuevos ingresos!',
-    14:'¡Iniciar!'
+    14:'Cada fin de mes te depositaremos tus ganancias por medio de PayPal, solo tendrás que abrir un mail.',
+    15:'Puedes regresar a esta página en "¿Cómo inicio?" o ir a "Ayuda" para ver la documentación de MoveMe.',
+    16:'¡Iniciar!'
   }
 }
 

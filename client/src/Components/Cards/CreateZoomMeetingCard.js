@@ -70,8 +70,9 @@ const [date, setDate] = useState(getDate(today))
                   claseID: props.claseID,
                   meetingID: resp.id,
                   startTime: resp.start_time,
-                  monthlyProgram: false,
-                  joinURL: resp.join_url
+                  joinURL: resp.join_url,
+                  dayNumber: new Date(resp.start_time).getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}),
+                  monthNumber: (new Date(resp.start_time).getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
                 }).then(alert(t('startZoom.9','La clase se agendó con éxito'))).then(window.location.reload(false))
                 .catch(function(error) {
                     console.log("Error setting documents: ", error);

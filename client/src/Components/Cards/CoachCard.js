@@ -49,15 +49,15 @@ function CoachCard(props) {
   })
 
   return(
-    <div className='card d-flex flex-column ClassCard-container' onClick={handleClick}>
-      <p className='card-title text-center'><strong>${(props.data.monthlyProgram.Price*(1+iva)+StripeFee(props.data.monthlyProgram.Price*(1+iva))).toFixed(2)} {props.data.profileName}</strong></p>
-      {props.data.imgURL?<img src={props.data.imgURL} className='card-img-top rounded-circle'/>:
-      <img src='/logo.jpg' className='card-img-top'/>}
-      <div className='card-img-overlay-bottom ClassCard-titulo d-flex flex-column justify-content-around'>
-        <p className='text-center px-1' >{zoomMeetingsNumber} {t('classCard.2','Clases por Zoom')}</p>
-        <p className='text-center px-1' >{videosNumber} {t('classCard.3','Clases en Video')}</p>
+      <div className='card d-flex flex-column ClassCard-container' onClick={handleClick}>
+        <p className='card-title text-center'><strong>${Math.ceil(props.data.monthlyProgram.Price*(1+iva)+StripeFee(props.data.monthlyProgram.Price*(1+iva)))} {props.data.profileName}</strong></p>
+        {props.data.imgURL?<img src={props.data.imgURL} className='card-img-top rounded-circle'/>:
+        <img src='/logo.jpg' className='card-img-top'/>}
+        <div className='card-img-overlay-bottom ClassCard-titulo d-flex flex-column justify-content-around'>
+          <p className='text-center px-1' >{zoomMeetingsNumber>0? zoomMeetingsNumber +' '+ t('classCard.2','Clases por Zoom'):null}</p>
+          <p className='text-center px-1' >{videosNumber>0? videosNumber +' '+ t('classCard.3','Clases en Video'):null}</p>
+        </div>
       </div>
-    </div>
   )
 }
 

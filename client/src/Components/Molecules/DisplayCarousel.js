@@ -99,11 +99,8 @@ function DisplayCarousel(props) {
                 joinURL:props.zoomMeetings[i].joinURL
               })
             }
-        if (props.instructor&&!props.instructor.data.monthlyProgram.Active) {
-          setMeetings(Meetings.filter(item => item.monthlyProgram===false))
-        }else {
+
           setMeetings(Meetings)
-        }
 
     }
 

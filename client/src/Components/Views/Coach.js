@@ -3,7 +3,7 @@ import Header from '../Molecules/Header'
 import { Auth } from "../../Config/AuthContext";
 import {db, auth} from '../../Config/firestore'
 import { withRouter } from "react-router";
-import { CameraVideoFill, CollectionPlayFill, Plus } from 'react-bootstrap-icons';
+import { CameraVideoFill, CollectionPlayFill, Plus, ArrowRight } from 'react-bootstrap-icons';
 import DisplayCarousel from '../Molecules/DisplayCarousel'
 import MonthlyProgram from './MonthlyProgram'
 import MyClasses from './MyClasses'
@@ -11,6 +11,8 @@ import SetMonthlyProgramPrice from '../Molecules/SetMonthlyProgramPrice'
 import { useTranslation } from 'react-i18next';
 import {iva} from '../../Config/Fees'
 import StripeFee from '../Atoms/StripeFee'
+import facebookLogo from '../Views/Images/Facebook.png'
+import instagramLogo from '../Views/Images/Instagram.png'
 import './InstructorProfile.css'
 
 function Coach(props) {
@@ -19,11 +21,12 @@ function Coach(props) {
   const [profileName, setprofileName] = useState(null)
   const [profilePicture, setprofilePicture] = useState(null)
   const [selfDescription, setselfDescription] = useState(null)
+  const [facebookLink, setFacebook] = useState(null)
+  const [instagramLink, setInstagram] = useState(null)
   const [monthlyProgramPrice, setmonthlyProgramPrice] = useState(null)
   const [instructor, setInstructor] = useState(null)
   const [allClases, setallClases] = useState([])
   const [zoomMeetings,setZoomMeetings] = useState([])
-  const [zoomMeetingsProgram,setZoomMeetingsProgram] = useState([])
   const [videoClases, setvideoClases] = useState([])
   const [monthlyProgram,setMonthlyProgram] = useState(false)
   const [myClasses,setmyClasses] = useState(false)
@@ -73,6 +76,8 @@ function Coach(props) {
         setprofileName(doc.data().profileName)
         setprofilePicture(doc.data().imgURL)
         setselfDescription(doc.data().selfDescription)
+        setFacebook(doc.data().linkFB)
+        setInstagram(doc.data().linkIG)
         setmonthlyProgramPrice(doc.data().monthlyProgram.Price)
         setInstructor(doc.data())
       })
@@ -95,12 +100,7 @@ function Coach(props) {
                   .then(function(querySnapshot) {
                     var now = new Date(Date.now()-3600000).toISOString()
                       querySnapshot.forEach(function(doc) {
-                        if (doc.data().monthlyProgram===true&&doc.data().week>fiveWeeks0&&!zoomMeetingsProgram.includes(doc.id)) {
-                          if (doc.data().startTime>now) {
 
-                            zoomMeetingsProgram.push(doc.id)
-                          }
-                        }
                         if(doc.data().startTime>now){
                           if (!aux.includes(doc.id)) {
                             aux.push(doc.id)
@@ -135,7 +135,7 @@ function Coach(props) {
 
         <div className='col-md-8 d-flex flex-row alig-items-center justify-content-star mt-2'>
           <CameraVideoFill size={'2em'} className='mr-2' color="#2C8BFF" />
-          <h4>{zoomMeetingsProgram.length} {t('iProfile.2','Clases por Zoom')}</h4>
+          <h4>{zoomMeetings.length} {t('iProfile.2','Clases por Zoom')}</h4>
         </div>
         <MonthlyProgram market={props.match.params.uid?true:false} instructor={{data:instructor,id:uid}}/>
       </div>
@@ -156,6 +156,16 @@ function Coach(props) {
                     backgroundPosition: 'center',
                     backgroundSize: 'cover'}}>
                     {profilePicture?null:<img src='/logo.jpg' className='p-2 '/>}
+                    <div className='fixed-bottom InstructorProfile-logos'>
+                      {facebookLink?
+                      <a href={facebookLink} target="_blank"> <img className='float-right ' src={facebookLogo} alt='Facebook' style={{width:'3em'}}/> </a>
+                      :null
+                      }
+                      {instagramLink?
+                      <a href={instagramLink} target="_blank"> <img className='float-right mr-2' src={instagramLogo} alt='Instagram' style={{width:'3em'}}/> </a>
+                      :null
+                      }
+                    </div>
                   </div>
                   <div className='col-12 col-md-6 d-flex flex-column'>
                     <div className='InstructorProfile-container-nameDescription'>
@@ -163,13 +173,16 @@ function Coach(props) {
                       <p className='text-left'>{selfDescription}</p>
                     </div>
                     <div className='InstructorProfile-container-programa p-2'>
-                      <div className='d-flex flex-row align-items-center justify-content-around'>
-                        <h3>{t('iProfile.1','Reto Mensual')}</h3>
-                        <button className='btn-outline-dark rounded' onClick={handleVerMonthlyProgram}>{t('iProfile.4','Ver')}</button>
-                      </div>
+                        <div className='d-flex flex-row align-items-center justify-content-around' onClick={handleVerMonthlyProgram} style={{cursor:'pointer'}}>
+                          <h3>{t('iProfile.1','Reto Mensual')}</h3>
+                          <div>
+                            {monthlyProgramPrice?'$ '+Math.ceil(monthlyProgramPrice*(1+iva)+StripeFee(monthlyProgramPrice*(1+iva))):null}
+                            <ArrowRight className='ml-2'/>
+                          </div>
+                        </div>
                       <div className='d-flex flex-row justify-content-around align-items-center'>
                         <div className='monthlyProgram-clasesZoom d-flex flex-column'>
-                          <p style={{ fontSize: '40px'}}>{zoomMeetingsProgram.length}</p>
+                          <p style={{ fontSize: '40px'}}>{zoomMeetings.length}</p>
                           <p>{t('iProfile.2','Clases por Zoom')}</p>
                         </div>
                         <Plus size={'2em'}/>
@@ -178,7 +191,6 @@ function Coach(props) {
                           <p>{t('iProfile.3','Clases en Video')}</p>
                         </div>
                       </div>
-                      <div className='InstructorProfile-container-programa-price'> {monthlyProgramPrice?'$ '+(monthlyProgramPrice*(1+iva)+StripeFee(monthlyProgramPrice*(1+iva))).toFixed(2):null} </div>
                     </div>
                   </div>
               </div>

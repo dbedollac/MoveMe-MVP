@@ -192,7 +192,7 @@ const handleRefresh = () =>{
       <div >
         <Header instructor={usuario?user?!props.match.params.uid?true:false:true:null} user={usuario?user?true:false:null}/>
           <div className='col-12 MyClasses-container d-flex flex-column flex-md-row'>
-            <div className='col-lg-3 col-12 col-md-4 MyClasses-summary py-2'>
+            <div className='col-lg-3 col-12 col-md-4 MyClasses-summary py-2 my-2'>
 
              {!detail?
               <div className='d-flex flex-column justify-content-start'>

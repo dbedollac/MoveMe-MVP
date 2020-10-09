@@ -284,7 +284,7 @@ function MarketAllClasses(props) {
 
   return(
     <div className='d-flex flex-column align-items-center'>
-      <form className='my-2'>
+      <form className={`my-2 Market-filters py-1 ${props.allInstructors?'col-md-5 col-12':'col-12'}`}>
         <div className='d-flex flex-row justify-content-start align-items-center flex-wrap'>
 
           <div className='d-flex flex-column flex-lg-row justify-content-between align-items-start col-6'>
@@ -347,7 +347,7 @@ function MarketAllClasses(props) {
           :props.misVideos?null
           :<select id="ordenar"
               name="ordenar"
-              className={`custom-select ${!props.allInstructors?'col-12':'col-6'}`}
+              className={`custom-select ${!props.allInstructors?'col-12':'col-6 ml-2'}`}
               onChange={handleOrdenar}
               value={filterSort}
               >

@@ -2,6 +2,14 @@
   width: 200px
 }
 
+.Market-filters{
+  background-color: #FBE5D6;
+  border-radius: 10px;
+  border-width: 1px;
+  border-color: lightgray;
+  border-style: solid;
+}
+
 @media (max-width: 768px) {
   .MarketAllClasses-card{
     width: 120px

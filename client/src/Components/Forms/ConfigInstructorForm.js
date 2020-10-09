@@ -65,7 +65,9 @@ const formik = useFormik({
     selfDescription: data.selfDescription,
     disableTrialClasses: false,
     firstName: data.firstName,
-    lastName: data.lastName
+    lastName: data.lastName,
+    linkIG: data.linkIG,
+    linkFB: data.linkFB
   },
   onSubmit: values => {
     db.collection("Instructors").doc(usuario.uid).set({
@@ -74,7 +76,9 @@ const formik = useFormik({
     lastName: values.lastName,
     selfDescription: values.selfDescription,
     disableTrialClasses: values.disableTrialClasses,
-    new: false
+    new: false,
+    linkIG: values.linkIG,
+    linkFB: values.linkFB
     },{ merge: true })
 
     alert(props.newInstructor?t('config.3','¡Ahora enlaza tu cuenta de Zoom!'):t('config.4','Tus datos se guardaron con éxito'));
@@ -111,6 +115,32 @@ const formik = useFormik({
               value={formik.values.selfDescription}
               className='col-md-10'
               maxlength='280'
+            />
+            <br/>
+            <label htmlFor="linkIG">{t('config.29','Comparte tu cuenta de Instagram')}</label>
+            <br/>
+            <textarea
+              id="linkIG"
+              name="linkIG"
+              type="text"
+              rows='1'
+              placeholder={t('config.30','Link de Instagram')}
+              onChange={formik.handleChange}
+              value={formik.values.linkIG}
+              className='col-md-10'
+            />
+            <br/>
+            <label htmlFor="linkFB">{t('config.31','Comparte tu cuenta de Facebook')}</label>
+            <br/>
+            <textarea
+              id="linkFB"
+              name="linkFB"
+              type="text"
+              rows='1'
+              placeholder={t('config.32','Link de Facebook')}
+              onChange={formik.handleChange}
+              value={formik.values.linkFB}
+              className='col-md-10'
             />
             <br/>
             <div>

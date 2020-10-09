@@ -97,7 +97,6 @@ const handleNext = () =>{
         countClasses: 0,
         new: true,
         monthlyProgram: {
-          Active: false,
           Price: null
         },
         aceptoTerminosYCondiciones: aceptar

@@ -49,8 +49,7 @@ function AddToCar(props) {
           startTime: props.startTime,
           type: 'Clase por Zoom',
           joinURL: props.joinURL,
-          claseID: props.claseID,
-          monthlyProgram: props.zoomMonthlyProgram
+          claseID: props.claseID
         }).catch(error => console.log(error))
       }
 

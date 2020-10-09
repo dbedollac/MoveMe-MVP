@@ -59,12 +59,12 @@ useEffect(()=>{
     return (
       <>
         <Header instructor={newInstructor?false:true} />
-          <div className='configInstructor-container'>
+          <div className='configInstructor-container px-1'>
 
             <div className="d-flex flex-column flex-lg-row align-items-start pt-4">
-              <div className="col-lg-4 foto-perfil d-flex flex-column justify-content-around">
+              <div className="col-lg-4 foto-perfil d-flex flex-column justify-content-around py-2">
 
-                <div className='d-flex flex-row justify-content-center align-items-center zoom-button mb-2 pb-3'>
+                <div className='d-flex flex-row justify-content-center align-items-center zoom-button mb-2 p-1'>
                   <div className='d-flex flex-column align-items-center'>
                     {zoomButton ? <p style={{color: 'gray'}}>{t('config.1','Guarda primero tus datos de perfil')}</p> : null}
                     <GetZoomToken disable={zoomButton} connected={zoomConnected}/>
@@ -76,7 +76,7 @@ useEffect(()=>{
               </div>
 
               <div className="col-lg-8 d-flex flex-column pt-lg-0 pt-4 mb-3">
-                <div className="d-flex align-self-center">
+                <div className="d-flex align-self-center configInstructor-form pb-2">
                   <ConfigInstructorForm newInstructor={newInstructor}/>
                 </div>
               </div>
