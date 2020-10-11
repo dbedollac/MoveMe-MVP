@@ -4,6 +4,7 @@ import { Auth } from "../../Config/AuthContext";
 import {db, auth} from '../../Config/firestore'
 import { withRouter } from "react-router";
 import { CameraVideoFill, CollectionPlayFill, Plus } from 'react-bootstrap-icons';
+import { useMediaQuery } from 'react-responsive'
 import DisplayCarousel from '../Molecules/DisplayCarousel'
 import {proxyurl} from '../../Config/proxyURL'
 import { useTranslation } from 'react-i18next';
@@ -27,6 +28,9 @@ const [zoomMeetings,setZoomMeetings] = useState([])
 const [videoClases, setvideoClases] = useState([])
 const [aux,setAux] = useState([])
 const { t } = useTranslation();
+const isMD = useMediaQuery({
+  query: '(min-device-width: 768px)'
+})
 
 const today = new Date()
 const firstMonthDay = new Date(today.getFullYear(),today.getMonth(),1)
@@ -101,7 +105,7 @@ const fiveWeeks0= fiveWeeks?-2:0
                     backgroundImage: `url(${profilePicture})`,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover'}}>
-                    {profilePicture?null:<img src='/logo.jpg' className='p-2'/>}
+                    {profilePicture?null:<img src='/logo.jpg' className='p-2 rounded-circle' style={{transform: isMD?'skew(-10deg)':null}}/>}
                     <div className='fixed-bottom InstructorProfile-logos'>
                       {facebookLink?
                       <a href={facebookLink} target="_blank"> <img className='float-right ' src={facebookLogo} alt='Facebook' style={{width:'3em'}}/> </a>

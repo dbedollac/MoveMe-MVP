@@ -72,7 +72,7 @@ function FileUpload (props){
               <progress value={uploadValue} max='100' className="progres-bar mr-2">
                 {uploadValue} %
               </progress>
-              {Math.round(uploadValue*100)/100} %
+              {Math.round(uploadValue)} %
             </div>
           </div>
           <div className="card-footer d-flex flex-row justify-content-between align-items-center">

@@ -9,6 +9,7 @@ import MonthlyProgram from './MonthlyProgram'
 import MyClasses from './MyClasses'
 import SetMonthlyProgramPrice from '../Molecules/SetMonthlyProgramPrice'
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive'
 import {iva} from '../../Config/Fees'
 import StripeFee from '../Atoms/StripeFee'
 import facebookLogo from '../Views/Images/Facebook.png'
@@ -33,6 +34,9 @@ function Coach(props) {
   const [aux,setAux] = useState([])
   const [user,setUser] = useState(false)
   const { t } = useTranslation();
+  const isMD = useMediaQuery({
+    query: '(min-device-width: 768px)'
+  })
 
   const today = new Date()
   const firstMonthDay = new Date(today.getFullYear(),today.getMonth(),1)
@@ -155,7 +159,7 @@ function Coach(props) {
                     backgroundImage: `url(${profilePicture})`,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover'}}>
-                    {profilePicture?null:<img src='/logo.jpg' className='p-2 '/>}
+                    {profilePicture?null:<img src='/logo.jpg' className='p-2 rounded-circle' style={{transform: isMD?'skew(-10deg)':null}}/>}
                     <div className='fixed-bottom InstructorProfile-logos'>
                       {facebookLink?
                       <a href={facebookLink} target="_blank"> <img className='float-right ' src={facebookLogo} alt='Facebook' style={{width:'3em'}}/> </a>

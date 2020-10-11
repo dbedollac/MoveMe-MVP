@@ -45,7 +45,7 @@ function FirstSteps(props) {
         <h2 className='pt-2'>{t('fSteps.1','¿Cómo iniciar?')}</h2>
         <div className='d-flex flex-column flex-lg-row pt-1 align-items-center justify-content-around'>
 
-          <VideoPlayer Video='https://youtu.be/B_yo1ZqVRAk' videoWidth={isMD?'500px':'280px'} videoHeight={isMD?'300px':'170px'} />
+          <VideoPlayer Video='https://youtu.be/5Nssuh8Tf0s' videoWidth={isMD?'500px':'280px'} videoHeight={isMD?'300px':'170px'} />
           <div className='d-flex flex-column align-items-start justify-content-around col-12 col-lg-7 mt-3 mt-md-0'>
             <div className='d-flex flex-row align-items-center justify-content-start'><h3 className='mr-3'>1</h3><p className='text-justify'>{t('fSteps.2','En ')}<strong>{t('fSteps.3','Configuración')}</strong> <GearFill />{t('fSteps.4',' agrega tus datos personales, foto de perfil y enlaza tu cuenta de Zoom.')}</p></div>
             <div className='d-flex flex-row align-items-center justify-content-start mt-2'><h3 className='mr-3'>2</h3><p className='text-justify'>{t('fSteps.2','En ')}<strong>{t('fSteps.5','Mis Clases')}</strong> <CollectionPlayFill />{t('fSteps.6',' genera tus clases, sube videos para rentar y agenda clases en Zoom para cobrar por asistencia.')}</p></div>
