@@ -15,7 +15,7 @@ const FirstSteps = {
     11:'See my business web page',
     12:'and share the URL of your web page on your social networks to offer your fitness services.',
     13:'Start generating new income!',
-    14:'At the end of the month we will deposit your earnings through PayPal, you only will have to open an email.',
+    14:'At the end of the month we will deposit your earnings to your bank account.',
     15:'You can return to this page in "How to start?" or go to "Help" to view MoveMe´s documentation.',
     16:'Start!'
   }

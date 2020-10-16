@@ -15,7 +15,7 @@ const FirstSteps = {
     11:'Ver mi página comercial',
     12:'y comparte la dirección URL de tu página en tus redes sociales para ofrecer tus servicios fitnes.',
     13:'¡Comienza a generar nuevos ingresos!',
-    14:'Cada fin de mes te depositaremos tus ganancias por medio de PayPal, solo tendrás que abrir un mail.',
+    14:'Cada fin de mes depositaremos tus ganancias a la cuenta de tu preferencia.',
     15:'Puedes regresar a esta página en "¿Cómo inicio?" o ir a "Ayuda" para ver la documentación de MoveMe.',
     16:'¡Iniciar!'
   }

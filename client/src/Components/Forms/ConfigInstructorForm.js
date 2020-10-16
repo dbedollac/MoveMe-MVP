@@ -6,7 +6,6 @@ import './ConfigInstructorForm.css'
 import { withRouter } from "react-router";
 import { Redirect } from 'react-router-dom'
 import { useTranslation } from 'react-i18next';
-import FileUploadPDF from '../Atoms/FileUploadPDF'
 import {proxyurl} from '../../Config/proxyURL'
 
 const ConfigInstructorForm = (props) => {
@@ -67,7 +66,10 @@ const formik = useFormik({
     firstName: data.firstName,
     lastName: data.lastName,
     linkIG: data.linkIG,
-    linkFB: data.linkFB
+    linkFB: data.linkFB,
+    RFC: data.RFC,
+    CURP: data.CURP,
+    CLABE: data.CLABE
   },
   onSubmit: values => {
     db.collection("Instructors").doc(usuario.uid).set({
@@ -79,7 +81,10 @@ const formik = useFormik({
     new: false,
     linkIG: values.linkIG,
     linkFB: values.linkFB,
-    website: 'https://moveme.fitness/coach-'+values.profileName.replace(/ /g,'-')+'/'+usuario.uid
+    website: 'https://moveme.fitness/coach-'+values.profileName.replace(/ /g,'-')+'/'+usuario.uid,
+    RFC: values.RFC,
+    CURP: values.CURP,
+    CLABE: values.CLABE
     },{ merge: true })
 
     alert(props.newInstructor?t('config.3','¡Ahora enlaza tu cuenta de Zoom!'):t('config.4','Tus datos se guardaron con éxito'));
@@ -187,15 +192,46 @@ const formik = useFormik({
               className='col-12'
               required
             />
-            <div className='mt-3 mb-2'>
-              <FileUploadPDF name={usuario?usuario.uid:null}/>
-            </div>
-            <div className="clasesPrueba col-md-12">
-              <p><strong>{t('config.24','La puedes subir después.')}</strong> {t('config.25','Este documento es un PDF expedido por el SAT y lo necesitamos para cumplir con las disposiciones fiscales exigidas por el gobierno de México. Lo puedes obtener en este link:')}
-              <a href='https://www.sat.gob.mx/aplicacion/53027/genera-tu-constancia-de-situacion-fiscal.' target="_blank"> https://www.sat.gob.mx/aplicacion/53027/genera-tu-constancia-de-situacion-fiscal. </a>
-              {t('config.26','Una vez inicies sesión en la página del SAT, solo haz click en "Generar Constancia".')}
-              </p>
-            </div>
+            <br/>
+            <label htmlFor="RFC">{t('config.33', 'RFC')}</label>
+            <br/>
+            <input
+              id="RFC"
+              name="RFC"
+              type="text"
+              placeholder={t('config.33','RFC')}
+              onChange={formik.handleChange}
+              value={formik.values.RFC}
+              className='col-12'
+            />
+            <br/>
+            <label htmlFor="CURP">{t('config.34','CURP')}</label>
+            <br/>
+            <input
+              id="CURP"
+              name="CURP"
+              type="text"
+              placeholder={t('config.34','CURP')}
+              onChange={formik.handleChange}
+              value={formik.values.CURP}
+              className='col-12'
+            />
+            <br/>
+            <label htmlFor="CLABE">{t('config.35','CLABE')}</label>
+            <br/>
+            <input
+              id="CLABE"
+              name="CLABE"
+              type="tel"
+              inputmode="numeric"
+              placeholder={t('config.35','CLABE')}
+              onChange={formik.handleChange}
+              value={formik.values.CLABE}
+              className='col-12'
+              maxlength="18"
+              minlength='18'
+              required
+            />
           </div>
         </div>
 

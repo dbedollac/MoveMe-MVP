@@ -88,7 +88,6 @@ const handleNext = () =>{
         firstName: "",
         lastName: "",
         CLABE: "",
-        noTarjeta: "",
         selfDescription:"",
         disableTrialClasses: false,
         website: "",
@@ -101,7 +100,9 @@ const handleNext = () =>{
         },
         aceptoTerminosYCondiciones: aceptar,
         linkIG:"",
-        linkFB:""
+        linkFB:"",
+        RFC:"",
+        CURP:""
         });
       }
         } else {

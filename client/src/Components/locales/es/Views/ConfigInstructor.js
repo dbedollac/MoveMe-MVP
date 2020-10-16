@@ -33,7 +33,10 @@ const ConfigInstructor = {
     29:'Comparte tu cuenta de Instagram',
     30:'Link de Instagram',
     31:'Comparte tu cuenta de Facebook',
-    32:'Link de Facebook'
+    32:'Link de Facebook',
+    33:'RFC',
+    34:'CURP',
+    35:'CLABE interbancaria'
   }
 }
 
