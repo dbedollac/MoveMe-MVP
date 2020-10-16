@@ -4,7 +4,7 @@ const ChooseUserType = {
   type: {
     1:'Hola',
     2:'¿Cómo quieres utilizar MoveMe?',
-    3:'¡Quiero ofrecer ofrecer mis servicios fitness!',
+    3:'¡Quiero ofrecer mis servicios fitness!',
     4:'¡Quiero hacer ejercicio!',
     5:'Aceptar',
     6:'Términos y condiciones',

@@ -99,7 +99,9 @@ const handleNext = () =>{
         monthlyProgram: {
           Price: null
         },
-        aceptoTerminosYCondiciones: aceptar
+        aceptoTerminosYCondiciones: aceptar,
+        linkIG:"",
+        linkFB:""
         });
       }
         } else {
@@ -154,7 +156,7 @@ const handleNext = () =>{
                         style={{backgroundColor: instructor ? '#F39119' : 'white'}}>
                         <h4>{t('type.12','Instructor')}</h4>
                         <img src='./Instructor.png' alt='Instructor'/>
-                        <p> {t('type.3','¡Quiero ofrecer ofrecer mis servicios fitness!')} </p>
+                        <p> {t('type.3','¡Quiero ofrecer mis servicios fitness!')} </p>
                       </div>
 
                       <div className="d-flex flex-column align-items-center col-10 col-md-5 chooseUserType-options text-center"

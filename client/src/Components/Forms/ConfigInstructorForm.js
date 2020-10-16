@@ -78,7 +78,8 @@ const formik = useFormik({
     disableTrialClasses: values.disableTrialClasses,
     new: false,
     linkIG: values.linkIG,
-    linkFB: values.linkFB
+    linkFB: values.linkFB,
+    website: 'https://moveme.fitness/coach-'+values.profileName.replace(/ /g,'-')+'/'+usuario.uid
     },{ merge: true })
 
     alert(props.newInstructor?t('config.3','¡Ahora enlaza tu cuenta de Zoom!'):t('config.4','Tus datos se guardaron con éxito'));
@@ -89,7 +90,7 @@ const formik = useFormik({
   return(
   <form onSubmit={formik.handleSubmit} >
       <div className="d-flex flex-row flex-wrap">
-          <div className="col-md-7">
+          <div className="col-md-6">
           <p><strong>{t('config.5','Datos para crear tu perfil')}</strong></p>
             <label htmlFor="profileName">{t('config.6','Nombre del perfil')}</label>
             <br/>
@@ -119,7 +120,7 @@ const formik = useFormik({
             <br/>
             <label htmlFor="linkIG">{t('config.29','Comparte tu cuenta de Instagram')}</label>
             <br/>
-            <textarea
+            <input
               id="linkIG"
               name="linkIG"
               type="text"
@@ -132,7 +133,7 @@ const formik = useFormik({
             <br/>
             <label htmlFor="linkFB">{t('config.31','Comparte tu cuenta de Facebook')}</label>
             <br/>
-            <textarea
+            <input
               id="linkFB"
               name="linkFB"
               type="text"
@@ -154,7 +155,7 @@ const formik = useFormik({
                 value={formik.values.trialClasses}
                 defaultChecked={data.disableTrialClasses}
               />
-              <div className="clasesPrueba col-md-7">
+              <div className="clasesPrueba col-md-6">
                 <p>{t('config.9','Tus nuevos clientes tienen derecho a tomar su ')}<strong>{t('config.10','primer clase (prueba) gratis')}</strong>, {t('config.11','al deshabilitar esta opción tendrán que pagar desde la primer clase.')}</p>
               </div>
             </div>

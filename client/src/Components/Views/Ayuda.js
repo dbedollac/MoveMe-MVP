@@ -4,6 +4,7 @@ import { Auth } from "../../Config/AuthContext";
 import Header from '../Molecules/Header'
 import { useTranslation } from 'react-i18next';
 import Documentation from './Documentation'
+import {EnvelopeFill, ArchiveFill} from 'react-bootstrap-icons';
 import './Ayuda.css'
 
 function Ayuda(props) {
@@ -14,12 +15,22 @@ function Ayuda(props) {
     <>
     <Header empty={usuario?true:false}/>
       <div className='Ayuda-container p-4'>
-        <p className='Ayuda-container-contact'>{t('help.1','Hola')}, <strong>{t('help.2','escríbenos a ')}<a href='mailto:ayuda@moveme.fitness'>ayuda@moveme.fitness</a></strong>{t('help.3',' y en cuanto nuestro próximo agente se encuentre disponible te responderá de inmediato.')}
-          <br/>
-          <br/>{t('help.4','Danos una descripción del problema o duda que presentas.')}
-          <br/>
-          <br/>{t('help.5','Te pido de favor nos escribas desde el correo electrónico que registraste en la plataforma.')}
-        </p>
+        <h4>{t('help.1','Hola')}</h4>
+
+        <div className='d-flex flex-row'>
+          <EnvelopeFill className='Ayuda-icono' size={'2em'}/>
+          <h5 className='pt-1 px-2'>{t('help.2','Email Support:')}</h5>
+          <a href='mailto:ayuda@moveme.fitness' className='pt-1'>{t('help.6')}</a>
+        </div>
+        <p>{t('help.3','Escríbenos')}</p>
+
+        <div className='d-flex flex-row'>
+          <ArchiveFill className='Ayuda-icono' size={'2em'}/>
+          <h5 className='pt-1 px-2'>{t('help.4')}</h5>
+          <a target="_blank" href='https://www.facebook.com/MoveMe-Fitness-107603050964291' className='pt-1'>{t('help.6')}</a>
+        </div>
+        <p>{t('help.5','Escríbenos')}</p>
+
         <Documentation empty={true}/>
       </div>
     </>

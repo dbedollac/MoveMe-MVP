@@ -3,12 +3,16 @@
   min-height: 100vh
 }
 
-.Ayuda-container-contact{
-  font-size: 20px
-}
-
 .Ayuda-container img{
   width: 100px
+}
+
+.Ayuda-container a{
+  text-decoration: underline;
+}
+
+.Ayuda-icono{
+  color: #F39119;
 }
 
 @media (max-width: 768px) {
