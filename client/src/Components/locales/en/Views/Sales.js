@@ -11,7 +11,7 @@ const Sales = {
     7:'Video rental',
     8:'Refunds',
     9:'MoveMe contribution',
-    10:'To pay',
+    10:'Total',
     11:'Paid',
     12:'Fitness Kit Sales',
     13:'Client',

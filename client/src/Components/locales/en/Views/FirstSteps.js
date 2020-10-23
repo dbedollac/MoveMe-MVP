@@ -17,7 +17,8 @@ const FirstSteps = {
     13:'Start generating new income!',
     14:'At the end of the month we will deposit your earnings to your bank account.',
     15:'You can return to this page in "How to start?" or go to "Help" to view MoveMe´s documentation.',
-    16:'Start!'
+    16:'Start!',
+    17:'It is time to help and reactivate our economy. Use MoveMe for free until February 2021.'
   }
 }
 

@@ -7,6 +7,12 @@
   color:#F39119
 }
 
+.FirstSteps-timeToHelp{
+  background-color: #FBE5D6;
+  border-radius: 10px;
+  padding: 10px
+}
+
 .FirstSteps-container p{
   font-size: large
 }

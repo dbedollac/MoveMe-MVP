@@ -56,7 +56,7 @@ function FirstSteps(props) {
           </div>
 
         </div>
-
+        <h4 className='FirstSteps-timeToHelp my-3'>{t('fSteps.17','MoveMe es gratis hasta Febrero del 2021')}</h4>
         {usuario?newInstructor?<button className='btn-lg btn-primary' onClick={()=>{props.history.push('/configuration-instructor')}}>{t('fSteps.16','¡¡Iniciar!')}</button>:null:null}
       </div>
     </div>

@@ -186,7 +186,7 @@ function MarketPlace(props) {
                   <h4>{t('mPlace.2','Retos Mensuales')}</h4>
                 </div>
                 <div className='col-md-4 d-flex flex-row alig-items-center justify-content-md-end'>
-                <i onClick={handleVerProgramas} style={{cursor:'pointer',fontSize:'large'}}>{t('mPlace.3','Ver todos los retos')}</i>
+                <p className='MarketPlace-button-ver mb-md-0 mb-1' onClick={handleVerProgramas} style={{cursor:'pointer'}}>{t('mPlace.3','Ver todos los retos')}</p>
               </div>
           </div>
             {allInstructors.length>0?
@@ -199,7 +199,7 @@ function MarketPlace(props) {
                   <h4>{t('mPlace.5','Próximas Clases por Zoom')}</h4>
                 </div>
                 <div className='col-md-4 d-flex flex-row alig-items-center justify-content-md-end'>
-                <i onClick={handleVerClasesZoom} style={{cursor:'pointer',fontSize:'large'}}>{t('mPlace.6','Ver todas las clases por Zoom')}</i>
+                <p className='MarketPlace-button-ver mb-md-0 mb-1' onClick={handleVerClasesZoom} style={{cursor:'pointer'}}>{t('mPlace.6','Ver todas las clases por Zoom')}</p>
               </div>
           </div>
             {zoomMeetings.length>0?
@@ -212,7 +212,7 @@ function MarketPlace(props) {
                     <h4>{t('mPlace.8','Clases en Video')}</h4>
                   </div>
                   <div className='col-md-4 d-flex flex-row alig-items-center justify-content-md-end'>
-                  <i onClick={handleVerClasesVideo} style={{cursor:'pointer',fontSize:'large'}}>{t('mPlace.9','Ver todas las clases en video')}</i>
+                  <p className='MarketPlace-button-ver mb-md-0 mb-1' onClick={handleVerClasesVideo} style={{cursor:'pointer'}}>{t('mPlace.9','Ver todas las clases en video')}</p>
                 </div>
             </div>
             {videoClases.length>0?

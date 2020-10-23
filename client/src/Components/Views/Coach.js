@@ -206,7 +206,7 @@ function Coach(props) {
                     <h4>{t('iProfile.5','Próximas Clases por Zoom')}</h4>
                   </div>
                   <div className='col-md-4 d-flex flex-row alig-items-center justify-content-md-end'>
-                  <i onClick={handleVerClases} style={{cursor:'pointer',fontSize:'large'}}>{t('iProfile.6','Ver todas las clases')}</i>
+                  <p className='InstructorProfile-button-ver mb-md-0 mb-1' onClick={handleVerClases} style={{cursor:'pointer'}}>{t('iProfile.6','Ver todas las clases')}</p>
                   </div>
                 </div>
 
@@ -220,7 +220,7 @@ function Coach(props) {
                     <h4>{t('iProfile.3','Clases en Video')}</h4>
                   </div>
                   <div className='col-md-4 d-flex flex-row alig-items-center justify-content-md-end'>
-                  <i onClick={handleVerClases} style={{cursor:'pointer',fontSize:'large'}}>{t('iProfile.6','Ver todas las clases')}</i>
+                  <p className='InstructorProfile-button-ver mb-md-0 mb-1' onClick={handleVerClases} style={{cursor:'pointer'}}>{t('iProfile.6','Ver todas las clases')}</p>
                   </div>
                 </div>
 

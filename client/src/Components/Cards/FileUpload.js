@@ -75,7 +75,7 @@ function FileUpload (props){
               {Math.round(uploadValue)} %
             </div>
           </div>
-          <div className="card-footer d-flex flex-row justify-content-between align-items-center">
+          <div className="col-12 card-footer">
             <div className='custom-file'>
               <input id='customFile-Foto' type='file' onChange={handleOnChange} accept='image/*' className='custom-file-input'/>
               <label className="custom-file-label" htmlFor="customFile"><Image size='2em'/> {t('myClasses.24','Seleccionar foto')}</label>

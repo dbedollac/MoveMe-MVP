@@ -1,0 +1,242 @@
+{
+"fields":[
+  {
+  "name": "data",
+  "type": "map",
+  "fields":[
+      {
+      "name": "claseData",
+      "type": "map",
+      "fields": [
+        {
+        "name": "description",
+        "type": "string"
+        },
+        {
+        "name": "duration",
+        "type": "number"
+        },
+        {
+        "name": "equipment",
+        "type": "string"
+        },
+        {
+        "name": "freeVideo",
+        "type": "boolean"
+        },
+        {
+        "name": "level",
+        "type": "string"
+        },
+        {
+        "name": "offlinePrice",
+        "type": "number"
+        },
+        {
+        "name": "title",
+        "type": "string"
+        },
+        {
+        "name": "type",
+        "type": "string"
+        },
+        {
+        "name": "videoURL",
+        "type": "string"
+        },
+        {
+        "name": "zoomPrice",
+        "type": "number"
+        },
+      ]
+      },
+      {
+      "name": "claseID",
+      "type": "string"
+      },
+      {
+      "name": "instructor",
+      "type": "map",
+      "fields":[
+        {
+        "name": "CLABE",
+        "type": "string"
+        },
+        {
+        "name": "CURP",
+        "type": "string"
+        },
+        {
+        "name": "RFC",
+        "type": "string"
+        },
+        {
+        "name": "aceptoTerminosYCondiciones",
+        "type": "string"
+        },
+        {
+        "name": "countClasses",
+        "type": "number"
+        },
+        {
+        "name": "disableTrialClasses",
+        "type": "boolean"
+        },
+        {
+        "name": "email",
+        "type": "string"
+        },
+        {
+        "name": "firstName",
+        "type": "string"
+        },
+        {
+        "name": "imgURL",
+        "type": "string"
+        },
+        {
+        "name": "lastName",
+        "type": "string"
+        },
+        {
+        "name": "linkFB",
+        "type": "string"
+        },
+        {
+        "name": "linkIG",
+        "type": "string"
+        },
+        {
+        "name": "monthlyProgram",
+        "type": "map",
+        "fields":[
+          {
+          "name": "Price",
+          "type": "number",
+          }
+        ]
+        },
+        {
+        "name": "new",
+        "type": "boolean"
+        },
+        {
+        "name": "profileName",
+        "type": "string"
+        },
+        {
+        "name": "selfDescription",
+        "type": "string"
+        },
+        {
+        "name": "uid",
+        "type": "string"
+        },
+        {
+        "name": "website",
+        "type": "string"
+        },
+        {
+        "name": "zoomAccountID",
+        "type": "string"
+        },
+        {
+        "name": "zoomRefreshToken",
+        "type": "string"
+        },
+        {
+        "name": "zoomToken",
+        "type": "string"
+        },
+        {
+        "name": "zoomUserID",
+        "type": "string"
+        },
+      ]
+      },
+      {
+      "name": "joinURL",
+      "type": "string"
+      },
+      {
+      "name": "meetingID",
+      "type": "number"
+      },
+      {
+      "name": "startTime",
+      "type": "map",
+      "fields":[
+        {
+        "name": "startTime",
+        "type": "string"
+        },
+        {
+        "name": "time",
+        "type": "string"
+        },
+        ]
+      },
+      {
+      "name": "type",
+      "type": "string"
+      }
+    ]
+  },
+  {
+  "name": "date",
+  "type": "string"
+  },
+  {
+  "name": "expire",
+  "type": "string"
+  },
+  {
+  "name": "instructor",
+  "type": "map",
+  "fields":[
+    {
+    "name": "email",
+    "type": "string"
+    },
+    {
+    "name": "uid",
+    "type": "string"
+    }
+    ]
+  },
+  {
+  "name": "paymentAmount",
+  "type": "number"
+  },
+  {
+  "name": "paymentID",
+  "type": "string"
+  },
+  {
+  "name": "price",
+  "type": "number"
+  },
+  {
+  "name": "refund",
+  "type": "boolean"
+  },
+  {
+  "name": "type",
+  "type": "string"
+  },
+  {
+  "name": "user",
+  "type": "map",
+  "fields":[
+    {
+    "name": "email",
+    "type": "string"
+    },
+    {
+    "name": "uid",
+    "type": "string"
+    }
+    ]
+  }
+]
+}

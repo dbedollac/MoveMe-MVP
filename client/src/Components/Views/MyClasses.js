@@ -11,6 +11,8 @@ import InstructorsDetailCard from '../Cards/InstructorsDetailCard'
 import EditClass from '../Molecules/EditClass'
 import CreateZoomMeetingCard from '../Cards/CreateZoomMeetingCard'
 import { useTranslation } from 'react-i18next';
+import {iva} from '../../Config/Fees'
+import StripeFee from '../Atoms/StripeFee'
 
 function MyClasses(props) {
 const { usuario } = useContext(Auth);
@@ -260,8 +262,8 @@ const handleRefresh = () =>{
                 <button className='btn-lg btn-secondary my-3' onClick={handleEditClass}>{t('myClasses.4','Editar clase ')}<PencilSquare /></button>
               </div>:
               <div>
-                <h4>{t('myClasses.5','Clase por Zoom')}: ${claseDetail.data.zoomPrice}</h4>
-                <h4>{t('myClasses.6','Renta de Video')}: ${claseDetail.data.offlinePrice}</h4>
+                <h4>{t('myClasses.5','Clase por Zoom')}: ${Math.ceil(claseDetail.data.zoomPrice*(1+iva)+StripeFee(claseDetail.data.zoomPrice*(1+iva)))}</h4>
+                <h4>{t('myClasses.6','Renta de Video')}: ${Math.ceil(claseDetail.data.offlinePrice*(1+iva)+StripeFee(claseDetail.data.offlinePrice*(1+iva)))}</h4>
               </div>
                 :null }
             </div>

@@ -61,6 +61,13 @@
   border-radius: 10px
 }
 
+.InstructorProfile-button-ver{
+  background-color: lightgray;
+  border-radius: 10px;
+  padding: 5px
+}
+
+
 @media (max-width: 768px) {
   .profilePicture img{
     max-height: 200px

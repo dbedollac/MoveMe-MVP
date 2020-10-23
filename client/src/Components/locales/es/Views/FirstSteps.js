@@ -17,7 +17,8 @@ const FirstSteps = {
     13:'¡Comienza a generar nuevos ingresos!',
     14:'Cada fin de mes depositaremos tus ganancias a la cuenta de tu preferencia.',
     15:'Puedes regresar a esta página en "¿Cómo inicio?" o ir a "Ayuda" para ver la documentación de MoveMe.',
-    16:'¡Iniciar!'
+    16:'¡Iniciar!',
+    17:'Es tiempo de apoyarnos y reactivar nuestra economía. Utiliza MoveMe gratis hasta Febrero del 2021.'
   }
 }
 

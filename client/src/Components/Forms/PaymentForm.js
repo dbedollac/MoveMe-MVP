@@ -245,7 +245,6 @@ const PaymentForm = (props) => {
         user: {uid:usuario.uid, email:usuario.email},
         expire: props.expire.toISOString(),
         date: props.now.toISOString(),
-        settle: false,
         refund: false,
         paymentID:paymentID,
         paymentAmount:paymentAmount*Price/props.subtotal
