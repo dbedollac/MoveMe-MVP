@@ -166,7 +166,7 @@ function Coach(props) {
                       :null
                       }
                       {instagramLink?
-                      <a href={instagramLink} target="_blank"> <img className='float-right mr-2' src={instagramLogo} alt='Instagram' style={{width:'3em'}}/> </a>
+                      <a href={'https://www.instagram.com/'+instagramLink} target="_blank"> <img className='float-right mr-2' src={instagramLogo} alt='Instagram' style={{width:'3em'}}/> </a>
                       :null
                       }
                     </div>

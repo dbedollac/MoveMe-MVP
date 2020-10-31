@@ -16,6 +16,7 @@ import Carrito from './Components/Views/Carrito'
 import MisCompras from './Components/Views/MisCompras'
 import FirstSteps from './Components/Views/FirstSteps'
 import Ayuda from './Components/Views/Ayuda'
+import LandingPage from './Components/Views/LandingPage'
 import TerminosCondiciones from './Components/Views/TerminosCondiciones'
 import AvisoPrivacidad from './Components/Views/AvisoPrivacidad'
 import Documentation from './Components/Views/Documentation'
@@ -48,6 +49,7 @@ const App = () => (
           <Route path="/terms-and-conditions" component={TerminosCondiciones} exact />
           <Route path="/privacy-notice" component={AvisoPrivacidad} exact />
           <Route path="/documentation" component={Documentation} exact />
+          <Route path='/LandingPage' component={LandingPage} exact />
           <Route path="/:name/:uid" component={Coach} exact />
           <Route path="*" component={Dashboard} />
         </Switch>
