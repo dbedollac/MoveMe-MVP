@@ -50,7 +50,8 @@ function AddFreeVideo(props) {
         expire: expire.toISOString(),
         date: curr.toISOString(),
         settle: true,
-        refund: false
+        refund: false,
+        movemeFee: 0
       }).then(setSuccess(true))
 
       //Mail a los usuarios

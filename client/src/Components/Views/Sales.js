@@ -152,8 +152,8 @@ function Sales(props) {
                   <td>- ${sales.length>0?(sales.filter(item=>item.refund===false).reduce((a,b)=>{return a+b.price},0)*(ISR>0.1?iva:iva/2)).toFixed(2):0}</td>
                 </tr>
                 <tr>
-                  <td colSpan='2'>- <i>{t('sales.27','Contribución a MoveMe')} ({movemeFee*100}%)</i></td>
-                  <td>- ${sales.length>0?(sales.filter(item=>item.refund===false).reduce((a,b)=>{return a+b.price},0)*movemeFee).toFixed(2):0}</td>
+                  <td colSpan='2'>- <i>{t('sales.27','Contribución a MoveMe')} ({sales.length>0?((sales.filter(item=>item.refund===false).reduce((a,b)=>{return a+b.movemeFee},0)/sales.filter(item=>item.refund===false).reduce((a,b)=>{return a+b.price},0))*100).toFixed(0):0}%)</i></td>
+                  <td>- ${sales.length>0?(sales.filter(item=>item.refund===false).reduce((a,b)=>{return a+b.movemeFee},0)).toFixed(2):0}</td>
                 </tr>
                 <tr>
                   <td colSpan='2'><strong>{t('sales.10','Total')}</strong></td>

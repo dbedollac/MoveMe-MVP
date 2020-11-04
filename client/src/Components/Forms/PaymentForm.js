@@ -1,6 +1,7 @@
 import React,{useState,useContext, useEffect} from 'react'
 import {CardElement, useStripe, useElements} from '@stripe/react-stripe-js';
 import {proxyurl} from '../../Config/proxyURL'
+import {movemeFee, freeMonths} from '../../Config/Fees'
 import Errores from '../Atoms/Errores'
 import { Spinner} from 'react-bootstrap'
 import {CheckCircleFill, CheckSquare} from 'react-bootstrap-icons'
@@ -252,6 +253,8 @@ const PaymentForm = (props) => {
         :props.products[i].data.type.includes('Zoom')?Number(props.products[i].data.claseData.zoomPrice)
         :Number(props.products[i].data.claseData.offlinePrice)
 
+      var now = new Date(Date.now()-3600000*24*30*freeMonths).toISOString()
+
       db.collection('Sales').doc().set({
         data: props.products[i].data,
         instructor: {uid:props.products[i].data.instructor.uid, email: props.products[i].data.instructor.email},
@@ -262,7 +265,8 @@ const PaymentForm = (props) => {
         date: props.now.toISOString(),
         refund: false,
         paymentID:paymentID,
-        paymentAmount:paymentAmount*Price/props.subtotal
+        paymentAmount:paymentAmount*Price/props.subtotal,
+        movemeFee: props.products[i].data.instructor.signDate > now?0:movemeFee*Price
       })
 
       //Mail a los usuarios

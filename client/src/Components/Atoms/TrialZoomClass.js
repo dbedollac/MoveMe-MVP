@@ -4,6 +4,7 @@ import { Auth } from "../../Config/AuthContext";
 import { CameraVideoFill, CheckCircleFill} from 'react-bootstrap-icons';
 import { Spinner, Modal, Button} from 'react-bootstrap'
 import Login from '../Forms/Login'
+import SalesUserMail from '../Atoms/SalesUserMail'
 import {withRouter} from 'react-router'
 
 function TrialZoomClass(props) {
@@ -24,12 +25,22 @@ function TrialZoomClass(props) {
         expire: expire.toISOString(),
         date: curr.toISOString(),
         settle: true,
-        refund: false
+        refund: false,
+        movemeFee: 0
       }).then(setSuccess(true))
 
       await db.collection('Users').doc(usuario.uid).set({
         trialClass:1
       },{merge:true})
+
+      //Mail a los usuarios
+      await db.collection('Mails').doc().set({
+        to:[usuario.email],
+        message:{
+          subject:'Tu Clase por Zoom '+props.product.data.claseData.title,
+          html: SalesUserMail('Clase por Zoom', props.product.data, expire.toISOString())
+        }
+      })
 
       props.history.push('/clasesZoom')
   }

@@ -103,7 +103,8 @@ const handleNext = () =>{
         linkIG:"",
         linkFB:"",
         RFC:"",
-        CURP:""
+        CURP:"",
+        signDate:new Date().toISOString()
         });
       }
         } else {

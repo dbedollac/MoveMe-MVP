@@ -84,8 +84,8 @@ function AddToCar(props) {
               startTime: props.claseZoom?props.startTime:null,
               type: props.claseZoom?'Clase por Zoom':props.claseVideo?'Clase en Video':'Reto Mensual',
               joinURL: props.claseZoom?props.joinURL:null,
-              claseID: props.claseZoom?props.claseID:null,
-              monthlyProgram: props.claseZoom?props.zoomMonthlyProgram:null},
+              claseID: props.claseZoom?props.claseID:null
+              },
             expire: expire
           }]}
           trialClass={props.trialClass}
