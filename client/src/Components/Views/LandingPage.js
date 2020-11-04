@@ -5,8 +5,6 @@ import logo from '../Views/Images/logo.png'
 import {storage} from "../../Config/firestore.js"
 import facebookLogo from '../Views/Images/Facebook.png'
 import instagramLogo from '../Views/Images/Instagram.png'
-import instructorPicture from '../Views/Images/LP_Instructor.jpg'
-import userPicture from '../Views/Images/LP_User.jpg'
 import textura from '../Views/Images/MM TEXTURA.jpg'
 import { useMediaQuery } from 'react-responsive'
 import {Modal} from 'react-bootstrap'
@@ -18,6 +16,8 @@ function LandingPage(props) {
   const { usuario } = useContext(Auth);
   const [instructorVideo, setinstructorVideo] = useState(null)
   const [userVideo, setuserVideo] = useState(null)
+  const [instructorPicture, setinstructorPicture] = useState(null)
+  const [userPicture, setuserPicture] = useState(null)
   const [show, setShow] = useState(false);
   const [who,setWho] = useState(null)
   const [signup,setSignup] = useState(false)
@@ -47,6 +47,24 @@ function LandingPage(props) {
                .getDownloadURL()
                .then(url => {
                  setuserVideo(url)
+              }).catch(function (error) {
+                console.error("Error", error);
+              })
+
+      storage.ref("LandingPage")
+               .child('LP_Instructor.jpg')
+               .getDownloadURL()
+               .then(url => {
+                 setinstructorPicture(url)
+              }).catch(function (error) {
+                console.error("Error", error);
+              })
+
+      storage.ref("LandingPage")
+               .child('LP_User.jpg')
+               .getDownloadURL()
+               .then(url => {
+                 setuserPicture(url)
               }).catch(function (error) {
                 console.error("Error", error);
               })

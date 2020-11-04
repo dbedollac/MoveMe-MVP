@@ -45,10 +45,6 @@
   text-shadow: 1px 1px black;
 }
 
-.LandingPage-foto-container{
-  overflow:hidden
-}
-
 .LandingPage-foto-container img{
   height: 60vw;
   filter: grayscale(90%);
@@ -66,7 +62,6 @@
 .LandingPage-foto-mensaje{
   background-color: #d68930;
   color: white;
-  opacity: 80%;
   position: absolute;
   top: 20%;
   width: 40vw
