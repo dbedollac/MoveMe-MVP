@@ -104,7 +104,7 @@ function CarritoProduct(props) {
       </div>
       <div className='card-footer d-flex flex-row justify-content-between align-items-center'>
         <CoachName uid={props.instructor.uid} profileName={props.instructor.profileName} profilePicture={props.instructor.imgURL?props.instructor.imgURL:null}/>
-        <h5>${props.paymentAmount/100}</h5>
+        <h5>${props.paymentAmount?(props.paymentAmount/100).toFixed(2):0}</h5>
       </div>
 
       <Modal

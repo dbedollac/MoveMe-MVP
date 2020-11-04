@@ -10,6 +10,7 @@ import {proxyurl} from '../../Config/proxyURL'
 import {Button, Modal} from 'react-bootstrap'
 import AvisoPrivacidad0 from '../Atoms/AvisoPrivacidad0'
 import TerminosCondiciones0 from '../Atoms/TerminosCondiciones0'
+import WelcomeUserMail from '../Atoms/WelcomeUserMail'
 import { useTranslation } from 'react-i18next';
 
 function ChooseUserType(props) {
@@ -113,6 +114,13 @@ const handleNext = () =>{
               trialClass: 0,
               aceptoTerminosYCondiciones: aceptar
             },{merge:true})
+              db.collection('Mails').doc().set({
+              to:[usuario.email],
+              message:{
+                subject:'Bienvenido(a) a MoveMe',
+                html: WelcomeUserMail(nombre)
+              }
+            })
               createSrtipeCustomer()
             }
               }

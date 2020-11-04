@@ -8,6 +8,8 @@ import {db} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
 import CreditCardDetails from '../Cards/CreditCardDetails'
 import TrialZoomClass from '../Atoms/TrialZoomClass'
+import SalesUserMail from '../Atoms/SalesUserMail'
+import SalesCoachMail from '../Atoms/SalesCoachMail'
 import { useTranslation } from 'react-i18next';
 import './PaymentForm.css'
 
@@ -233,6 +235,19 @@ const PaymentForm = (props) => {
 
   const addSales = (paymentID,paymentAmount) =>{
     for (var i = 0; i < props.products.length; i++) {
+
+      var SubjectUser = ''
+      var SubjectCoach = ''
+
+      if (props.products[i].data.type.includes('Reto')) {
+        SubjectUser = 'Tu Fitness Kit de '+props.products[i].data.instructor.profileName
+        SubjectCoach = 'Vendiste tu Fitness Kit'
+      }else {
+        SubjectUser = 'Tu '+props.products[i].data.type+' '+props.products[i].data.claseData.title
+        SubjectCoach = 'Vendiste tu '+props.products[i].data.type+' '+props.products[i].data.claseData.title
+      }
+
+
       var Price = props.products[i].data.type.includes('Reto')? Number(props.products[i].data.instructor.monthlyProgram.Price)
         :props.products[i].data.type.includes('Zoom')?Number(props.products[i].data.claseData.zoomPrice)
         :Number(props.products[i].data.claseData.offlinePrice)
@@ -249,6 +264,25 @@ const PaymentForm = (props) => {
         paymentID:paymentID,
         paymentAmount:paymentAmount*Price/props.subtotal
       })
+
+      //Mail a los usuarios
+      db.collection('Mails').doc().set({
+        to:[usuario.email],
+        message:{
+          subject:SubjectUser,
+          html: SalesUserMail(props.products[i].data.type, props.products[i].data, props.expire.toISOString())
+        }
+      })
+
+      //Mail a instructores
+      db.collection('Mails').doc().set({
+        to:[props.products[i].data.instructor.email],
+        message:{
+          subject:SubjectCoach,
+          html: SalesCoachMail(props.products[i].data.type, props.products[i].data, props.expire.toISOString(),usuario.email,Price)
+        }
+      })
+
     }
   }
 

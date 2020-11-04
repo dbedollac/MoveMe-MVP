@@ -4,6 +4,8 @@ import { Auth } from "../../Config/AuthContext";
 import { PlusCircleFill, CheckCircleFill} from 'react-bootstrap-icons';
 import { Spinner, Modal, Button} from 'react-bootstrap'
 import Login from '../Forms/Login'
+import SalesUserMail from '../Atoms/SalesUserMail'
+import SalesCoachMail from '../Atoms/SalesCoachMail'
 import {withRouter} from 'react-router'
 import { useTranslation } from 'react-i18next';
 
@@ -50,6 +52,24 @@ function AddFreeVideo(props) {
         settle: true,
         refund: false
       }).then(setSuccess(true))
+
+      //Mail a los usuarios
+      db.collection('Mails').doc().set({
+        to:[usuario.email],
+        message:{
+          subject:'Tu Clase en Video '+props.product.data.claseData.title,
+          html: SalesUserMail('Clase en Video', props.product.data, expire.toISOString())
+        }
+      })
+
+      //Mail a instructores
+      db.collection('Mails').doc().set({
+        to:[props.product.data.instructor.email],
+        message:{
+          subject:'Vendiste tu Clase en Video '+props.product.data.claseData.title,
+          html: SalesCoachMail('Clase en Video', props.product.data, expire.toISOString(),usuario.email,0)
+        }
+      })
   }
 
   return(

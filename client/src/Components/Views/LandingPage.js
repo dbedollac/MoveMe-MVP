@@ -34,7 +34,7 @@ function LandingPage(props) {
   useEffect(()=>{
 
       storage.ref("LandingPage")
-               .child('MoveMe-Vision-Concept.mp4')
+               .child('LP-Coach.mp4')
                .getDownloadURL()
                .then(url => {
                  setinstructorVideo(url)
@@ -43,7 +43,7 @@ function LandingPage(props) {
               })
 
       storage.ref("LandingPage")
-               .child('MoveMe-Vision-Concept.mp4')
+               .child('LP-User.mp4')
                .getDownloadURL()
                .then(url => {
                  setuserVideo(url)

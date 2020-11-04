@@ -7,6 +7,7 @@ import { withRouter } from "react-router";
 import { Redirect } from 'react-router-dom'
 import { useTranslation } from 'react-i18next';
 import {proxyurl} from '../../Config/proxyURL'
+import WelcomeCoachMail from '../Atoms/WelcomeCoachMail'
 
 const ConfigInstructorForm = (props) => {
 const { usuario } = useContext(Auth);
@@ -43,16 +44,6 @@ useEffect(() => {
               }).catch(function (error) {
                 console.error("No se ha subido ninguna foto de perfil ", error)
               });
-
-              fetch(proxyurl+'visionAPI', {
-                method: 'post',
-                headers: {
-                  'Content-type': 'application/json',
-                },
-                body: JSON.stringify({
-                  uid: usuario.uid
-                }),
-              })
   }
 
 // Pass the useFormik() hook initial form values and a submit function that will
@@ -86,6 +77,16 @@ const formik = useFormik({
     CURP: values.CURP,
     CLABE: values.CLABE
     },{ merge: true })
+
+    if(props.newInstructor){
+      db.collection('Mails').doc().set({
+        to:[usuario.email],
+        message:{
+          subject:'Bienvenido(a) a MoveMe',
+          html: WelcomeCoachMail(values.profileName)
+        }
+      })
+    }
 
     alert(props.newInstructor?t('config.3','¡Ahora enlaza tu cuenta de Zoom!'):t('config.4','Tus datos se guardaron con éxito'));
     handleClick()
