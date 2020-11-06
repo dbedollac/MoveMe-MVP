@@ -10,6 +10,7 @@ import { useMediaQuery } from 'react-responsive'
 import {Modal} from 'react-bootstrap'
 import ReactPlayer from 'react-player'
 import Signup from '../Forms/Signup'
+import MessengerCustomerChat from 'react-messenger-customer-chat';
 import './LandingPage.css'
 
 function LandingPage(props) {
@@ -76,6 +77,10 @@ function LandingPage(props) {
   return(
     <>
     <div className='LandingPage-container d-flex flex-column align-items-center'>
+    <MessengerCustomerChat
+      pageId="107603050964291"
+      appId="3464127340346161"
+    />
       <div className='LandingPage-content d-flex flex-column flex-md-row align-items-center align-items-md-start mb-md-2'>
 
         <div className='d-flex flex-column align-items-center col-md-3 p-0 p-md-1'>
