@@ -13,7 +13,7 @@ function WelcomeUserMail(name) {
     +   "<li><a href="+' "https://moveme.fitness/myVideos" '+">Aquí</a> encontrarás todos los videos que hayas rentado.</li>"
     +   "<li><a href="+' "https://moveme.fitness/ZoomClasses" '+">Aquí</a> encontrarás todas las clases en vivo que hayas adquirido.</li>"
     +  "</ol>"
-    +  "Síguenos en Instagram como <a href="+' "https://www.instagram.com/movemefitnessapp/" '+">movemefitnessapp</a> y en Facebook como <a href="+' "https://www.facebook.com/MoveMe-Fitness-107603050964291/" '+">MoveMe Fitness</a>."
+    +  "Síguenos en Instagram como <a href="+' "https://www.instagram.com/movemefitnessapp/" '+">movemefitnessapp</a> y en Facebook como <a href="+' "https://www.facebook.com/MoveMe-Fitness-107603050964291/" '+">movemeFitnessMX</a>."
 
   return welcome
 }

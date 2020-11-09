@@ -113,7 +113,7 @@ function LandingPage(props) {
 
         <div className='col-12 d-flex flex-row justify-content-around align-items-center py-2'>
           <a className='mr-0 mr-md-2' href='https://www.facebook.com/MoveMe-Fitness-107603050964291/' target="_blank" style={{color:'#0070C0'}}>
-            <img src={facebookLogo} alt='Facebook'/> MoveMe Fitness
+            <img src={facebookLogo} alt='Facebook'/> movemeFitnessMX
           </a>
           <a href='https://www.instagram.com/movemefitnessapp/' target="_blank" style={{color:'#AF33AE'}}>
             <img src={instagramLogo} alt='Facebook'/> movemefitnessapp

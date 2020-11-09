@@ -83,7 +83,7 @@ const formik = useFormik({
         to:[usuario.email],
         message:{
           subject:'Bienvenido(a) a MoveMe',
-          html: WelcomeCoachMail(values.profileName)
+          html: WelcomeCoachMail(values.profileName, usuario.uid)
         }
       })
     }
