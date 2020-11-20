@@ -36,7 +36,8 @@ const ConfigInstructor = {
     32:'Link de Facebook',
     33:'RFC',
     34:'CURP',
-    35:'CLABE interbancaria'
+    35:'CLABE interbancaria',
+    36:'Datos obligatorios'
   }
 }
 

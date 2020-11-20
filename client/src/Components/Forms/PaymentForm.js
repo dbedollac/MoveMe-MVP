@@ -1,7 +1,7 @@
 import React,{useState,useContext, useEffect} from 'react'
 import {CardElement, useStripe, useElements} from '@stripe/react-stripe-js';
 import {proxyurl} from '../../Config/proxyURL'
-import {movemeFee, freeMonths} from '../../Config/Fees'
+import {movemeFee} from '../../Config/Fees'
 import Errores from '../Atoms/Errores'
 import { Spinner} from 'react-bootstrap'
 import {CheckCircleFill, CheckSquare} from 'react-bootstrap-icons'
@@ -253,7 +253,7 @@ const PaymentForm = (props) => {
         :props.products[i].data.type.includes('Zoom')?Number(props.products[i].data.claseData.zoomPrice)
         :Number(props.products[i].data.claseData.offlinePrice)
 
-      var now = new Date(Date.now()-3600000*24*30*freeMonths).toISOString()
+      var now = new Date(Date.now()-3600000*24*30*props.products[i].data.instructor.freeMonths).toISOString()
 
       db.collection('Sales').doc().set({
         data: props.products[i].data,

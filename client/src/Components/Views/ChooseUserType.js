@@ -12,6 +12,7 @@ import AvisoPrivacidad0 from '../Atoms/AvisoPrivacidad0'
 import TerminosCondiciones0 from '../Atoms/TerminosCondiciones0'
 import WelcomeUserMail from '../Atoms/WelcomeUserMail'
 import { useTranslation } from 'react-i18next';
+import {freeMonths} from '../../Config/Fees'
 
 function ChooseUserType(props) {
 const { usuario } = useContext(Auth);
@@ -104,7 +105,8 @@ const handleNext = () =>{
         linkFB:"",
         RFC:"",
         CURP:"",
-        signDate:new Date().toISOString()
+        signDate:new Date().toISOString(),
+        freeMonths: freeMonths
         });
       }
         } else {

@@ -98,7 +98,7 @@ const formik = useFormik({
       <div className="d-flex flex-row flex-wrap">
           <div className="col-md-6">
           <p><strong>{t('config.5','Datos para crear tu perfil')}</strong></p>
-            <label htmlFor="profileName">{t('config.6','Nombre del perfil')}</label>
+            <label htmlFor="profileName">{t('config.6','Nombre del perfil')}*</label>
             <br/>
             <input
               id="profileName"
@@ -168,7 +168,7 @@ const formik = useFormik({
           </div>
           <div className='col-md-5'>
             <p><strong>{t('config.12','Datos para depositarte tus ganancias')}</strong></p>
-            <label htmlFor="firstName">{t('config.13','Nombre')}</label>
+            <label htmlFor="firstName">{t('config.13','Nombre')}*</label>
             <br/>
             <input
               id="firtsName"
@@ -181,7 +181,7 @@ const formik = useFormik({
               required
             />
             <br/>
-            <label htmlFor="lastName">{t('config.14','Apellido(s)')}</label>
+            <label htmlFor="lastName">{t('config.14','Apellido(s)')}*</label>
             <br/>
             <input
               id="lastName"
@@ -218,7 +218,7 @@ const formik = useFormik({
               className='col-12'
             />
             <br/>
-            <label htmlFor="CLABE">{t('config.35','CLABE')}</label>
+            <label htmlFor="CLABE">{t('config.35','CLABE')}*</label>
             <br/>
             <input
               id="CLABE"
@@ -233,6 +233,8 @@ const formik = useFormik({
               minlength='18'
               required
             />
+            <br/>
+            <p style={{fontSize:'small'}} className='pt-2'>*{t('config.36','Datos obligatorios')}</p>
           </div>
         </div>
 
