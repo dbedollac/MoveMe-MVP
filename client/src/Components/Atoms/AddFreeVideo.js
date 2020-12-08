@@ -73,6 +73,10 @@ function AddFreeVideo(props) {
       })
   }
 
+  if (success) {
+    props.history.push('/myVideos')
+  }
+
   return(
     <div>
       {loading&&!success?<Spinner animation="border" />

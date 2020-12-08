@@ -42,7 +42,7 @@ function TrialZoomClass(props) {
         }
       })
 
-      props.history.push('/clasesZoom')
+      props.history.push('/ZoomClasses')
   }
 
   return(

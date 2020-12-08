@@ -11,6 +11,7 @@ import CreditCardDetails from '../Cards/CreditCardDetails'
 import TrialZoomClass from '../Atoms/TrialZoomClass'
 import SalesUserMail from '../Atoms/SalesUserMail'
 import SalesCoachMail from '../Atoms/SalesCoachMail'
+import { withRouter } from "react-router";
 import { useTranslation } from 'react-i18next';
 import './PaymentForm.css'
 
@@ -314,6 +315,14 @@ const PaymentForm = (props) => {
     }
   },[usuario])
 
+  if (success&&!props.cart) {
+    if (props.products[0].data.type.includes('Video')) {
+      props.history.push("/myVideos")
+    } else {
+      props.history.push("/ZoomClasses")
+    }
+  }
+
   if (props.products[0]) {
     if (!props.products[0].data.instructor.disableTrialClasses) {
       if (trialClass===0) {
@@ -362,4 +371,4 @@ const PaymentForm = (props) => {
   )
 }
 
-export default PaymentForm
+export default withRouter(PaymentForm)
