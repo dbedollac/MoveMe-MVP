@@ -94,8 +94,8 @@ function ClasesZoom(props) {
               claseID:doc.data().data.claseID,
               instructor:{id:doc.data().instructor.uid,data:doc.data().data.instructor},
               joinURL:doc.data().data.joinURL,
-              monthNumber: doc.data().monthNumber,
-              dayNumber: date.getDay()+1
+              monthNumber: date.getMonth()+1,
+              dayNumber: date.getDate()
               })
             }
         }

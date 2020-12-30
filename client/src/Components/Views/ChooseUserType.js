@@ -106,7 +106,8 @@ const handleNext = () =>{
         RFC:"",
         CURP:"",
         signDate:new Date().toISOString(),
-        freeMonths: freeMonths
+        freeMonths: freeMonths,
+        supporter: false
         });
       }
         } else {

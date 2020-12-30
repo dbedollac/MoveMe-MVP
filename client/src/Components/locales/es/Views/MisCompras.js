@@ -24,7 +24,8 @@ const MisCompras = {
     20:'(Vigente hasta ',
     21:'Clase en Video',
     22:'Clase por Zoom',
-    23:'Fitness Kit'
+    23:'Fitness Kit',
+    24:'Mis Compras'
   }
 }
 

@@ -12,7 +12,7 @@ function WelcomeCoachMail(name, uid) {
     +  "</ul>"
     +  "<p>Tus clientes pagarán desde MoveMe y nosotros depositaremos tus ganancias cada inicio de mes.</p>"
     +  "<p>La misión de MoveMe es impusarte a ti coach. Brindarte todas las herramientas para que compitas en el emergente mercado del <i>digital fitness</i>. Queremos que tengas tu propio negocio, que ya no dependas de nadie.</p>"
-    +  "<p>Vende y administra tu gimnasio digital de manera gratis durante tus primeros 2 meses. Luego, tomaremos una contribución del 15% sobre tus ventas para que nos ayudes a impulsar este proyecto.</p>"
+    +  "<p>Se te retendrá una contribución del 15% sobre tus ventas para que nos ayudes a impulsar este proyecto. Si te vuelves nuestro aliado, te aseguramos un ingreso de $500 al mes; para volverte nuestro aliado responde a este mail o contáctanos por Instagram.</p>"
     +  "<p>Este es link de tu página web <a href="+' "https://moveme.fitness/coach-'+name.replace(/ /g,'-')+'/'+uid+'">'+'https://moveme.fitness/coach-'+name.replace(/ /g,'-')+'/'+uid+"</a> .Compártelo para vender tus servicios.</p>"
     +  "<a href="+' "https://youtu.be/5Nssuh8Tf0s" '+">¡Descubre cómo empezar!</a>"
     +  "<p>Síguenos en Instagram como <a href="+' "https://www.instagram.com/movemefitnessapp/" '+">movemefitnessapp</a> y en Facebook como <a href="+' "https://www.facebook.com/MoveMe-Fitness-107603050964291/" '+">movemeFitnessMX</a>.</p>"

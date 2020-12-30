@@ -315,11 +315,15 @@ const PaymentForm = (props) => {
     }
   },[usuario])
 
-  if (success&&!props.cart) {
-    if (props.products[0].data.type.includes('Video')) {
-      props.history.push("/myVideos")
+  if (success) {
+    if(!props.cart){
+      if (props.products[0].data.type.includes('Video')) {
+        props.history.push("/myVideos")
+      } else {
+        props.history.push("/ZoomClasses")
+      }
     } else {
-      props.history.push("/ZoomClasses")
+      props.history.push("/purchases")
     }
   }
 

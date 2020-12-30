@@ -59,6 +59,7 @@ function MisCompras(props) {
     <div>
       <Header  user={usuario?true:false}/>
       <div className='MisCompras-container d-flex flex-column pt-2 align-items-center'>
+        <h3 className='align-self-start pl-3'>{t('misCompras.24','Mis Compras')}</h3>
         <div className='MisCompras-container-paymentMethod col-10 col-md-7 rounded p-1'>
           <CardSaved/>
         </div>

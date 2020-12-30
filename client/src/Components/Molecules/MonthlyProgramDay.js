@@ -78,11 +78,10 @@ function MonthlyProgramDay(props) {
               console.log("Error getting documents: ", error);
           });
         }else {
-          var meetings0 = props.zoomMeetings.filter(item => item.monthNumber === (props.dayDate.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}))
-          var meetings1 = meetings0.filter(item => item.dayNumber === props.dayDate.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}))
-          setclasesNumber(meetings1.length)
-
           var zoomMeetings = []
+          var meetings0 = props.zoomMeetings.filter(item => item.monthNumber === props.dayDate.getMonth()+1)
+          var meetings1 = meetings0.filter(item => item.dayNumber === props.dayDate.getDate())
+          setclasesNumber(meetings1.length)
 
           meetings1.forEach(function(doc) {
             zoomMeetings.push({startTime:doc.startTime,
