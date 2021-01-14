@@ -7,6 +7,7 @@ import {CheckCircleFill} from 'react-bootstrap-icons'
 import Errores from '../Atoms/Errores'
 import {proxyurl} from '../../Config/proxyURL'
 import { useTranslation } from 'react-i18next';
+import { withRouter } from "react-router";
 
 function CarritoProduct(props) {
   const { usuario } = useContext(Auth);
@@ -19,6 +20,7 @@ function CarritoProduct(props) {
   const [error,setError] = useState(null)
   const [refundSuccess, setrefundSuccess] = useState(false)
   const { t } = useTranslation();
+  const [goZoomClasses, setgoZoomClasses] = useState(true)
 
   const handleClose = () => {
     setShow(false)
@@ -72,6 +74,14 @@ function CarritoProduct(props) {
 
   }
 
+  const goToProduct = () =>{
+    if (goZoomClasses){
+      props.history.push('/ZoomClasses')
+    }else{
+      props.history.push('/myVideos')
+    }
+  }
+
 
   useEffect(()=>{
 
@@ -89,13 +99,17 @@ function CarritoProduct(props) {
     if(props.date){
       setpurchaseDate(getDate(props.date))
     }
+
+    if (props.type.includes('Video')){
+      setgoZoomClasses(false)
+    }
   },[])
 
   return(
     <div className='card'>
       <div className='card-body d-flex flex-column flex-md-row align-items-center justify-content-start'>
-        <h5 className='col-12 col-md-5'>{props.type.includes('Video')?t('misCompras.21','Clase en Video'):props.type.includes('Zoom')?t('misCompras.22','Clase por Zoom'):t('misCompras.23','Reto Mensual')} {props.startTime?'('+props.startTime.time+')':null}{props.type.includes('Video')||props.type.includes('Reto')?t('misCompras.20','(Vigente hasta ')+expireDate+')':null}</h5>
-        <h6 className="card-subtitle mb-2 text-muted col-12 col-md-4">{props.claseData?props.claseData.title:null}</h6>
+        <h5 className='col-12 col-md-5' style={{cursor:'pointer'}} onClick={goToProduct}>{props.type.includes('Video')?t('misCompras.21','Clase en Video'):props.type.includes('Zoom')?t('misCompras.22','Clase por Zoom'):t('misCompras.23','Reto Mensual')} {props.startTime?'('+props.startTime.time+')':null}{props.type.includes('Video')||props.type.includes('Reto')?t('misCompras.20','(Vigente hasta ')+expireDate+')':null}</h5>
+        <h6 className="card-subtitle mb-2 text-muted col-12 col-md-4" style={{cursor:'pointer'}} onClick={goToProduct}>{props.claseData?props.claseData.title:null}</h6>
         <div className='d-flex flex-column align-items-center'>
           <p><strong>{t('misCompras.11','Comprado el ')}{purchaseDate}</strong></p>
           {!props.type.includes('Video')?
@@ -146,4 +160,4 @@ function CarritoProduct(props) {
   )
 }
 
-export default CarritoProduct
+export default withRouter(CarritoProduct)
