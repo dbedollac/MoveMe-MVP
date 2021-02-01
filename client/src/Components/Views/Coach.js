@@ -180,7 +180,7 @@ function Coach(props) {
                         <div className='d-flex flex-row align-items-center justify-content-around' onClick={handleVerMonthlyProgram} style={{cursor:'pointer'}}>
                           <h3>{t('iProfile.1','Reto Mensual')}</h3>
                           <div>
-                            {monthlyProgramPrice?'$ '+Math.ceil(monthlyProgramPrice*(1+iva)+StripeFee(monthlyProgramPrice*(1+iva))):null}
+                            {monthlyProgramPrice&&usuario?'$ '+Math.ceil(monthlyProgramPrice*(1+iva)+StripeFee(monthlyProgramPrice*(1+iva))):null}
                             <ArrowRight className='ml-2'/>
                           </div>
                         </div>

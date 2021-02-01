@@ -6,8 +6,10 @@ import UsersDetailCard from '../Cards/UsersDetailCard'
 import { X, Search } from 'react-bootstrap-icons';
 import { useTranslation } from 'react-i18next';
 import './MarketAllClasses.css'
+import { Auth } from "../../Config/AuthContext";
 
 function MarketAllClasses(props) {
+  const { usuario } = useContext(Auth);
   const [clases, setclases] = useState([])
   const [clasesAll, setclasesAll] = useState([])
   const [pictures, setpictures] = useState([])
@@ -372,8 +374,8 @@ function MarketAllClasses(props) {
         clases.length>0?clases.slice(0,showMore).map((clase,index) => (
         <div className='MarketAllClasses-card' key={props.allInstructors?clase.uid+index:clase.id+index+clase.instructor.id+clase.startTime} onClick={handleDetail} style={{cursor:'pointer'}} >
           {props.allInstructors? <CoachCard data={clase.data} uid={clase.uid}/>
-          :props.zoomMeetings?<ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.instructor?clase.instructor.id:clase.id} id={clase.id} startTime={clase.startTime} price={clase.data.zoomPrice}/>
-          :<ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.instructor?clase.instructor.id:clase.id} id={clase.id} price={clase.data.offlinePrice} freeVideo={clase.data.freeVideo} misVideos={props.misVideos?true:false} expire={props.misVideos?clase.expire:null}/>}
+          :props.zoomMeetings?<ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.instructor?clase.instructor.id:clase.id} id={clase.id} startTime={clase.startTime} price={usuario?clase.data.zoomPrice:null}/>
+          :<ClassCard title={clase.data.title} picture={clase.data.imgURL} name={clase.instructor?clase.instructor.id:clase.id} id={clase.id} price={usuario?clase.data.offlinePrice:null} freeVideo={clase.data.freeVideo} misVideos={props.misVideos?true:false} expire={props.misVideos?clase.expire:null}/>}
         </div>
       )):<h5 style={{color:'gray'}} className='text-center py-5'><i>{props.allInstructors?t('allClases.25','No hay retos disponibles'):t('allClases.26','No hay clases disponibles')}</i></h5>}
       </div>

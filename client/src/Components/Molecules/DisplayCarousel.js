@@ -8,8 +8,10 @@ import UsersDetailCard from '../Cards/UsersDetailCard'
 import { Spinner} from 'react-bootstrap'
 import "react-multi-carousel/lib/styles.css";
 import { useTranslation } from 'react-i18next';
+import { Auth } from "../../Config/AuthContext";
 
 function DisplayCarousel(props) {
+  const { usuario } = useContext(Auth);
   const [meetings, setMeetings] = useState([])
   const [detail, setdetail] = useState(false)
   const [claseDetail, setclaseDetail] = useState(null)
@@ -139,7 +141,7 @@ function DisplayCarousel(props) {
             ))
             :videoClases? videoClases.slice(0,50).map((item,index) => (
             <div key={item.id+index} onClick={handleDetail} style={{cursor:'pointer'}}>
-              <ClassCard title={item.data.title} picture={item.data.imgURL} name={item.instructor?item.instructor.id:item.id} id={item.id} price={props.fitnessKit?null:item.data.offlinePrice} freeVideo={item.data.freeVideo?true:false}/>
+              <ClassCard title={item.data.title} picture={item.data.imgURL} name={item.instructor?item.instructor.id:item.id} id={item.id} price={props.fitnessKit||!usuario?null:item.data.offlinePrice} freeVideo={item.data.freeVideo?true:false}/>
             </div>
           )): meetings.sort(sortMeetings).slice(0,50).map((item,index) => (
             <div key={item.id+index} onClick={handleDetail} style={{cursor:'pointer'}}>
@@ -148,7 +150,7 @@ function DisplayCarousel(props) {
                 name={item.instructor?item.instructor.id:item.id}
                 id={item.id}
                 startTime={item.startTime}
-                price={!props.ClasesZoom?item.data.zoomPrice:null}
+                price={!props.ClasesZoom&&usuario?item.data.zoomPrice:null}
                 joinURL={props.ClasesZoom?item.joinURL:null}
                 />
             </div>

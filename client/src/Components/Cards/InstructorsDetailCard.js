@@ -109,7 +109,7 @@ const handleOpen = () =>{
                     {open?<ChevronCompactUp onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>
                     :<PlayFill onClick={() => setOpen(!open)} style={{cursor:'pointer'}} size={'2em'}/>}
                     <p className='text-center mx-2'>
-                    <strong>{t('iCard.2','Video para rentar')}</strong> <br/>{t('iCard.3','(1 mes)')} {!props.fitnessKit?props.match.params.uid||props.market?!props.data.freeVideo? '$'+Math.ceil(props.data.offlinePrice*(1+iva)+StripeFee(props.data.offlinePrice*(1+iva))):null:null:null}</p>
+                    <strong>{t('iCard.2','Video para rentar')}</strong> <br/>{t('iCard.3','(1 mes)')} {!props.fitnessKit?props.match.params.uid||usuario&&props.market?!props.data.freeVideo? '$'+Math.ceil(props.data.offlinePrice*(1+iva)+StripeFee(props.data.offlinePrice*(1+iva))):null:null:null}</p>
                   </div>
 
                     {!props.fitnessKit&&props.market?!props.data.freeVideo&&props.data.offlinePrice!==0?<AddToCar instructor={instructor} claseVideo={props.data}/>

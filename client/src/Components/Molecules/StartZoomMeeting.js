@@ -140,7 +140,7 @@ function StartZoomMeeting(props) {
               <PeopleFill size={'20px'}/>
               <p className='pt-3 ml-1'>{usersLength}</p>
           </div>:null}
-        {props.monthlyProgram?<p className='pt-3'>{!props.fitnessKit& props.market?'$'+price:null} {time} {claseTitle}</p>:<p className='mt-3'>{props.market?'$'+price:null} {dateTime}</p>}
+        {props.monthlyProgram?<p className='pt-3'>{!props.fitnessKit&& props.market && usuario?'$'+price:null} {time} {claseTitle}</p>:<p className='mt-3'>{props.market&&usuario?'$'+price:null} {dateTime}</p>}
       </div>
 
       {props.fitnessKit&&props.market?null:
