@@ -12,7 +12,7 @@ import ReactPlayer from 'react-player'
 import Signup from '../Forms/Signup'
 import MessengerCustomerChat from 'react-messenger-customer-chat';
 import Header from '../Molecules/Header'
-import aliadosInfo from '../Views/Images/aliados_info.jpg'
+import aliadosInfo from '../Views/Images/aliados_info.jpeg'
 import './LandingPage.css'
 
 function LandingPage(props) {
@@ -111,8 +111,8 @@ function LandingPage(props) {
           </div>
 
         </div>
-        <div className='LandingPage-foto-container my-4 d-flex flex-row justify-content-center col-12'>
-          <img className='col-md-6 col-9' src={aliadosInfo} alt='Aliados'/>
+        <div className='LandingPage-foto-container my-4'>
+          <img src={aliadosInfo} alt='Aliados'/>
         </div>
       </div>
     </div>

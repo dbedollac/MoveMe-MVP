@@ -14,6 +14,11 @@
   padding-bottom:200px
 }
 
+.LandingPage-foto-container img{
+  max-width: 100vw;
+  height: 200vw;
+}
+
 .header-rigt{
   animation-name: header-right;
   animation-duration: 2s;
@@ -70,6 +75,12 @@
   font-size: small;
 }
 
+.LandingPage-foto-container{
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
 @media (min-width: 768px) {
 
   @keyframes logo {
@@ -87,6 +98,11 @@
 
   .LandingPage-bullets h3{
     margin-top: 0%
+  }
+
+  .LandingPage-foto-container img{
+    max-width: 80vw;
+    height: auto;
   }
 
 }
