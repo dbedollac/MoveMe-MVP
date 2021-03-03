@@ -8,11 +8,13 @@ import { Redirect } from 'react-router-dom'
 import { useTranslation } from 'react-i18next';
 import {proxyurl} from '../../Config/proxyURL'
 import WelcomeCoachMail from '../Atoms/WelcomeCoachMail'
+import StripeButton from '../Atoms/StripeButton'
 
 const ConfigInstructorForm = (props) => {
 const { usuario } = useContext(Auth);
 const [data,setdata] = useState({})
 const [certSAT,setcertSAT] = useState(null)
+const [stripeConnected,setstripeConnected] = useState(false)
 const { t } = useTranslation();
 
 useEffect(() => {
@@ -22,6 +24,23 @@ useEffect(() => {
     docRef.get().then(function(doc) {
         if (doc.exists) {
             setdata(doc.data())
+
+            fetch(proxyurl+'stripeAPI/get-account', {
+                method: 'post',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  account_id: doc.data().stripeAccountID
+                }),
+              })
+                .then((response) => {
+                  return response.json();
+                })
+                .then( (result) => {
+                  setstripeConnected(result.account.charges_enabled)
+                  console.log(result);
+                })
         } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
@@ -57,10 +76,7 @@ const formik = useFormik({
     firstName: data.firstName,
     lastName: data.lastName,
     linkIG: data.linkIG,
-    linkFB: data.linkFB,
-    RFC: data.RFC,
-    CURP: data.CURP,
-    CLABE: data.CLABE
+    linkFB: data.linkFB
   },
   onSubmit: values => {
     db.collection("Instructors").doc(usuario.uid).set({
@@ -72,10 +88,7 @@ const formik = useFormik({
     new: false,
     linkIG: values.linkIG,
     linkFB: values.linkFB,
-    website: 'https://moveme.fitness/coach-'+values.profileName.replace(/ /g,'-')+'/'+usuario.uid,
-    RFC: values.RFC,
-    CURP: values.CURP,
-    CLABE: values.CLABE
+    website: 'https://moveme.fitness/coach-'+values.profileName.replace(/ /g,'-')+'/'+usuario.uid
     },{ merge: true })
 
     if(props.newInstructor){
@@ -96,7 +109,13 @@ const formik = useFormik({
   return(
   <form onSubmit={formik.handleSubmit} >
       <div className="d-flex flex-row flex-wrap">
-          <div className="col-md-6">
+          <div className='col-12 text-center'>
+            <p><strong>{t('config.12','Para depositarte tus ganancias')}</strong></p>
+            <StripeButton connected={stripeConnected}/>
+            <i style={{'color':'gray'}}>{stripeConnected?t('config.39'):t('config.40')}</i>
+          </div>
+
+          <div className="col-md-12">
           <p><strong>{t('config.5','Datos para crear tu perfil')}</strong></p>
             <label htmlFor="profileName">{t('config.6','Nombre del perfil')}*</label>
             <br/>
@@ -165,76 +184,6 @@ const formik = useFormik({
                 <p>{t('config.9','Tus nuevos clientes tienen derecho a tomar su ')}<strong>{t('config.10','primer clase (prueba) gratis')}</strong>, {t('config.11','al deshabilitar esta opción tendrán que pagar desde la primer clase.')}</p>
               </div>
             </div>
-          </div>
-          <div className='col-md-5'>
-            <p><strong>{t('config.12','Datos para depositarte tus ganancias')}</strong></p>
-            <label htmlFor="firstName">{t('config.13','Nombre')}*</label>
-            <br/>
-            <input
-              id="firtsName"
-              name="firstName"
-              type="text"
-              placeholder={t('config.20','Nombre(s)')}
-              onChange={formik.handleChange}
-              value={formik.values.firstName}
-              className='col-12'
-              required
-            />
-            <br/>
-            <label htmlFor="lastName">{t('config.14','Apellido(s)')}*</label>
-            <br/>
-            <input
-              id="lastName"
-              name="lastName"
-              type="text"
-              placeholder={t('config.21','Apellido(s)')}
-              onChange={formik.handleChange}
-              value={formik.values.lastName}
-              className='col-12'
-              required
-            />
-            <br/>
-            <label htmlFor="RFC">{t('config.33', 'RFC')}</label>
-            <br/>
-            <input
-              id="RFC"
-              name="RFC"
-              type="text"
-              placeholder={t('config.33','RFC')}
-              onChange={formik.handleChange}
-              value={formik.values.RFC}
-              className='col-12'
-            />
-            <br/>
-            <label htmlFor="CURP">{t('config.34','CURP')}</label>
-            <br/>
-            <input
-              id="CURP"
-              name="CURP"
-              type="text"
-              placeholder={t('config.34','CURP')}
-              onChange={formik.handleChange}
-              value={formik.values.CURP}
-              className='col-12'
-            />
-            <br/>
-            <label htmlFor="CLABE">{t('config.35','CLABE')}*</label>
-            <br/>
-            <input
-              id="CLABE"
-              name="CLABE"
-              type="tel"
-              inputmode="numeric"
-              placeholder={t('config.35','CLABE')}
-              onChange={formik.handleChange}
-              value={formik.values.CLABE}
-              className='col-12'
-              maxlength="18"
-              minlength='18'
-              required
-            />
-            <br/>
-            <p style={{fontSize:'small'}} className='pt-2'>*{t('config.36','Datos obligatorios')}</p>
           </div>
         </div>
 

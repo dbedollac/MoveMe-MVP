@@ -1,6 +1,6 @@
 
 var StripeConfig = {
-  PublicKey: 'pk_live_51HCrlMASQcuvqq5qyPeBKCmZ5Kdpd58VDbuH4dX74Bv9Ef7AB502xa1ixqMYbdxkPKAGRCgT4GLuxmAIPu8HQqco00raLsjhxm',
+  PublicKey: 'pk_test_51HCrlMASQcuvqq5q6JyuDZ8LZABVngGLHQo2j97OtCszKu0lcrwO8IYEkGUlXZoZI5rpDCLvftXMEzPxDCPA583500oRKcTvn2',
 }
 
 export const stripePublicKey = StripeConfig.PublicKey

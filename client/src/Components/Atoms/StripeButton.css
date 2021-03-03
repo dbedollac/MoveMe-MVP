@@ -1,0 +1,23 @@
+.stripe-connect {
+  background: #635bff;
+  display: inline-block;
+  height: 38px;
+  text-decoration: none;
+  width: 180px;
+  color:white;
+
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+
+  -webkit-font-smoothing: antialiased;
+}
+
+.stripe-connect:hover {
+  background: #7a73ff;
+}

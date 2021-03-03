@@ -4,7 +4,7 @@ var express = require('express');
 var app = express();
 const cors = require('cors')({origin: true});
 var http = require("https");
-const stripe = require('stripe')('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');
+const stripe = require('stripe')('sk_test_51HCrlMASQcuvqq5qRoBALRqEj9NTsWPE8N9OPWvOJIcIe6klruWXlkh9l1Ly7K7CDKuHO80S7XVKF1A7Ex9qloQD00ZwSykRm0');
 const zoomID = 'BAI2U_LMR0qde_D7g8SV_g'
 const zoomSecret = 'vkU91bWzoulRS0hDnHxslr2a4JauqSol'
 const zoomVerification = '8blv9hJ7SnatkgmG21B2Qw'
@@ -182,6 +182,49 @@ app.post('/app/stripeAPI/create-customer', async (req, res) => {
   // in your database.
 
   res.send({ customer });
+});
+
+app.post('/app/stripeAPI/create-account', async (req, res) => {
+  // Create a new customer object
+  const account = await stripe.account.create({
+    type: 'standard',
+    email: req.body.email,
+    business_profile:{
+      url: req.body.business_link
+    }
+  });
+
+  // save the customer.id as stripeCustomerId
+  // in your database.
+
+  res.send({ account });
+});
+
+app.post('/app/stripeAPI/get-account', async (req, res) => {
+  // Create a new customer object
+
+  const account = await stripe.account.retrieve(
+    req.body.account_id
+  );
+
+  // save the customer.id as stripeCustomerId
+  // in your database.
+  res.send({ account });
+});
+
+app.post('/app/stripeAPI/create-account-link', async (req, res) => {
+  // Create a new customer object
+  const accountLinks = await stripe.accountLinks.create({
+    account: req.body.account_id,
+    refresh_url: 'https://moveme.fitness/configuration-instructor',
+    return_url: 'https://moveme.fitness/configuration-instructor',
+    type: 'account_onboarding',
+  });
+
+  // save the customer.id as stripeCustomerId
+  // in your database.
+
+  res.send({ accountLinks });
 });
 
 app.post('/app/stripeAPI/newPaymentMethod', async (req, res) => {

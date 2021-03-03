@@ -13,7 +13,7 @@ const ConfigInstructor = {
     9:'Tus nuevos clientes tienen derecho a tomar su ',
     10:'primer clase (prueba) gratis',
     11:'al deshabilitar esta opción tendrán que pagar desde la primer clase.',
-    12:'Datos para depositarte tus ganancias',
+    12:'Para depositarte tus ganancias',
     13:'Nombre',
     14:'Apellido(s)',
     15:'CLABE',
@@ -37,7 +37,11 @@ const ConfigInstructor = {
     33:'RFC',
     34:'CURP',
     35:'CLABE interbancaria',
-    36:'Datos obligatorios'
+    36:'Datos obligatorios',
+    37:'Conectar con Stripe',
+    38:'Modificar mi cuenta',
+    39:'Cuenta conectada',
+    40:'Cuenta no conectada'
   }
 }
 
