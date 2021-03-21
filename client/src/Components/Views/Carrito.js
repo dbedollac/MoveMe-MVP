@@ -61,10 +61,9 @@ function Carrito(props) {
       <div className='Carrito-container d-flex flex-column pt-2 align-items-center'>
         <div className='col-10 col-md-7 d-flex flex-column flex-md-row justify-content-around Carrito-container-total rounded p-1'>
           <div className='d-flex flex-column'>
-            <h4><strong>Total: ${(subtotal*(1+iva)+StripeFee(subtotal*(1+iva))).toFixed(2)}</strong></h4>
+            <h4><strong>Total: ${(subtotal*(1+iva)+StripeFee(subtotal*(1+iva),products.length)).toFixed(2)}</strong></h4>
             <h6>Subtotal: ${subtotal.toFixed(2)}</h6>
-            <h6>{t('cart.1','IVA')}: ${(subtotal*iva).toFixed(2)}</h6>
-            <h6>{t('cart.2','Tarifa por transacción')}: ${StripeFee(subtotal*(1+iva)).toFixed(2)}</h6>
+            <h6>{t('cart.2','Tarifa por transacción')}: ${StripeFee(subtotal*(1+iva),products.length).toFixed(2)}</h6>
           </div>
           <div className='d-flex flex-column justify-content-around'>
             <PayButton subtotal={subtotal} cart={true} products={products}/>

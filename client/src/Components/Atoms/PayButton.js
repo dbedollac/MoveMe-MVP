@@ -9,6 +9,9 @@ import {db} from "../../Config/firestore";
 import { withRouter } from "react-router";
 import { useTranslation } from 'react-i18next';
 import {iva} from '../../Config/Fees'
+import {Elements} from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js';
+import {stripePublicKey} from "../../Config/StripeCredentials"
 
 function PayButton(props) {
   const { usuario } = useContext(Auth);
@@ -18,6 +21,9 @@ function PayButton(props) {
   const expire = new Date(curr.getFullYear(),curr.getMonth()+1,curr.getDate())
   const [trialClass,settrialClass] = useState(null)
   const { t } = useTranslation();
+  const [stripeAccountID,setstripeAccountID] = useState(null)
+
+  const stripePromise = loadStripe(stripePublicKey, { stripeAccount: props.products[0].data.instructor.stripeAccountID })
 
   var days = expire.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
   var month = (expire.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
@@ -64,15 +70,17 @@ function PayButton(props) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>{t('cart.8','Total a pagar')}: ${(props.subtotal*(1+iva)+StripeFee(props.subtotal*(1+iva))).toFixed(2)}<br/>
+          <Modal.Title>{t('cart.8','Total a pagar')}: ${(props.subtotal*(1+iva)+StripeFee(props.subtotal*(1+iva), props.products.length)).toFixed(2)}<br/>
             {!props.cart?<div clasaName='d-flex flex-row'>
-              <p style={{color:'gray',fontSize:'small'}}>Subtotal: ${props.subtotal} / {t('cart.1','IVA')}: ${(props.subtotal*iva).toFixed(2)} / {t('cart.2','Tarifa por transacción')}: ${StripeFee(props.subtotal*(1+iva)).toFixed(2)}</p>
+              <p style={{color:'gray',fontSize:'small'}}>Subtotal: ${props.subtotal} + {t('cart.2','Tarifa por transacción')}: ${StripeFee(props.subtotal*(1+iva), props.products.length).toFixed(2)}</p>
             </div>:null}
-          {(props.subtotal*(1+iva)+StripeFee(props.subtotal*(1+iva))).toFixed(2)<=10?<p style={{color:'red',fontSize:'small'}}>{t('cart.9','Tu total a pagar debe ser mayor a $10')}</p>:null}
+          {(props.subtotal*(1+iva)+StripeFee(props.subtotal*(1+iva), props.products.length)).toFixed(2)<=10?<p style={{color:'red',fontSize:'small'}}>{t('cart.9','Tu total a pagar debe ser mayor a $10')}</p>:null}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <PaymentForm trialClass={trialClass} subtotal={props.subtotal} total={(props.subtotal*(1+iva)+StripeFee(props.subtotal*(1+iva))).toFixed(2)} products={props.products} cart={props.cart?true:false} expire={expire} now={curr}/>
+          <Elements stripe={stripePromise}>
+            <PaymentForm trialClass={trialClass} subtotal={props.subtotal} total={(props.subtotal*(1+iva)+StripeFee(props.subtotal*(1+iva), props.products.length)).toFixed(2)} products={props.products} cart={props.cart?true:false} expire={expire} now={curr}/>
+          </Elements>
         </Modal.Body>
         {!props.cart?props.type!=='Zoom'?
         <Modal.Footer>

@@ -11,6 +11,7 @@ import CreditCardDetails from '../Cards/CreditCardDetails'
 import TrialZoomClass from '../Atoms/TrialZoomClass'
 import SalesUserMail from '../Atoms/SalesUserMail'
 import SalesCoachMail from '../Atoms/SalesCoachMail'
+import StripeFee from '../Atoms/StripeFee'
 import { withRouter } from "react-router";
 import { useTranslation } from 'react-i18next';
 import './PaymentForm.css'
@@ -118,15 +119,13 @@ const PaymentForm = (props) => {
     setName(event.target.value)
   }
 
-  const handleSubmit = async (event) => {
-    // Block native form submission.
-    event.preventDefault();
-    setLoading(true)
+  const fecthStripeSecret = (amount, stripeAccountID) => {
 
     var response = fetch(proxyurl+'stripeAPI/secret',{
       method: 'POST',
       body: JSON.stringify({
-        amount: amount
+        amount: Number(amount*100).toFixed(0),
+        stripeAccountID:stripeAccountID
       }),
       headers: {
         "content-type": "application/json"
@@ -150,18 +149,19 @@ const PaymentForm = (props) => {
       // Show error to your customer (e.g., insufficient funds)
             console.log(result.error.message);
             setError(result.error.message)
-            setLoading(false)
             setSuccess(false)
+            setLoading(false)
+
           } else {
             // The payment has been processed!
             console.log(result)
             if (result.paymentIntent.status === 'succeeded') {
               setSuccess(true)
-              setLoading(false)
               if (details===null) {
                 handlePaymentMethod()
               }
               setError(null)
+              setLoading(false)
               addSales(result.paymentIntent.id,result.paymentIntent.amount)
               if (props.cart) {
                 vaciarCarrito()
@@ -173,7 +173,28 @@ const PaymentForm = (props) => {
               // post-payment actions.
             }
           }
-      });
+
+        });
+
+  }
+
+  const handleSubmit = async (event) => {
+    // Block native form submission.
+    event.preventDefault();
+    setLoading(true)
+
+    for (var i = 0; i < props.products.length; i++) {
+      if (props.products[i].data.type.includes('Zoom')) {
+         fecthStripeSecret(props.products[i].data.claseData.zoomPrice+StripeFee(props.products[i].data.claseData.zoomPrice,1),props.products[i].data.instructor.stripeAccountID)
+      }else {
+        if (props.products[i].data.type.includes('Video')) {
+         fecthStripeSecret(props.products[i].data.claseData.offlinePrice+StripeFee(props.products[i].data.claseData.offlinePrice,1),props.products[i].data.instructor.stripeAccountID)
+        }
+        else {
+         fecthStripeSecret(props.products[i].data.instructor.monthlyProgram.Price+StripeFee(props.products[i].data.instructor.monthlyProgram.Price,1),props.products[i].data.instructor.stripeAccountID)
+        }
+      }
+    }
   }
 
   const handleSubmitAuto = (event) =>{

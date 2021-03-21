@@ -25,7 +25,7 @@ import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import {stripePublicKey} from "./Config/StripeCredentials"
 
-const stripePromise = loadStripe(stripePublicKey);
+const stripePromise = loadStripe(stripePublicKey)
 
 const App = () => (
   <Elements stripe={stripePromise}>

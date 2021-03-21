@@ -124,7 +124,11 @@ app.post('/app/stripeAPI/charge-card', async (req,res) =>{
     customer: req.body.customer,
     payment_method: req.body.payment_method,
     off_session: true,
-    confirm: true
+    confirm: true,
+    application_fee_amount: 0,
+  },
+  {
+  stripeAccount: req.body.stripeAccountID
   }).catch((error)=>{
     res.send({error:'error'});
   })
@@ -164,10 +168,12 @@ app.post('/app/stripeAPI/card-details',async (req,res) => {
 
 app.post('/app/stripeAPI/secret', async (req, res) => {
   const intent = await stripe.paymentIntents.create({ // ... Fetch or create the PaymentIntent
+      payment_method_types: ['card'],
       amount: req.body.amount,
       currency: 'mxn',
-      // Verify your integration in this guide by including this parameter
-      metadata: {integration_check: 'accept_a_payment'},
+      application_fee_amount: 0,
+    },{
+      stripeAccount: req.body.stripeAccountID,
     });
   res.json({client_secret: intent.client_secret});
 });
