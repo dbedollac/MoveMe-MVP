@@ -11,13 +11,13 @@ import CreditCardDetails from '../Cards/CreditCardDetails'
 import TrialZoomClass from '../Atoms/TrialZoomClass'
 import SalesUserMail from '../Atoms/SalesUserMail'
 import SalesCoachMail from '../Atoms/SalesCoachMail'
-import StripeFee from '../Atoms/StripeFee'
 import { withRouter } from "react-router";
 import { useTranslation } from 'react-i18next';
 import './PaymentForm.css'
 
 const PaymentForm = (props) => {
   const { usuario } = useContext(Auth);
+  //const stripe = useStripe();
   const stripe = useStripe();
   const elements = useElements();
   const [name,setName] = useState('')
@@ -121,60 +121,6 @@ const PaymentForm = (props) => {
 
   const fecthStripeSecret = (amount, stripeAccountID) => {
 
-    var response = fetch(proxyurl+'stripeAPI/secret',{
-      method: 'POST',
-      body: JSON.stringify({
-        amount: Number(amount*100).toFixed(0),
-        stripeAccountID:stripeAccountID
-      }),
-      headers: {
-        "content-type": "application/json"
-      }
-    }).then(function(response) {
-        return response.json();
-      }).then(async function(responseJson) {
-        var clientSecret = responseJson.client_secret;
-        // Call stripe.confirmCardPayment() with the client secret.
-        const result = await stripe.confirmCardPayment(clientSecret, {
-          payment_method: {
-            card: elements.getElement(CardElement),
-            billing_details: {
-              name: name,
-              email: usuario.email
-            }
-          }
-        });
-
-        if (result.error) {
-      // Show error to your customer (e.g., insufficient funds)
-            console.log(result.error.message);
-            setError(result.error.message)
-            setSuccess(false)
-            setLoading(false)
-
-          } else {
-            // The payment has been processed!
-            console.log(result)
-            if (result.paymentIntent.status === 'succeeded') {
-              setSuccess(true)
-              if (details===null) {
-                handlePaymentMethod()
-              }
-              setError(null)
-              setLoading(false)
-              addSales(result.paymentIntent.id,result.paymentIntent.amount)
-              if (props.cart) {
-                vaciarCarrito()
-              }
-                            // Show a success message to your customer
-              // There's a risk of the customer closing the window before callback
-              // execution. Set up a webhook or plugin to listen for the
-              // payment_intent.succeeded event that handles any business critical
-              // post-payment actions.
-            }
-          }
-
-        });
 
   }
 
@@ -183,18 +129,63 @@ const PaymentForm = (props) => {
     event.preventDefault();
     setLoading(true)
 
-    for (var i = 0; i < props.products.length; i++) {
-      if (props.products[i].data.type.includes('Zoom')) {
-         fecthStripeSecret(props.products[i].data.claseData.zoomPrice+StripeFee(props.products[i].data.claseData.zoomPrice,1),props.products[i].data.instructor.stripeAccountID)
-      }else {
-        if (props.products[i].data.type.includes('Video')) {
-         fecthStripeSecret(props.products[i].data.claseData.offlinePrice+StripeFee(props.products[i].data.claseData.offlinePrice,1),props.products[i].data.instructor.stripeAccountID)
-        }
-        else {
-         fecthStripeSecret(props.products[i].data.instructor.monthlyProgram.Price+StripeFee(props.products[i].data.instructor.monthlyProgram.Price,1),props.products[i].data.instructor.stripeAccountID)
-        }
-      }
-    }
+
+        var response = fetch(proxyurl+'stripeAPI/secret',{
+          method: 'POST',
+          body: JSON.stringify({
+            amount: amount,
+            stripeAccountID:props.products[0].data.instructor.stripeAccountID
+          }),
+          headers: {
+            "content-type": "application/json"
+          }
+        }).then(function(response) {
+            return response.json();
+          }).then(async function(responseJson) {
+            var clientSecret = responseJson.client_secret;
+            // Call stripe.confirmCardPayment() with the client secret.
+            const result = await stripe.confirmCardPayment(clientSecret, {
+              payment_method: {
+                card: elements.getElement(CardElement),
+                billing_details: {
+                  name: name,
+                  email: usuario.email
+                }
+              }
+            });
+
+            if (result.error) {
+          // Show error to your customer (e.g., insufficient funds)
+                console.log(result.error.message);
+                setError(result.error.message)
+                setSuccess(false)
+                setLoading(false)
+
+              } else {
+                // The payment has been processed!
+                console.log(result)
+                if (result.paymentIntent.status === 'succeeded') {
+                  setSuccess(true)
+                /*  if (details===null) {
+                    handlePaymentMethod()
+                  }*/ //Habilitar después cargos automáticos
+
+                  setError(null)
+                  setLoading(false)
+                  addSales(result.paymentIntent.id,result.paymentIntent.amount)
+                  if (props.cart) {
+                    vaciarCarrito(props.products[0].data.instructor.uid)
+                  }
+                                // Show a success message to your customer
+                  // There's a risk of the customer closing the window before callback
+                  // execution. Set up a webhook or plugin to listen for the
+                  // payment_intent.succeeded event that handles any business critical
+                  // post-payment actions.
+                }
+              }
+
+            });
+
   }
 
   const handleSubmitAuto = (event) =>{
@@ -206,7 +197,8 @@ const PaymentForm = (props) => {
       body: JSON.stringify({
         amount: amount,
         customer: stripeID,
-        payment_method: paymentMethod
+        payment_method: paymentMethod,
+        stripeAccountID:props.products[0].data.instructor.stripeAccountID
       }),
       headers: {
         "content-type": "application/json"
@@ -312,8 +304,8 @@ const PaymentForm = (props) => {
     }
   }
 
-  const vaciarCarrito = async () =>{
-    var docRef = db.collection("Users").doc(usuario.uid).collection("ShoppingCart")
+  const vaciarCarrito = async (uid) =>{
+    var docRef = db.collection("Users").doc(usuario.uid).collection("ShoppingCart").where("instructor.uid","==",uid)
      await docRef.get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
       doc.ref.delete()
@@ -343,8 +335,6 @@ const PaymentForm = (props) => {
       } else {
         props.history.push("/ZoomClasses")
       }
-    } else {
-      props.history.push("/purchases")
     }
   }
 
@@ -391,7 +381,7 @@ const PaymentForm = (props) => {
             {t('cart.14','Pagar')}
           </button>}
         </div>
-        {success&&otherCard?<button className='btn-info' onClick={handlePaymentMethod}>{t('cart.16','Guardar tarjeta')}</button>:null}
+        {success?<button className='btn-info' onClick={()=>{props.history.push("/purchases")}}>{t('cart.16','Ir a Mis Compras')}</button>:null}
     </form>
   )
 }

@@ -4,11 +4,9 @@ import { Auth } from "../../Config/AuthContext"
 import {db,auth} from '../../Config/firestore'
 import { withRouter } from "react-router";
 import {Table, Collapse} from 'react-bootstrap'
-import {movemeFee} from '../../Config/Fees'
 import {ChevronCompactUp,ChevronCompactDown, InfoCircleFill} from 'react-bootstrap-icons'
 import {UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap'
 import { useTranslation } from 'react-i18next';
-import {iva} from '../../Config/Fees'
 import './Sales.css'
 
 function Sales(props) {
@@ -21,7 +19,6 @@ function Sales(props) {
   const today = new Date()
   const [sinceDate,setsinceDate] = useState(new Date(today.getTime()-(24*7 * 60 * 60 * 1000)))
   const { t } = useTranslation();
-  const [ISR, setISR] = useState(0.009);
 
   const sortSales = (a,b) => {
     const meetingA = a.date;
@@ -61,12 +58,6 @@ function Sales(props) {
     })
 
     if (usuario) {
-      db.collection('Instructors').doc(usuario.uid).get()
-        .then(doc => {
-          if (doc.data().RFC.length<=0) {
-            setISR(0.2)
-          }
-        })
 
       var Sales = []
       db.collection('Sales').where('instructor.uid','==',usuario.uid).get()
@@ -136,28 +127,8 @@ function Sales(props) {
                   <td>-${sales.length>0?sales.filter(item=>item.refund===true).reduce((a,b)=>{return a+b.price},0).toFixed(2):0}</td>
                 </tr>
                 <tr>
-                  <td colSpan='2'><i><strong>Subtotal</strong></i></td>
+                  <td colSpan='2'><i><strong>Total</strong></i></td>
                   <td><i><strong>${sales.length>0?sales.filter(item=>item.refund===false).reduce((a,b)=>{return a+b.price},0).toFixed(2):0}</strong></i></td>
-                </tr>
-                <tr>
-                  <td colSpan='2'>+ <i>{t('sales.24','IVA')} ({iva*100}%)</i></td>
-                  <td>+ ${sales.length>0?(sales.filter(item=>item.refund===false).reduce((a,b)=>{return a+b.price},0)*iva).toFixed(2):0}</td>
-                </tr>
-                <tr>
-                  <td colSpan='2'>- <i>{t('sales.25','Retención ISR')} ({(ISR*100).toFixed(2)}%)</i> <InfoCircleFill color='#d68930' style={{cursor:'pointer'}} id='ISR-info'/></td>
-                  <td>- ${sales.length>0?(sales.filter(item=>item.refund===false).reduce((a,b)=>{return a+b.price},0)*ISR).toFixed(2):0}</td>
-                </tr>
-                <tr>
-                  <td colSpan='2'>- <i>{t('sales.26','Retención IVA')} ({(ISR>0.1?iva:iva/2)*100}%)</i> <InfoCircleFill color='#d68930' style={{cursor:'pointer'}} id='IVA-info'/></td>
-                  <td>- ${sales.length>0?(sales.filter(item=>item.refund===false).reduce((a,b)=>{return a+b.price},0)*(ISR>0.1?iva:iva/2)).toFixed(2):0}</td>
-                </tr>
-                <tr>
-                  <td colSpan='2'>- <i>{t('sales.27','Contribución a MoveMe')} ({sales.length>0?((sales.filter(item=>item.refund===false).reduce((a,b)=>{return a+b.movemeFee},0)/sales.filter(item=>item.refund===false).reduce((a,b)=>{return a+b.price},0))*100).toFixed(0):0}%)</i></td>
-                  <td>- ${sales.length>0?(sales.filter(item=>item.refund===false).reduce((a,b)=>{return a+b.movemeFee},0)).toFixed(2):0}</td>
-                </tr>
-                <tr>
-                  <td colSpan='2'><strong>{t('sales.10','Total')}</strong></td>
-                  <td><strong>${sales.length>0?(sales.filter(item=>item.refund===false).reduce((a,b)=>{return a+b.price},0)*(1+(iva)-(ISR>0.1?iva:iva/2)-ISR-movemeFee)).toFixed(2):0}</strong></td>
                 </tr>
               </tbody>
             </Table>
@@ -259,46 +230,6 @@ function Sales(props) {
                 </div>
 
           </div>
-          <UncontrolledPopover trigger="click" placement="bottom" target="ISR-info" >
-            <PopoverBody>
-              {ISR>0.1?t('sales.28'):t('sales.29')}
-              <Table size='sm'>
-                <thead>
-                  <th>{t('sales.30')}</th>
-                  <th>{t('sales.31')}</th>
-                </thead>
-                <tr>
-                  <td>{t('sales.32')} $1,500.00</td>
-                  <td>0.40%</td>
-                </tr>
-                <tr>
-                  <td>{t('sales.32')} $5,000.00</td>
-                  <td>0.50%</td>
-                </tr>
-                <tr>
-                  <td>{t('sales.32')} $10,000.00</td>
-                  <td>0.90%</td>
-                </tr>
-                <tr>
-                  <td>{t('sales.32')} $25,000.00</td>
-                  <td>1.10%</td>
-                </tr>
-                <tr>
-                  <td>{t('sales.32')} $100,000.00</td>
-                  <td>2.0%</td>
-                </tr>
-                <tr>
-                  <td>{t('sales.33')} $100,000.00</td>
-                  <td>5.40%</td>
-                </tr>
-              </Table>
-            </PopoverBody>
-          </UncontrolledPopover>
-          <UncontrolledPopover trigger="click" placement="bottom" target="IVA-info" >
-            <PopoverBody>
-              {ISR>0.1?t('sales.34'):t('sales.35')}
-            </PopoverBody>
-          </UncontrolledPopover>
     </div>
   )
 }

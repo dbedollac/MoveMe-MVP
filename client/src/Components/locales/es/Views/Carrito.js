@@ -17,7 +17,7 @@ const Carrito = {
     13:'Cambiar tipo de cuenta',
     14:'Pagar',
     15:'Usar otra tarjeta',
-    16:'Guardar tarjeta'
+    16:'Ir a Mis Compras'
   }
 }
 

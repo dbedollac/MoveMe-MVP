@@ -1,7 +1,7 @@
 import React,{useContext,useEffect,useState} from 'react'
 import Header from '../Molecules/Header'
 import { Auth } from "../../Config/AuthContext"
-import CardSaved from '../Cards/CardSaved'
+//import CardSaved from '../Cards/CardSaved' Agregar una vez que se habiliten los pagos automáticos
 import Purchases from '../Cards/Purchases'
 import {db,auth} from '../../Config/firestore'
 import { withRouter } from "react-router";
@@ -60,9 +60,6 @@ function MisCompras(props) {
       <Header  user={usuario?true:false}/>
       <div className='MisCompras-container d-flex flex-column pt-2 align-items-center'>
         <h3 className='align-self-start pl-3'>{t('misCompras.24','Mis Compras')}</h3>
-        <div className='MisCompras-container-paymentMethod col-10 col-md-7 rounded p-1'>
-          <CardSaved/>
-        </div>
         {purchases.length>0?purchases.sort(sortPurchases).slice(0,showMore).map((purchase,index) => (
           <div className='col-12 col-md-10 mt-2' key={purchase.id}>
             <Purchases

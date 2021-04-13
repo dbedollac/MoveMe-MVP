@@ -30,11 +30,13 @@ function FirstSteps(props) {
     }
 
   useEffect(()=>{
-    auth.onAuthStateChanged((usuario) => {
-      if (usuario===null) {
-          props.history.push("/market");
-      }
-    })
+    if (!props.LandingPage){
+      auth.onAuthStateChanged((usuario) => {
+        if (usuario===null) {
+            props.history.push("/market");
+        }
+      })
+    }
       searchInstructor()
   },[usuario])
 

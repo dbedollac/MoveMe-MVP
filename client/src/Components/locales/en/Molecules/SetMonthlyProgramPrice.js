@@ -21,7 +21,7 @@ const SetMonthlyProgramPrice = {
     17:'When you activate your Fitness Kit, it will be automatically offered to all MoveMe users and the classes you scheduled will be offered individually for attendance purchases.',
     18:'Cancel',
     19:'Activate your Fitness Kit!',
-    20:'Tax plus a transaction fee will be added',
+    20:'A transaction fee will be added',
     21:'Add a video or Zoom class',
     22:'Price was successfully set'
   }

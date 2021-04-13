@@ -4,7 +4,7 @@ var express = require('express');
 var app = express();
 const cors = require('cors')({origin: true});
 var http = require("https");
-const stripe = require('stripe')('sk_test_51HCrlMASQcuvqq5qRoBALRqEj9NTsWPE8N9OPWvOJIcIe6klruWXlkh9l1Ly7K7CDKuHO80S7XVKF1A7Ex9qloQD00ZwSykRm0');
+const stripe = require('stripe')('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');
 const zoomID = 'BAI2U_LMR0qde_D7g8SV_g'
 const zoomSecret = 'vkU91bWzoulRS0hDnHxslr2a4JauqSol'
 const zoomVerification = '8blv9hJ7SnatkgmG21B2Qw'
@@ -118,24 +118,26 @@ app.post('/app/stripeAPI/delete-card',async (req,res) =>{
 })
 
 app.post('/app/stripeAPI/charge-card', async (req,res) =>{
+
   const paymentIntent = await stripe.paymentIntents.create({
     amount: req.body.amount,
     currency: "mxn",
     customer: req.body.customer,
     payment_method: req.body.payment_method,
-    off_session: true,
-    confirm: true,
     application_fee_amount: 0,
-  },
+    payment_method_types: ['card']
+    },
   {
   stripeAccount: req.body.stripeAccountID
   }).catch((error)=>{
     res.send({error:'error'});
   })
 
-  if (paymentIntent.status === "succeeded") {
-    res.send(paymentIntent);
-  }
+  console.log(paymentIntent);
+
+//  if (paymentIntent.status === "succeeded") {
+  //  res.send(paymentIntent);
+  //}
 })
 
 app.post('/app/stripeAPI/refund', async (req,res) =>{

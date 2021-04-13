@@ -12,6 +12,7 @@ import ReactPlayer from 'react-player'
 import Signup from '../Forms/Signup'
 import MessengerCustomerChat from 'react-messenger-customer-chat';
 import Header from '../Molecules/Header'
+import FirstSteps from './FirstSteps'
 import aliadosInfo from '../Views/Images/aliados_info.jpeg'
 import './LandingPage.css'
 
@@ -109,10 +110,9 @@ function LandingPage(props) {
             <h4 className='text-right'>Sube y renta tus clases en video</h4>
             <h4 className='text-left'>Cobra una cuota mensual por tu Fitness Kit</h4>
           </div>
-
         </div>
-        <div className='LandingPage-foto-container my-4'>
-          <img src={aliadosInfo} alt='Aliados'/>
+        <div className='LandingPage-FirstSteps col-12'>
+          <FirstSteps LandingPage={true}/>
         </div>
       </div>
     </div>

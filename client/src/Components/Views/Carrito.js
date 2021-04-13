@@ -2,6 +2,7 @@ import React, {useState,useEffect,useContext} from 'react';
 import { Auth } from "../../Config/AuthContext";
 import {db, auth} from '../../Config/firestore'
 import Header from '../Molecules/Header'
+import CarritoInstructor from '../Molecules/CarritoInstructor'
 import { withRouter } from "react-router";
 import CarritoProduct from '../Cards/CarritoProduct'
 import PayButton from '../Atoms/PayButton'
@@ -13,7 +14,8 @@ import './Carrito.css'
 function Carrito(props) {
   const { usuario } = useContext(Auth);
   const [products,setProducts] = useState([])
-  const [subtotal,setSubtotal] = useState(0)
+  const [prices,setPrices] = useState([])
+  const [instructorsUID,setInstructorsUID] = useState([])
   const curr = new Date()
   const expire = new Date(curr.getFullYear(),curr.getMonth()+1,curr.getDate())
   const { t } = useTranslation();
@@ -33,15 +35,16 @@ function Carrito(props) {
       docRef.get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
                Products.push({id:doc.id,data:doc.data(),expire:expire});
-               doc.data().type.includes('Reto')?Prices.push(Number(doc.data().instructor.monthlyProgram.Price))
-                 :doc.data().type.includes('Zoom')?Prices.push(Number(doc.data().claseData.zoomPrice))
-                 :Prices.push(Number(doc.data().claseData.offlinePrice))
+               doc.data().type.includes('Reto')?Prices.push({'uid':doc.data().instructor.uid,'price':Number(doc.data().instructor.monthlyProgram.Price)})
+                 :doc.data().type.includes('Zoom')?Prices.push({'uid':doc.data().instructor.uid,'price':Number(doc.data().claseData.zoomPrice)})
+                 :Prices.push({'uid':doc.data().instructor.uid,'price':Number(doc.data().claseData.offlinePrice)})
           });
           setProducts(Products)
-          setSubtotal(Prices.reduce((a,b)=>{return a+b},0))
+          setPrices(Prices)
+          setInstructorsUID(Array.from(new Set(Products.map(product => product.data.instructor.uid))))
       });
     }
-  },[usuario,subtotal])
+  },[usuario])
 
   const vaciarCarrito = async () =>{
     var docRef = db.collection("Users").doc(usuario.uid).collection("ShoppingCart")
@@ -52,40 +55,22 @@ function Carrito(props) {
     }).catch(error => console.log(error))
 
     setProducts([])
-    setSubtotal(0)
+    setPrices([])
+    window.location.reload(false)
   }
 
   return(
-    <div>
-    <Header  user={usuario?true:false}/>
-      <div className='Carrito-container d-flex flex-column pt-2 align-items-center'>
-        <div className='col-10 col-md-7 d-flex flex-column flex-md-row justify-content-around Carrito-container-total rounded p-1'>
-          <div className='d-flex flex-column'>
-            <h4><strong>Total: ${(subtotal*(1+iva)+StripeFee(subtotal*(1+iva),products.length)).toFixed(2)}</strong></h4>
-            <h6>Subtotal: ${subtotal.toFixed(2)}</h6>
-            <h6>{t('cart.2','Tarifa por transacción')}: ${StripeFee(subtotal*(1+iva),products.length).toFixed(2)}</h6>
+    <div className='Carrito-container'>
+      <Header  user={usuario?true:false}/>
+      {products.length===0? <h4 style={{color:'gray'}} className='text-center py-5'><i>{t('cart.4','Tu carrito está vacío')}</i></h4>:null}
+      {products.length>0?<h5 className='p-2' onClick={vaciarCarrito} style={{'cursor':'pointer'}}><i>{t('cart.3','Vaciar carrito')}</i></h5>:null}
+      <div className='col-12 d-flex flex-row flex-wrap'>
+        {instructorsUID.map(uid =>
+          <div className='col-12 col-md-4'>
+            <CarritoInstructor products={products.filter(p => p.data.instructor.uid === uid)}
+            subtotal={prices.filter(p => p.uid === uid).reduce((a,b)=>{return a+b.price},0)} />
           </div>
-          <div className='d-flex flex-column justify-content-around'>
-            <PayButton subtotal={subtotal} cart={true} products={products}/>
-            <p style={{cursor:'pointer'}} onClick={vaciarCarrito} className='mt-2'><i>{t('cart.3','Vaciar Carrito')}</i></p>
-          </div>
-        </div>
-
-        <div className='col-11'>
-          {products.length===0? <h4 style={{color:'gray'}} className='text-center py-5'><i>{t('cart.4','Tu carrito está vacío')}</i></h4>
-            :products.map(product =>(
-            <div className='pt-2' key={product.id}>
-              <CarritoProduct claseData={product.data.claseData?product.data.claseData:null}
-              instructor={product.data.instructor}
-              meetingID={product.data.meetingID?product.data.meetingID:null}
-              startTime={product.data.startTime?product.data.startTime:null}
-              type={product.data.type}
-              expire={product.data.type.includes('Video')||product.data.type.includes('Reto')?expire:null}
-              id={product.id}/>
-            </div>
-          ))}
-        </div>
-
+        )}
       </div>
     </div>
   )

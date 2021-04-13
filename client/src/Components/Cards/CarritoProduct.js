@@ -1,5 +1,4 @@
 import React,{useContext, useEffect, useState} from 'react';
-import CoachName from '../Atoms/CoachName'
 import {db} from '../../Config/firestore'
 import { Auth } from "../../Config/AuthContext";
 import { TrashFill } from 'react-bootstrap-icons';
@@ -35,17 +34,20 @@ function CarritoProduct(props) {
 
   return(
     <div className='card'>
-      <div className='card-body d-flex flex-column flex-md-row align-items-end justify-content-start'>
-        <h5 className='col-12 col-md-6'>{props.type.includes('Video')?t('misCompras.21','Clase en Video'):props.type.includes('Zoom')?t('misCompras.22','Clase por Zoom'):t('misCompras.23','Reto Mensual')} {props.startTime?'('+props.startTime.time+')':null}{props.type.includes('Video')||props.type.includes('Reto')?'(Vigente hasta '+expireDate+')':null}</h5>
-        <h6 className="card-subtitle mb-2 text-muted col-12 col-md-5">{props.claseData?props.claseData.title:null}</h6>
-        <TrashFill size={'2em'} onClick={deleteProduct} style={{cursor:'pointer'}}/>
-      </div>
-      <div className='card-footer d-flex flex-row justify-content-between align-items-center'>
-        <CoachName uid={props.instructor.uid} profileName={props.instructor.profileName} profilePicture={props.instructor.imgURL?props.instructor.imgURL:null}/>
-        <h5>${props.type.includes('Reto')?props.instructor.monthlyProgram.Price
-          :props.type.includes('Zoom')?props.claseData.zoomPrice
-          :props.claseData.offlinePrice}
-        </h5>
+      <div className='card-footer d-flex flex-column'>
+
+        <div className='d-flex flex-row justify-content-between'>
+          <h5 className='mr-2'>${props.type.includes('Reto')?props.instructor.monthlyProgram.Price
+            :props.type.includes('Zoom')?props.claseData.zoomPrice
+            :props.claseData.offlinePrice}
+          </h5>
+          <h5>{props.type.includes('Video')?t('misCompras.21','Clase en Video'):props.type.includes('Zoom')?t('misCompras.22','Clase por Zoom'):t('misCompras.23','Reto Mensual')} {props.startTime?'('+props.startTime.time+')':null}{props.type.includes('Video')||props.type.includes('Reto')?'(Vigente hasta '+expireDate+')':null}</h5>
+        </div>
+
+        <div className='d-flex flex-row'>
+          <h6 className="card-subtitle text-muted col-11">{props.claseData?props.claseData.title:null}</h6>
+          <TrashFill onClick={deleteProduct} style={{cursor:'pointer'}}/>
+        </div>
       </div>
     </div>
   )

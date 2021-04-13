@@ -196,7 +196,7 @@ const formik = useFormik({
                 />
                 MXN
                 </div>
-                <i style={{color:'gray',fontSize:'small'}}>{t('mPrice.20','Se agregará IVA más tarifa por transacción')}</i>
+                <i style={{color:'gray',fontSize:'small'}}>{t('mPrice.20','Se agregará tarifa por transacción')}</i>
         </div>
         <div className='d-flex flex-column col-md-6 mb-2'>
               <label htmlFor="offlinePrice">{t('myClasses.21','Precio por renta del video (1 mes)')}</label>
@@ -214,7 +214,7 @@ const formik = useFormik({
                 />
                 MXN
                 </div>
-                <i style={{color:'gray',fontSize:'small'}}>{t('mPrice.20','Se agregará IVA más tarifa por transacción')}</i>
+                <i style={{color:'gray',fontSize:'small'}}>{t('mPrice.20','Se agregará tarifa por transacción')}</i>
               <div className='d-flex flex-row align-items-center'>
                 <label htmlFor="freeVideo" className='mr-2 mt-1'><i>{t('myClasses.22','Video gratis')}</i></label>
                 <input

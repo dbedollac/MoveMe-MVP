@@ -55,6 +55,12 @@
 .LandingPage-bullets h3{
   color: black !important;
   margin-top: 5%;
+}{}
+
+.LandingPage-FirstSteps{
+  margin-top: 2%;
+  padding: 1%;
+  background-color:  #BA874D !important
 }
 
 .footer{

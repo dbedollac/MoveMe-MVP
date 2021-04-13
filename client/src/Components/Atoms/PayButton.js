@@ -20,10 +20,10 @@ function PayButton(props) {
   const curr = new Date()
   const expire = new Date(curr.getFullYear(),curr.getMonth()+1,curr.getDate())
   const [trialClass,settrialClass] = useState(null)
+  const stripeAccount =  props.products.length>0?props.products[0].data.instructor?props.products[0].data.instructor.stripeAccountID:null:null
   const { t } = useTranslation();
-  const [stripeAccountID,setstripeAccountID] = useState(null)
 
-  const stripePromise = loadStripe(stripePublicKey, { stripeAccount: props.products[0].data.instructor.stripeAccountID })
+  const stripePromise = loadStripe(stripePublicKey, { stripeAccount: stripeAccount})
 
   var days = expire.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
   var month = (expire.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
@@ -79,7 +79,7 @@ function PayButton(props) {
         </Modal.Header>
         <Modal.Body>
           <Elements stripe={stripePromise}>
-            <PaymentForm trialClass={trialClass} subtotal={props.subtotal} total={(props.subtotal*(1+iva)+StripeFee(props.subtotal*(1+iva), props.products.length)).toFixed(2)} products={props.products} cart={props.cart?true:false} expire={expire} now={curr}/>
+            <PaymentForm stripeAccount={stripeAccount} trialClass={trialClass} subtotal={props.subtotal} total={(props.subtotal*(1+iva)+StripeFee(props.subtotal*(1+iva))).toFixed(2)} products={props.products} cart={props.cart?true:false} expire={expire} now={curr}/>
           </Elements>
         </Modal.Body>
         {!props.cart?props.type!=='Zoom'?
